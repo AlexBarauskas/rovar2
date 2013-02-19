@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block css %}
+<link type="text/css" href="/static/leaflet/leaflet.css" rel="stylesheet"/>
+{% endblock css %}
+
+{% block content %}
+<h1>Project run!</h1>
+<div id="map" style="height: 600px;width: 80%;margin:0 10%"></div>
+{% endblock content %}
+
+{% block js %}
+<script type="text/javascript" src="/static/leaflet/leaflet-src.js"></script>
+<script type="text/javascript" src="/static/leaflet/leaflet.js"></script>
+
+<script type="text/javascript" src="/static/js/map.js"></script>
+{% endblock js %}
