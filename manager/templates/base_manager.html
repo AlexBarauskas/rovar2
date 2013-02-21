@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block css %}
+<link type="text/css" href="/static/css/manager.css" rel="stylesheet"/>
+{% endblock css %}
+
+{% block content %}
+<div class="manager top-menu">
+  <ul>
+    <li class="last">
+      <a href="{% url logout %}"><span class="small">Выход</span></a>
+    </li>
+  </ul>
+  <h1>Панель менеджера</h1>
+  <ul>
+    <li class="{% if not menu_item %}active{% endif %}">
+      <a href="{% url manager_index %}">Главная</a>
+    </li>
+    <li class="{% if menu_item == 'types' %}active{% endif %}">
+      <a href="{% url track_point_types %}">Типы</a>
+    </li>
+    <li class="{% if menu_item == 'tracks' %}active{% endif %}">
+      <a href="{% url manager_tracks %}">Маршруты</a>
+    </li>
+    <li class="last{% if menu_item == 'points' %} active{% endif %}">
+      <a href="{% url manager_points %}">Места</a>
+    </li>
+  </ul>
+<div class="clear"></div>
+</div>
+
+{% block inner_content %}
+<h1>It works!</h1>
+{% endblock inner_content %}
+
+{% endblock content %}
+
+{% block js %}
+{% endblock js %}

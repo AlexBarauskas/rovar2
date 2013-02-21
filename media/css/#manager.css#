@@ -1,0 +1,27 @@
+.top-menu{
+    background: #2A3333;
+}
+
+.top-menu h1{
+    color:white;
+    margin:0;
+}
+
+.top-menu li{
+    list-style:none;
+    float:left;
+    padding:5px 10px;
+    //background-color:#999;
+    border-right:
+    
+}
+
+.top-menu ul{
+    float:right;
+}
+
+.top-menu li a{
+    color:white;
+    text-decoration:none;
+}
+

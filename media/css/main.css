@@ -1,0 +1,16 @@
+* {
+    font-family:Helvetica, sans-serif;
+}
+
+.small{
+    font-size:75%;
+}
+
+html, body{
+    margin:0;
+    padding:0;
+}
+
+.clear {
+    clear:both;
+}

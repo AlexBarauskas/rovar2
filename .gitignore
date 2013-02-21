@@ -2,3 +2,5 @@
 *.out
 *.pyc
 settings_local.py
+*.db
+*#

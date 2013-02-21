@@ -1,0 +1,38 @@
+.top-menu{
+    padding:10px;
+    background: #2A3333;
+}
+
+.top-menu h1{
+    color:white;
+    margin:0;
+}
+
+.top-menu li{
+    list-style:none;
+    float:left;
+    padding:0px 15px;
+    font-size:16px;
+    //background-color:#999;
+    border-right:solid 1px #CCC;
+    
+}
+
+.top-menu li.last{
+    border-right:none;
+}
+
+.top-menu li.active{
+    font-weight:bold;
+}
+
+.top-menu ul{
+    float:right;
+    margin:5px 0;
+}
+
+.top-menu li a{
+    color:white;
+    text-decoration:none;
+}
+
