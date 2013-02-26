@@ -1,0 +1,25 @@
+{% extends 'base_manager.html' %}
+
+{% block inner_content %}
+<h1>Редактирование типов маршрутов и точек</h1>
+<form action="." method="POST">
+{% csrf_token %}
+{% for f in forms %}
+<div class="form-item{%if f.errors%} open{%endif%}">
+  <div class="form-header">
+    {% if f.instance.name %}
+    {{f.instance}}
+    {% else %}
+    Добавить новый тип
+    {% endif %}
+  </div>
+  <div class="form-fields">
+    {{f.as_p}}
+  </div>
+</div>
+{% endfor %}
+<div class="btn-box">
+  <button>Сохранить</button>
+</div>
+</form>
+{% endblock inner_content %}

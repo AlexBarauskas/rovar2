@@ -11,10 +11,12 @@
 
   </head>
   <body>
-  {% block content %}
-  {% endblock content %}
-
-  {% block js %}
-  {% endblock js %}
+      {% block content %}
+      <div class="content">
+      </div>
+      {% endblock content %}
+    <script type="text/javascript" src="/static/js/jquery-1.7.1.min.js"></script>
+    {% block js %}
+    {% endblock js %}
   </body>
 </html>
