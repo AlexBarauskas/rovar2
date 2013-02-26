@@ -9,6 +9,7 @@ urlpatterns = patterns('',
     url(r'^$', 'rovar2.views.home', name='home'),
 
     url(r'^manager/', include('manager.urls')),
+    url(r'^map/', include('map.urls')),
 
     url(r'^login/$','django.contrib.auth.views.login',{ 'template_name' : 'login.html'},name="login"),
     url(r'^logout/$', 'django.contrib.auth.views.logout',

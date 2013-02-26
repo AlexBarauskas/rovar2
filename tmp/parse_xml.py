@@ -16,10 +16,10 @@ class XMLTrack(object):
         track_node = self.dom.getElementsByTagName('trk')[0]
         self.track["name"] = track_node.getElementsByTagName('name')[0].firstChild.nodeValue
         track_points = track_node.getElementsByTagName('trkpt')
-        self.track['points'] = []
+        self.track['rout'] = []
         for p in track_points:
-            self.track['points'].append((p.getAttribute(self.lat),
-                                         p.getAttribute(self.lon)))
+            self.track['rout'].append((float(p.getAttribute(self.lat)),
+                                         float(p.getAttribute(self.lon))))
         return self.track
     
 
