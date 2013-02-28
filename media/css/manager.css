@@ -66,3 +66,7 @@
     height:auto;
 }
 /* End form sets */
+
+.delete {
+    cursor:pointer;
+}

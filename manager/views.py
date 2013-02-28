@@ -1,12 +1,13 @@
+# -*- coding: utf-8 -*-
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.template.context import RequestContext
 
 from django.contrib.admin.views.decorators import staff_member_required
 
-from models import Type
-from forms import TypeForm
+from models import Type, Track
+from forms import TypeForm, TrackForm
 import json
 
 
@@ -58,6 +59,8 @@ def type_delete(request, type_id):
         _type = Type.objects.get(id=type_id)
     except ObjectDoesNotExist:
         errors.append['Object does not exist']
+    ## Добавить проверку на наличие связанных компанент
+    # в случае присутствия связей выдать ошибку о невозможномти удаления
     try:
         _type.delete()
     except e:
@@ -70,3 +73,32 @@ def type_delete(request, type_id):
                         content_type="text/json")
     
         
+@staff_member_required
+def tracks(request):
+    tracks = Track.objects.all()
+    return render_to_response('manager_tracks.html',
+                              {'tracks': tracks},
+                              RequestContext(request))
+
+@staff_member_required
+def track_edit(request, track_id=None):
+    if track_id is not None:
+        track = get_object_or_404(Track, id=track_id)
+        title = u'Редактирование маршрута'
+    else:
+        track=None
+        title = u'Новый маршрут'
+    if request.method == "POST":
+        form = TrackForm(request.POST, instance=track)
+        if form.is_valid():
+            form.save()
+            if request.POST.get('submit', 'to_current_page') == 'to_section':
+                return HttpResponseRedirect(reverse('manager_tracks'))
+    else:
+        form = TrackForm(instance=track)
+    
+    return render_to_response('obj_edit.html',
+                              {'form': form,
+                               'title': title},
+                              RequestContext(request))
+    

@@ -1,0 +1,27 @@
+{% extends 'base_manager.html' %}
+
+{% block inner_content %}
+<h1>Редактирование маршрутов</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Название</th>
+      <th>Дата создания</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for t in tracks%}
+    <tr>
+      <td>{{t.name}}</td>
+      <td>{{t.created}}</td>
+      <td><a href="{% url track-edit t.id %}">Редактировать</a></td>
+      <td><div id={{t.id}} class="delete">x</div></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<div class="button-box">
+  <a href="{% url track-add %}">Добавить маршрут</a>
+</div>
+{% endblock inner_content %}

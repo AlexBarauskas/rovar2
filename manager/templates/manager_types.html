@@ -9,12 +9,12 @@
   <div class="form-header">
     <span class="form-name">
     {% if f.instance.name %}
-    {{f.instance}}
+    {{f.instance.obj_name}}
     {% else %}
     Добавить новый тип
     {% endif %}
     </span>
-    <div class="close delete">x</div>
+    <div id="{{f.instance.id}}" class="close delete">x</div>
   </div>
   <div class="form-fields">
     {{f.as_p}}

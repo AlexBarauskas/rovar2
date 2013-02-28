@@ -7,4 +7,22 @@ $(function(){
 				else
 				    box.addClass('open');
 			    });
+
+      $('.delete').click(function(ev){
+			     var box=$(this).parent().parent();
+			     if(!!this.id){
+				 $.ajax({method: 'POST',
+					 url: this.id+'/delete/',
+					 success: function(data){
+					     if(data.success){
+						 box.remove();
+					     }
+					     else{
+						 for(var i=data.errors.length-1;i>=0;i--)
+						     box.find('.form-fields').append('<p class="error">'+data.errors[i]+'</p>');
+					     }
+					 }
+					});
+			     }
+			 });
 });
