@@ -7,6 +7,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 
 from models import Type
 from forms import TypeForm
+import json
 
 
 @staff_member_required
@@ -38,8 +39,7 @@ def types(request):
         if f.is_valid():
             f.save()
             forms.append(f)
-        else:
-            forms.append(TypeForm())
+        forms.append(TypeForm())
     else:
         for t in _types:
             prefix = "%s" % t.id
@@ -51,3 +51,22 @@ def types(request):
                               RequestContext(request))
     
 
+@staff_member_required
+def type_delete(request, type_id):
+    errors = []
+    try:
+        _type = Type.objects.get(id=type_id)
+    except ObjectDoesNotExist:
+        errors.append['Object does not exist']
+    try:
+        _type.delete()
+    except e:
+        errors.append(str(e))
+    res = {
+        'success': not errors,
+        'errors': errors,
+        }
+    return HttpResponse(json.dumps(res),
+                        content_type="text/json")
+    
+        

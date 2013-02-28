@@ -7,11 +7,14 @@
 {% for f in forms %}
 <div class="form-item{%if f.errors%} open{%endif%}">
   <div class="form-header">
+    <span class="form-name">
     {% if f.instance.name %}
     {{f.instance}}
     {% else %}
     Добавить новый тип
     {% endif %}
+    </span>
+    <div class="close delete">x</div>
   </div>
   <div class="form-fields">
     {{f.as_p}}
