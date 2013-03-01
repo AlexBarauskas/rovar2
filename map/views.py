@@ -1,13 +1,27 @@
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
 import json
 
-from tmp.parse_xml import XMLTrack
+#from tmp.parse_xml import XMLTrack
+from manager.models import Track
+import json
 
-def track(request):
-    #track=[[0,0],[32,60]]
+def get_available_tracks(request):
+    state = '0'
+    tracks = Track.objects.filter(state__lte=state)
+    tracks = [t.id for t in tracks]
+    
+    return HttpResponse(json.dumps({'ids': tracks}),
+                        mimetype='text/json')
+    
 
-    t = XMLTrack(open("tmp/GPSLogMee_Log_1_141.txt").read())
-    track = t.get_track()
-
+def track(request, track_id=None):
+    kwargs = {}
+    if track_id:
+        kwargs['id'] = track_id
+    try:
+        t = Track.objects.get(**kwargs)
+        track = {'route': json.loads(t.coordinates)}
+    except:
+        track = {'route': [[0,0],[0,0]]}
     return HttpResponse(json.dumps(track),
-                        content_type="text/json")
+                        mimetype='text/json')

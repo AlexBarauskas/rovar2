@@ -3,12 +3,15 @@ from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
 from django.shortcuts import render_to_response, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.template.context import RequestContext
+from django.core.exceptions import ObjectDoesNotExist
 
 from django.contrib.admin.views.decorators import staff_member_required
 
 from models import Type, Track
 from forms import TypeForm, TrackForm
 import json
+
+from tmp.parse_xml import XMLTrack
 
 
 @staff_member_required
@@ -61,10 +64,13 @@ def type_delete(request, type_id):
         errors.append['Object does not exist']
     ## Добавить проверку на наличие связанных компанент
     # в случае присутствия связей выдать ошибку о невозможномти удаления
-    try:
-        _type.delete()
-    except e:
-        errors.append(str(e))
+    if _type.track_set.count():
+        errors.append(" Не возможно удалить! Некоторые маршруты принаджежат данному типу.")
+    else:
+        try:
+            _type.delete()
+        except e:
+            errors.append(str(e))
     res = {
         'success': not errors,
         'errors': errors,
@@ -89,9 +95,19 @@ def track_edit(request, track_id=None):
         track=None
         title = u'Новый маршрут'
     if request.method == "POST":
-        form = TrackForm(request.POST, instance=track)
+        form = TrackForm(request.POST, request.FILES, instance=track)
         if form.is_valid():
+
             form.save()
+            xml_file = request.FILES.get('xml_coordinates', None)
+            if track is None:
+                track = form.instance
+            if xml_file:
+                t = XMLTrack(xml_file.read())
+                rout = t.get_track()['rout']
+                track.coordinates = json.dumps(rout)
+                track.save()
+
             if request.POST.get('submit', 'to_current_page') == 'to_section':
                 return HttpResponseRedirect(reverse('manager_tracks'))
     else:
@@ -99,6 +115,25 @@ def track_edit(request, track_id=None):
     
     return render_to_response('obj_edit.html',
                               {'form': form,
-                               'title': title},
+                               'title': title,
+                               'back_url': reverse('manager_tracks')},
                               RequestContext(request))
     
+
+@staff_member_required
+def track_delete(request, track_id):
+    errors = []
+    try:
+        obj = Track.objects.get(id=track_id)
+    except ObjectDoesNotExist:
+        errors.append['Object does not exist']
+    try:
+        obj.delete()
+    except e:
+        errors.append(str(e))
+    res = {
+        'success': not errors,
+        'errors': errors,
+        }
+    return HttpResponse(json.dumps(res),
+                        content_type="text/json")

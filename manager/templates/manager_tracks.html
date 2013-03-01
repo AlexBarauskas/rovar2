@@ -15,13 +15,13 @@
     <tr>
       <td>{{t.name}}</td>
       <td>{{t.created}}</td>
-      <td><a href="{% url track-edit t.id %}">Редактировать</a></td>
-      <td><div id={{t.id}} class="delete">x</div></td>
+      <td><a class="btn edit" href="{% url track-edit t.id %}">Редактировать</a></td>
+      <td><div id={{t.id}} class="btn danger delete">Удалить</div></td>
     </tr>
     {% endfor %}
   </tbody>
 </table>
 <div class="button-box">
-  <a href="{% url track-add %}">Добавить маршрут</a>
+  <a  class="btn success" href="{% url track-add %}">Добавить маршрут</a>
 </div>
 {% endblock inner_content %}

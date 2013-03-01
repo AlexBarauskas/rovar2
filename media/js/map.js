@@ -11,8 +11,19 @@ var rovar = {
 
     addTrack : function (data){
 	tmp=data;
-	var polyline = L.polyline(data.rout, {color: 'blue'});
+	var polyline = L.polyline(data.route, {color: 'blue'});
 	polyline.addTo(this.map);
+    },
+
+    loadTrack : function(id){
+	var self = this;
+	$.ajax({
+		   url: '/map/track/'+id+'/',
+		   method: 'GET',
+		   success: function(data){
+		       self.addTrack(data);
+		   }
+	       });	
     }
 };
 
@@ -21,9 +32,9 @@ L.marker([53.9, 27.566667]).addTo(rovar.map)
     .bindPopup('Minsk<br/> test popup')
     .openPopup();
 
+
 $.ajax({
-	   url: '/map/track/',
+	   url: '/map/available-tracks/',
 	   method: 'GET',
-	   type: 'JSON',
-	   success: function(data){rovar.addTrack(data);}
+	   success: function(data){for(var i=0;i<data.ids.length;i++){rovar.loadTrack(data.ids[i]);}}
 });

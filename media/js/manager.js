@@ -19,7 +19,9 @@ $(function(){
 					     }
 					     else{
 						 for(var i=data.errors.length-1;i>=0;i--)
-						     box.find('.form-fields').append('<p class="error">'+data.errors[i]+'</p>');
+						     box.find('.form-fields').prepend('<p class="error">'+data.errors[i]+'</p>');
+						 console.log(box);
+						 box.addClass('open');
 					     }
 					 }
 					});
