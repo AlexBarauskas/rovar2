@@ -18,6 +18,25 @@ thead th, table{
     border-bottom: solid 1px #ccc;
 }
 
+label{
+    min-width: 15%;
+    display: inline-block;
+    vertical-align: top;
+}
+
+textarea{
+    min-width: 80%;
+}
+input[type="text"]{
+    min-width: 40%;
+}
+
+textarea, input[type="text"] {
+    border: solid 1px #999;
+    border-radius: 3px;
+    box-shadow: 1px 1px 3px #ccc;
+}
+
 .small{
     font-size:75%;
 }
