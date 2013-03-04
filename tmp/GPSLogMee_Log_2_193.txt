@@ -1,0 +1,772 @@
+<gpx creator="GPS LogMee" version="1.x">
+   <wpt lat="53.86075501330197" lon="27.462047785520554"><ele>176</ele><name>Start Point</name><sym>Trail Head</sym></wpt>
+   <trk>
+   <name>GPS LogMee Track</name>
+       <trkseg>
+         <trkpt lat="53.860728023573756" lon="27.462036469951272">
+           <time>Wed Feb 27 2013 11:42:32 GMT+0300 (FET)</time>
+           <ele>184.5</ele>
+         </trkpt>
+         <trkpt lat="53.860736321657896" lon="27.462114421650767">
+           <time>Wed Feb 27 2013 11:42:36 GMT+0300 (FET)</time>
+           <ele>197</ele>
+         </trkpt>
+         <trkpt lat="53.86075316928327" lon="27.46205256320536">
+           <time>Wed Feb 27 2013 11:42:38 GMT+0300 (FET)</time>
+           <ele>206</ele>
+         </trkpt>
+         <trkpt lat="53.86063481681049" lon="27.46229630894959">
+           <time>Wed Feb 27 2013 11:42:42 GMT+0300 (FET)</time>
+           <ele>217</ele>
+         </trkpt>
+         <trkpt lat="53.86056415736675" lon="27.462521363049746">
+           <time>Wed Feb 27 2013 11:42:44 GMT+0300 (FET)</time>
+           <ele>218</ele>
+         </trkpt>
+         <trkpt lat="53.86044538579881" lon="27.462895195931196">
+           <time>Wed Feb 27 2013 11:42:48 GMT+0300 (FET)</time>
+           <ele>218.5</ele>
+         </trkpt>
+         <trkpt lat="53.86044521816075" lon="27.46292319148779">
+           <time>Wed Feb 27 2013 11:42:50 GMT+0300 (FET)</time>
+           <ele>218</ele>
+         </trkpt>
+         <trkpt lat="53.86030071415007" lon="27.463254695758224">
+           <time>Wed Feb 27 2013 11:42:54 GMT+0300 (FET)</time>
+           <ele>222</ele>
+         </trkpt>
+         <trkpt lat="53.8602111954242" lon="27.46338402852416">
+           <time>Wed Feb 27 2013 11:42:56 GMT+0300 (FET)</time>
+           <ele>224.5</ele>
+         </trkpt>
+         <trkpt lat="53.86019996367395" lon="27.463599359616637">
+           <time>Wed Feb 27 2013 11:43:00 GMT+0300 (FET)</time>
+           <ele>225</ele>
+         </trkpt>
+         <trkpt lat="53.86022427119315" lon="27.463702959939837">
+           <time>Wed Feb 27 2013 11:43:02 GMT+0300 (FET)</time>
+           <ele>225.5</ele>
+         </trkpt>
+         <trkpt lat="53.86032309383154" lon="27.463841764256358">
+           <time>Wed Feb 27 2013 11:43:06 GMT+0300 (FET)</time>
+           <ele>226.5</ele>
+         </trkpt>
+         <trkpt lat="53.8603977765888" lon="27.46394251473248">
+           <time>Wed Feb 27 2013 11:43:08 GMT+0300 (FET)</time>
+           <ele>228</ele>
+         </trkpt>
+         <trkpt lat="53.860512021929026" lon="27.464108057320118">
+           <time>Wed Feb 27 2013 11:43:12 GMT+0300 (FET)</time>
+           <ele>227.5</ele>
+         </trkpt>
+         <trkpt lat="53.86054437607527" lon="27.46415801346302">
+           <time>Wed Feb 27 2013 11:43:14 GMT+0300 (FET)</time>
+           <ele>227.5</ele>
+         </trkpt>
+         <trkpt lat="53.860575975850224" lon="27.46414426714182">
+           <time>Wed Feb 27 2013 11:43:18 GMT+0300 (FET)</time>
+           <ele>228</ele>
+         </trkpt>
+         <trkpt lat="53.86054043658078" lon="27.4641331192106">
+           <time>Wed Feb 27 2013 11:43:20 GMT+0300 (FET)</time>
+           <ele>224.5</ele>
+         </trkpt>
+         <trkpt lat="53.86053859256208" lon="27.464131778106093">
+           <time>Wed Feb 27 2013 11:43:24 GMT+0300 (FET)</time>
+           <ele>225</ele>
+         </trkpt>
+         <trkpt lat="53.860527612268925" lon="27.464161785319448">
+           <time>Wed Feb 27 2013 11:43:26 GMT+0300 (FET)</time>
+           <ele>225</ele>
+         </trkpt>
+         <trkpt lat="53.86060212738812" lon="27.46421274729073">
+           <time>Wed Feb 27 2013 11:43:30 GMT+0300 (FET)</time>
+           <ele>226.5</ele>
+         </trkpt>
+         <trkpt lat="53.86072131805122" lon="27.46429530903697">
+           <time>Wed Feb 27 2013 11:43:32 GMT+0300 (FET)</time>
+           <ele>226.5</ele>
+         </trkpt>
+         <trkpt lat="53.86095919646323" lon="27.464570151641965">
+           <time>Wed Feb 27 2013 11:43:36 GMT+0300 (FET)</time>
+           <ele>220</ele>
+         </trkpt>
+         <trkpt lat="53.861080817878246" lon="27.46471750549972">
+           <time>Wed Feb 27 2013 11:43:38 GMT+0300 (FET)</time>
+           <ele>221.5</ele>
+         </trkpt>
+         <trkpt lat="53.86131165549159" lon="27.46503652073443">
+           <time>Wed Feb 27 2013 11:43:42 GMT+0300 (FET)</time>
+           <ele>223</ele>
+         </trkpt>
+         <trkpt lat="53.86140000075102" lon="27.465142467990518">
+           <time>Wed Feb 27 2013 11:43:44 GMT+0300 (FET)</time>
+           <ele>226</ele>
+         </trkpt>
+         <trkpt lat="53.86160770431161" lon="27.465344052761793">
+           <time>Wed Feb 27 2013 11:43:48 GMT+0300 (FET)</time>
+           <ele>225</ele>
+         </trkpt>
+         <trkpt lat="53.86173519305885" lon="27.465402642264962">
+           <time>Wed Feb 27 2013 11:43:50 GMT+0300 (FET)</time>
+           <ele>224</ele>
+         </trkpt>
+         <trkpt lat="53.8620485085994" lon="27.465702211484313">
+           <time>Wed Feb 27 2013 11:43:56 GMT+0300 (FET)</time>
+           <ele>225</ele>
+         </trkpt>
+         <trkpt lat="53.8620485085994" lon="27.465702211484313">
+           <time>Wed Feb 27 2013 11:43:56 GMT+0300 (FET)</time>
+           <ele>225</ele>
+         </trkpt>
+         <trkpt lat="53.86222100816667" lon="27.46581545099616">
+           <time>Wed Feb 27 2013 11:44:00 GMT+0300 (FET)</time>
+           <ele>222</ele>
+         </trkpt>
+         <trkpt lat="53.86228999122977" lon="27.465880997478962">
+           <time>Wed Feb 27 2013 11:44:02 GMT+0300 (FET)</time>
+           <ele>222</ele>
+         </trkpt>
+         <trkpt lat="53.8624803442508" lon="27.466131700202823">
+           <time>Wed Feb 27 2013 11:44:06 GMT+0300 (FET)</time>
+           <ele>225</ele>
+         </trkpt>
+         <trkpt lat="53.86257673613727" lon="27.466286262497306">
+           <time>Wed Feb 27 2013 11:44:08 GMT+0300 (FET)</time>
+           <ele>228.5</ele>
+         </trkpt>
+         <trkpt lat="53.862682431936264" lon="27.466402100399137">
+           <time>Wed Feb 27 2013 11:44:12 GMT+0300 (FET)</time>
+           <ele>230.5</ele>
+         </trkpt>
+         <trkpt lat="53.86271445080638" lon="27.466407800093293">
+           <time>Wed Feb 27 2013 11:44:14 GMT+0300 (FET)</time>
+           <ele>230</ele>
+         </trkpt>
+         <trkpt lat="53.862823750823736" lon="27.46653168462217">
+           <time>Wed Feb 27 2013 11:44:18 GMT+0300 (FET)</time>
+           <ele>233</ele>
+         </trkpt>
+         <trkpt lat="53.8629000261426" lon="27.466633692383766">
+           <time>Wed Feb 27 2013 11:44:20 GMT+0300 (FET)</time>
+           <ele>233.5</ele>
+         </trkpt>
+         <trkpt lat="53.863032292574644" lon="27.466762103140354">
+           <time>Wed Feb 27 2013 11:44:24 GMT+0300 (FET)</time>
+           <ele>235.5</ele>
+         </trkpt>
+         <trkpt lat="53.86307168751955" lon="27.466789511963725">
+           <time>Wed Feb 27 2013 11:44:26 GMT+0300 (FET)</time>
+           <ele>235</ele>
+         </trkpt>
+         <trkpt lat="53.86307713575661" lon="27.466790853068233">
+           <time>Wed Feb 27 2013 11:44:30 GMT+0300 (FET)</time>
+           <ele>233.5</ele>
+         </trkpt>
+         <trkpt lat="53.86308518238366" lon="27.4667942058295">
+           <time>Wed Feb 27 2013 11:44:32 GMT+0300 (FET)</time>
+           <ele>233.5</ele>
+         </trkpt>
+         <trkpt lat="53.8631138484925" lon="27.466825805604458">
+           <time>Wed Feb 27 2013 11:44:36 GMT+0300 (FET)</time>
+           <ele>235.5</ele>
+         </trkpt>
+         <trkpt lat="53.86316740885377" lon="27.466886742040515">
+           <time>Wed Feb 27 2013 11:44:38 GMT+0300 (FET)</time>
+           <ele>236.5</ele>
+         </trkpt>
+         <trkpt lat="53.863318618386984" lon="27.46705555357039">
+           <time>Wed Feb 27 2013 11:44:42 GMT+0300 (FET)</time>
+           <ele>235</ele>
+         </trkpt>
+         <trkpt lat="53.86343772523105" lon="27.467157812789083">
+           <time>Wed Feb 27 2013 11:44:44 GMT+0300 (FET)</time>
+           <ele>235</ele>
+         </trkpt>
+         <trkpt lat="53.863706197589636" lon="27.467439947649837">
+           <time>Wed Feb 27 2013 11:44:48 GMT+0300 (FET)</time>
+           <ele>234.5</ele>
+         </trkpt>
+         <trkpt lat="53.863851288333535" lon="27.467585625126958">
+           <time>Wed Feb 27 2013 11:44:50 GMT+0300 (FET)</time>
+           <ele>235.5</ele>
+         </trkpt>
+         <trkpt lat="53.86406402103603" lon="27.467844123020768">
+           <time>Wed Feb 27 2013 11:44:54 GMT+0300 (FET)</time>
+           <ele>235.5</ele>
+         </trkpt>
+         <trkpt lat="53.86415119282901" lon="27.46792048215866">
+           <time>Wed Feb 27 2013 11:44:56 GMT+0300 (FET)</time>
+           <ele>234.5</ele>
+         </trkpt>
+         <trkpt lat="53.86422822251916" lon="27.46806951239705">
+           <time>Wed Feb 27 2013 11:45:00 GMT+0300 (FET)</time>
+           <ele>233.5</ele>
+         </trkpt>
+         <trkpt lat="53.86425496079028" lon="27.468120558187366">
+           <time>Wed Feb 27 2013 11:45:02 GMT+0300 (FET)</time>
+           <ele>231</ele>
+         </trkpt>
+         <trkpt lat="53.86427968740463" lon="27.468059035018086">
+           <time>Wed Feb 27 2013 11:45:06 GMT+0300 (FET)</time>
+           <ele>230</ele>
+         </trkpt>
+         <trkpt lat="53.8643419649452" lon="27.468047635629773">
+           <time>Wed Feb 27 2013 11:45:08 GMT+0300 (FET)</time>
+           <ele>230</ele>
+         </trkpt>
+         <trkpt lat="53.86452225968242" lon="27.46828199364245">
+           <time>Wed Feb 27 2013 11:45:12 GMT+0300 (FET)</time>
+           <ele>231</ele>
+         </trkpt>
+         <trkpt lat="53.864657962694764" lon="27.468361286446452">
+           <time>Wed Feb 27 2013 11:45:14 GMT+0300 (FET)</time>
+           <ele>232.5</ele>
+         </trkpt>
+         <trkpt lat="53.86474370956421" lon="27.468631519004703">
+           <time>Wed Feb 27 2013 11:45:18 GMT+0300 (FET)</time>
+           <ele>233.5</ele>
+         </trkpt>
+         <trkpt lat="53.86480665765703" lon="27.468710392713547">
+           <time>Wed Feb 27 2013 11:45:20 GMT+0300 (FET)</time>
+           <ele>234</ele>
+         </trkpt>
+         <trkpt lat="53.86503146030009" lon="27.469037622213364">
+           <time>Wed Feb 27 2013 11:45:24 GMT+0300 (FET)</time>
+           <ele>230.5</ele>
+         </trkpt>
+         <trkpt lat="53.86508577503264" lon="27.469063103199005">
+           <time>Wed Feb 27 2013 11:45:26 GMT+0300 (FET)</time>
+           <ele>230</ele>
+         </trkpt>
+         <trkpt lat="53.865184262394905" lon="27.46911557391286">
+           <time>Wed Feb 27 2013 11:45:30 GMT+0300 (FET)</time>
+           <ele>227.5</ele>
+         </trkpt>
+         <trkpt lat="53.86519381776452" lon="27.469132421538234">
+           <time>Wed Feb 27 2013 11:45:32 GMT+0300 (FET)</time>
+           <ele>230</ele>
+         </trkpt>
+         <trkpt lat="53.865208737552166" lon="27.469103503972292">
+           <time>Wed Feb 27 2013 11:45:36 GMT+0300 (FET)</time>
+           <ele>230.5</ele>
+         </trkpt>
+         <trkpt lat="53.86521779000759" lon="27.469152538105845">
+           <time>Wed Feb 27 2013 11:45:38 GMT+0300 (FET)</time>
+           <ele>232</ele>
+         </trkpt>
+         <trkpt lat="53.86524511501193" lon="27.469169972464442">
+           <time>Wed Feb 27 2013 11:45:42 GMT+0300 (FET)</time>
+           <ele>235</ele>
+         </trkpt>
+         <trkpt lat="53.86525098234415" lon="27.469168547540903">
+           <time>Wed Feb 27 2013 11:45:44 GMT+0300 (FET)</time>
+           <ele>235</ele>
+         </trkpt>
+         <trkpt lat="53.86524838395417" lon="27.4691669549793">
+           <time>Wed Feb 27 2013 11:45:48 GMT+0300 (FET)</time>
+           <ele>236</ele>
+         </trkpt>
+         <trkpt lat="53.86524796485901" lon="27.469168044626713">
+           <time>Wed Feb 27 2013 11:45:50 GMT+0300 (FET)</time>
+           <ele>236</ele>
+         </trkpt>
+         <trkpt lat="53.86524964123964" lon="27.469171984121203">
+           <time>Wed Feb 27 2013 11:45:54 GMT+0300 (FET)</time>
+           <ele>238</ele>
+         </trkpt>
+         <trkpt lat="53.86525391601026" lon="27.469163769856095">
+           <time>Wed Feb 27 2013 11:45:56 GMT+0300 (FET)</time>
+           <ele>238</ele>
+         </trkpt>
+         <trkpt lat="53.86528953909874" lon="27.469105683267117">
+           <time>Wed Feb 27 2013 11:46:00 GMT+0300 (FET)</time>
+           <ele>239.5</ele>
+         </trkpt>
+         <trkpt lat="53.86528140865266" lon="27.469109455123544">
+           <time>Wed Feb 27 2013 11:46:02 GMT+0300 (FET)</time>
+           <ele>240</ele>
+         </trkpt>
+         <trkpt lat="53.86527352966368" lon="27.469094032421708">
+           <time>Wed Feb 27 2013 11:46:06 GMT+0300 (FET)</time>
+           <ele>240</ele>
+         </trkpt>
+         <trkpt lat="53.86527453549206" lon="27.469084141775966">
+           <time>Wed Feb 27 2013 11:46:08 GMT+0300 (FET)</time>
+           <ele>239.5</ele>
+         </trkpt>
+         <trkpt lat="53.8652762118727" lon="27.469079364091158">
+           <time>Wed Feb 27 2013 11:46:12 GMT+0300 (FET)</time>
+           <ele>239.5</ele>
+         </trkpt>
+         <trkpt lat="53.865274200215936" lon="27.469075843691826">
+           <time>Wed Feb 27 2013 11:46:14 GMT+0300 (FET)</time>
+           <ele>239</ele>
+         </trkpt>
+         <trkpt lat="53.86527453549206" lon="27.469075927510858">
+           <time>Wed Feb 27 2013 11:46:18 GMT+0300 (FET)</time>
+           <ele>239</ele>
+         </trkpt>
+         <trkpt lat="53.86527570895851" lon="27.469075843691826">
+           <time>Wed Feb 27 2013 11:46:20 GMT+0300 (FET)</time>
+           <ele>239</ele>
+         </trkpt>
+         <trkpt lat="53.86528601869941" lon="27.469082549214363">
+           <time>Wed Feb 27 2013 11:46:24 GMT+0300 (FET)</time>
+           <ele>241</ele>
+         </trkpt>
+         <trkpt lat="53.86531627736986" lon="27.469137953594327">
+           <time>Wed Feb 27 2013 11:46:26 GMT+0300 (FET)</time>
+           <ele>241</ele>
+         </trkpt>
+         <trkpt lat="53.86545684188604" lon="27.46929050423205">
+           <time>Wed Feb 27 2013 11:46:30 GMT+0300 (FET)</time>
+           <ele>241</ele>
+         </trkpt>
+         <trkpt lat="53.86549623683095" lon="27.469351775944233">
+           <time>Wed Feb 27 2013 11:46:32 GMT+0300 (FET)</time>
+           <ele>240.5</ele>
+         </trkpt>
+         <trkpt lat="53.865513084456325" lon="27.469384549185634">
+           <time>Wed Feb 27 2013 11:46:36 GMT+0300 (FET)</time>
+           <ele>241</ele>
+         </trkpt>
+         <trkpt lat="53.86553370393813" lon="27.46940391138196">
+           <time>Wed Feb 27 2013 11:46:38 GMT+0300 (FET)</time>
+           <ele>242</ele>
+         </trkpt>
+         <trkpt lat="53.86555977165699" lon="27.469489155337214">
+           <time>Wed Feb 27 2013 11:46:42 GMT+0300 (FET)</time>
+           <ele>242</ele>
+         </trkpt>
+         <trkpt lat="53.86555893346667" lon="27.469583367928863">
+           <time>Wed Feb 27 2013 11:46:44 GMT+0300 (FET)</time>
+           <ele>241.5</ele>
+         </trkpt>
+         <trkpt lat="53.86551300063729" lon="27.469814624637365">
+           <time>Wed Feb 27 2013 11:46:48 GMT+0300 (FET)</time>
+           <ele>242</ele>
+         </trkpt>
+         <trkpt lat="53.86547871865332" lon="27.46994244866073">
+           <time>Wed Feb 27 2013 11:46:50 GMT+0300 (FET)</time>
+           <ele>242.5</ele>
+         </trkpt>
+         <trkpt lat="53.865408059209585" lon="27.470178063958883">
+           <time>Wed Feb 27 2013 11:46:54 GMT+0300 (FET)</time>
+           <ele>244</ele>
+         </trkpt>
+         <trkpt lat="53.86537469923496" lon="27.470274958759546">
+           <time>Wed Feb 27 2013 11:46:56 GMT+0300 (FET)</time>
+           <ele>241</ele>
+         </trkpt>
+         <trkpt lat="53.8653502240777" lon="27.470427928492427">
+           <time>Wed Feb 27 2013 11:47:00 GMT+0300 (FET)</time>
+           <ele>242</ele>
+         </trkpt>
+         <trkpt lat="53.86532809585333" lon="27.470506466925144">
+           <time>Wed Feb 27 2013 11:47:02 GMT+0300 (FET)</time>
+           <ele>242</ele>
+         </trkpt>
+         <trkpt lat="53.86531895957887" lon="27.47059372253716">
+           <time>Wed Feb 27 2013 11:47:06 GMT+0300 (FET)</time>
+           <ele>242</ele>
+         </trkpt>
+         <trkpt lat="53.86529062874615" lon="27.47057327069342">
+           <time>Wed Feb 27 2013 11:47:08 GMT+0300 (FET)</time>
+           <ele>241</ele>
+         </trkpt>
+         <trkpt lat="53.865292305126786" lon="27.47053161263466">
+           <time>Wed Feb 27 2013 11:47:12 GMT+0300 (FET)</time>
+           <ele>241</ele>
+         </trkpt>
+         <trkpt lat="53.86530160903931" lon="27.470523482188582">
+           <time>Wed Feb 27 2013 11:47:14 GMT+0300 (FET)</time>
+           <ele>244</ele>
+         </trkpt>
+         <trkpt lat="53.86528710834682" lon="27.470636134967208">
+           <time>Wed Feb 27 2013 11:47:18 GMT+0300 (FET)</time>
+           <ele>246</ele>
+         </trkpt>
+         <trkpt lat="53.8652571849525" lon="27.470747027546167">
+           <time>Wed Feb 27 2013 11:47:20 GMT+0300 (FET)</time>
+           <ele>246</ele>
+         </trkpt>
+         <trkpt lat="53.86526179499924" lon="27.47114885598421">
+           <time>Wed Feb 27 2013 11:47:24 GMT+0300 (FET)</time>
+           <ele>247</ele>
+         </trkpt>
+         <trkpt lat="53.86527285911143" lon="27.471383213996887">
+           <time>Wed Feb 27 2013 11:47:26 GMT+0300 (FET)</time>
+           <ele>248.5</ele>
+         </trkpt>
+         <trkpt lat="53.86525869369507" lon="27.471922589465976">
+           <time>Wed Feb 27 2013 11:47:30 GMT+0300 (FET)</time>
+           <ele>250.5</ele>
+         </trkpt>
+         <trkpt lat="53.865267746150494" lon="27.471972377970815">
+           <time>Wed Feb 27 2013 11:47:32 GMT+0300 (FET)</time>
+           <ele>250.5</ele>
+         </trkpt>
+         <trkpt lat="53.86524226516485" lon="27.472629016265273">
+           <time>Wed Feb 27 2013 11:47:36 GMT+0300 (FET)</time>
+           <ele>251.5</ele>
+         </trkpt>
+         <trkpt lat="53.86525240726769" lon="27.472929675132036">
+           <time>Wed Feb 27 2013 11:47:38 GMT+0300 (FET)</time>
+           <ele>248.5</ele>
+         </trkpt>
+         <trkpt lat="53.86537553742528" lon="27.473625289276242">
+           <time>Wed Feb 27 2013 11:47:42 GMT+0300 (FET)</time>
+           <ele>246.5</ele>
+         </trkpt>
+         <trkpt lat="53.86540780775249" lon="27.474013287574053">
+           <time>Wed Feb 27 2013 11:47:44 GMT+0300 (FET)</time>
+           <ele>244</ele>
+         </trkpt>
+         <trkpt lat="53.865435468032956" lon="27.474834714084864">
+           <time>Wed Feb 27 2013 11:47:48 GMT+0300 (FET)</time>
+           <ele>241.5</ele>
+         </trkpt>
+         <trkpt lat="53.865487268194556" lon="27.47525674290955">
+           <time>Wed Feb 27 2013 11:47:50 GMT+0300 (FET)</time>
+           <ele>237</ele>
+         </trkpt>
+         <trkpt lat="53.86554317548871" lon="27.47601253911853">
+           <time>Wed Feb 27 2013 11:47:54 GMT+0300 (FET)</time>
+           <ele>237</ele>
+         </trkpt>
+         <trkpt lat="53.865563375875354" lon="27.476377403363585">
+           <time>Wed Feb 27 2013 11:47:56 GMT+0300 (FET)</time>
+           <ele>234</ele>
+         </trkpt>
+         <trkpt lat="53.8655901979655" lon="27.476921221241355">
+           <time>Wed Feb 27 2013 11:48:00 GMT+0300 (FET)</time>
+           <ele>231.5</ele>
+         </trkpt>
+         <trkpt lat="53.86558827012777" lon="27.47701333835721">
+           <time>Wed Feb 27 2013 11:48:02 GMT+0300 (FET)</time>
+           <ele>237.5</ele>
+         </trkpt>
+         <trkpt lat="53.865566896274686" lon="27.47712037526071">
+           <time>Wed Feb 27 2013 11:48:06 GMT+0300 (FET)</time>
+           <ele>235.5</ele>
+         </trkpt>
+         <trkpt lat="53.86554133147001" lon="27.4771018512547">
+           <time>Wed Feb 27 2013 11:48:08 GMT+0300 (FET)</time>
+           <ele>232</ele>
+         </trkpt>
+         <trkpt lat="53.86556069366634" lon="27.4771451856941">
+           <time>Wed Feb 27 2013 11:48:12 GMT+0300 (FET)</time>
+           <ele>231</ele>
+         </trkpt>
+         <trkpt lat="53.86557376943529" lon="27.47714384458959">
+           <time>Wed Feb 27 2013 11:48:14 GMT+0300 (FET)</time>
+           <ele>231.5</ele>
+         </trkpt>
+         <trkpt lat="53.86560469865799" lon="27.477260353043675">
+           <time>Wed Feb 27 2013 11:48:18 GMT+0300 (FET)</time>
+           <ele>229.5</ele>
+         </trkpt>
+         <trkpt lat="53.86564032174647" lon="27.477390272542834">
+           <time>Wed Feb 27 2013 11:48:20 GMT+0300 (FET)</time>
+           <ele>228</ele>
+         </trkpt>
+         <trkpt lat="53.86566915549338" lon="27.47773267328739">
+           <time>Wed Feb 27 2013 11:48:24 GMT+0300 (FET)</time>
+           <ele>230</ele>
+         </trkpt>
+         <trkpt lat="53.86569472029805" lon="27.477964097633958">
+           <time>Wed Feb 27 2013 11:48:26 GMT+0300 (FET)</time>
+           <ele>230.5</ele>
+         </trkpt>
+         <trkpt lat="53.86575096286833" lon="27.478350838646293">
+           <time>Wed Feb 27 2013 11:48:30 GMT+0300 (FET)</time>
+           <ele>229</ele>
+         </trkpt>
+         <trkpt lat="53.86574492789805" lon="27.478645630180836">
+           <time>Wed Feb 27 2013 11:48:32 GMT+0300 (FET)</time>
+           <ele>233</ele>
+         </trkpt>
+         <trkpt lat="53.86576060205698" lon="27.479190789163113">
+           <time>Wed Feb 27 2013 11:48:36 GMT+0300 (FET)</time>
+           <ele>236.5</ele>
+         </trkpt>
+         <trkpt lat="53.86575766839087" lon="27.479442916810513">
+           <time>Wed Feb 27 2013 11:48:38 GMT+0300 (FET)</time>
+           <ele>236</ele>
+         </trkpt>
+         <trkpt lat="53.86575900949538" lon="27.47983225621283">
+           <time>Wed Feb 27 2013 11:48:42 GMT+0300 (FET)</time>
+           <ele>229</ele>
+         </trkpt>
+         <trkpt lat="53.86577091179788" lon="27.48000081628561">
+           <time>Wed Feb 27 2013 11:48:44 GMT+0300 (FET)</time>
+           <ele>228.5</ele>
+         </trkpt>
+         <trkpt lat="53.86579203419387" lon="27.480320753529668">
+           <time>Wed Feb 27 2013 11:48:48 GMT+0300 (FET)</time>
+           <ele>224</ele>
+         </trkpt>
+         <trkpt lat="53.86578591540456" lon="27.480477914214134">
+           <time>Wed Feb 27 2013 11:48:50 GMT+0300 (FET)</time>
+           <ele>227</ele>
+         </trkpt>
+         <trkpt lat="53.86578792706132" lon="27.48073909431696">
+           <time>Wed Feb 27 2013 11:48:54 GMT+0300 (FET)</time>
+           <ele>227</ele>
+         </trkpt>
+         <trkpt lat="53.865765212103724" lon="27.48091159388423">
+           <time>Wed Feb 27 2013 11:48:56 GMT+0300 (FET)</time>
+           <ele>227</ele>
+         </trkpt>
+         <trkpt lat="53.86572531424463" lon="27.481180066242814">
+           <time>Wed Feb 27 2013 11:49:00 GMT+0300 (FET)</time>
+           <ele>229</ele>
+         </trkpt>
+         <trkpt lat="53.86571450158954" lon="27.481288108974695">
+           <time>Wed Feb 27 2013 11:49:02 GMT+0300 (FET)</time>
+           <ele>229.5</ele>
+         </trkpt>
+         <trkpt lat="53.86565909720957" lon="27.481459267437458">
+           <time>Wed Feb 27 2013 11:49:06 GMT+0300 (FET)</time>
+           <ele>227.5</ele>
+         </trkpt>
+         <trkpt lat="53.8656197860837" lon="27.48159723356366">
+           <time>Wed Feb 27 2013 11:49:08 GMT+0300 (FET)</time>
+           <ele>227.5</ele>
+         </trkpt>
+         <trkpt lat="53.86555382050574" lon="27.481833016499877">
+           <time>Wed Feb 27 2013 11:49:12 GMT+0300 (FET)</time>
+           <ele>229.5</ele>
+         </trkpt>
+         <trkpt lat="53.8655455224216" lon="27.48186989687383">
+           <time>Wed Feb 27 2013 11:49:14 GMT+0300 (FET)</time>
+           <ele>228.5</ele>
+         </trkpt>
+         <trkpt lat="53.8655455224216" lon="27.481899317353964">
+           <time>Wed Feb 27 2013 11:49:18 GMT+0300 (FET)</time>
+           <ele>230</ele>
+         </trkpt>
+         <trkpt lat="53.86554904282093" lon="27.48190007172525">
+           <time>Wed Feb 27 2013 11:49:20 GMT+0300 (FET)</time>
+           <ele>229</ele>
+         </trkpt>
+         <trkpt lat="53.86549984104931" lon="27.481945836916566">
+           <time>Wed Feb 27 2013 11:49:24 GMT+0300 (FET)</time>
+           <ele>233</ele>
+         </trkpt>
+         <trkpt lat="53.865493051707745" lon="27.481948183849454">
+           <time>Wed Feb 27 2013 11:49:26 GMT+0300 (FET)</time>
+           <ele>233.5</ele>
+         </trkpt>
+         <trkpt lat="53.86549388989806" lon="27.48194022104144">
+           <time>Wed Feb 27 2013 11:49:30 GMT+0300 (FET)</time>
+           <ele>233</ele>
+         </trkpt>
+         <trkpt lat="53.865492129698396" lon="27.48193770647049">
+           <time>Wed Feb 27 2013 11:49:32 GMT+0300 (FET)</time>
+           <ele>233</ele>
+         </trkpt>
+         <trkpt lat="53.86548399925232" lon="27.481949105858803">
+           <time>Wed Feb 27 2013 11:49:36 GMT+0300 (FET)</time>
+           <ele>232</ele>
+         </trkpt>
+         <trkpt lat="53.86548165231943" lon="27.481948854401708">
+           <time>Wed Feb 27 2013 11:49:38 GMT+0300 (FET)</time>
+           <ele>232.5</ele>
+         </trkpt>
+         <trkpt lat="53.86549481190741" lon="27.481950111687183">
+           <time>Wed Feb 27 2013 11:49:42 GMT+0300 (FET)</time>
+           <ele>232.5</ele>
+         </trkpt>
+         <trkpt lat="53.865495063364506" lon="27.481952123343945">
+           <time>Wed Feb 27 2013 11:49:44 GMT+0300 (FET)</time>
+           <ele>232.5</ele>
+         </trkpt>
+         <trkpt lat="53.86543379165232" lon="27.48214926570654">
+           <time>Wed Feb 27 2013 11:49:48 GMT+0300 (FET)</time>
+           <ele>234</ele>
+         </trkpt>
+         <trkpt lat="53.86539523489773" lon="27.482285806909204">
+           <time>Wed Feb 27 2013 11:49:50 GMT+0300 (FET)</time>
+           <ele>235.5</ele>
+         </trkpt>
+         <trkpt lat="53.86537696234882" lon="27.48231941834092">
+           <time>Wed Feb 27 2013 11:49:54 GMT+0300 (FET)</time>
+           <ele>235.5</ele>
+         </trkpt>
+         <trkpt lat="53.86536623351276" lon="27.482349425554276">
+           <time>Wed Feb 27 2013 11:49:56 GMT+0300 (FET)</time>
+           <ele>232.5</ele>
+         </trkpt>
+         <trkpt lat="53.86532365344465" lon="27.48244741000235">
+           <time>Wed Feb 27 2013 11:50:00 GMT+0300 (FET)</time>
+           <ele>237.5</ele>
+         </trkpt>
+         <trkpt lat="53.86530043557286" lon="27.482499880716205">
+           <time>Wed Feb 27 2013 11:50:02 GMT+0300 (FET)</time>
+           <ele>239</ele>
+         </trkpt>
+         <trkpt lat="53.86525291018188" lon="27.482414050027728">
+           <time>Wed Feb 27 2013 11:50:06 GMT+0300 (FET)</time>
+           <ele>237</ele>
+         </trkpt>
+         <trkpt lat="53.86523480527103" lon="27.482403488829732">
+           <time>Wed Feb 27 2013 11:50:08 GMT+0300 (FET)</time>
+           <ele>237</ele>
+         </trkpt>
+         <trkpt lat="53.86517277918756" lon="27.48236568644643">
+           <time>Wed Feb 27 2013 11:50:12 GMT+0300 (FET)</time>
+           <ele>237</ele>
+         </trkpt>
+         <trkpt lat="53.86508007533848" lon="27.482334254309535">
+           <time>Wed Feb 27 2013 11:50:14 GMT+0300 (FET)</time>
+           <ele>238</ele>
+         </trkpt>
+         <trkpt lat="53.86492635123432" lon="27.4821375310421">
+           <time>Wed Feb 27 2013 11:50:18 GMT+0300 (FET)</time>
+           <ele>237.5</ele>
+         </trkpt>
+         <trkpt lat="53.86485745199025" lon="27.48203837312758">
+           <time>Wed Feb 27 2013 11:50:20 GMT+0300 (FET)</time>
+           <ele>239</ele>
+         </trkpt>
+         <trkpt lat="53.86473239399493" lon="27.481874926015735">
+           <time>Wed Feb 27 2013 11:50:24 GMT+0300 (FET)</time>
+           <ele>239</ele>
+         </trkpt>
+         <trkpt lat="53.864695597440004" lon="27.481832765042782">
+           <time>Wed Feb 27 2013 11:50:26 GMT+0300 (FET)</time>
+           <ele>238.5</ele>
+         </trkpt>
+         <trkpt lat="53.864675145596266" lon="27.481833770871162">
+           <time>Wed Feb 27 2013 11:50:30 GMT+0300 (FET)</time>
+           <ele>236</ele>
+         </trkpt>
+         <trkpt lat="53.864697106182575" lon="27.48182086274028">
+           <time>Wed Feb 27 2013 11:50:32 GMT+0300 (FET)</time>
+           <ele>236</ele>
+         </trkpt>
+         <trkpt lat="53.864698112010956" lon="27.481763949617743">
+           <time>Wed Feb 27 2013 11:50:36 GMT+0300 (FET)</time>
+           <ele>235</ele>
+         </trkpt>
+         <trkpt lat="53.86472652666271" lon="27.4817696493119">
+           <time>Wed Feb 27 2013 11:50:38 GMT+0300 (FET)</time>
+           <ele>238</ele>
+         </trkpt>
+         <trkpt lat="53.864772291854024" lon="27.481804266572">
+           <time>Wed Feb 27 2013 11:50:42 GMT+0300 (FET)</time>
+           <ele>239.5</ele>
+         </trkpt>
+         <trkpt lat="53.864803137257695" lon="27.48181901872158">
+           <time>Wed Feb 27 2013 11:50:44 GMT+0300 (FET)</time>
+           <ele>244</ele>
+         </trkpt>
+         <trkpt lat="53.864841694012284" lon="27.48184642754495">
+           <time>Wed Feb 27 2013 11:50:48 GMT+0300 (FET)</time>
+           <ele>243</ele>
+         </trkpt>
+         <trkpt lat="53.864897014573216" lon="27.481845673173666">
+           <time>Wed Feb 27 2013 11:50:50 GMT+0300 (FET)</time>
+           <ele>243.5</ele>
+         </trkpt>
+         <trkpt lat="53.86491218581796" lon="27.48190736398101">
+           <time>Wed Feb 27 2013 11:50:54 GMT+0300 (FET)</time>
+           <ele>244.5</ele>
+         </trkpt>
+         <trkpt lat="53.86492802761495" lon="27.481911638751626">
+           <time>Wed Feb 27 2013 11:50:56 GMT+0300 (FET)</time>
+           <ele>243.5</ele>
+         </trkpt>
+         <trkpt lat="53.864938421174884" lon="27.481957487761974">
+           <time>Wed Feb 27 2013 11:51:00 GMT+0300 (FET)</time>
+           <ele>243.5</ele>
+         </trkpt>
+         <trkpt lat="53.864960884675384" lon="27.481984896585345">
+           <time>Wed Feb 27 2013 11:51:02 GMT+0300 (FET)</time>
+           <ele>242</ele>
+         </trkpt>
+         <trkpt lat="53.86501050554216" lon="27.482040217146277">
+           <time>Wed Feb 27 2013 11:51:06 GMT+0300 (FET)</time>
+           <ele>240.5</ele>
+         </trkpt>
+         <trkpt lat="53.86504118330777" lon="27.482052790001035">
+           <time>Wed Feb 27 2013 11:51:08 GMT+0300 (FET)</time>
+           <ele>237.5</ele>
+         </trkpt>
+         <trkpt lat="53.86506834067404" lon="27.482133759185672">
+           <time>Wed Feb 27 2013 11:51:12 GMT+0300 (FET)</time>
+           <ele>238.5</ele>
+         </trkpt>
+         <trkpt lat="53.865065490826964" lon="27.482184385880828">
+           <time>Wed Feb 27 2013 11:51:14 GMT+0300 (FET)</time>
+           <ele>237.5</ele>
+         </trkpt>
+         <trkpt lat="53.86508719995618" lon="27.482239790260792">
+           <time>Wed Feb 27 2013 11:51:18 GMT+0300 (FET)</time>
+           <ele>236</ele>
+         </trkpt>
+         <trkpt lat="53.865079237148166" lon="27.48227834701538">
+           <time>Wed Feb 27 2013 11:51:20 GMT+0300 (FET)</time>
+           <ele>236</ele>
+         </trkpt>
+         <trkpt lat="53.86506414972246" lon="27.48235889710486">
+           <time>Wed Feb 27 2013 11:51:24 GMT+0300 (FET)</time>
+           <ele>236.5</ele>
+         </trkpt>
+         <trkpt lat="53.86505065485835" lon="27.482383456081152">
+           <time>Wed Feb 27 2013 11:51:26 GMT+0300 (FET)</time>
+           <ele>235.5</ele>
+         </trkpt>
+         <trkpt lat="53.86502827517688" lon="27.48244732618332">
+           <time>Wed Feb 27 2013 11:51:30 GMT+0300 (FET)</time>
+           <ele>235</ele>
+         </trkpt>
+         <trkpt lat="53.86502659879625" lon="27.48247808776796">
+           <time>Wed Feb 27 2013 11:51:32 GMT+0300 (FET)</time>
+           <ele>235</ele>
+         </trkpt>
+         <trkpt lat="53.86500715278089" lon="27.482531815767288">
+           <time>Wed Feb 27 2013 11:51:36 GMT+0300 (FET)</time>
+           <ele>237</ele>
+         </trkpt>
+         <trkpt lat="53.86499508284032" lon="27.482560984790325">
+           <time>Wed Feb 27 2013 11:51:38 GMT+0300 (FET)</time>
+           <ele>235.5</ele>
+         </trkpt>
+         <trkpt lat="53.86496423743665" lon="27.482613623142242">
+           <time>Wed Feb 27 2013 11:51:42 GMT+0300 (FET)</time>
+           <ele>236</ele>
+         </trkpt>
+         <trkpt lat="53.86494990438223" lon="27.482637763023376">
+           <time>Wed Feb 27 2013 11:51:44 GMT+0300 (FET)</time>
+           <ele>234</ele>
+         </trkpt>
+         <trkpt lat="53.86491193436086" lon="27.482687383890152">
+           <time>Wed Feb 27 2013 11:51:48 GMT+0300 (FET)</time>
+           <ele>236.5</ele>
+         </trkpt>
+         <trkpt lat="53.86490397155285" lon="27.482720240950584">
+           <time>Wed Feb 27 2013 11:51:50 GMT+0300 (FET)</time>
+           <ele>233.5</ele>
+         </trkpt>
+         <trkpt lat="53.86487823911011" lon="27.482780339196324">
+           <time>Wed Feb 27 2013 11:51:54 GMT+0300 (FET)</time>
+           <ele>234</ele>
+         </trkpt>
+         <trkpt lat="53.86486625298858" lon="27.48281923122704">
+           <time>Wed Feb 27 2013 11:51:56 GMT+0300 (FET)</time>
+           <ele>235.5</ele>
+         </trkpt>
+         <trkpt lat="53.8648427836597" lon="27.482896260917187">
+           <time>Wed Feb 27 2013 11:52:00 GMT+0300 (FET)</time>
+           <ele>236</ele>
+         </trkpt>
+         <trkpt lat="53.864832976832986" lon="27.482932973653078">
+           <time>Wed Feb 27 2013 11:52:02 GMT+0300 (FET)</time>
+           <ele>236.5</ele>
+         </trkpt>
+       </trkseg>
+   </trk>
+</gpx>

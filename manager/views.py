@@ -7,8 +7,8 @@ from django.core.exceptions import ObjectDoesNotExist
 
 from django.contrib.admin.views.decorators import staff_member_required
 
-from models import Type, Track
-from forms import TypeForm, TrackForm
+from models import Type, Track, Post
+from forms import TypeForm, TrackForm, PostForm
 import json
 
 from tmp.parse_xml import XMLTrack
@@ -137,3 +137,46 @@ def track_delete(request, track_id):
         }
     return HttpResponse(json.dumps(res),
                         content_type="text/json")
+
+
+@staff_member_required
+def post_edit(request, track_id=None):
+    track = get_object_or_404(Track, id=track_id)
+    if track.post is None:
+        post = Post(title=track.name,
+                    text='')
+        post.save()
+        track.post = post
+        track.save()
+    else:
+        post = track.post
+    if request.method == "POST":
+        form = PostForm(request.POST, instance=post)
+        if form.is_valid():
+            form.save()
+            if request.POST.get('submit', 'to_current_page') == 'to_section':
+                return HttpResponseRedirect(reverse('manager_tracks'))
+
+    else:
+        form = PostForm(instance=post)
+    title = u'Редактирование "%s"' % post.title
+
+    return render_to_response('post_edit.html',
+                              {'form': form,
+                               'title': title,
+                               'back_url': reverse('manager_tracks')
+                               },
+                              RequestContext(request))
+    
+def js_image_list(request):
+    return render_to_response('tiny_images.js',
+                              {'images':
+                               [{'title': 'favicon.png',
+                                'url': '/static/images/favicon.png'},
+                                {'title': 'favicon.png',
+                                'url': '/static/images/favicon.png'},
+                                ]
+                               },
+                              RequestContext(request),
+                              mimetype='text/javascript')
+    

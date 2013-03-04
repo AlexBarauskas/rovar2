@@ -15,6 +15,7 @@
     <tr>
       <td>{{t.name}}</td>
       <td>{{t.created}}</td>
+      <td><a class="btn edit" href="{% url post-edit t.id %}">Пост блога</a></td>
       <td><a class="btn edit" href="{% url track-edit t.id %}">Редактировать</a></td>
       <td><div id={{t.id}} class="btn danger delete">Удалить</div></td>
     </tr>

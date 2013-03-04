@@ -70,3 +70,8 @@
 .delete {
     cursor:pointer;
 }
+
+.tiny-editor{
+    width:100%;
+    min-height:500px;;
+}
