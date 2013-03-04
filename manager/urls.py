@@ -15,7 +15,7 @@ urlpatterns = patterns(
     url(r'^tracks/(?P<track_id>\d+)/edit/$', track_edit, name="track-edit"),
     url(r'^tracks/(?P<track_id>\d+)/delete/$', track_delete, name="track-delete"),
 
-    url(r'^blog/(?P<track_id>\d+)/edit/$', post_edit, name="post-edit"),
+    url(r'^tracks/(?P<track_id>\d+)/edit-post/$', post_edit, name="post-edit"),
 
     url(r'^points/$', default, name="manager_points"),
 

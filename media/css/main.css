@@ -2,6 +2,22 @@
     font-family:Helvetica, sans-serif;
 }
 
+table{
+width: 100%;
+margin-bottom:20px;
+border-collapse: collapse;
+border-spacing: 0;
+}
+
+th, td{
+    text-align:left;
+    padding:5px;
+
+}
+thead th, table{
+    border-bottom: solid 1px #ccc;
+}
+
 .small{
     font-size:75%;
 }
@@ -53,9 +69,19 @@ padding: 3px 5px;
 border: solid 1px #444;
 border-radius: 3px;
 color: #FFF;
-font-size:14px;
 box-shadow: 1px 2px 3px #777;
 text-shadow: 1px 1px 1px #000;
+
+font-size: 13px;
+font-style: inherit;
+font-weight: bold;
+
+    background-image: -moz-linear-gradient(top, rgba(255,255,255,0.5), transparent);
+    background-image: -webkit-linear-gradient(top, rgba(255,255,255,0.5), transparent);
+    background-image:  -o-linear-gradient(top, rgba(255,255,255,0.5), transparent);
+    background-image:  -ms-linear-gradient(top, rgba(255,255,255,0.5), transparent);
+    background-image:  linear-gradient(top, rgba(255,255,255,0.5), transparent);
+
 }
 
 .btn.danger {
@@ -71,4 +97,9 @@ text-shadow: 1px 1px 1px #000;
 .btn.success {
     background-color: #61b361;
     border-color:#51a351;
+}
+
+.icon-btn {
+    height:24px;
+    margin-left:20px;
 }

@@ -8,6 +8,8 @@
       <th>Название</th>
       <th>Дата создания</th>
       <th></th>
+      <th></th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -15,9 +17,9 @@
     <tr>
       <td>{{t.name}}</td>
       <td>{{t.created}}</td>
-      <td><a class="btn edit" href="{% url post-edit t.id %}">Пост блога</a></td>
-      <td><a class="btn edit" href="{% url track-edit t.id %}">Редактировать</a></td>
-      <td><div id={{t.id}} class="btn danger delete">Удалить</div></td>
+      <td><a title="Редактировать расширенное описание маршрута" class="icon-btn" href="{% url post-edit t.id %}"><img src="/static/icons/edit_post.png"/></a></td>
+      <td><a title="Редактировать информацию о маршруте" class="icon-btn" href="{% url track-edit t.id %}"><img src="/static/icons/edit.png"/></a></td>
+      <td><img title="Удалить маршрут" id={{t.id}} class="delete icon-btn" src="/static/icons/delete.png"/></td>
     </tr>
     {% endfor %}
   </tbody>
