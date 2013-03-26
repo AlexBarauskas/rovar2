@@ -14,7 +14,9 @@
     Добавить новый тип
     {% endif %}
     </span>
+    {% if f.instance.id %}
     <div id="{{f.instance.id}}" class="close delete">x</div>
+    {% endif %}
   </div>
   <div class="form-fields">
     {{f.as_p}}
