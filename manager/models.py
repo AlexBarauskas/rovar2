@@ -51,3 +51,22 @@ class Track(models.Model):
 
     def __unicode__(self):
         return self.name
+
+
+class Point(models.Model):
+    name = models.CharField(u'Наименование', max_length=128, null=False)
+    state = models.CharField(u'Объект',
+                           max_length=1,
+                           choices=ACCESS,
+                           default='2')
+    type = models.ForeignKey(Type,
+                             limit_choices_to={'obj': 't'})
+    description = models.CharField(u'Краткое описание', max_length=256, null=False)
+    coordinates = models.TextField(u'Координаты', default='[]')
+    created = models.DateTimeField(auto_now_add=True)
+    post = models.OneToOneField(Post, null=True)
+
+    def __unicode__(self):
+        return self.name
+
+

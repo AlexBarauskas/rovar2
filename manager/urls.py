@@ -17,7 +17,7 @@ urlpatterns = patterns(
 
     url(r'^tracks/(?P<track_id>\d+)/edit-post/$', post_edit, name="post-edit"),
 
-    url(r'^points/$', default, name="manager_points"),
+    url(r'^points/$', points, name="manager_points"),
 
     url(r'^tiny/image_list.js$', js_image_list, name="tiny-image-list"),
     )

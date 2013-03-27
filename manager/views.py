@@ -7,7 +7,7 @@ from django.core.exceptions import ObjectDoesNotExist
 
 from django.contrib.admin.views.decorators import staff_member_required
 
-from models import Type, Track, Post
+from models import Type, Post, Point, Track
 from forms import TypeForm, TrackForm, PostForm
 import json
 
@@ -180,3 +180,10 @@ def js_image_list(request):
                               RequestContext(request),
                               mimetype='text/javascript')
     
+
+@staff_member_required
+def points(request):
+    points = Point.objects.all()
+    return render_to_response('manager_points.html',
+                              {'points': points},
+                              RequestContext(request))
