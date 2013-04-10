@@ -7,6 +7,7 @@
     <tr>
       <th>Название</th>
       <th>Дата создания</th>
+      <th>Тип</th>
       <th></th>
       <th></th>
       <th></th>
@@ -17,7 +18,8 @@
     <tr>
       <td>{{t.name}}</td>
       <td>{{t.created}}</td>
-      <td><a title="Редактировать расширенное описание маршрута" class="icon-btn" href="{% url post-edit t.id %}"><img src="/static/icons/edit_post.png"/></a></td>
+      <td>{{t.type}}</td>
+      <td><a title="Редактировать расширенное описание маршрута" class="icon-btn" href="{% url post-edit-track t.id %}"><img src="/static/icons/edit_post.png"/></a></td>
       <td><a title="Редактировать информацию о маршруте" class="icon-btn" href="{% url track-edit t.id %}"><img src="/static/icons/edit.png"/></a></td>
       <td><img title="Удалить маршрут" id={{t.id}} class="delete icon-btn" src="/static/icons/delete.png"/></td>
     </tr>

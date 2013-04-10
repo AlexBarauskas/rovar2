@@ -7,8 +7,8 @@ from django.core.exceptions import ObjectDoesNotExist
 
 from django.contrib.admin.views.decorators import staff_member_required
 
-from models import Type, Post, Point, Track
-from forms import TypeForm, TrackForm, PostForm
+from models import Type, Post, Point, Track, EditorImage
+from forms import TypeForm, TrackForm, PostForm, PointForm, UploadImageForm
 import json
 
 from tmp.parse_xml import XMLTrack
@@ -23,8 +23,16 @@ def default(request):
 
 @staff_member_required
 def index(request):
+    if request.method == "POST":
+        form = UploadImageForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+    else:
+        form = UploadImageForm()        
+    images = EditorImage.objects.all().order_by("-created")[:10]
     return render_to_response('manager_index.html',
-                              {},
+                              {'form': form,
+                               'images': images},
                               RequestContext(request))
 
 
@@ -64,8 +72,8 @@ def type_delete(request, type_id):
         errors.append['Object does not exist']
     ## Добавить проверку на наличие связанных компанент
     # в случае присутствия связей выдать ошибку о невозможномти удаления
-    if _type.track_set.count():
-        errors.append(" Не возможно удалить! Некоторые маршруты принаджежат данному типу.")
+    if _type.track_set.count() or _type.point_set.count():
+        errors.append(u" Не возможно удалить! Некоторые маршруты или пункты принаджежат данному типу.")
     else:
         try:
             _type.delete()
@@ -88,6 +96,8 @@ def tracks(request):
 
 @staff_member_required
 def track_edit(request, track_id=None):
+    errors = []
+    messages = []
     if track_id is not None:
         track = get_object_or_404(Track, id=track_id)
         title = u'Редактирование маршрута'
@@ -100,23 +110,36 @@ def track_edit(request, track_id=None):
 
             form.save()
             xml_file = request.FILES.get('xml_coordinates', None)
+            created = False
             if track is None:
                 track = form.instance
+                created = True
             if xml_file:
-                t = XMLTrack(xml_file.read())
-                rout = t.get_track()['rout']
-                track.coordinates = json.dumps(rout)
-                track.save()
-
-            if request.POST.get('submit', 'to_current_page') == 'to_section':
+                try:
+                    t = XMLTrack(xml_file.read())                
+                    rout = t.get_track()['rout']
+                    track.coordinates = json.dumps(rout)
+                    track.save()
+                except:
+                    errors.append(u"Ошибка разбора XML.")
+            if not errors:
+                messages.append(u"Изменения успешно сохранены.")
+            if request.POST.get('submit', 'to_current_page') == 'to_section' and not errors:
                 return HttpResponseRedirect(reverse('manager_tracks'))
+            if created and not errors:
+                return HttpResponseRedirect(reverse('track-edit', 
+                                                    args=[form.instance.id]))
+
     else:
         form = TrackForm(instance=track)
     
     return render_to_response('obj_edit.html',
                               {'form': form,
                                'title': title,
-                               'back_url': reverse('manager_tracks')},
+                               'back_url': reverse('manager_tracks'),
+                               'info': {'errors': errors,
+                                        'messages': messages}
+                               },
                               RequestContext(request))
     
 
@@ -140,8 +163,15 @@ def track_delete(request, track_id):
 
 
 @staff_member_required
-def post_edit(request, track_id=None):
-    track = get_object_or_404(Track, id=track_id)
+def post_edit(request, track_id=None, point_id=None):
+    if track_id is not None:
+        track = get_object_or_404(Track, id=track_id)
+        url_name = 'manager_tracks'
+    elif point_id is not None:
+        track = get_object_or_404(Point, id=point_id)
+        url_name = 'manager_points'
+    else:
+        return HttpResponseNotFound()
     if track.post is None:
         post = Post(title=track.name,
                     text='')
@@ -155,7 +185,7 @@ def post_edit(request, track_id=None):
         if form.is_valid():
             form.save()
             if request.POST.get('submit', 'to_current_page') == 'to_section':
-                return HttpResponseRedirect(reverse('manager_tracks'))
+                return HttpResponseRedirect(reverse(url_name))
 
     else:
         form = PostForm(instance=post)
@@ -164,18 +194,17 @@ def post_edit(request, track_id=None):
     return render_to_response('post_edit.html',
                               {'form': form,
                                'title': title,
-                               'back_url': reverse('manager_tracks')
+                               'back_url': reverse(url_name)
                                },
                               RequestContext(request))
     
 def js_image_list(request):
+    images = []
+    for i in EditorImage.objects.all():
+        images.append({'title': i.image.name,
+                      'url': i.image.url})
     return render_to_response('tiny_images.js',
-                              {'images':
-                               [{'title': 'favicon.png',
-                                'url': '/static/images/favicon.png'},
-                                {'title': 'favicon.png',
-                                'url': '/static/images/favicon.png'},
-                                ]
+                              {'images': images
                                },
                               RequestContext(request),
                               mimetype='text/javascript')
@@ -187,3 +216,54 @@ def points(request):
     return render_to_response('manager_points.html',
                               {'points': points},
                               RequestContext(request))
+
+
+@staff_member_required
+def point_edit(request, point_id=None):
+    if point_id is not None:
+        point = get_object_or_404(Point, id=point_id)
+        title = u'Редактирование точки'
+    else:
+        point = None
+        title = u'Новый маршрут'
+    messages = []
+    if request.method == "POST":
+        form = PointForm(request.POST, instance=point)
+        if form.is_valid():
+            form.save()
+            messages.append(u"Изменения успешно сохранены.")
+            if request.POST.get('submit', 'to_current_page') == 'to_section':
+                return HttpResponseRedirect(reverse('manager_points'))
+            if point is None:
+                return HttpResponseRedirect(reverse('point-edit', 
+                                                    args=[form.instance.id]))
+                
+    else:
+        form = PointForm(instance=point)
+    
+    return render_to_response('obj_edit.html',
+                              {'form': form,
+                               'title': title,
+                               'back_url': reverse('manager_points'),
+                               'info': {'messages': messages},
+                               },                              
+                              RequestContext(request))
+
+@staff_member_required
+def point_delete(request, point_id):
+    errors = []
+    try:
+        obj = Point.objects.get(id=point_id)
+    except ObjectDoesNotExist:
+        errors.append['Object does not exist']
+    try:
+        obj.delete()
+    except e:
+        errors.append(str(e))
+    res = {
+        'success': not errors,
+        'errors': errors,
+        }
+    return HttpResponse(json.dumps(res),
+                        content_type="text/json")
+

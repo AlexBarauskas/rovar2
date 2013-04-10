@@ -2,4 +2,25 @@
 
 {% block inner_content %}
 <h1>Index page</h1>
+<div class="section">
+  <h2>Список изображений для редактора html.</h2>
+  <div>
+    <h3>Последние загруженные изображения</h3>
+    <div>
+      {% for i in images %}
+      <div class="image-item">
+	<a class="close" href="#">X</a>
+	<img src="{{i.image.url}}"/>
+	<span>{{i.image.name}}</span>
+      </div>
+      {% endfor %}
+    </div>
+    <h3>Загрузить новые изображения</h3>
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{form.as_p}}
+      <button>Загрузить</button>
+    </form>
+  </div>
+</div>
 {% endblock inner_content %}

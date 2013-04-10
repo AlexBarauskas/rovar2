@@ -2,6 +2,12 @@
 
 {% block inner_content %}
 <h1>{{title}}</h1>
+{% for i in info.errors %}
+<p class="alert error">{{i}}</p>
+{% endfor %}
+{% for i in info.messages %}
+<p class="alert success">{{i}}</p>
+{% endfor %}
 <form action="." method="POST" enctype="multipart/form-data">
 {% csrf_token %}
 {{form.as_p}}

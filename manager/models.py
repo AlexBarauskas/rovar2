@@ -70,3 +70,7 @@ class Point(models.Model):
         return self.name
 
 
+class EditorImage(models.Model):
+    image = models.ImageField(upload_to="editor-images/")
+    created = models.DateTimeField(auto_now_add=True)
+

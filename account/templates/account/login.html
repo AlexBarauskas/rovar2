@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="login">
+  <h1>Для аутентификации на нашем сайте вы можете воспользоваться учетной записью одной из социальных сетей:</h1>
+  {% for b in backends %}
+  <div class="network {{b.name}}">
+    <a href="{{b.url}}">
+      <img src="{{b.img}}"/>
+      {{b.title}}
+    </a>
+  </div>
+  {% endfor %}
+</div>
+{% endblock content %}
