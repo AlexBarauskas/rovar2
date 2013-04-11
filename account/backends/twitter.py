@@ -4,8 +4,8 @@ from django.core.urlresolvers import reverse
 from oauth.oauth import OAuthToken
 from oauthtwitter import OAuthApi
 
-#from invitation.backends import BackendBase, BackendType, DenyException,\
-#    RecoverableError
+from account.backends import DenyException
+#     BackendBase, BackendType, RecoverableError
                               
 from django.utils.datastructures import MultiValueDictKeyError
 
@@ -57,8 +57,9 @@ class TwitterBackend():
         friends = [f.GetId() for f in friends]
         
         return { 'id': user_info.get('id',''),
-                 'name': user_info.get('name',''),
-                 'picture': user_info.get('profile_image_url',''),
+                 'name': user_info.get('name','') or user_info.get('screen_name',''),
+                 'screen_name': user_info.get('screen_name',''),
+                 'picture': user_info.get('profile_image_url',None),
                  'link': '//twitter.com/%s' % user_info.get('screen_name',''),
                  'backend': 'twitter',
                  }

@@ -133,7 +133,7 @@ INSTALLED_APPS = (
 
     'manager',
     'map',
-    'account'
+    'account',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -158,6 +158,14 @@ LOGGING = {
         },
     }
 }
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'account.auth_backends.SocialLoginBackend',
+)
+
+
+MAIN_HOST = "hivede6-3189.fornex.org"
 
 try:
     from settings_local import *

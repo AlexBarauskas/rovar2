@@ -1,1 +1,2 @@
-
+class DenyException(Exception):
+    pass
