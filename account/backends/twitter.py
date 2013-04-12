@@ -33,7 +33,6 @@ class TwitterBackend():
         db_request_token = request.session.get('account_token','')
         request_token = self.deserialize(db_request_token)
         api = OAuthApi(self.key, self.secret, request_token)
-
         access_token = api.getAccessToken(verifier=verifier)
         return access_token
 

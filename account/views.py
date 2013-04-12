@@ -14,6 +14,15 @@ from account.backends import DenyException
 #from account.backends.twitter import TwitterBackend
 from backends import get_backend
 
+def _error_page(request):
+    message = u"Ошибка авторизации! Перейдите по ссылке, чтобы повторить попытку."
+    redirect = {'url': reverse('account_login'),
+                'title': u"Попробовать еще раз."}
+    return render_to_response('account/error_page.html',
+                              {'message': message,
+                               'redirect': redirect},
+                              RequestContext(request))    
+
 def login_page(request):
     #print request.user.is_authenticated()
     backends = []
@@ -28,6 +37,8 @@ def login_page(request):
 
 def login_start(request, backend_name):
     backend = get_backend(backend_name)
+    if backend is None:
+        return HttpResponseNotFound()
     redirect_url = request.META.get('HTTP_REFERER','/')
     print redirect_url
     request.session['post_login_redirect'] = redirect_url
@@ -47,11 +58,10 @@ def login_return(request, backend_name):
     except DenyException:
         return HttpResponseRedirect(redirect_url)
     except:
-        return HttpResponse(u'Ошибка авторизации!')
+        return _error_page(request)
 
     user_data = backend.get_user_data(access_token)
     
-    #if not request.user.is_authenticated():
     account = Account.objects.filter(id_from_backend=user_data['id'],
                                      backend=backend_name,
                                      )

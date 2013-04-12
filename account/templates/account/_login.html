@@ -1,0 +1,8 @@
+  <div class="account-networks">
+  {% for b in backends %}
+      <a href="{{b.url}}">
+	<img src="{{b.img}}"/>
+	<span>{{b.title}}</span>
+      </a>
+  {% endfor %}
+  </div>

@@ -1,19 +1,17 @@
 {% extends 'base.html' %}
+{% block css %}
+<link type="text/css" href="/static/account/css/login.css" rel="stylesheet"/>
+<link type="text/css" href="/static/css/account.css" rel="stylesheet"/>
+{% endblock css %}
 {% block content %}
-<div class="login">
+<div class="account-login popup">
   {% if user.is_authenticated %}
   <h1>Вы авторизованны от имени {{user.first_name}}({{user.username}}).</h1>
   <a href="{% url logout %}">Выход</a>
   {% else %}
-  <h1>Для аутентификации на нашем сайте вы можете воспользоваться учетной записью одной из социальных сетей:</h1>
-  {% for b in backends %}
-  <div class="network {{b.name}}">
-    <a href="{{b.url}}">
-      <img src="{{b.img}}"/>
-      {{b.title}}
-    </a>
-  </div>
-  {% endfor %}
+  <h1>Для аутентификации на нашем сайте вы можете воспользоваться учетной записью одной из социальных сетей</h1>
+  {% include "account/_login.html" %}
   {% endif %}
 </div>
 {% endblock content %}
+

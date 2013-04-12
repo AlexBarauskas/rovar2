@@ -44,7 +44,6 @@ class VkBackend():
         urllib._urlopener.addheader('Connection', 'close')
         data = urllib.urlopen(url)
         data = json.loads(data.read())
-
         return data['access_token']
 
     def serialize(self, token):

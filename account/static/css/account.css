@@ -1,0 +1,20 @@
+.account-login {
+    padding:40px;
+    border-radius: 4px;
+    border:solid 2px #CCF;
+    background-color:#EEF;
+    background-image:url("/static/account/img/network-bg.png");
+    background-size: 100% 100%;
+    box-shadow:0px 0px 3px #CCF;
+}
+.account-login.popup{
+    margin:100px auto 0;
+    width:400px;
+}
+.account-login.popup h1 {
+    margin: 0 0 40px 0;
+    font-family: Helvetica, sans, Arial;
+    font-size: 21px;
+    color: #AAA;
+    text-shadow: 1px 1px 1px #444;
+}
