@@ -1,8 +1,7 @@
+# -*- coding: utf-8 -*-
 from django.conf import settings
-from django.core.urlresolvers import reverse
-
 from oauth.oauth import OAuthToken
-from oauthtwitter import OAuthApi
+from _twitter.oauthtwitter import OAuthApi
 
 from account.backends import DenyException
 #     BackendBase, BackendType, RecoverableError
@@ -15,18 +14,16 @@ class TwitterBackend():
     secret    = settings.ACCOUNT_TWITTER_SECRET
     name      = 'twitter'
     title     = 'Twitter'
-    image_url = '/site-media/images/mobile/twitter.png'
 
     def get_auth_url(self, return_to=None, mobile=False):
         api = OAuthApi(self.key, self.secret)
         request_token = api.getRequestToken(callback=return_to,
                                             access='read')
         token = self.serialize(request_token)
-        #account.save()
         auth_url = api.getAuthorizationURL(request_token)
         return (token, auth_url)
 
-    def get_token(self, request):
+    def get_token(self, request, redirect_url=None):
         try:
             verifier = request.GET['oauth_verifier']
         except MultiValueDictKeyError:

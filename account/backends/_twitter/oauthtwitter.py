@@ -14,7 +14,7 @@ __author__ = "Hameedullah Khan <hameed@hameedkhan.net>"
 __version__ = "0.2"
 
 
-from _twitter import Api, User
+from twitter import Api, User
 
 import simplejson
 from oauth import oauth

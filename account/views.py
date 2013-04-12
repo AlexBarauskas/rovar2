@@ -11,7 +11,8 @@ from django.utils.datastructures import MultiValueDictKeyError
 
 from account.models import Account, ACCOUNT_BACKENDS
 from account.backends import DenyException
-from account.backends.twitter import TwitterBackend
+#from account.backends.twitter import TwitterBackend
+from backends import get_backend
 
 def login_page(request):
     #print request.user.is_authenticated()
@@ -26,7 +27,7 @@ def login_page(request):
                               RequestContext(request))
 
 def login_start(request, backend_name):
-    backend = TwitterBackend()
+    backend = get_backend(backend_name)
     redirect_url = request.META.get('HTTP_REFERER','/')
     print redirect_url
     request.session['post_login_redirect'] = redirect_url
@@ -37,10 +38,12 @@ def login_start(request, backend_name):
     return HttpResponseRedirect(url)
 
 def login_return(request, backend_name):
-    backend = TwitterBackend()
+    backend = get_backend(backend_name)
     redirect_url = request.session.get('post_login_redirect', '/')
+    return_url = "http://%s%s" % (settings.MAIN_HOST,
+                                  reverse('login_return', args=[backend_name]))
     try:
-        access_token = backend.get_token(request)
+        access_token = backend.get_token(request, return_url)
     except DenyException:
         return HttpResponseRedirect(redirect_url)
     except:
