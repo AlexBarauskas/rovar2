@@ -6,7 +6,7 @@
 {% block content %}
 <div class="account-login popup">
   {% if user.is_authenticated %}
-  <h1>Вы авторизованны от имени {{user.first_name}}({{user.username}}).</h1>
+  <h1>Вы авторизованны от имени {{user.first_name}}.</h1>
   <a href="{% url logout %}">Выход</a>
   {% else %}
   <h1>Для аутентификации на нашем сайте вы можете воспользоваться учетной записью одной из социальных сетей</h1>

@@ -15,7 +15,7 @@ class TwitterBackend():
     name      = 'twitter'
     title     = 'Twitter'
 
-    def get_auth_url(self, return_to=None, mobile=False):
+    def get_auth_url(self, return_to=None):
         api = OAuthApi(self.key, self.secret)
         request_token = api.getRequestToken(callback=return_to,
                                             access='read')
