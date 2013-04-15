@@ -1,0 +1,5 @@
+flup
+PIL
+oauth==1.0.1
+simplejson==3.1.3
+django==1.4
