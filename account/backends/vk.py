@@ -52,7 +52,7 @@ class VkBackend():
     def deserialize(self, db_token):
         return OAuthToken.from_string(db_token)
 
-    def get_user_data(self,access_token):
+    def get_user_data(self, access_token):
         param={'access_token': access_token,
                'fields': 'nickname, screen_name, uid, photo',
                }
