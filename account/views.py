@@ -73,6 +73,7 @@ def login_return(request, backend_name):
         return HttpResponseRedirect(redirect_url)
     if not request.user.is_authenticated():
         un = "%s - %s" % (user_data['screen_name'], user_data['id'])
+        un = un[:30]
         user, created = User.objects.get_or_create(username=un)
         if created:
             temp_password = User.objects.make_random_password(length=12)
