@@ -35,6 +35,24 @@ def index(request):
                                'images': images},
                               RequestContext(request))
 
+@staff_member_required
+def editor_img_del(request, img_id):
+    try:
+        img = EditorImage.objects.get(id=img_id)
+    except ObjectDoesNotExist:
+        img = None
+        res = {'success': True}
+    except:
+        res = {'success': False,
+               'error': [u'Ошибка при удалении изображения. Повторите попытку.']}
+    #
+    if img is not None:
+        img.delete()
+        res = {'success': True}
+    #
+    return HttpResponse(json.dumps(res),
+                        content_type="text/json")
+
 
 @staff_member_required
 def types(request):

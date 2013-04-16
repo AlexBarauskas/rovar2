@@ -23,7 +23,7 @@ urlpatterns = patterns(
     url(r'^points/(?P<point_id>\d+)/edit-post/$', post_edit, name="post-edit-point"),
 
     url(r'^tiny/image_list.js$', js_image_list, name="tiny-image-list"),
-    
+    url(r'^(?P<img_id>\d+)/delete/$', editor_img_del, name="editor_img_del")
     )
 
 

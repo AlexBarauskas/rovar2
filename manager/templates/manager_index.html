@@ -9,7 +9,7 @@
     <div>
       {% for i in images %}
       <div class="image-item">
-	<a class="close" href="#">X</a>
+	<a id="{{i.id}}" class="close delete" href="javascript:;">X</a>
 	<img src="{{i.image.url}}"/>
 	<span>{{i.image.name}}</span>
       </div>

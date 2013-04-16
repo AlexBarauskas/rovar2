@@ -9,7 +9,7 @@ $(function(){
 			    });
 
       $('.delete').click(function(ev){
-			     var box=$(this).parent().parent();
+			     var box=$(this).parent();
 			     if(!!this.id){
 				 $.ajax({method: 'POST',
 					 url: this.id+'/delete/',

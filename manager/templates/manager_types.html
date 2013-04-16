@@ -6,6 +6,9 @@
 {% csrf_token %}
 {% for f in forms %}
 <div class="form-item{%if f.errors%} open{%endif%}">
+  {% if f.instance.id %}
+  <div id="{{f.instance.id}}" class="close delete">x</div>
+  {% endif %}
   <div class="form-header">
     <span class="form-name">
     {% if f.instance.name %}
@@ -14,9 +17,6 @@
     Добавить новый тип
     {% endif %}
     </span>
-    {% if f.instance.id %}
-    <div id="{{f.instance.id}}" class="close delete">x</div>
-    {% endif %}
   </div>
   <div class="form-fields">
     {{f.as_p}}
