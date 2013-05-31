@@ -34,7 +34,7 @@ var rovar = {
     addTrack : function (data){
 	var polyline = L.polyline(data.route, {color: 'blue'});
 	tmp=data;
-	var video='';
+	var video='', btn='';
 	if(data.video!=''){
 	    video=$("<div id=\"video-"+data.id.toString()+"\">"+
 		    data.video+
@@ -44,6 +44,9 @@ var rovar = {
 			  data.id.toString()+
 			  ")\" class=\"close\">X</a><br/>");
 	    video.hide().appendTo('#video-wrap');
+	    btn = "<a href=\"javascript:play("+
+		data.id.toString()+
+		")\">Смотреть видео</a>";
 	}
 	    
 	   
@@ -51,9 +54,7 @@ var rovar = {
 	polyline.addTo(this.map).bindPopup("<h1>"+data.title+"</h1>"+
 					   "<p><a href=\""+"#"+"\">"+
 					   data.description+"</a></p>"+
-					   "<a href=\"javascript:play("+
-					   data.id.toString()+
-					   ")\">Смотреть видео</a>"
+					   btn
 					   );
 	tmp =polyline;
     },
