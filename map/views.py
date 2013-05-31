@@ -20,7 +20,11 @@ def track(request, track_id=None):
         kwargs['id'] = track_id
     try:
         t = Track.objects.get(**kwargs)
-        track = {'route': json.loads(t.coordinates)}
+        track = {'route': json.loads(t.coordinates),
+                 'title': t.name,
+                 'description': t.description,
+                 'video': t.video or '',
+                 'id': t.id}
     except:
         track = {'route': [[0,0],[0,0]]}
     return HttpResponse(json.dumps(track),
