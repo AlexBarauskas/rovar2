@@ -7,11 +7,16 @@ class XMLTrack(object):
     track = None
     lat = 'lat'
     lon = 'lon'
+    type = None
 
     def __init__(self, xml_string):
+        if xml_string.find('kml') >= 0:
+            self.type = 'kml'
         self.dom = parseString(xml_string)    
 
     def get_track(self):
+        if self.type == 'kml':
+            return self.get_track_kml()
         self.track = {}
         track_node = self.dom.getElementsByTagName('trk')[0]
         self.track["name"] = track_node.getElementsByTagName('name')[0].firstChild.nodeValue
@@ -20,6 +25,21 @@ class XMLTrack(object):
         for p in track_points:
             self.track['rout'].append((float(p.getAttribute(self.lat)),
                                          float(p.getAttribute(self.lon))))
+        return self.track
+
+    def get_track_kml(self):
+        self.track = {}
+        #track_node = self.dom.getElementsByTagName('trk')[0]
+        self.track["name"] = '' #track_node.getElementsByTagName('name')[0].firstChild.nodeValue
+        #track_points = track_node.getElementsByTagName('trkpt')
+        self.track['rout'] = []
+        #for p in track_points:
+        #    self.track['rout'].append((float(p.getAttribute(self.lat)),
+        #                                 float(p.getAttribute(self.lon))))
+        coordinats = self.dom.getElementsByTagName('coordinates')[0].nodeValue
+        coordinats = coordinats.split(' ')
+        for i in coordinats:
+            self.track['rout'].append(i.split(',')[:2])
         return self.track
     
 
