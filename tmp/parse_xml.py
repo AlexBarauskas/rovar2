@@ -36,7 +36,7 @@ class XMLTrack(object):
         #for p in track_points:
         #    self.track['rout'].append((float(p.getAttribute(self.lat)),
         #                                 float(p.getAttribute(self.lon))))
-        coordinats = self.dom.getElementsByTagName('coordinates')[0].nodeValue
+        coordinats = self.dom.getElementsByTagName('coordinates')[0].firstChild.nodeValue
         coordinats = coordinats.split(' ')
         for i in coordinats:
             self.track['rout'].append(i.split(',')[:2])
