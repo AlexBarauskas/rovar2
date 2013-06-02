@@ -39,7 +39,9 @@ class XMLTrack(object):
         coordinats = self.dom.getElementsByTagName('coordinates')[0].firstChild.nodeValue
         coordinats = coordinats.split(' ')
         for i in coordinats:
-            self.track['rout'].append(i.split(',')[:2])
+            p = i.split(',')[:2]
+            p.reverse()
+            self.track['rout'].append(p)
         return self.track
     
 
