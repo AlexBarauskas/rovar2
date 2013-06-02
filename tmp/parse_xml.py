@@ -40,8 +40,9 @@ class XMLTrack(object):
         coordinats = coordinats.split(' ')
         for i in coordinats:
             p = i.split(',')[:2]
-            p.reverse()
-            self.track['rout'].append(p)
+            #p.reverse()
+            self.track['rout'].append([float(p[1]),
+                                       float(p[0])])
         return self.track
     
 
