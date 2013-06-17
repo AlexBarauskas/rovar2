@@ -8,13 +8,18 @@ html, body {
 
 #main-panel{
     width:30%;
+    height:100%; 
     float:left;
 }
 
 #map{
+}
+
+.data-content {
     width:70%;
-    height:100%;
-    
+    height:100%; 
+    background-color:#CCC;
+    float:left;
 }
 
 #header {
