@@ -37,7 +37,7 @@ class Post(models.Model):
 
 class Track(models.Model):
     name = models.CharField(u'Наименование', max_length=128, null=False)
-    state = models.CharField(u'Объект',
+    state = models.CharField(u'Доступ',
                            max_length=1,
                            choices=ACCESS,
                            default='2')
@@ -55,12 +55,12 @@ class Track(models.Model):
 
 class Point(models.Model):
     name = models.CharField(u'Наименование', max_length=128, null=False)
-    state = models.CharField(u'Объект',
+    state = models.CharField(u'Доступ',
                            max_length=1,
                            choices=ACCESS,
                            default='2')
     type = models.ForeignKey(Type,
-                             limit_choices_to={'obj': 't'})
+                             limit_choices_to={'obj': 'p'})
     description = models.CharField(u'Краткое описание', max_length=256, null=False)
     coordinates = models.TextField(u'Координаты', default='[]')
     created = models.DateTimeField(auto_now_add=True)

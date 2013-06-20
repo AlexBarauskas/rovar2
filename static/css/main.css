@@ -106,6 +106,8 @@ span.green{
     background-color:#1db783;
 }
 
+.views .control .disable>span{background-color:#ccc!important;}
+
 #search-btn{
     display:block;
     text-align:center;

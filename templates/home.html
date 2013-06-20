@@ -24,18 +24,18 @@
   </div>
   <div class="section views">
     <h1>Показывать на карте:</h1>
-    <ul>
-      <li>
+    <ul class="control">
+      <li id="parkingctrl">
 	<span class="blue">Велопарковки</span>
-	<span class="number">123</span>
+	<span class="number">{{parkings}}</span>
       </li>
-      <li>
-	<span class="yelow">Сервис</span>
-	<span class="number">12</span>
+      <li id="servicectrl">
+	<span class="yelow">Сервисы</span>
+	<span class="number">{{services}}</span>
       </li>
-      <li>
+      <li id="trackctrl">
 	<span class="green">Маршруты</span>
-	<span class="number">1</span>
+	<span class="number">{{tracks.count}}</span>
       </li>
     </ul>
   </div>
