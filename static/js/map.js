@@ -89,9 +89,14 @@ var rovar = {
 	       });	
     },
 
-    clear : function(layers){
+    hide : function(layers){
 	for(var i=layers.length-1; i>=0;i--)
-	    this.map.removeLayer(layers.pop());
+	    this.map.removeLayer(layers[i]);
+    },
+
+    show : function(layers){
+	for(var i=layers.length-1; i>=0;i--)
+	    layers[i].addTo(this.map);
     },
 
     addPoint : function (data){
@@ -145,20 +150,20 @@ $(function(){
 		 if($(this).attr('class')=='disable'){
 		     $(this).removeClass('disable');
 		     if($(this).attr('id')=="trackctrl"){
-			 rovar.loadTracks();
+			 rovar.show(rovar.tracks);
 		     }else if($(this).attr('id')=="parkingctrl"){
-			 rovar.loadPoints({type: 'Велопарковки'});
+			 rovar.show(rovar.parkings);
 		     }else if($(this).attr('id')=="servicectrl"){
-			 rovar.loadPoints({type: 'Сервисы'});
+			 rovar.show(rovar.services);
 		     }
 		 }else{
 		     $(this).addClass('disable');
 		     if($(this).attr('id')=="trackctrl"){
-			 rovar.clear(rovar.tracks);	 
+			 rovar.hide(rovar.tracks);	 
 		     }else if($(this).attr('id')=="parkingctrl"){
-			 rovar.clear(rovar.parkings);
+			 rovar.hide(rovar.parkings);
 		     }else if($(this).attr('id')=="servicectrl"){
-			 rovar.clear(rovar.services);
+			 rovar.hide(rovar.services);
 		     }
 		 }
 		 });
