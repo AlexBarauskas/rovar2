@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
+from django.core.urlresolvers import reverse
+
 import json
 
 #from tmp.parse_xml import XMLTrack
@@ -34,8 +36,12 @@ def track(request, track_id=None):
                  'description': t.description,
                  'video': t.video or '',
                  'id': t.id}
+        if t.post:
+            track['post_url'] = reverse('blog_post', args=[t.post.id])
+
     except:
         track = {'route': [[0,0],[0,0]]}
+
     return HttpResponse(json.dumps(track),
                         mimetype='text/json')
 
@@ -75,6 +81,8 @@ def point(request, point_id=None):
             point['type'] = 'p'
         elif p.type.name == u'Сервисы':
             point['type'] = 's'
+        if p.post:
+            point['post_url'] = reverse('blog_post', args=[p.post.id])
     except:
         point = {'coordinates': [0,0]}
     return HttpResponse(json.dumps(point),

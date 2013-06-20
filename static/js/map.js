@@ -54,12 +54,15 @@ var rovar = {
 		data.id.toString()+
 		")\">Смотреть видео</a>";
 	}
-	    
+	var description;
+	if(data.post_url)
+	    description = "<p><a href=\""+data.post_url+"\">"+data.description+"</a></p>";
+	else
+	    description = "<p>"+data.description+"</p>";
 	   
 	//console.log(video);
 	polyline.addTo(this.map).bindPopup("<h1>"+data.title+"</h1>"+
-					   "<p><a href=\""+"#"+"\">"+
-					   data.description+"</a></p>"+
+					   description+
 					   btn
 					   );
 	this.tracks.push(polyline);
@@ -101,10 +104,19 @@ var rovar = {
 
     addPoint : function (data){
 	console.log(data.coordinates);
-	var point = L.circle(data.coordinates,100, {color: 'red'});
+	var myIcon =new L.Icon({
+				   iconUrl: '/static/images/Parking.png',
+				   iconSize: [20, 20],
+				   iconAnchor: [10, 20]
+			       });
+	var point = L.marker(data.coordinates, {color: 'red', icon: myIcon});
+	var description;
+	if(data.post_url)
+	    description = "<p><a href=\""+data.post_url+"\">"+data.description+"</a></p>";
+	else
+	    description = "<p>"+data.description+"</p>";
 	point.addTo(this.map).bindPopup("<h1>"+data.title+"</h1>"+
-					"<p><a href=\""+"#"+"\">"+
-					data.description+"</a></p>"
+					description
 				       );
 	if(data.type=="s"){
 	    this.services.push(point);
