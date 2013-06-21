@@ -1,0 +1,12 @@
+<div class="account-networks">
+  {%if not user.is_authenticated %}
+  {% for b in backends %}
+  <a href="{{b.url}}">
+    <img src="{{b.img}}"/>
+    <span>{{b.title}}</span>
+  </a>
+  {% endfor %}
+  {%else%}
+  {{user.first_name}} {{user.last_name}} {{user.email}}
+  {%endif%}
+</div>

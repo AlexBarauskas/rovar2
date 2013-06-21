@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load login %}
 
 {% block css %}
 <link type="text/css" href="/static/leaflet/leaflet.css" rel="stylesheet"/>
@@ -6,7 +7,6 @@
 
 {% block content %}
 <div id="video-wrap" style="width:100%; height:100%; position:fixed; display:none; z-index:9999; background-color:rgba(0,0,0,0.5)"></div>
-
 <div id="main-panel">
   <div id="header">
     <div id="hmenu">
@@ -40,6 +40,8 @@
       </li>
     </ul>
   </div>
+  
+  {% login_form %}
 </div>
 
 <div id="map" class="data-content"></div>
