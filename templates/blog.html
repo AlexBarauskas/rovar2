@@ -6,16 +6,34 @@
 
 {% block content %}
 <div id="video-wrap" style="width:100%; height:100%; position:fixed; display:none; z-index:9999; background-color:rgba(0,0,0,0.5)"></div>
+
 <div id="main-panel">
   <div id="header">
     <div id="hmenu">
-      <a href="#">Карта</a>
+      <a href="{% url home %}">Карта</a>
       <a href="#"><img src="/static/icons/info.png"/></a>
     </div>
     <h1>
       <img class="logo" src="/static/icons/logo.png"/> 
       ONBIKE.BY 
     </h1>
+  </div>
+
+  <div class="section post-links">
+    <ul>
+      {% for k in links.iteritems%}
+      <li>
+	{{k.0}}
+	<ul>
+	  {% for l in k.1%}
+	  <li{%if l.id == currentid%} class="active"{%endif%}>
+	    <a href="{% url blog_post l.id %}">&#8722; {{l.title}}</a>
+	  </li>
+	  {%endfor%}
+	</ul>
+      </li>
+      {% endfor %}
+    </ul>
   </div>
 
   <!--div class="section">
@@ -42,11 +60,17 @@
 </div>
 
 <div class="data-content">
+{%for post in posts%}
   <h1>{{post.title}}</h1>
+  <p class="post-info"><span class="date">{{ post.created|date:'d M, Y' }}</span></p>
   <div>
     {{post.text|safe}}
   </div>
+  <div class="clear"></div>
+  <hr class="post-end"/>
+{%endfor%}
 </div>
+
 {% endblock content %}
 
 {% block js %}
