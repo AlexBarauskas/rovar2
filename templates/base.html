@@ -1,3 +1,4 @@
+{% load login %}
 <!DOCTYPE html>
 <html>
   <head>
@@ -16,5 +17,12 @@
     <script type="text/javascript" src="/static/js/jquery-1.7.1.min.js"></script>
     {% block js %}
     {% endblock js %}
+
+    <div id="login-badge" {%if not user.is_authenticated %}class="unautorized"{%endif%}>
+        {% login_form %}
+	{%if not user.is_authenticated %}
+	<p><span>login</span></p>
+	{%endif%}
+    </div>
   </body>
 </html>

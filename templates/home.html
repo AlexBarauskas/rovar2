@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-{% load login %}
 
 {% block css %}
 <link type="text/css" href="/static/leaflet/leaflet.css" rel="stylesheet"/>
@@ -41,7 +40,6 @@
     </ul>
   </div>
   
-  {% login_form %}
 </div>
 
 <div id="map" class="data-content"></div>

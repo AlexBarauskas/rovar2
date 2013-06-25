@@ -116,8 +116,22 @@ TEMPLATE_DIRS = (
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     "django.contrib.auth.context_processors.auth",
-    "manager.context_processor.manager_menu_item"
+    "manager.context_processor.manager_menu_item",
+    'account.context_processors.get_account',
 )
+
+## TEMPLATE_CONTEXT_PROCESSORS = (
+##     #'django.core.context_processors.auth',
+##     'django.core.context_processors.i18n',
+##     'django.core.context_processors.debug',
+##     'django.core.context_processors.request',
+##     'django.core.context_processors.media',
+##     'django.core.context_processors.csrf',
+##     'django.contrib.auth.context_processors.auth',
+##     'django.contrib.messages.context_processors.messages',
+##     'django.core.context_processors.static',
+## )
+
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -165,6 +179,7 @@ AUTHENTICATION_BACKENDS = (
     'account.auth_backends.SocialLoginBackend',
 )
 
+AUTH_PROFILE_MODULE = "account.Account"
 
 MAIN_HOST = "hivede6-3189.fornex.org"
 

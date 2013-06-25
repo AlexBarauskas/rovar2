@@ -7,6 +7,15 @@
   </a>
   {% endfor %}
   {%else%}
-  {{user.first_name}} {{user.last_name}} {{user.email}}
+  <!--{{user.first_name}} {{user.last_name}} {{user.email}}-->
+  {% if account.img_url %}
+  <img class="user_img" src="{{account.img_url}}"/>
+  {% endif %}
+  <ul class="dropdown">
+    {{account.name}} &#9660;
+    <li>
+      <a href="{% url logout %}">logout</a>
+    </li>
+  </ul>
   {%endif%}
 </div>

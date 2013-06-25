@@ -31,7 +31,7 @@ SIGNIN_URL = 'http://twitter.com/oauth/authenticate'
 class OAuthApi(Api):
     def __init__(self, consumer_key, consumer_secret, access_token=None):
         if access_token:
-            Api.__init__(self,access_token.key, access_token.secret)
+            Api.__init__(self, consumer_key, consumer_secret, access_token.key, access_token.secret)
         else:
             Api.__init__(self)
         self._Consumer = oauth.OAuthConsumer(consumer_key, consumer_secret)
@@ -230,3 +230,4 @@ class OAuthApi(Api):
         data = simplejson.loads(json)
         self._CheckForTwitterError(data)
         return data #User.NewFromJsonDict(data)
+

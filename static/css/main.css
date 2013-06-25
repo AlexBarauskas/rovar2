@@ -206,7 +206,7 @@ form p{
     color:red;
 }
 
-.errorlist li, ul{
+.errorlist li,.errorlist ul{
     margin-top:2px;
     list-style: circle outside none;
 }
@@ -289,3 +289,38 @@ font-weight: bold;
 .post-links li>a {color:#d94d14;text-decoration:none;font-size:14px;font-weight:bold;}
 .post-links li.active>a {color:#4dd914;}
 .post-links ul {list-style:none;margin-bottom:10px;}
+
+#login-badge {
+    position:absolute;
+    height:auto;
+    width:auto;
+    display:inline-block;
+    right:0px;
+    z-index:100;   
+    background-color:#e95d24;
+    padding:5px;
+}
+#login-badge a{margin:0;}
+
+#login-badge.unautorized .account-networks, #login-badge:hover p{display:none;}
+#login-badge.unautorized:hover .account-networks, #login-badge p{display:block;}
+
+#login-badge p{height:20px;text-align:center;font-size:16px;font-weight:bold; margin:0px; padding:10px;}
+
+.dropdown{display:inline-block;list-style:none;margin:0;padding:0;font-size:14px;font-weight:bold;padding-left:5px;}
+.dropdown:hover li{display:block;}
+.dropdown li{
+    display:none;
+    cursor:pointer;
+    background-color:rgba(255,255,255,0.5);
+    padding:5px;
+    border-radius:5px;
+}
+
+.dropdown li>a{
+    text-decoration:none;
+    color:#666;
+}
+.dropdown li>a:hover{
+    color:black;
+}
