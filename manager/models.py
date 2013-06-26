@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from django.contrib.auth.models import User
 
 OBJ_CHOICES = (('t', u'Маршрут'),
                ('p', u'Точка'),
@@ -41,7 +42,8 @@ class PostManager(models.Manager):
                           'id': p.id})
                 links[key] = l            
         return links
-    
+
+
 class Post(models.Model):
     title = models.CharField(u'Заголовок', max_length=128, null=False)
     text = models.TextField(u'Пост', default='')
@@ -51,6 +53,13 @@ class Post(models.Model):
         return self.title
 
     objects = PostManager()
+
+
+class Comment(models.Model):
+    owner = models.ForeignKey(User)
+    parent = models.ForeignKey('self', null=True)
+    created = models.DateTimeField(auto_now_add=True)
+    text = models.TextField(u'Комментарий', default='')
 
 
 class Track(models.Model):
