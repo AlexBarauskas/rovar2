@@ -39,7 +39,7 @@
 </div>
 
 <div class="data-content">
-{%for post in posts%}
+  {%for post in posts%}
   <h1>{{post.title}}</h1>
   <p class="post-info"><span class="date">{{ post.created|date:'d M, Y' }}</span></p>
   <div>
@@ -47,7 +47,34 @@
   </div>
   <div class="clear"></div>
   <hr class="post-end"/>
-{%endfor%}
+  {%endfor%}
+  {%for c in comments%}
+  <div class="comment">
+    <p>
+      {%if c.owner.get_profile.img_url%}
+      <img class="user_img" src="{{c.owner.get_profile.img_url}}"/>
+      {%endif%}
+      <span>{{c.owner.get_profile.name}}</span>    
+      <span class="date">{{c.created}}<span>
+    </p>
+    <p>
+      {{c.text}}
+    </p>
+  </div>
+  {%endfor%}
+  {%if new_comment%}
+  <form class="comment" method="POST">
+    {% csrf_token %}
+    <p>
+      {%if c.owner.get_profile.img_url%}
+      <img class="user_img" src="{{account.img_url}}"/>
+      {%endif%}
+      <span>{{account.name}}</span>
+    </p>
+    {{ new_comment }}
+    <button>Add</button>
+  </form>
+  {%endif%}
 </div>
 
 {% endblock content %}

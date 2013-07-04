@@ -58,8 +58,9 @@ class Post(models.Model):
 class Comment(models.Model):
     owner = models.ForeignKey(User)
     parent = models.ForeignKey('self', null=True)
+    post = models.ForeignKey(Post)
     created = models.DateTimeField(auto_now_add=True)
-    text = models.TextField(u'Комментарий', default='')
+    text = models.TextField(u'Комментарий', default='', blank=False)
 
 
 class Track(models.Model):

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django import forms
 
-from models import Type, Track, Post, Point, EditorImage
+from manager.models import Type, Track, Post, Point, EditorImage
 
 
 class TypeForm(forms.ModelForm):
