@@ -33,8 +33,10 @@ var rovar = {
 	var minsk = new L.LatLng(53.9, 27.566667);
 	this.copyright = '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors';
 	this.map = map.setView(minsk, 12);
-	L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png',
-		    {attribution: this.copyright}).addTo(this.map);
+	//L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+	//http://tile.stamen.com/toner-lite/6/36/21.png
+	L.tileLayer('http://tile.stamen.com/toner-lite/{z}/{x}/{y}.png',
+		    {attribution: this.copyright,key: 'BC9A493B41014CAABB98F0471D759707'}).addTo(this.map);
     },
 
     addTrack : function (data){
