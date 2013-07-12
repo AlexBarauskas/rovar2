@@ -63,11 +63,11 @@ def types(request):
     if request.method == "POST":
         for t in _types:
             prefix = "%s" % t.id
-            f = TypeForm(request.POST, prefix=prefix, instance=t)
+            f = TypeForm(request.POST, request.FILES, prefix=prefix, instance=t)
             if f.is_valid():
                 f.save()
             forms.append(f)
-        f = TypeForm(request.POST)
+        f = TypeForm(request.POST, request.FILES)
         if f.is_valid():
             f.save()
             forms.append(f)

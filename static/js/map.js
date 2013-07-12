@@ -99,23 +99,24 @@ var rovar = {
     },
 
     addPoint : function (data){
-	console.log(data.coordinates);
-	var myIcon =new L.Icon({
-				   iconUrl: '/static/images/Parking.png',
-				   iconSize: [20, 20],
-				   iconAnchor: [10, 20]
-			       });
-	var point = L.marker(data.coordinates, {color: 'red', icon: myIcon});
-	var description;
-	if(data.post_url)
-	    description = "<p><a href=\""+data.post_url+"\">"+data.description+"</a></p>";
-	else
-	    description = "<p>"+data.description+"</p>";
-	point.addTo(this.map).bindPopup("<h1>"+data.title+"</h1>"+
-					description
-				       );
-	this.elements[data.type[0]][data.type[1]].push(point);
-	
+	//console.log(data.coordinates);
+	if(data.status == 'success'){
+	    var myIcon =new L.Icon({
+				       iconUrl: data.marker,
+				       iconSize: [20, 20],
+				       iconAnchor: [10, 20]
+				   });
+	    var point = L.marker(data.coordinates, {color: 'red', icon: myIcon});
+	    var description;
+	    if(data.post_url)
+		description = "<p><a href=\""+data.post_url+"\">"+data.description+"</a></p>";
+	    else
+		description = "<p>"+data.description+"</p>";
+	    point.addTo(this.map).bindPopup("<h1>"+data.title+"</h1>"+
+					    description
+					   );
+	    this.elements[data.type[0]][data.type[1]].push(point);
+	}
     },
 
     loadPoints : function(filter){

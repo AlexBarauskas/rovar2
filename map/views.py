@@ -87,11 +87,15 @@ def point(request, point_id=None):
                  'description': p.description,
                  'id': p.id,
                  'color': p.type.color,
+                 'marker': '/static/images/Parking.png',
+                 'status': 'success',
                  }
+        if p.type.image:
+            point['marker'] = p.type.image.url
         point['type'] = [p.type.obj, '%s' % p.type.id]
         if p.post:
             point['post_url'] = reverse('blog_post', args=[p.post.id])
     except:
-        point = {'coordinates': [0,0]}
+        point = {'status': 'error',}
     return HttpResponse(json.dumps(point),
                         mimetype='text/json')
