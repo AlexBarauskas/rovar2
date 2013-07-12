@@ -2,7 +2,7 @@
 from django.shortcuts import render_to_response
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
-from manager.models import *
+from map.models import *
 from django.template import RequestContext
 
 def home(request):

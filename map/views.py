@@ -5,7 +5,7 @@ from django.core.urlresolvers import reverse
 import json
 
 #from tmp.parse_xml import XMLTrack
-from manager.models import Track, Point, Type
+from map.models import Track, Point, Type
 import json
 
 def get_available_tracks(request):

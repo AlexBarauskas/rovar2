@@ -7,7 +7,9 @@ from django.core.exceptions import ObjectDoesNotExist
 
 from django.contrib.admin.views.decorators import staff_member_required
 
-from models import Type, Post, Point, Track, EditorImage
+from map.models import Type, Point, Track
+from manager.models import EditorImage
+from blog.models import Post
 from forms import TypeForm, TrackForm, PostForm, PointForm, UploadImageForm
 import json
 

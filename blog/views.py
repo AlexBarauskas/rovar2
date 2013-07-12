@@ -7,7 +7,8 @@ from django.http import Http404
 from django.db.models import Q
 from django.template import RequestContext
 
-from manager.models import Post, Point, Track
+from map.models import Point, Track
+from blog.models import Post
 
 def blog(request):
     acl = '0'
