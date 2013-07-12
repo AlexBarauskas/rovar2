@@ -5,8 +5,8 @@ from django.contrib.auth.models import User
 
 class PostManager(models.Manager):
     def get_links(self, acl):
-        qs = self.get_query_set().extra(select={'acl_track': 'SELECT state FROM map_track WHERE post_id=map_post.id ',
-                                                'acl_point': 'SELECT state FROM map_point WHERE post_id=map_post.id ',
+        qs = self.get_query_set().extra(select={'acl_track': 'SELECT state FROM map_track WHERE post_id=blog_post.id ',
+                                                'acl_point': 'SELECT state FROM map_point WHERE post_id=blog_post.id ',
                                                 }).order_by('-created')
         links = {}
         for p in qs:
