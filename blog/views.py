@@ -9,6 +9,7 @@ from django.template import RequestContext
 
 from map.models import Point, Track
 from blog.models import Post
+from blog.forms import CommentForm
 
 def blog(request):
     acl = '0'
@@ -39,8 +40,22 @@ def post(request, post_id):
     post = get_object_or_404(Post, id=post_id)
     if not Point.objects.filter(post=post, state__lte=acl).count() and not Track.objects.filter(post=post, state__lte=acl).count():
         raise Http404
+    form = None
+    if acl > '0':
+        if request.method == "POST":
+            form = CommentForm(request.POST)
+            if form.is_valid():
+                comment = Comment(owner=request.user,
+                                  post=post,
+                                  text=form.cleaned_data['text'])
+                comment.save()
+                form = CommentForm()
+        else:
+            form = CommentForm()
     return render_to_response('blog.html',
                               {'posts': [post],
                                'currentid': post.id,
-                               'links': Post.objects.get_links(acl)},
+                               'links': Post.objects.get_links(acl),
+                               'new_comment': form,
+                               'comments': post.comment_set.order_by('-created')[:10]},
                               context_instance=RequestContext(request))
