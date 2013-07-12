@@ -17,8 +17,8 @@ def blog(request):
         acl = '1'
         if request.user.is_staff:
             acl = '2'
-    qs = Post.objects.extra(select={'acl_track': 'SELECT state FROM manager_track WHERE post_id=manager_post.id ',
-                                    'acl_point': 'SELECT state FROM manager_point WHERE post_id=manager_post.id ',
+    qs = Post.objects.extra(select={'acl_track': 'SELECT state FROM map_track WHERE post_id=map_post.id ',
+                                    'acl_point': 'SELECT state FROM map_point WHERE post_id=map_post.id ',
                                     }).order_by('-created')
     last_posts = []
     for p in qs:
