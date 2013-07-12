@@ -27,6 +27,7 @@ def home(request):
     return render_to_response('home.html',
                               {'tracks': Track.objects.filter(state__lte=acl),
                                'services': services,
-                               'parkings': parkings
+                               'parkings': parkings,
+                               'types': Type.objects.all()
                                },
                               context_instance=RequestContext(request))

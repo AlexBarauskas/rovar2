@@ -25,7 +25,13 @@
   <div class="section views">
     <h1>Показывать на карте:</h1>
     <ul class="control">
-      <li id="parkingctrl">
+      {%for T in types%}
+      <li id="type-{{T.obj}}-{{T.id}}" class="type-all">
+	<span style="background-color:{{T.color}}">{{T.name}}</span>
+	<span class="number">{{T.count_items}}</span>
+      </li>
+      {%endfor%}
+      <!--li id="parkingctrl">
 	<span class="blue">Велопарковки</span>
 	<span class="number">{{parkings}}</span>
       </li>
@@ -36,7 +42,7 @@
       <li id="trackctrl">
 	<span class="green">Маршруты</span>
 	<span class="number">{{tracks.count}}</span>
-      </li>
+      </li-->
     </ul>
   </div>
   

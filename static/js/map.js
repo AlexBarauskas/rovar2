@@ -22,11 +22,7 @@ function play_close(id){
 };
 
 var rovar = {
-    tracks : [],
-    points : [],
-    services : [],
-    parkings : [],
-    
+    elements:{},
 
     init : function(){
 	var map = new L.Map('map');
@@ -40,8 +36,7 @@ var rovar = {
     },
 
     addTrack : function (data){
-	var polyline = L.polyline(data.route, {color: 'blue'});
-	//tmp=data;
+	var polyline = L.polyline(data.route, {color: data.color});
 	var video='', btn='';
 	if(data.video!=''){
 	    video=$("<div id=\"video-"+data.id.toString()+"\">"+
@@ -62,12 +57,11 @@ var rovar = {
 	else
 	    description = "<p>"+data.description+"</p>";
 	   
-	//console.log(video);
 	polyline.addTo(this.map).bindPopup("<h1>"+data.title+"</h1>"+
 					   description+
 					   btn
 					   );
-	this.tracks.push(polyline);
+	this.elements[data.type[0]][data.type[1]].push(polyline);
     },
 
     loadTrack : function(id){
@@ -120,11 +114,8 @@ var rovar = {
 	point.addTo(this.map).bindPopup("<h1>"+data.title+"</h1>"+
 					description
 				       );
-	if(data.type=="s"){
-	    this.services.push(point);
-	}else if(data.type=="p"){
-	    this.parkings.push(point);
-	}
+	this.elements[data.type[0]][data.type[1]].push(point);
+	
     },
 
     loadPoints : function(filter){
@@ -154,31 +145,33 @@ var rovar = {
 };
 
 rovar.init();
-rovar.loadTracks({});
-rovar.loadPoints({type: 'Велопарковки'});
-rovar.loadPoints({type: 'Сервисы'});
 
 $(function(){
-      $('.views .control li')
-	  .click(function(){
-		 if($(this).attr('class')=='disable'){
-		     $(this).removeClass('disable');
-		     if($(this).attr('id')=="trackctrl"){
-			 rovar.show(rovar.tracks);
-		     }else if($(this).attr('id')=="parkingctrl"){
-			 rovar.show(rovar.parkings);
-		     }else if($(this).attr('id')=="servicectrl"){
-			 rovar.show(rovar.services);
-		     }
-		 }else{
-		     $(this).addClass('disable');
-		     if($(this).attr('id')=="trackctrl"){
-			 rovar.hide(rovar.tracks);	 
-		     }else if($(this).attr('id')=="parkingctrl"){
-			 rovar.hide(rovar.parkings);
-		     }else if($(this).attr('id')=="servicectrl"){
-			 rovar.hide(rovar.services);
-		     }
-		 }
-		 });
+      var types = $(".type-all");
+      for(var i = types.length-1; i>=0; i--){
+	  var id = types[i].id.split('-');
+	  if(id[1]=='p'){
+	      rovar.loadPoints({type: id[2]});
+	  }else if(id[1]=='t'){
+	      rovar.loadTracks({type: id[2]});
+	  }
+	  if(typeof rovar.elements[id[1]] == "undefined"){
+	      rovar.elements[id[1]]={};
+	  }
+	  rovar.elements[id[1]][id[2]]=[];    
+	  
+      }
+	  
+      types.click(function(){
+		      var id = this.id.split('-');
+		      if($(this).attr('class').indexOf('disable')>=0){
+			  $(this).removeClass('disable');
+			  rovar.show(rovar.elements[id[1]][id[2]]);
+		      }
+		      else{
+			  $(this).addClass('disable');
+			  rovar.hide(rovar.elements[id[1]][id[2]]);
+		      }		      
+		  }
+		 );
 });

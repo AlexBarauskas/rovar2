@@ -22,6 +22,10 @@ class Type(models.Model):
                            default='t')
     active = models.BooleanField(default=False, blank=False)
     name = models.CharField(u'Наименование', max_length=64, null=False)
+    color = models.CharField(u'Цвет', max_length=7, default="#0000FF")
+
+    def count_items(self):
+        return self.track_set.count() or self.point_set.count()
     
     def obj_name(self):
         return "%s - %s" % (dict(OBJ_CHOICES)[self.obj], self.name)

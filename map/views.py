@@ -14,9 +14,15 @@ def get_available_tracks(request):
         acl = '1'
         if request.user.is_staff:
             acl = '2'
-    tracks = Track.objects.filter(state__lte=acl)
-    tracks = [t.id for t in tracks]
-    
+    query = {'state__lte': acl}
+    if 'type' in request.GET:
+        try:
+            query['type'] = Type.objects.get(id=request.GET['type'])
+        except:
+            pass
+        
+    #tracks = Track.objects.filter(state__lte=acl)
+    tracks = [t.id for t in Track.objects.filter(**query)]
     return HttpResponse(json.dumps({'ids': tracks}),
                         mimetype='text/json')
 
@@ -35,7 +41,10 @@ def track(request, track_id=None):
                  'title': t.name,
                  'description': t.description,
                  'video': t.video or '',
-                 'id': t.id}
+                 'id': t.id,
+                 'type': [t.type.obj, '%s' % t.type.id],
+                 'color': t.type.color,
+                 }
         if t.post:
             track['post_url'] = reverse('blog_post', args=[t.post.id])
 
@@ -54,7 +63,7 @@ def get_available_points(request):
     query = {'state__lte': acl}
     if 'type' in request.GET:
         try:
-            query['type'] = Type.objects.get(name=request.GET['type'])
+            query['type'] = Type.objects.get(id=request.GET['type'])
         except:
             pass
     points = [p.id for p in Point.objects.filter(**query)]
@@ -76,11 +85,10 @@ def point(request, point_id=None):
         point = {'coordinates': json.loads(p.coordinates),
                  'title': p.name,
                  'description': p.description,
-                 'id': p.id}
-        if p.type.name == u'Велопарковки':
-            point['type'] = 'p'
-        elif p.type.name == u'Сервисы':
-            point['type'] = 's'
+                 'id': p.id,
+                 'color': p.type.color,
+                 }
+        point['type'] = [p.type.obj, '%s' % p.type.id]
         if p.post:
             point['post_url'] = reverse('blog_post', args=[p.post.id])
     except:
