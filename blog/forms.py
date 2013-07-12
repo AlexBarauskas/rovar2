@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django import forms
 
-from manager.models import Comment
+from blog.models import Comment
 
 class CommentForm(forms.ModelForm):
     class Meta:
