@@ -33,6 +33,8 @@ class Post(models.Model):
 
 class Comment(models.Model):
     owner = models.ForeignKey(User)
+    post = models.ForeignKey(Post)
     parent = models.ForeignKey('self', null=True)
     created = models.DateTimeField(auto_now_add=True)
     text = models.TextField(u'Комментарий', default='')
+    
