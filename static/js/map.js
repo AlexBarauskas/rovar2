@@ -42,11 +42,7 @@ var rovar = {
 	if(data.video!=''){
 	    var video = $(data.video);
 	    preview.append(video);
-	    //if(preview.width()<preview.find('iframe').width())
-	    video.height(video.height()*preview.width()/video.width());
-	    video.width(preview.width());
-	    
-	    
+	    //if(preview.width()<preview.find('iframe').width())	    
 	}
 	if(data.post_url)
 	    description = "<p><a href=\""+data.post_url+"\">"+data.description+"</a></p>";
@@ -54,6 +50,10 @@ var rovar = {
 	    description = "<p>"+data.description+"</p>";
 	preview.append(description);
 	preview.show();
+	    if(typeof video != 'undefined'){
+		video.height(video.height()*preview.width()/video.width());
+		video.width(preview.width());
+	    }
 	}
 	/*var video='', btn='';
 	if(data.video!=''){
