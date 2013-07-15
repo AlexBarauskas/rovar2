@@ -29,15 +29,33 @@ var rovar = {
 	var minsk = new L.LatLng(53.9, 27.566667);
 	this.copyright = '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors';
 	this.map = map.setView(minsk, 12);
-	//L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+	L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png',
 	//http://tile.stamen.com/toner-lite/6/36/21.png
-	L.tileLayer('http://tile.stamen.com/toner-lite/{z}/{x}/{y}.png',
+	//L.tileLayer('http://tile.stamen.com/toner-lite/{z}/{x}/{y}.png',
 		    {attribution: this.copyright,key: 'BC9A493B41014CAABB98F0471D759707'}).addTo(this.map);
     },
 
     addTrack : function (data){
-	var polyline = L.polyline(data.route, {color: data.color});
-	var video='', btn='';
+	function show_preview(data){
+	var preview = $('.section.preview').html('')
+	    .append("<h1>"+data.title+"</h1>");
+	if(data.video!=''){
+	    var video = $(data.video);
+	    preview.append(video);
+	    //if(preview.width()<preview.find('iframe').width())
+	    video.height(video.height()*preview.width()/video.width());
+	    video.width(preview.width());
+	    
+	    
+	}
+	if(data.post_url)
+	    description = "<p><a href=\""+data.post_url+"\">"+data.description+"</a></p>";
+	else
+	    description = "<p>"+data.description+"</p>";
+	preview.append(description);
+	preview.show();
+	}
+	/*var video='', btn='';
 	if(data.video!=''){
 	    video=$("<div id=\"video-"+data.id.toString()+"\">"+
 		    data.video+
@@ -61,6 +79,12 @@ var rovar = {
 					   description+
 					   btn
 					   );
+	*/
+	var polyline = L.polyline(data.route, {color: data.color});
+	polyline.addTo(this.map);
+	//polyline.onclick(function(){console.log('CLICK');});
+	//tmp = polyline;
+	polyline._container.onclick = function(){show_preview(data);};
 	this.elements[data.type[0]][data.type[1]].push(polyline);
     },
 

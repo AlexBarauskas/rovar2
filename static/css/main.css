@@ -55,6 +55,9 @@ html, body {
     position:relative;
     padding:20px;
 }
+.section.preview{
+    padding:20px 0px;;
+}
 
 .views ul{
     list-style:none;
@@ -323,4 +326,8 @@ font-weight: bold;
 }
 .dropdown li>a:hover{
     color:black;
+}
+
+.preview {
+    display:none;
 }

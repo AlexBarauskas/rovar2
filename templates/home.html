@@ -18,9 +18,12 @@
     </h1>
   </div>
 
-  <div class="section">
+  <!--div class="section">
     <a id="search-btn" href="#">НAЙТИ МАРШРУТ</a>
     <a id="all-list-btn" href="#">Показывать список всех маршрутов</a>
+  </div-->
+  <div class="section preview">
+    
   </div>
   <div class="section views">
     <h1>Показывать на карте:</h1>
@@ -31,18 +34,6 @@
 	<span class="number">{{T.count_items}}</span>
       </li>
       {%endfor%}
-      <!--li id="parkingctrl">
-	<span class="blue">Велопарковки</span>
-	<span class="number">{{parkings}}</span>
-      </li>
-      <li id="servicectrl">
-	<span class="yelow">Сервисы</span>
-	<span class="number">{{services}}</span>
-      </li>
-      <li id="trackctrl">
-	<span class="green">Маршруты</span>
-	<span class="number">{{tracks.count}}</span>
-      </li-->
     </ul>
   </div>
   
@@ -56,4 +47,9 @@
 <script type="text/javascript" src="/static/leaflet/leaflet.js"></script>
 
 <script type="text/javascript" src="/static/js/map.js"></script>
+<script>
+  //$(function(){
+  //$('.data-content').width(window.innerWidth-560-60);
+  //})
+</script>
 {% endblock js %}
