@@ -38,7 +38,7 @@ var rovar = {
     addTrack : function (data){
 	function show_preview(data){
 	var preview = $('.section.preview').html('')
-	    .append("<h1>"+data.title+"</h1>");
+		.append($("<h1>"+data.title+"</h1>").css('color', data.color));
 	if(data.video!=''){
 	    var video = $(data.video);
 	    preview.append(video);
@@ -51,8 +51,8 @@ var rovar = {
 	preview.append(description);
 	preview.show();
 	    if(typeof video != 'undefined'){
-		video.height(video.height()*preview.width()/video.width());
-		video.width(preview.width());
+		video.height(video.height()*(preview.width()+40)/video.width());
+		video.width(preview.width()+40);
 	    }
 	}
 	/*var video='', btn='';
