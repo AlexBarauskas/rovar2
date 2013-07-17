@@ -27,6 +27,8 @@ class PostForm(forms.ModelForm):
         exclude = ('created')
 
 class PointForm(forms.ModelForm):
+    photos = forms.FileField(label=u'Фотографии', required=False,
+                             widget=forms.ClearableFileInput(attrs={'multiple':'true'}))
 
     class Meta:
         model = Point

@@ -11,6 +11,14 @@
 <form action="." method="POST" enctype="multipart/form-data">
 {% csrf_token %}
 {{form.as_p}}
+{%for p in form.instance.photo_set.all%}
+<div class="image-item">
+  <a id="{{p.id}}" class="close delete" href="javascript:;">X</a>
+  <img src="{{p.image.url}}"/>
+  <span>{{p.image.name}}</span>
+</div>
+
+{%endfor%}
 <div class="btn-box">
   <button class="btn success" name="submit" value="to_current_page">Сохранить</button>
   <button class="btn edit" name="submit" value="to_section">Сохранить и вернуться к списку</button>

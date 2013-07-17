@@ -68,3 +68,9 @@ class Point(models.Model):
 
     def __unicode__(self):
         return self.name
+
+
+class Photo(models.Model):
+    point = models.ForeignKey(Point, null=True)
+    track = models.ForeignKey(Track, null=True)
+    image = models.ImageField(upload_to="photos/")

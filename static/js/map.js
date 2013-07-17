@@ -125,20 +125,34 @@ var rovar = {
     addPoint : function (data){
 	//console.log(data.coordinates);
 	if(data.status == 'success'){
+	    function show_preview(data){
+		var description;
+		if(data.post_url)
+		    description = "<p><a href=\""+data.post_url+"\">"+data.description+"</a></p>";
+		else
+		    description = "<p>"+data.description+"</p>";
+		var preview = $('.section.preview').html('')
+		    .append($("<h1>"+data.title+"</h1>").css('color', data.color));
+		//for(var i=data.images.length-1; i>=0; i--)
+		if(data.images && data.images.length){
+		    $('<img/>').attr({'src': data.images[0], 'title': "Show more..."}).css({'max-width': "100%", 'cursor': 'pointer'}).appendTo(preview);
+		}
+		    
+		preview.append(description).show()
+	    }
+
 	    var myIcon =new L.Icon({
 				       iconUrl: data.marker,
 				       iconSize: [20, 20],
 				       iconAnchor: [10, 20]
 				   });
+
 	    var point = L.marker(data.coordinates, {color: 'red', icon: myIcon});
-	    var description;
-	    if(data.post_url)
-		description = "<p><a href=\""+data.post_url+"\">"+data.description+"</a></p>";
-	    else
-		description = "<p>"+data.description+"</p>";
-	    point.addTo(this.map).bindPopup("<h1>"+data.title+"</h1>"+
-					    description
-					   );
+	    point.addTo(this.map);
+	    point._icon.onclick = function(){show_preview(data);};
+	    //point.addTo(this.map).bindPopup("<h1>"+data.title+"</h1>"+
+	    //				    description
+	    //				   );
 	    this.elements[data.type[0]][data.type[1]].push(point);
 	}
     },

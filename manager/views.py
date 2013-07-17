@@ -7,7 +7,7 @@ from django.core.exceptions import ObjectDoesNotExist
 
 from django.contrib.admin.views.decorators import staff_member_required
 
-from map.models import Type, Point, Track
+from map.models import Type, Point, Track, Photo
 from manager.models import EditorImage
 from blog.models import Post
 from forms import TypeForm, TrackForm, PostForm, PointForm, UploadImageForm
@@ -248,9 +248,12 @@ def point_edit(request, point_id=None):
         title = u'Новый маршрут'
     messages = []
     if request.method == "POST":
-        form = PointForm(request.POST, instance=point)
+        form = PointForm(request.POST, request.FILES,  instance=point)
         if form.is_valid():
-            form.save()
+            _point =  form.save()
+            for f in request.FILES.getlist('photos',[]):
+                ph = Photo.objects.get_or_create(point=_point, image=f)
+                #ph.save()
             messages.append(u"Изменения успешно сохранены.")
             if request.POST.get('submit', 'to_current_page') == 'to_section':
                 return HttpResponseRedirect(reverse('manager_points'))
@@ -287,3 +290,20 @@ def point_delete(request, point_id):
     return HttpResponse(json.dumps(res),
                         content_type="text/json")
 
+@staff_member_required
+def photo_img_del(request, point_id, img_id):
+    try:
+        img = Photo.objects.get(id=img_id)
+    except ObjectDoesNotExist:
+        img = None
+        res = {'success': True}
+    except:
+        res = {'success': False,
+               'error': [u'Ошибка при удалении изображения. Повторите попытку.']}
+    #
+    if img is not None:
+        img.delete()
+        res = {'success': True}
+    #
+    return HttpResponse(json.dumps(res),
+                        content_type="text/json")
