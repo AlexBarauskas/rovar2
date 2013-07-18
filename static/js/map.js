@@ -37,7 +37,7 @@ var rovar = {
 
     addTrack : function (data){
 	function show_preview(data){
-	var preview = $('.preview').html('')
+	var preview = $('.preview-content').html('')
 		.append($("<h1>"+data.title+"</h1>").css('color', data.color));
 	if(data.duration)
 		preview.append($("<p></p>").html('Время в пути: '+data.duration).addClass('description-address'));
@@ -52,10 +52,21 @@ var rovar = {
 	else
 	    description = "<p>"+data.description+"</p>";
 	preview.append(description);
-	preview.show();
+	preview.parent().show();
 	    if(typeof video != 'undefined'){
 		video.height(video.height()*(preview.width())/video.width());
 		video.width(preview.width());
+	    }
+
+	    if(typeof DISQUS != 'undefined'){
+		DISQUS.reset({
+				 reload: true,
+				 config: function () {  
+				     this.page.identifier = "onbike-track-"+data.id.toString();  
+				     this.page.url = "http://onbike.by#onbike-track-"+data.id.toString();
+				 }
+			     });
+		$('#disqus_thread').show();
 	    }
 	}
 	/*var video='', btn='';
@@ -134,15 +145,26 @@ var rovar = {
 		    description = "<p><a href=\""+data.post_url+"\">"+data.description+"</a></p>";
 		else
 		    description = "<p>"+data.description+"</p>";
-		var preview = $('.preview').html('')
+		var preview = $('.preview-content').html('')
 		    .append($("<h1>"+data.title+"</h1>").css('color', data.color))
 		    .append($("<p></p>").html(data.address).addClass('description-address'));
 		//for(var i=data.images.length-1; i>=0; i--)
 		if(data.images && data.images.length){
 		    $('<img/>').attr({'src': data.images[0], 'title': "Show more..."}).appendTo(preview);
 		}
-		preview.append(description).show();
-		
+		preview.append(description).parent().show();
+		if(typeof DISQUS != 'undefined'){
+		    
+		    DISQUS.reset({
+				     reload: true,
+				     config: function () {  
+					 this.page.identifier = "onbike-point-"+data.id.toString();  
+					 this.page.url = "http://onbike.by#onbike-point-"+data.id.toString();
+				     }
+				 });
+		    $('#disqus_thread').show();
+		}	
+	
 	    }
 
 	    var myIcon =new L.Icon({

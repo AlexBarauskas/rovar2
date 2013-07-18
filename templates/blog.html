@@ -12,7 +12,7 @@
       <a href="{% url logout %}" title="logout">{{account.name}}</a>
       {% else %}
       <a href="{% url login_start 'facebook' %}">f</a>
-      <a href="{% url login_start 'twitter' %}">f</a>
+      <a href="{% url login_start 'twitter' %}">t</a>
       <a href="{% url login_start 'vk' %}">vk</a>
       {% endif %}
       <a href="{% url home %}">Карта</a>
