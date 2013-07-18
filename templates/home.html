@@ -9,6 +9,13 @@
 <div id="main-panel">
   <div id="header">
     <div id="hmenu">
+      {% if account %}
+      <a href="{% url logout %}" title="logout">{{account.name}}</a>
+      {% else %}
+      <a href="{% url login_start 'facebook' %}">f</a>
+      <a href="{% url login_start 'twitter' %}">f</a>
+      <a href="{% url login_start 'vk' %}">vk</a>
+      {% endif %}
       <a href="{% url blog %}">Блог</a>
       <a href="#"><img src="/static/icons/info.png"/></a>
     </div>

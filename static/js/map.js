@@ -39,11 +39,14 @@ var rovar = {
 	function show_preview(data){
 	var preview = $('.preview').html('')
 		.append($("<h1>"+data.title+"</h1>").css('color', data.color));
+	if(data.duration)
+		preview.append($("<p></p>").html('Время в пути: '+data.duration).addClass('description-address'));
 	if(data.video!=''){
 	    var video = $(data.video);
 	    preview.append(video);
 	    //if(preview.width()<preview.find('iframe').width())	    
 	}
+	var description;
 	if(data.post_url)
 	    description = "<p><a href=\""+data.post_url+"\">"+data.description+"</a></p>";
 	else

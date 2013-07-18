@@ -5,6 +5,7 @@
 
 html, body {
     height:100%;
+    font-size:12px;
 }
 
 #contentWrapper { 
@@ -34,7 +35,7 @@ html, body {
     background-color:#e95d24;
     color:white;
     margin:0;
-    padding:25px;
+    padding:10px;
 }
 
 #header .logo{
@@ -49,7 +50,7 @@ html, body {
 
 #hmenu{
     float:right;
-    margin: 27px 0px;
+    margin: 23px 0px;
 }
 #hmenu a{
     margin-left:15px;
@@ -72,6 +73,9 @@ html, body {
     margin-left:-20px;
 }
 
+.views {
+    font-size:16px;
+}
 
 .views ul{
     list-style:none;
@@ -291,19 +295,19 @@ font-weight: bold;
 .data-content h1{
     margin-top:0;
     padding-top:30px;
+    color:#e95d24
 }
 
 
 .data-content {
     //width:100%;
     margin-left:440px;
-    padding:0 20px;
+    padding:0 40px;
     min-height:100%;
     background-color:#e9e6de;
     //float:left;
 }
 
-.data-content h1 {color:#e95d24}
 .data-content .post-info {color:#e95d24; font-weight:bold;}
 .data-content div {//font-family: Helvetica, sans-serif; 
 		   font-size:17px; font-weight: lighter;}
@@ -352,6 +356,8 @@ font-weight: bold;
 
 .preview {
     display:none;
+    box-shadow:0px 3px 3px #999;
+    padding-bottom:10px;
 }
 
 .preview h1{
@@ -366,7 +372,11 @@ font-weight: bold;
     cursor:pointer;
 }
 
-.preview p {
+.preview a{
+    text-decoration:none;
+}
+
+.preview p, .preview a {
     margin-top:0;
     color: #999;
     font-weight: bold;

@@ -45,6 +45,8 @@ def track(request, track_id=None):
                  'type': [t.type.obj, '%s' % t.type.id],
                  'color': t.type.color,
                  }
+        if t.duration:
+            track['duration'] = '%s мин' % t.duration
         if t.post:
             track['post_url'] = reverse('blog_post', args=[t.post.id])
 

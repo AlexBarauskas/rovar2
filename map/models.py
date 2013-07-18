@@ -48,6 +48,7 @@ class Track(models.Model):
     video = models.TextField(u'Ссылка на видео', default='', blank=True)
     created = models.DateTimeField(auto_now_add=True)
     post = models.OneToOneField(Post, null=True)
+    duration = models.PositiveIntegerField(u'Длительность',null=True, blank=True)
 
     def __unicode__(self):
         return self.name
