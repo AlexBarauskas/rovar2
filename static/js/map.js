@@ -138,14 +138,14 @@ var rovar = {
 		if(data.images && data.images.length){
 		    $('<img/>').attr({'src': data.images[0], 'title': "Show more..."}).appendTo(preview);
 		}
-		preview.append(description).show()    
+		preview.append(description).show();
 		
 	    }
 
 	    var myIcon =new L.Icon({
 				       iconUrl: data.marker,
-				       iconSize: [20, 20],
-				       iconAnchor: [10, 20]
+				       iconSize: [30, 30],
+				       iconAnchor: [15, 15]
 				   });
 
 	    var point = L.marker(data.coordinates, {color: 'red', icon: myIcon});
