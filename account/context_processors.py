@@ -11,4 +11,4 @@ def get_account(request):
                                                          user.last_name))
             account.save()
         return {'account' : account}
-    return {}
+    return {'account' : None}
