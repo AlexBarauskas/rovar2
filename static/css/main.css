@@ -1,5 +1,6 @@
 * {
-    font-family:Helvetica, sans-serif;
+    font-family:futurabookcregular;//Helvetica, sans-serif;
+
 }
 
 html, body {
@@ -42,7 +43,7 @@ html, body {
     top:5px;
 }
 #header h1{
-    font-family:Helvetica;
+    //font-family:Helvetica;
     font-size:20px;
 }
 
@@ -287,18 +288,25 @@ font-weight: bold;
     margin-left:20px;
 }
 
+.data-content h1{
+    margin-top:0;
+    padding-top:30px;
+}
+
+
 .data-content {
-    width:100%;
+    //width:100%;
     margin-left:440px;
-    //padding:0 5%;
+    padding:0 20px;
     min-height:100%;
     background-color:#e9e6de;
-    float:left;
+    //float:left;
 }
 
 .data-content h1 {color:#e95d24}
 .data-content .post-info {color:#e95d24; font-weight:bold;}
-.data-content div {font-family: Helvetica, sans-serif; font-size:17px; font-weight: lighter;}
+.data-content div {//font-family: Helvetica, sans-serif; 
+		   font-size:17px; font-weight: lighter;}
 
 .post-end {margin-bottom:60px; box-shadow: 0px 1px 2px #444}
 
@@ -344,4 +352,23 @@ font-weight: bold;
 
 .preview {
     display:none;
+}
+
+.preview h1{
+    margin: 20px 0px 0px 20px;
+}
+
+.preview img{
+    width:100%;
+    height:auto;
+    position:relative;
+    //left:-20px;
+    cursor:pointer;
+}
+
+.preview p {
+    margin-top:0;
+    color: #999;
+    font-weight: bold;
+    margin: 5px 0px 20px 20px;
 }

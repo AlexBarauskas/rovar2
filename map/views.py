@@ -90,6 +90,7 @@ def point(request, point_id=None):
                  'marker': '/static/images/Parking.png',
                  'status': 'success',
                  'images': [ph.image.url for ph in  p.photo_set.all()],
+                 'address': p.address,
                  }
         if p.type.image:
             point['marker'] = p.type.image.url

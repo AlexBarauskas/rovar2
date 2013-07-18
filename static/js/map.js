@@ -37,7 +37,7 @@ var rovar = {
 
     addTrack : function (data){
 	function show_preview(data){
-	var preview = $('.section.preview').html('')
+	var preview = $('.preview').html('')
 		.append($("<h1>"+data.title+"</h1>").css('color', data.color));
 	if(data.video!=''){
 	    var video = $(data.video);
@@ -51,8 +51,8 @@ var rovar = {
 	preview.append(description);
 	preview.show();
 	    if(typeof video != 'undefined'){
-		video.height(video.height()*(preview.width()+40)/video.width());
-		video.width(preview.width()+40);
+		video.height(video.height()*(preview.width())/video.width());
+		video.width(preview.width());
 	    }
 	}
 	/*var video='', btn='';
@@ -131,14 +131,15 @@ var rovar = {
 		    description = "<p><a href=\""+data.post_url+"\">"+data.description+"</a></p>";
 		else
 		    description = "<p>"+data.description+"</p>";
-		var preview = $('.section.preview').html('')
-		    .append($("<h1>"+data.title+"</h1>").css('color', data.color));
+		var preview = $('.preview').html('')
+		    .append($("<h1>"+data.title+"</h1>").css('color', data.color))
+		    .append($("<p></p>").html(data.address).addClass('description-address'));
 		//for(var i=data.images.length-1; i>=0; i--)
 		if(data.images && data.images.length){
-		    $('<img/>').attr({'src': data.images[0], 'title': "Show more..."}).css({'max-width': "100%", 'cursor': 'pointer'}).appendTo(preview);
+		    $('<img/>').attr({'src': data.images[0], 'title': "Show more..."}).appendTo(preview);
 		}
-		    
-		preview.append(description).show()
+		preview.append(description).show()    
+		
 	    }
 
 	    var myIcon =new L.Icon({

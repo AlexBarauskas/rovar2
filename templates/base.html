@@ -6,6 +6,7 @@
     <link type="image/png" rel="icon" href="/static/images/favicon.png"/>
     <link type="text/css" href="/static/css/main.css" rel="stylesheet"/>
     <link type="text/css" href="/static/account/css/login.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="/static/assets/fonts/futurabookc-webfont/stylesheet.css" type="text/css" charset="utf-8" />
     {% block css %}
     {% endblock css %}
   </head>
@@ -18,11 +19,5 @@
     {% block js %}
     {% endblock js %}
 
-    <div id="login-badge" {%if not user.is_authenticated %}class="unautorized"{%endif%}>
-        {% login_form %}
-	{%if not user.is_authenticated %}
-	<p><span>login</span></p>
-	{%endif%}
-    </div>
   </body>
 </html>

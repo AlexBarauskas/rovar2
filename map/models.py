@@ -63,6 +63,7 @@ class Point(models.Model):
                              limit_choices_to={'obj': 'p'})
     description = models.CharField(u'Краткое описание', max_length=256, null=False)
     coordinates = models.TextField(u'Координаты', default='[]')
+    address = models.CharField(u'Адрес', max_length=256, null=False)
     created = models.DateTimeField(auto_now_add=True)
     post = models.OneToOneField(Post, null=True)
 
@@ -74,3 +75,4 @@ class Photo(models.Model):
     point = models.ForeignKey(Point, null=True)
     track = models.ForeignKey(Track, null=True)
     image = models.ImageField(upload_to="photos/")
+    description = models.TextField(u'Описание', default='', null=True)
