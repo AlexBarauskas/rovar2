@@ -5,8 +5,9 @@
 {% endblock css %}
 
 {% block content %}
-<div id="main-panel">
+<div id="main-panel" style="position:fixed;">
   <div id="header">
+    <!--div style="height:1px;"></div-->
     <div id="hmenu">
       {% if account %}
       <a href="{% url logout %}" title="logout">{{account.name}}</a>
@@ -19,7 +20,7 @@
       <a href="#"><img src="/static/icons/info.png"/></a>
     </div>
     <h1>
-      <img class="logo" src="/static/icons/logo.png"/> 
+      <!--img class="logo" src="/static/icons/logo.png"/--> 
       ONBIKE.BY 
     </h1>
   </div>
@@ -54,40 +55,26 @@
   <!--div class="clear"></div-->
   <hr class="post-end"/>
   {%endfor%}
-  {%for c in comments%}
-  <div class="comment">
-    <p>
-      {%if c.owner.get_profile.img_url%}
-      <img class="user_img" src="{{c.owner.get_profile.img_url}}"/>
-      {%endif%}
-      <span>{{c.owner.get_profile.name}}</span>    
-      <span class="date">{{c.created}}<span>
-    </p>
-    <p>
-      {{c.text}}
-    </p>
-  </div>
-  {%endfor%}
-  {%if new_comment%}
-  <form class="comment" method="POST">
-    {% csrf_token %}
-    <p>
-      {%if c.owner.get_profile.img_url%}
-      <img class="user_img" src="{{account.img_url}}"/>
-      {%endif%}
-      <span>{{account.name}}</span>
-    </p>
-    {{ new_comment }}
-    <button>Add</button>
-  </form>
-  {%endif%}
+
+  <div id="disqus_thread"></div>
+
 </div>
 
 {% endblock content %}
 
 {% block js %}
-<!--script type="text/javascript" src="/static/leaflet/leaflet-src.js"></script>
-<script type="text/javascript" src="/static/leaflet/leaflet.js"></script>
+{%if comments_instance%}
+<script type="text/javascript">
+  var disqus_shortname = 'onbike';
+  var disqus_identifier = 'onbike-{%if comments_instance.type.obj == 'p'%}point{%else%}track{%endif%}-{{comments_instance.id}}';
+  var disqus_title = '{{comments_instance.name}}';
 
-<script type="text/javascript" src="/static/js/map.js"></script-->
+  (function() {
+  var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+{%endif%}
+
 {% endblock js %}

@@ -1,9 +1,12 @@
 * {
-    font-family:futurabookcregular;//Helvetica, sans-serif;
-
+    //font-family:futurabookcregular;//Helvetica, sans-serif;
+    
 }
 
 html, body {
+    //font-family:'anselm_sans_mediumregular';
+    //font-family:'futurabookcregular';
+    font-family: Helvetica;
     height:100%;
     font-size:12px;
 }
@@ -35,7 +38,8 @@ html, body {
     background-color:#e95d24;
     color:white;
     margin:0;
-    padding:10px;
+    padding:30px;
+    height:13px;
 }
 
 #header .logo{
@@ -44,16 +48,21 @@ html, body {
     top:5px;
 }
 #header h1{
-    //font-family:Helvetica;
-    font-size:20px;
+    font-size:15px;
+    line-height:13px;
+    margin:0;
 }
 
 #hmenu{
     float:right;
-    margin: 23px 0px;
+    height:13px;
+    font-size:13px;
+    //margin: 23px 0px;
+    margin-top:-3px;
 }
 #hmenu a{
     margin-left:15px;
+    height:15px;
     text-decoration:none;
     font-weight:bold;
     color:white;
@@ -66,15 +75,14 @@ html, body {
 
 .section{
     position:relative;
-    padding:20px;
+    padding:30px;
 }
 .section.preview iframe{
-    //padding:20px 0px;;
     margin-left:-20px;
 }
 
 .views {
-    font-size:16px;
+    font-size:12px;
 }
 
 .views ul{
@@ -92,7 +100,7 @@ html, body {
 .views li>span{
     border-radius:4px;
     color:white;
-    padding:5px;
+    padding:7px 10px;
     font-weight:bold;
     cursor:pointer;
 }
@@ -246,7 +254,7 @@ border-radius: 10px;
 border: solid 3px #444;
 text-align: center;
 text-decoration: none;
-font-family: sans;
+//font-family: sans;
 padding: 2px;
 }
 
@@ -309,8 +317,7 @@ font-weight: bold;
 }
 
 .data-content .post-info {color:#e95d24; font-weight:bold;}
-.data-content div {//font-family: Helvetica, sans-serif; 
-		   font-size:17px; font-weight: lighter;}
+.data-content div {font-size:17px; font-weight: lighter;}
 
 .post-end {margin-bottom:60px; box-shadow: 0px 1px 2px #444}
 
