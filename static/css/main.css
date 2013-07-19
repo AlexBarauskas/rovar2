@@ -6,7 +6,8 @@
 }
 
 html, body {
-    font-family: Helvetica;
+    //font-family: Helvetica;
+font-family:'anselm_sans_mediumregular', Helvetica;
     height:100%;
     font-size:12px;
     text-shadow: 0 1px 1px #888888;
@@ -65,8 +66,9 @@ html, body {
     margin-left:15px;
     height:15px;
     text-decoration:none;
-    font-weight:bold;
+    font-weight:normal;
     color:white;
+    font-size:16px;
 }
 
 #hmenu a>img{
@@ -304,7 +306,8 @@ font-weight: bold;
 .data-content h1{
     margin-top:0;
     padding-top:30px;
-    color:#e95d24
+    color:#e95d24;
+    font-size:26pt;
 }
 
 
@@ -317,8 +320,10 @@ font-weight: bold;
     //float:left;
 }
 
-.data-content .post-info {color:#e95d24; font-weight:bold;}
-.data-content div {font-size:14px; font-weight: lighter;}
+.data-content .post-info {color:#e95d24; font-weight:bold;font-size:14pt;}
+.data-content div {font-size:18pt;
+		   //font-weight: bold;
+		   font-family: 'futurabookcregular', Helvetica;}
 
 .post-end {margin-bottom:60px; box-shadow: 0px 1px 2px #444}
 
