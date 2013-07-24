@@ -44,6 +44,7 @@ def track(request, track_id=None):
                  'id': t.id,
                  'type': [t.type.obj, '%s' % t.type.id],
                  'color': t.type.color,
+                 'uid': t.uid,
                  }
         if t.duration:
             track['duration'] = '%s мин' % t.duration
@@ -93,6 +94,7 @@ def point(request, point_id=None):
                  'status': 'success',
                  'images': [ph.image.url for ph in  p.photo_set.all()],
                  'address': p.address,
+                 'uid': p.uid,
                  }
         if p.type.image:
             point['marker'] = p.type.image.url

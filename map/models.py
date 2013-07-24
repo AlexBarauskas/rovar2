@@ -49,6 +49,14 @@ class Track(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     post = models.OneToOneField(Post, null=True)
     duration = models.PositiveIntegerField(u'Длительность',null=True, blank=True)
+    uid = models.CharField(max_length=16, null=True)
+
+    def save(self, *args, **kwargs):
+        if not self.uid:
+            self.uid = "%s-%s" % (self.id, self.type.obj)
+            self.save()
+        res = super(Track, self).save(*args, **kwargs)
+        return res
 
     def __unicode__(self):
         return self.name
@@ -67,6 +75,14 @@ class Point(models.Model):
     address = models.CharField(u'Адрес', max_length=256, null=False)
     created = models.DateTimeField(auto_now_add=True)
     post = models.OneToOneField(Post, null=True)
+    uid = models.CharField(max_length=24, null=True)
+
+    def save(self, *args, **kwargs):
+        if not self.uid:
+            self.uid = "%s-%s" % (self.id, self.type.obj)
+            self.save()
+        res = super(Point, self).save(*args, **kwargs)
+        return res
 
     def __unicode__(self):
         return self.name
