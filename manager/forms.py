@@ -16,7 +16,7 @@ class TrackForm(forms.ModelForm):
 
     class Meta:
         model = Track
-        exclude = ('created', 'post', 'coordinates')
+        exclude = ('created', 'post', 'coordinates', 'uid')
 
 class PostForm(forms.ModelForm):
     text = forms.CharField(label="",required=True,
