@@ -66,7 +66,7 @@
 {%if comments_instance%}
 <script type="text/javascript">
   var disqus_shortname = 'onbike';
-  var disqus_identifier = 'onbike-{%if comments_instance.type.obj == 'p'%}point{%else%}track{%endif%}-{{comments_instance.id}}';
+  var disqus_identifier = 'onbike-{{comments_instance.uid}}';
   var disqus_title = '{{comments_instance.name}}';
 
   (function() {
