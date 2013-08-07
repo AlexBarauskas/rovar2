@@ -63,7 +63,7 @@ var rovar = {
 				 reload: true,
 				 config: function () {  
 				     this.page.identifier = "onbike-"+data.uid;  
-				     this.page.url = "http://onbike.by#onbike-track-"+data.id.toString();
+				     this.page.url = "http://onbike.by#"+data.uid;
 				 }
 			     });
 		$('#disqus_thread').show();
@@ -159,7 +159,7 @@ var rovar = {
 				     reload: true,
 				     config: function () {  
 					 this.page.identifier = "onbike-"+data.uid;  
-					 this.page.url = "http://onbike.by#onbike-point-"+data.id.toString();
+					 this.page.url = "http://onbike.by#"+data.uid;
 				     }
 				 });
 		    $('#disqus_thread').show();
