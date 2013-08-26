@@ -11,16 +11,25 @@
       {% if account %}
       <a href="{% url logout %}" title="logout">{{account.name}}</a>
       {% else %}
-      <a href="{% url login_start 'facebook' %}">f</a>
+      <!--a href="{% url login_start 'facebook' %}">f</a>
       <a href="{% url login_start 'twitter' %}">t</a>
-      <a href="{% url login_start 'vk' %}">vk</a>
+      <a href="{% url login_start 'vk' %}">vk</a-->
       {% endif %}
+      <a href="https://www.facebook.com/onbike.by">
+	<img src="/static/account/img/facebook.png"/>
+      </a>
+      <a href="https://vk.com/onbikeby">
+	<img src="/static/account/img/vk.png"/>
+      </a>
+      <a href="https://twitter.com/onbike_by">
+	<img src="/static/account/img/twitter.png"/>
+      </a>
       <a href="{% url blog %}">Блог</a>
       <a href="#"><img src="/static/icons/info.png"/></a>
     </div>
     <h1>
       <!--img class="logo" src="/static/icons/logo.png"/--> 
-      ONBIKE.BY
+      <a href="/">ONBIKE.BY</a>
     </h1>
   </div>
 
@@ -57,7 +66,7 @@
 
 <script type="text/javascript" src="/static/js/map.js"></script>
 
-<script type="text/javascript">
+<!--script type="text/javascript">
   var disqus_shortname = 'onbike'; // required: replace example with your forum shortname
   var disqus_identifier = 'onbike-track-1';
   //var disqus_title = 'a unique title for each page where Disqus is present';
@@ -69,6 +78,6 @@
   dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
   })();
-</script>
+</script-->
 
 {% endblock js %}
