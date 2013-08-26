@@ -49,6 +49,12 @@ font-family:'anselm_sans_mediumregular', Helvetica;
     position:relative;
     top:5px;
 }
+
+#header h1>a{
+    text-decoration:none;
+    color:white;
+}
+
 #header h1{
     font-size:18px;
     line-height:16px;
@@ -75,6 +81,13 @@ font-family:'anselm_sans_mediumregular', Helvetica;
     position:relative;
     top:3px;
 }
+
+.social{
+    height: 15px;
+    width: auto;
+}
+
+
 
 .section{
     position:relative;
