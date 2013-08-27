@@ -36,38 +36,46 @@ var rovar = {
     },
 
     addTrack : function (data){
-	function show_preview(data){
-	var preview = $('.preview-content').html('')
+	function show_preview(data, track){
+	    //console.log(rovar.elements['t']);
+	    //for(var i=rovar.elements[data.type[0]][data.type[1]].length-1; i>=0; i-- )
+	    //	rovar.elements[data.type[0]][data.type[1]][i].setStyle({'opacity':0.5});
+	    if(rovar.currentLine)
+		rovar.currentLine.setStyle({'opacity':0.5});
+	    rovar.currentLine = track;
+	    track.setStyle({'opacity':1});
+	    var preview = $('.preview-content').html('')
 		.append($("<h1>"+data.title+"</h1>").css('color', data.color));
-	if(data.duration)
+	    if(data.duration)
 		preview.append($("<p></p>").html('Время в пути: '+data.duration).addClass('description-address'));
-	if(data.video!=''){
-	    var video = $(data.video);
-	    preview.append(video);
-	    //if(preview.width()<preview.find('iframe').width())	    
-	}
-	var description;
-	if(data.post_url)
-	    description = "<p><a href=\""+data.post_url+"\">"+data.description+"</a></p>";
-	else
-	    description = "<p>"+data.description+"</p>";
-	preview.append(description);
-	preview.parent().show();
+	    if(data.video!=''){
+		var video = $(data.video);
+		preview.append(video);
+		//if(preview.width()<preview.find('iframe').width())	    
+	    }
+	    var description;
+	    if(data.post_url)
+		description = "<p><a href=\""+data.post_url+"\">"+data.description+"</a></p>";
+	    else
+		description = "<p>"+data.description+"</p>";
+	    preview.append(description);
+	    preview.parent().show();
 	    if(typeof video != 'undefined'){
 		video.height(video.height()*(preview.width())/video.width());
 		video.width(preview.width());
 	    }
-
 	    if(typeof DISQUS != 'undefined'){
 		DISQUS.reset({
 				 reload: true,
 				 config: function () {  
 				     this.page.identifier = "onbike-"+data.uid;  
-				     this.page.url = "http://onbike.by#"+data.uid;
+				     console.log(this);
+				     this.page.url = "http://onbike.by/#"+data.uid;
 				 }
 			     });
 		$('#disqus_thread').show();
 	    }
+
 	}
 	/*var video='', btn='';
 	if(data.video!=''){
@@ -98,7 +106,7 @@ var rovar = {
 	polyline.addTo(this.map);
 	//polyline.onclick(function(){console.log('CLICK');});
 	//tmp = polyline;
-	polyline._container.onclick = function(){show_preview(data);};
+	polyline._container.onclick = function(){show_preview(data, polyline); };
 	this.elements[data.type[0]][data.type[1]].push(polyline);
     },
 
