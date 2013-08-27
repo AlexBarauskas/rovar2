@@ -10,18 +10,27 @@
     <!--div style="height:1px;"></div-->
     <div id="hmenu">
       {% if account %}
-      <a href="{% url logout %}" title="logout">{{account.name}}</a>
+      <!--a href="{% url logout %}" title="logout">{{account.name}}</a-->
       {% else %}
-      <a href="{% url login_start 'facebook' %}">f</a>
+      <!--a href="{% url login_start 'facebook' %}">f</a>
       <a href="{% url login_start 'twitter' %}">t</a>
-      <a href="{% url login_start 'vk' %}">vk</a>
+      <a href="{% url login_start 'vk' %}">vk</a-->
       {% endif %}
+      <a href="https://www.facebook.com/onbike.by">
+	<img class="social" src="/static/account/img/facebook.png"/>
+      </a>
+      <a href="https://vk.com/onbikeby">
+	<img class="social" src="/static/account/img/vk.png"/>
+      </a>
+      <a href="https://twitter.com/onbike_by">
+	<img class="social" src="/static/account/img/twitter.png"/>
+      </a>
       <a href="{% url home %}">Карта</a>
       <a href="#"><img src="/static/icons/info.png"/></a>
     </div>
     <h1>
       <!--img class="logo" src="/static/icons/logo.png"/--> 
-      ONBIKE.BY 
+      <a href="/">ONBIKE.BY</a>
     </h1>
   </div>
 

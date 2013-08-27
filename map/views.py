@@ -43,7 +43,7 @@ def track(request, track_id=None):
                  'video': t.video or '',
                  'id': t.id,
                  'type': [t.type.obj, '%s' % t.type.id],
-                 'color': t.type.color,
+                 'color': t.color or t.type.color,
                  'uid': t.uid,
                  }
         if t.duration:
