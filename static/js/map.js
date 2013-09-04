@@ -88,6 +88,7 @@ var rovar = {
 		 dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
 		 (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
 	     })();
+	    $('#disqus_thread').show();
 	    
 	}
 	/*var video='', btn='';
