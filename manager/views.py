@@ -155,6 +155,7 @@ def track_edit(request, track_id=None):
     
     return render_to_response('obj_edit.html',
                               {'form': form,
+                               'comments_instance': track,
                                'title': title,
                                'back_url': reverse('manager_tracks'),
                                'info': {'errors': errors,
@@ -266,6 +267,7 @@ def point_edit(request, point_id=None):
     
     return render_to_response('obj_edit.html',
                               {'form': form,
+                               'comments_instance': point,
                                'title': title,
                                'back_url': reverse('manager_points'),
                                'info': {'messages': messages},

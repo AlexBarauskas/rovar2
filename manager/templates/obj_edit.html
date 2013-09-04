@@ -25,4 +25,20 @@
   <a class="btn" href="{{back_url}}">Назад</a>
 </div>
 </form>
+
+{%if comments_instance%}
+<script type="text/javascript">
+  var disqus_shortname = 'onbike';
+  var disqus_identifier = 'onbike-{{comments_instance.uid}}';
+  var disqus_title = '{{comments_instance.name}}';
+
+  (function() {
+  var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+{%endif%}
+
+
 {% endblock inner_content %}
