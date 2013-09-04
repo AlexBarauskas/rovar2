@@ -66,6 +66,7 @@ var rovar = {
 		video.height(video.height()*(preview.width())/video.width());
 		video.width(preview.width());
 	    }
+/*
 	    if(typeof DISQUS != 'undefined'){
 		DISQUS.reset({
 				 reload: true,
@@ -78,7 +79,16 @@ var rovar = {
 			     });
 		$('#disqus_thread').show();
 	    }
-
+*/
+	    disqus_identifier = "onbike-"+data.uid;
+	    disqus_title = data.title;
+	    disqus_url = "http://onbike.by/#"+data.uid;
+	    (function() {
+		 var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+		 dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+		 (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	     })();
+	    
 	}
 	/*var video='', btn='';
 	if(data.video!=''){
