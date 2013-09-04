@@ -53,10 +53,10 @@ class Track(models.Model):
     color = models.CharField(u'Цвет', max_length=7, default="#0000FF")
 
     def save(self, *args, **kwargs):
+        res = super(Track, self).save(*args, **kwargs)
         if not self.uid:
             self.uid = "%s-%s" % (self.id, self.type.obj)
             self.save()
-        res = super(Track, self).save(*args, **kwargs)
         return res
 
     def __unicode__(self):
@@ -79,10 +79,10 @@ class Point(models.Model):
     uid = models.CharField(max_length=24, null=True)
 
     def save(self, *args, **kwargs):
+        res = super(Point, self).save(*args, **kwargs)
         if not self.uid:
             self.uid = "%s-%s" % (self.id, self.type.obj)
             self.save()
-        res = super(Point, self).save(*args, **kwargs)
         return res
 
     def __unicode__(self):
