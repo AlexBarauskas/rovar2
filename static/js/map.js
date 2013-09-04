@@ -70,8 +70,8 @@ var rovar = {
 		DISQUS.reset({
 				 reload: true,
 				 config: function () {  
-				     console.log(data.uid);
 				     this.page.identifier = "onbike-"+data.uid;  
+				     this.page.title = data.title;
 				     console.log(this);
 				     this.page.url = "http://onbike.by/#"+data.uid;
 				 }
