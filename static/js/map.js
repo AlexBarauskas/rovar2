@@ -73,7 +73,7 @@ var rovar = {
 				 config: function () {  
 				     this.page.identifier = "onbike-"+data.uid;  
 				     this.page.title = data.title;
-				     console.log(this);
+				     //console.log(this);
 				     this.page.url = "http://onbike.by/#"+data.uid;
 				 }
 			     });
@@ -174,6 +174,7 @@ var rovar = {
 				     reload: true,
 				     config: function () {  
 					 this.page.identifier = "onbike-"+data.uid;  
+					 this.page.title = data.title;
 					 this.page.url = "http://onbike.by#"+data.uid;
 				     }
 				 });
