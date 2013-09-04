@@ -44,6 +44,8 @@ var rovar = {
 		rovar.currentLine.setStyle({'opacity':0.5});
 	    rovar.currentLine = track;
 	    track.setStyle({'opacity':1});
+	    rovar.map.removeLayer(rovar.currentLine);
+	    rovar.currentLine.addTo(rovar.map);
 	    var preview = $('.preview-content').html('')
 		.append($("<h1>"+data.title+"</h1>").css('color', data.color));
 	    if(data.duration)
@@ -148,6 +150,8 @@ var rovar = {
 	//console.log(data.coordinates);
 	if(data.status == 'success'){
 	    function show_preview(data){
+		if(rovar.currentLine)
+		    rovar.currentLine.setStyle({'opacity':0.5});
 		var description;
 		if(data.post_url)
 		    description = "<p><a href=\""+data.post_url+"\">"+data.description+"</a></p>";
