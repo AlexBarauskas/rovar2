@@ -200,7 +200,7 @@ var rovar = {
 	    var myIcon =new L.Icon({
 				       iconUrl: data.marker,
 				       iconSize: [30, 30],
-				       iconAnchor: [15, 30]
+				       iconAnchor: [15, 15]
 				   });
 
 	    var activeIcon =new L.Icon({
