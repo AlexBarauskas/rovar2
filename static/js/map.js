@@ -40,8 +40,10 @@ var rovar = {
 	    //console.log(rovar.elements['t']);
 	    //for(var i=rovar.elements[data.type[0]][data.type[1]].length-1; i>=0; i-- )
 	    //	rovar.elements[data.type[0]][data.type[1]][i].setStyle({'opacity':0.5});
-	    if(rovar.currentPoint)
+	    if(rovar.currentPoint){
 		rovar.currentPoint.setIcon(rovar.currentPoint._baseIcon);
+		rovar.currentPoint._icon.onclick = rovar.currentPoint._onclick;
+	    }
 
 	    if(rovar.currentLine)
 		rovar.currentLine.setStyle({'opacity':0.5});
@@ -156,10 +158,14 @@ var rovar = {
 	//console.log(data.coordinates);
 	if(data.status == 'success'){
 	    function show_preview(data, _point){
-		if(rovar.currentPoint)
+		if(rovar.currentPoint){
 		    rovar.currentPoint.setIcon(rovar.currentPoint._baseIcon);
+		    rovar.currentPoint._icon.onclick = rovar.currentPoint._onclick;
+		}
+		    
 		rovar.currentPoint = _point;
 		rovar.currentPoint.setIcon(rovar.currentPoint._activeIcon);
+		rovar.currentPoint._icon.onclick = rovar.currentPoint._onclick;
 		
 		if(rovar.currentLine)
 		    rovar.currentLine.setStyle({'opacity':0.5});
@@ -207,9 +213,10 @@ var rovar = {
 	    point._baseIcon = myIcon;
 	    point._activeIcon = activeIcon;
 	    point.addTo(this.map);
+	    point._onclick = function(){show_preview(data, point);};
 	    point._icon.onclick = function(){show_preview(data, point);};
-	    point._baseIcon.onclick = function(){show_preview(data, point);};
-	    point._activeIcon.onclick = function(){show_preview(data, point);};
+	    //point._baseIcon.onclick = function(){show_preview(data, point);};
+	    //point._activeIcon.onclick = function(){show_preview(data, point);};
 	    //point.addTo(this.map).bindPopup("<h1>"+data.title+"</h1>"+
 	    //				    description
 	    //				   );
