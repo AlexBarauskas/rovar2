@@ -24,6 +24,7 @@ class Type(models.Model):
     name = models.CharField(u'Наименование', max_length=64, null=False)
     color = models.CharField(u'Цвет', max_length=7, default="#0000FF")
     image = models.ImageField(upload_to="icons/", null=True, blank=True)
+    image2 = models.ImageField(upload_to="icons/", null=True, blank=True)
     
     def count_items(self):
         return self.track_set.count() or self.point_set.count()

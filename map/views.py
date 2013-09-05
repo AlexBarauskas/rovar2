@@ -91,6 +91,7 @@ def point(request, point_id=None):
                  'id': p.id,
                  'color': p.type.color,
                  'marker': '/static/images/Parking.png',
+                 'marker_active': '/static/images/Parking.png',
                  'status': 'success',
                  'images': [ph.image.url for ph in  p.photo_set.all()],
                  'address': p.address,
@@ -98,6 +99,9 @@ def point(request, point_id=None):
                  }
         if p.type.image:
             point['marker'] = p.type.image.url
+            point['marker_active'] = p.type.image.url
+        if p.type.image2:
+            point['marker_active'] = p.type.image2.url
         point['type'] = [p.type.obj, '%s' % p.type.id]
         if p.post:
             point['post_url'] = reverse('blog_post', args=[p.post.id])
