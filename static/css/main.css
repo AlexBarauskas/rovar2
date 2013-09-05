@@ -384,6 +384,7 @@ font-weight: bold;
 }
 
 .preview {
+    border:none;
     font-size:14px;
     font-weight:normal;
     display:none;
