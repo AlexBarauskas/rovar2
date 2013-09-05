@@ -73,7 +73,7 @@
 
 {% block js %}
 {%if comments_instance%}
-<script type="text/javascript">
+<!--script type="text/javascript">
   var disqus_shortname = 'onbike';
   var disqus_identifier = 'onbike-{{comments_instance.uid}}';
   var disqus_title = '{{comments_instance.name}}';
@@ -83,7 +83,7 @@
   dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
   })();
-</script>
+</script-->
 {%endif%}
 
 {% endblock js %}
