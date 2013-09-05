@@ -208,6 +208,8 @@ var rovar = {
 	    point._activeIcon = activeIcon;
 	    point.addTo(this.map);
 	    point._icon.onclick = function(){show_preview(data, point);};
+	    point._baseIcon.onclick = function(){show_preview(data, point);};
+	    point._activeIcon.onclick = function(){show_preview(data, point);};
 	    //point.addTo(this.map).bindPopup("<h1>"+data.title+"</h1>"+
 	    //				    description
 	    //				   );
