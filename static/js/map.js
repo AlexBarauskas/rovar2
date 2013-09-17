@@ -29,7 +29,7 @@ var rovar = {
 	var minsk = new L.LatLng(53.9, 27.566667);
 	this.copyright = '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors';
 	this.map = map.setView(minsk, 12);
-	L.tileLayer('http://localhost:8000/map/tile/{z}/{x}/{y}.png',
+	L.tileLayer('http://onbike.by/map/tile/{z}/{x}/{y}.png',
 	//L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png',
 	//http://tile.stamen.com/toner-lite/6/36/21.png
 	//L.tileLayer('http://tile.stamen.com/toner-lite/{z}/{x}/{y}.png',
