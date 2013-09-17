@@ -3,7 +3,7 @@ from django.conf.urls.defaults import patterns, include, url
 from views import *
 
 urlpatterns = patterns(
-    'map.urls',
+    'map.views',
     #url(r'^$', index, name="manager_index"),
 
     url(r'^available-tracks/$', get_available_tracks, name="get_available_tracks"),
@@ -14,5 +14,8 @@ urlpatterns = patterns(
 
     url(r'^point/$', point, name="get_point"),
     url(r'^point/(?P<point_id>\d+)/$', point, name="get_point_by_id"),
+
+    url(r'^tile/(?P<z>\d+)/(?P<x>\d+)/(?P<y>\d+).png$', tile, name="map_tile"),
+
 
     )

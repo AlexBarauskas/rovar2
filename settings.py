@@ -184,6 +184,9 @@ AUTH_PROFILE_MODULE = "account.Account"
 
 MAIN_HOST = "hivede6-3189.fornex.org"
 
+
+MAP_TILES = os.path.join(MEDIA_ROOT, 'tiles')
+
 try:
     from settings_local import *
 except ImportError:

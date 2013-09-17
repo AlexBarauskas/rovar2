@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
 from django.core.urlresolvers import reverse
+from django.conf import settings
 
 import json
+import urllib
+import os
+from PIL import Image, ImageFilter
 
 #from tmp.parse_xml import XMLTrack
 from map.models import Track, Point, Type
-import json
 
 def get_available_tracks(request):
     acl = '0'
@@ -109,3 +112,20 @@ def point(request, point_id=None):
         point = {'status': 'error',}
     return HttpResponse(json.dumps(point),
                         mimetype='text/json')
+
+
+def tile(request, z, x, y):
+    #http://b.tile.osm.org/12/2362/1317.png
+    url = "http://b.tile.osm.org/%s/%s/%s.png" % (z, x, y)
+    tile_name = "%s_%s_%s.png" % (z, x, y)
+    rurl = 'http://%s%stiles/%s' % (settings.MAIN_HOST, settings.MEDIA_URL, tile_name)
+    path = os.path.join(settings.MAP_TILES, tile_name)
+    if not os.path.isfile(path):
+        f = open(path, 'w')
+        f.write(urllib.urlopen(url).read())
+        f.close()
+
+        img = Image.open(path)
+        img.convert('L').save(path)
+        
+    return HttpResponseRedirect(rurl)
