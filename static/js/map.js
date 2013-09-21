@@ -267,7 +267,7 @@ rovar.init();
 
 $(function(){
       $('#back-to-banner').click(function(){
-				     $('.preview-content').hide();
+				     $('.preview').hide();
 				     $('.preview-content').html('');
 				     if(rovar.currentPoint){
 					 rovar.currentPoint.setIcon(rovar.currentPoint._baseIcon);
