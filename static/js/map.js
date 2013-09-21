@@ -41,6 +41,8 @@ var rovar = {
 	    //console.log(rovar.elements['t']);
 	    //for(var i=rovar.elements[data.type[0]][data.type[1]].length-1; i>=0; i-- )
 	    //	rovar.elements[data.type[0]][data.type[1]][i].setStyle({'opacity':0.5});
+	    $('#banner').hide();
+	    $('#back-to-banner').show();
 	    if(rovar.currentPoint){
 		rovar.currentPoint.setIcon(rovar.currentPoint._baseIcon);
 		rovar.currentPoint._icon.onclick = rovar.currentPoint._onclick;
@@ -159,6 +161,9 @@ var rovar = {
 	//console.log(data.coordinates);
 	if(data.status == 'success'){
 	    function show_preview(data, _point){
+		$('#banner').hide();
+		$('#back-to-banner').show();
+
 		if(rovar.currentPoint){
 		    rovar.currentPoint.setIcon(rovar.currentPoint._baseIcon);
 		    rovar.currentPoint._icon.onclick = rovar.currentPoint._onclick;
@@ -254,6 +259,21 @@ var rovar = {
 rovar.init();
 
 $(function(){
+      $('#back-to-banner').click(function(){
+				     $('.preview-content').hide();
+				     $('.preview-content').html('');
+				     if(rovar.currentPoint){
+					 rovar.currentPoint.setIcon(rovar.currentPoint._baseIcon);
+					 rovar.currentPoint._icon.onclick = rovar.currentPoint._onclick;
+				     }
+				     if(rovar.currentLine)
+					 rovar.currentLine.setStyle({'opacity':0.5});
+				     $('#back-to-banner').hide();
+				     $('#banner').show();
+				     
+				     
+				 });
+
       var types = $(".type-all");
       for(var i = types.length-1; i>=0; i--){
 	  var id = types[i].id.split('-');
@@ -268,6 +288,7 @@ $(function(){
 	  rovar.elements[id[1]][id[2]]=[];    
 	  
       }
+
 	  
       types.click(function(){
 		      var id = this.id.split('-');
