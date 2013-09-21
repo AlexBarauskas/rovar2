@@ -13,6 +13,21 @@ html, body {
     //text-shadow: 0 1px 1px #888888;
 }
 
+#social-networks {
+    width: 110px;
+    position:absolute;
+    z-index: 100;
+    right:10px;
+    top:10px;
+}
+
+#social-networks a{
+    text-decoration:none;
+    float: right;
+    margin-left: 5px;
+}
+
+
 #contentWrapper { 
 	float: left;
 	width: 100%;
@@ -126,7 +141,7 @@ html, body {
     margin-bottom:20px;
 }
 
-.views li>span.number{
+.post-links li>span.number, .views li>span.number{
     float:right;
     color:#a6a6a6;
     background-color:white;

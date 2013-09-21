@@ -15,7 +15,8 @@ class PostManager(models.Manager):
                 l = links.get(key, [])
                 l.append({'title': p.title,
                           'date': p.created,
-                          'id': p.id})
+                          'id': p.id,
+                          'P': p})
                 links[key] = l            
         return links
 

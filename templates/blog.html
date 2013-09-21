@@ -5,7 +5,20 @@
 {% endblock css %}
 
 {% block content %}
+<div id="social-networks">
+  <a href="https://www.facebook.com/onbike.by">
+    <img src="/static/images/facebook.png"/>
+  </a>
+  <a href="https://vk.com/onbikeby">
+    <img src="/static/images/vk.png"/>
+  </a>
+  <a href="https://twitter.com/onbike_by">
+    <img src="/static/images/twitter.png"/>
+  </a>
+</div>
+
 <div id="main-panel" style="position:fixed;">
+
   <div id="header">
     <!--div style="height:1px;"></div-->
     <div id="hmenu">
@@ -16,15 +29,6 @@
       <a href="{% url login_start 'twitter' %}">t</a>
       <a href="{% url login_start 'vk' %}">vk</a-->
       {% endif %}
-      <a href="https://www.facebook.com/onbike.by">
-	f
-      </a>
-      <a href="https://vk.com/onbikeby">
-	vk
-      </a>
-      <a href="https://twitter.com/onbike_by">
-	t
-      </a>
       <a href="{% url home %}">Карта</a>
       <a href="#"><img src="/static/icons/info.png"/></a>
     </div>
@@ -39,11 +43,13 @@
     <ul>
       {% for k in links.iteritems%}
       <li>
-	{{k.0}}
+	<!--{{k.0}}-->
 	<ul>
 	  {% for l in k.1%}
 	  <li{%if l.id == currentid%} class="active"{%endif%}>
-	    <a href="{% url blog_post l.id %}">&#8722; {{l.title}}</a>
+	    <a href="{% url blog_post l.id %}">{{l.title}}</a>
+	    <!--span class="number">{{l.durations}}&#8722;</span-->
+	    <span class="number">{{l.P.track.duration}} {% if l.P.track.duration %}мин{%endif%}</span>
 	  </li>
 	  {%endfor%}
 	</ul>
