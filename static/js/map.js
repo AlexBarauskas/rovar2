@@ -154,8 +154,13 @@ var rovar = {
     },
 
     show : function(layers){
-	for(var i=layers.length-1; i>=0;i--)
+	for(var i=layers.length-1; i>=0;i--){
 	    layers[i].addTo(this.map);
+	    if(layers[i]._icon)
+		layers[i]._icon.onclick = layers[i]._onclick;
+	}
+	    
+	
     },
 
     addPoint : function (data){
