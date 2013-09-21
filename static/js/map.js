@@ -45,7 +45,8 @@ var rovar = {
 	    $('#back-to-banner').show();
 	    if(rovar.currentPoint){
 		rovar.currentPoint.setIcon(rovar.currentPoint._baseIcon);
-		rovar.currentPoint._icon.onclick = rovar.currentPoint._onclick;
+		if(rovar.currentPoint._icon)
+		    rovar.currentPoint._icon.onclick = rovar.currentPoint._onclick;
 	    }
 
 	    if(rovar.currentLine)
@@ -166,7 +167,8 @@ var rovar = {
 
 		if(rovar.currentPoint){
 		    rovar.currentPoint.setIcon(rovar.currentPoint._baseIcon);
-		    rovar.currentPoint._icon.onclick = rovar.currentPoint._onclick;
+		    if(rovar.currentPoint._icon)
+			rovar.currentPoint._icon.onclick = rovar.currentPoint._onclick;
 		}
 		    
 		rovar.currentPoint = _point;
