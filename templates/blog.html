@@ -1,65 +1,29 @@
 {% extends 'base.html' %}
 
 {% block css %}
-<!--link type="text/css" href="/static/leaflet/leaflet.css" rel="stylesheet"/-->
 {% endblock css %}
 
-{% block content %}
-<div id="social-networks">
-  <a href="https://www.facebook.com/onbike.by">
-    <img src="/static/images/facebook.png"/>
-  </a>
-  <a href="https://vk.com/onbikeby">
-    <img src="/static/images/vk.png"/>
-  </a>
-  <a href="https://twitter.com/onbike_by">
-    <img src="/static/images/twitter.png"/>
-  </a>
+{% block content_left %}
+<div class="section post-links">
+  <ul>
+    {% for k in links.iteritems%}
+    <li>
+      <!--{{k.0}}-->
+      <ul>
+	{% for l in k.1%}
+	<li{%if l.id == currentid%} class="active"{%endif%}>
+	  <a href="{% url blog_post l.id %}">{{l.title}}</a>
+	  <span class="number">{{l.P.track.duration}} {% if l.P.track.duration %}мин{%endif%}</span>
+	</li>
+	{%endfor%}
+      </ul>
+    </li>
+    {% endfor %}
+  </ul>
 </div>
+{% endblock content_left %}
 
-<div id="main-panel" style="position:fixed;">
-
-  <div id="header">
-    <!--div style="height:1px;"></div-->
-    <div id="hmenu">
-      {% if account %}
-      <!--a href="{% url logout %}" title="logout">{{account.name}}</a-->
-      {% else %}
-      <!--a href="{% url login_start 'facebook' %}">f</a>
-      <a href="{% url login_start 'twitter' %}">t</a>
-      <a href="{% url login_start 'vk' %}">vk</a-->
-      {% endif %}
-      <a href="{% url home %}">Карта</a>
-      <a href="#"><img src="/static/icons/info.png"/></a>
-    </div>
-    <h1>
-      <!--img class="logo" src="/static/icons/logo.png"/--> 
-      <a href="/">ONBIKE.BY</a>
-    </h1>
-  </div>
-
-
-  <div class="section post-links">
-    <ul>
-      {% for k in links.iteritems%}
-      <li>
-	<!--{{k.0}}-->
-	<ul>
-	  {% for l in k.1%}
-	  <li{%if l.id == currentid%} class="active"{%endif%}>
-	    <a href="{% url blog_post l.id %}">{{l.title}}</a>
-	    <!--span class="number">{{l.durations}}&#8722;</span-->
-	    <span class="number">{{l.P.track.duration}} {% if l.P.track.duration %}мин{%endif%}</span>
-	  </li>
-	  {%endfor%}
-	</ul>
-      </li>
-      {% endfor %}
-    </ul>
-  </div>
-
-</div>
-
+{% block content_right %}
 <div class="data-content">
   {%for post in posts%}
   <h1>{{post.title}}</h1>
@@ -67,29 +31,25 @@
   <div>
     {{post.text|safe}}
   </div>
-  <!--div class="clear"></div-->
   <hr class="post-end"/>
   {%endfor%}
-
   <div id="disqus_thread"></div>
-
 </div>
-
-{% endblock content %}
+{% endblock content_right %}
 
 {% block js %}
 {%if comments_instance%}
 <!--script type="text/javascript">
-  var disqus_shortname = 'onbike';
-  var disqus_identifier = 'onbike-{{comments_instance.uid}}';
-  var disqus_title = '{{comments_instance.name}}';
+    var disqus_shortname = 'onbike';
+    var disqus_identifier = 'onbike-{{comments_instance.uid}}';
+    var disqus_title = '{{comments_instance.name}}';
 
-  (function() {
-  var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-</script-->
+    (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script-->
 {%endif%}
 
 {% endblock js %}

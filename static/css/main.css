@@ -446,3 +446,18 @@ font-weight: bold;
     background-image: url("/static/images/shadow.png");
     background-repeat: repeat-x;
 }
+
+.authors-item {
+    float:left;
+    width: 20%;
+    padding: 2.5%;
+    text-align:center;
+    min-width:165px;
+}
+
+.authors-item h1{
+    font-size:18px;
+}
+.authors-item p{
+    font-size:16px;
+}

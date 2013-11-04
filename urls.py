@@ -8,6 +8,7 @@ admin.autodiscover()
 urlpatterns = patterns(
     '',
     url(r'^$', 'onbike.views.home', name='home'),
+    url(r'^info/$', 'onbike.views.info', name='info'),
     url(r'^manager/', include('manager.urls')),
     url(r'^map/', include('map.urls')),
     url(r'^blog/', include('blog.urls')),

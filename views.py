@@ -31,3 +31,10 @@ def home(request):
                                'types': Type.objects.all()
                                },
                               context_instance=RequestContext(request))
+
+
+def info(request):
+    return render_to_response('info.html',
+                              {},
+                              context_instance=RequestContext(request))
+    

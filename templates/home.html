@@ -4,97 +4,37 @@
 <link type="text/css" href="/static/leaflet/leaflet.css" rel="stylesheet"/>
 {% endblock css %}
 
-{% block content %}
 
-<div id="social-networks">
-  <a href="https://www.facebook.com/onbike.by">
-    <img src="/static/images/facebook.png"/>
-  </a>
-  <a href="https://vk.com/onbikeby">
-    <img src="/static/images/vk.png"/>
-  </a>
-  <a href="https://twitter.com/onbike_by">
-    <img src="/static/images/twitter.png"/>
-  </a>
-</div>
 
-<div id="main-panel">
-  <div id="header">
-    <div id="hmenu">
-      {% if account %}
-      <!--a href="{% url logout %}" title="logout">{{account.name}}</a-->
-      {% else %}
-      <!--a href="{% url login_start 'facebook' %}">f</a>
-      <a href="{% url login_start 'twitter' %}">t</a>
-      <a href="{% url login_start 'vk' %}">vk</a-->
-      {% endif %}
-      <!--a href="https://www.facebook.com/onbike.by">
-	f
-      </a>
-      <a href="https://vk.com/onbikeby">
-	vk
-      </a>
-      <a href="https://twitter.com/onbike_by">
-	t
-      </a-->
-      <a href="{% url blog %}">Блог</a>
-      <a href="#"><img src="/static/icons/info.png"/></a>
-    </div>
-    <h1>
-      <!--img class="logo" src="/static/icons/logo.png"/--> 
-      <a href="/" id="banner">ONBIKE.BY</a>
-      <a href="javascript:;" id="back-to-banner" style="display:none">< назад</a>
-    </h1>
-  </div>
 
-  <!--div class="section">
-      <a id="search-btn" href="#">НAЙТИ МАРШРУТ</a>
-      <a id="all-list-btn" href="#">Показывать список всех маршрутов</a>
-  </div-->
-  <div class="preview">
-    <div class="preview-content"></div>
-    <div id="disqus_thread" style="display:none"></div>
-    <div class="hr-shadow"></div>
-  </div>
-  <div class="section views">
-    <h1>Показывать на карте:</h1>
-    <ul class="control">
-      {%for T in types%}
-      <li id="type-{{T.obj}}-{{T.id}}" class="type-all">
-	<span style="background-color:{{T.color}}">{{T.name}}</span>
-	<span class="number">{{T.count_items}}</span>
-      </li>
-      {%endfor%}
-    </ul>
-  </div>
-  
+{% block content_left %}
+<div class="preview">
+  <div class="preview-content"></div>
+  <div id="disqus_thread" style="display:none"></div>
   <div class="hr-shadow"></div>
 </div>
+<div class="section views">
+  <h1>Показывать на карте:</h1>
+  <ul class="control">
+    {%for T in types%}
+    <li id="type-{{T.obj}}-{{T.id}}" class="type-all">
+      <span style="background-color:{{T.color}}">{{T.name}}</span>
+      <span class="number">{{T.count_items}}</span>
+    </li>
+    {%endfor%}
+  </ul>
+</div>  
+<div class="hr-shadow"></div>
+{% endblock content_left %}
 
-<div id="contentWrapper"> 
-  <div id="map" class="data-content"></div>
-</div>
-{% endblock content %}
+{% block content_right %}
+<div id="map" class="data-content"></div>
+{% endblock content_right %}
+
 
 {% block js %}
 <script type="text/javascript" src="/static/leaflet/leaflet-src.js"></script>
 <script type="text/javascript" src="/static/leaflet/leaflet.js"></script>
-
-<!--script type="text/javascript">
-  var disqus_shortname = 'onbike'; // required: replace example with your forum shortname
-  var disqus_identifier = 'onbike';
-  var disqus_title = 'home';
-  var disqus_url = 'http://onbike.by';
-
-  /* * * DON'T EDIT BELOW THIS LINE * * */
-  (function() {
-  var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-</script-->
-
 <script type="text/javascript" src="/static/js/map.js"></script>
-
 
 {% endblock js %}
