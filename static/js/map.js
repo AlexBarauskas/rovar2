@@ -21,6 +21,21 @@ function play_close(id){
   
 };
 
+function fn_back(){
+    $('.preview').hide();
+    $('.preview-content').html('');
+    if(rovar.currentPoint){
+	rovar.currentPoint.setIcon(rovar.currentPoint._baseIcon);
+	rovar.currentPoint._icon.onclick = rovar.currentPoint._onclick;
+    }
+    if(rovar.currentLine)
+	rovar.currentLine.setStyle({'opacity':0.5});
+    $('#back-to-banner').hide();
+    $('#banner').show();
+    
+    
+};
+
 var rovar = {
     elements:{},
     _iconSize: 36,
@@ -224,7 +239,7 @@ var rovar = {
 		    
 		rovar.currentPoint = _point;
 		rovar.currentPoint.setIcon(rovar.currentPoint._activeIcon);
-		rovar.currentPoint._icon.onclick = rovar.currentPoint._onclick;
+		rovar.currentPoint._icon.onclick = fn_back;//rovar.currentPoint._onclick;
 		
 		if(rovar.currentLine){
 		    rovar.currentLine.setStyle({'opacity':0.5});
@@ -276,6 +291,7 @@ var rovar = {
 	    point._activeIcon = activeIcon;
 	    point.addTo(this.map);
 	    point._onclick = function(){show_preview(data, point);};
+	    
 	    point._icon.onclick = function(){show_preview(data, point);};
 	    //point._baseIcon.onclick = function(){show_preview(data, point);};
 	    //point._activeIcon.onclick = function(){show_preview(data, point);};
@@ -314,21 +330,10 @@ var rovar = {
 
 rovar.init();
 
+
+
 $(function(){
-      $('#back-to-banner').click(function(){
-				     $('.preview').hide();
-				     $('.preview-content').html('');
-				     if(rovar.currentPoint){
-					 rovar.currentPoint.setIcon(rovar.currentPoint._baseIcon);
-					 rovar.currentPoint._icon.onclick = rovar.currentPoint._onclick;
-				     }
-				     if(rovar.currentLine)
-					 rovar.currentLine.setStyle({'opacity':0.5});
-				     $('#back-to-banner').hide();
-				     $('#banner').show();
-				     
-				     
-				 });
+      $('#back-to-banner').click();
 
       var types = $(".type-all");
       for(var i = types.length-1; i>=0; i--){
