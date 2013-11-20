@@ -46,7 +46,7 @@ var rovar = {
 	var self = this;
 	map.on('zoomend', function(ev){
 		   self._iconsize = 36 * ev.target._zoom * ev.target._zoom / (12 * 12);
-		   console.log(ev.target._zoom, self._iconsize);
+		   //console.log(ev.target._zoom, self._iconsize);
 		   $('.leaflet-marker-icon').css({'margin-left': (-self._iconsize*self._kLeft).toString()+'px',
 						  'margin-top': (-self._iconsize).toString()+'px',
 						  'width': self._iconsize.toString()+'px',
