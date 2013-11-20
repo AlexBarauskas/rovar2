@@ -16,7 +16,7 @@ html, body {
 #social-networks {
     width: 110px;
     position:absolute;
-    z-index: 100;
+    z-index: 1001;
     right:10px;
     top:10px;
 }
