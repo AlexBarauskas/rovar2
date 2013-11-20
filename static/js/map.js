@@ -23,9 +23,20 @@ function play_close(id){
 
 var rovar = {
     elements:{},
+    _iconSize: 36,
 
     init : function(){
 	var map = new L.Map('map');
+	var self = this;
+	map.on('zoomend', function(ev){
+		   self._iconsize = 36 * ev.target._zoom/12 * ev.target._zoom/12;
+		   console.log(ev.target._zoom, self._iconsize);
+		   $('.leaflet-marker-icon').css({'margin-left': (-self._iconsize/2).toString()+'px',
+						  'margin-top': (-self._iconsize).toString()+'px',
+						  'width': self._iconsize.toString()+'px',
+						  'height': self._iconsize.toString()+'px'
+						 });
+	       });
 	var minsk = new L.LatLng(53.9, 27.566667);
 	this.copyright = '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors';
 	this.map = map.setView(minsk, 12);
@@ -123,15 +134,15 @@ var rovar = {
 	polyline._container.onclick = function(){show_preview(data, polyline); };
 
 	var myIconA =new L.Icon({
-				   iconUrl: data.marker_a,
-				   iconSize: [30, 30],
-				   iconAnchor: [15, 15]
+				    iconUrl: data.marker_a,
+				    iconSize: [this._iconSize, this._iconSize],
+				    iconAnchor: [this._iconSize/2, this._iconSize]
 			       });
 	
 	var myIconB =new L.Icon({
 				    iconUrl: data.marker_b,
-				    iconSize: [30, 30],
-				    iconAnchor: [15, 30]
+				    iconSize: [this._iconSize, this._iconSize],
+				    iconAnchor: [this._iconSize/2, this._iconSize]
 				});
 	
 	var pointA = L.marker(data.route[0], {color: 'red', icon: myIconA});
@@ -238,14 +249,14 @@ var rovar = {
 
 	    var myIcon =new L.Icon({
 				       iconUrl: data.marker,
-				       iconSize: [30, 30],
-				       iconAnchor: [15, 15]
+				       iconSize: [this._iconSize, this._iconSize],
+				       iconAnchor: [this._iconSize/2, this._iconSize]
 				   });
 
 	    var activeIcon =new L.Icon({
 				       iconUrl: data.marker_active,
-				       iconSize: [30, 30],
-				       iconAnchor: [15, 30]
+				       iconSize: [this._iconSize, this._iconSize],
+				       iconAnchor: [this._iconSize/2, this._iconSize]
 				   });
 
 	    var point = L.marker(data.coordinates, {color: 'red', icon: myIcon});
