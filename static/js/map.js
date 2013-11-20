@@ -29,7 +29,7 @@ var rovar = {
 	var map = new L.Map('map');
 	var self = this;
 	map.on('zoomend', function(ev){
-		   self._iconsize = 36 * ev.target._zoom/12 * ev.target._zoom/12;
+		   self._iconsize = 36 * ev.target._zoom * ev.target._zoom / (12 * 12);
 		   console.log(ev.target._zoom, self._iconsize);
 		   $('.leaflet-marker-icon').css({'margin-left': (-self._iconsize/2).toString()+'px',
 						  'margin-top': (-self._iconsize).toString()+'px',
