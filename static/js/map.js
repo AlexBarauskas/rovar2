@@ -33,6 +33,12 @@ function fn_back(){
     $('#back-to-banner').hide();
     $('#banner').show();
     
+
+    $('.leaflet-marker-icon').css({'margin-left': (-rovar._iconsize*rovar._kLeft).toString()+'px',
+				   'margin-top': (-rovar._iconsize).toString()+'px',
+				   'width': rovar._iconsize.toString()+'px',
+				   'height': rovar._iconsize.toString()+'px'
+				  });
     
 };
 
@@ -123,6 +129,11 @@ var rovar = {
 		$('#disqus_thread').show();
 	    }
 
+	    $('.leaflet-marker-icon').css({'margin-left': (-rovar._iconsize*rovar._kLeft).toString()+'px',
+					   'margin-top': (-rovar._iconsize).toString()+'px',
+					   'width': rovar._iconsize.toString()+'px',
+					   'height': rovar._iconsize.toString()+'px'
+					  });
 	    
 	}
 	/*var video='', btn='';
@@ -240,6 +251,12 @@ var rovar = {
 		    
 		rovar.currentPoint = _point;
 		rovar.currentPoint.setIcon(rovar.currentPoint._activeIcon);
+		$('.leaflet-marker-icon').css({'margin-left': (-rovar._iconsize*rovar._kLeft).toString()+'px',
+					       'margin-top': (-rovar._iconsize).toString()+'px',
+					       'width': rovar._iconsize.toString()+'px',
+					       'height': rovar._iconsize.toString()+'px'
+					      });
+
 		rovar.currentPoint._icon.onclick = fn_back;//rovar.currentPoint._onclick;
 		
 		if(rovar.currentLine){
