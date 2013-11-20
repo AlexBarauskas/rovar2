@@ -53,6 +53,11 @@ def track(request, track_id=None):
             track['duration'] = '%s мин' % t.duration
         if t.post:
             track['post_url'] = reverse('blog_post', args=[t.post.id])
+        if t.type.image:
+            track['marker_a'] = t.type.image.url
+            track['marker_b'] = t.type.image.url
+        if t.type.image2:
+            track['marker_b'] = t.type.image2.url
 
     except:
         track = {'route': [[0,0],[0,0]]}

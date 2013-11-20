@@ -121,7 +121,33 @@ var rovar = {
 	//polyline.onclick(function(){console.log('CLICK');});
 	//tmp = polyline;
 	polyline._container.onclick = function(){show_preview(data, polyline); };
+
+	var myIconA =new L.Icon({
+				   iconUrl: data.marker_a,
+				   iconSize: [30, 30],
+				   iconAnchor: [15, 15]
+			       });
+	
+	var myIconB =new L.Icon({
+				    iconUrl: data.marker_b,
+				    iconSize: [30, 30],
+				    iconAnchor: [15, 30]
+				});
+	
+	var pointA = L.marker(data.route[0], {color: 'red', icon: myIconA});
+	var pointB = L.marker(data.route[data.route.length-1], {color: 'red', icon: myIconB});
+
+	pointA.addTo(this.map);
+	pointB.addTo(this.map);
+	pointA._onclick = function(){show_preview(data, polyline); };
+	pointB._onclick = function(){show_preview(data, polyline); };
+	pointA._icon.onclick = function(){show_preview(data, polyline); };
+	pointB._icon.onclick = function(){show_preview(data, polyline); };
+
+
 	this.elements[data.type[0]][data.type[1]].push(polyline);
+	this.elements[data.type[0]][data.type[1]].push(pointA);
+	this.elements[data.type[0]][data.type[1]].push(pointB);
     },
 
     loadTrack : function(id){
