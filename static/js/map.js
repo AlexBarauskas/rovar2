@@ -39,6 +39,7 @@ function fn_back(){
 var rovar = {
     elements:{},
     _iconSize: 36,
+    _kLeft: 0.317,
 
     init : function(){
 	var map = new L.Map('map');
@@ -46,7 +47,7 @@ var rovar = {
 	map.on('zoomend', function(ev){
 		   self._iconsize = 36 * ev.target._zoom * ev.target._zoom / (12 * 12);
 		   console.log(ev.target._zoom, self._iconsize);
-		   $('.leaflet-marker-icon').css({'margin-left': (-self._iconsize/2).toString()+'px',
+		   $('.leaflet-marker-icon').css({'margin-left': (-self._iconsize*self._kLeft).toString()+'px',
 						  'margin-top': (-self._iconsize).toString()+'px',
 						  'width': self._iconsize.toString()+'px',
 						  'height': self._iconsize.toString()+'px'
@@ -158,13 +159,13 @@ var rovar = {
 	var myIconA =new L.Icon({
 				    iconUrl: data.marker_a,
 				    iconSize: [this._iconSize, this._iconSize],
-				    iconAnchor: [this._iconSize/2, this._iconSize]
+				    iconAnchor: [this._iconSize*this._kLeft, this._iconSize]
 			       });
 	
 	var myIconB =new L.Icon({
 				    iconUrl: data.marker_b,
 				    iconSize: [this._iconSize, this._iconSize],
-				    iconAnchor: [this._iconSize/2, this._iconSize]
+				    iconAnchor: [this._iconSize*this._kLeft, this._iconSize]
 				});
 	
 	var pointA = L.marker(data.route[0], {color: 'red', icon: myIconA});
@@ -277,13 +278,13 @@ var rovar = {
 	    var myIcon =new L.Icon({
 				       iconUrl: data.marker,
 				       iconSize: [this._iconSize, this._iconSize],
-				       iconAnchor: [this._iconSize/2, this._iconSize]
+				       iconAnchor: [this._iconSize*this._kLeft, this._iconSize]
 				   });
 
 	    var activeIcon =new L.Icon({
 				       iconUrl: data.marker_active,
 				       iconSize: [this._iconSize, this._iconSize],
-				       iconAnchor: [this._iconSize/2, this._iconSize]
+				       iconAnchor: [this._iconSize*this._kLeft, this._iconSize]
 				   });
 
 	    var point = L.marker(data.coordinates, {color: 'red', icon: myIcon});
