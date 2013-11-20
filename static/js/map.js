@@ -60,9 +60,16 @@ var rovar = {
 		    rovar.currentPoint._icon.onclick = rovar.currentPoint._onclick;
 	    }
 
-	    if(rovar.currentLine)
+	    if(rovar.currentLine){
 		rovar.currentLine.setStyle({'opacity':0.5});
+		rovar.map.removeLayer(rovar.currentLine._pointA);
+		rovar.map.removeLayer(rovar.currentLine._pointB);
+	    }
+		
 	    rovar.currentLine = track;
+	    rovar.currentLine._pointA.addTo(rovar.map);
+	    rovar.currentLine._pointB.addTo(rovar.map);
+
 	    track.setStyle({'opacity':1});
 	    rovar.map.removeLayer(rovar.currentLine);
 	    rovar.currentLine.addTo(rovar.map);
@@ -148,17 +155,19 @@ var rovar = {
 	var pointA = L.marker(data.route[0], {color: 'red', icon: myIconA});
 	var pointB = L.marker(data.route[data.route.length-1], {color: 'red', icon: myIconB});
 
-	pointA.addTo(this.map);
-	pointB.addTo(this.map);
+	//pointA.addTo(this.map);
+	//pointB.addTo(this.map);
 	pointA._onclick = function(){show_preview(data, polyline); };
 	pointB._onclick = function(){show_preview(data, polyline); };
-	pointA._icon.onclick = function(){show_preview(data, polyline); };
-	pointB._icon.onclick = function(){show_preview(data, polyline); };
+	//pointA._icon.onclick = function(){show_preview(data, polyline); };
+	//pointB._icon.onclick = function(){show_preview(data, polyline); };
+	polyline._pointA = pointA;
+	polyline._pointB = pointB;
 
-
+	polyline._container.onclick = function(){show_preview(data, polyline); };
 	this.elements[data.type[0]][data.type[1]].push(polyline);
-	this.elements[data.type[0]][data.type[1]].push(pointA);
-	this.elements[data.type[0]][data.type[1]].push(pointB);
+	//this.elements[data.type[0]][data.type[1]].push(pointA);
+	//this.elements[data.type[0]][data.type[1]].push(pointB);
     },
 
     loadTrack : function(id){
@@ -217,8 +226,11 @@ var rovar = {
 		rovar.currentPoint.setIcon(rovar.currentPoint._activeIcon);
 		rovar.currentPoint._icon.onclick = rovar.currentPoint._onclick;
 		
-		if(rovar.currentLine)
+		if(rovar.currentLine){
 		    rovar.currentLine.setStyle({'opacity':0.5});
+		    rovar.map.removeLayer(rovar.currentLine._pointA);
+		    rovar.map.removeLayer(rovar.currentLine._pointB);
+		}
 		var description;
 		if(data.post_url)
 		    description = "<p><a href=\""+data.post_url+"\">"+data.description+"</a></p>";
