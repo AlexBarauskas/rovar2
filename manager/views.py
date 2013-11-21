@@ -309,3 +309,4 @@ def photo_img_del(request, point_id, img_id):
     #
     return HttpResponse(json.dumps(res),
                         content_type="text/json")
+

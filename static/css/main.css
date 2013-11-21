@@ -461,3 +461,17 @@ font-weight: bold;
 .authors-item p{
     font-size:16px;
 }
+
+.authors-item .mask-img{
+    display:inline-block;
+    width:130px;
+    height:130px;
+    overflow:hidden;
+    position:relative;
+}
+
+.authors-item .mask-img img{
+    position:absolute;
+    top: 0;
+    left: 0;
+}

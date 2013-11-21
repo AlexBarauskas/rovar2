@@ -15,3 +15,14 @@ class Account(models.Model):
     backend = models.CharField(max_length=16, choices=ACCOUNT_BACKENDS, null=True)
     id_from_backend = models.CharField(max_length=32, null=True)
 #ALTER TABLE "account_account" ALTER COLUMN "backend" DROP NOT NULL;
+
+class Author(models.Model):
+    name = models.CharField(max_length=128)
+    description = models.TextField()
+    image = models.ImageField(upload_to="thubnails/")
+
+    def __unicode__(self):
+        return self.name
+
+    def __str__(self):
+        return self.name

@@ -20,27 +20,32 @@
 
 
   <div class="authors">
+    {% for a in authors %}
     <div class="authors-item">
-      <img/>
-      <h1>Рома Цыбульский</h1>
-      <p>Идея и руководство проектов. Все видео Рома снял сам.</p>
-    </div>
-    <div class="authors-item">
-      <img/>
-      <h1>Александр Бараускас</h1>
-      <p>Программирование и техническое сопровождение.</p>
-    </div>
-    <div class="authors-item">
-      <img/>
+      <div class="mask-img"> 
+	<img src="{{a.image.url}}"/>
+	<img src="/static/images/mask.png"/>
+      </div>
+      <h1>{{a.name}}</h1>
+      <p>{{a.description}}</p>
+    </div>    
+    {% endfor %}
+    <!--div class="authors-item">
+      <div class="mask-img"> 
+	<img src="/static/images/mask.png"/>
+      </div>
       <h1>Тарас Куба</h1>
       <p>Дизайн сайта и сопровождения для iOS.</p>
     </div>
     <div class="authors-item">
-      <img/>
+      <div class="mask-img">
+	<img src="/static/images/mask.png"/>
+      </div>
       <h1>Алена Мельченко</h1>
       <p>Ответственная за мобильную разработку. Приложение для iOS сделано в студии OrangeSoft</p>
     </div>
-    <div class="clear"></div>
+    <div class="clear"></div-->
+
   </div>
 </div>
 

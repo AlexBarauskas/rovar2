@@ -5,6 +5,8 @@ from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
 from map.models import *
 from django.template import RequestContext
 
+from account.models import Author
+
 def home(request):
     acl = '0'
     if request.user.is_authenticated():
@@ -35,6 +37,6 @@ def home(request):
 
 def info(request):
     return render_to_response('info.html',
-                              {},
+                              {'authors': Author.objects.all()},
                               context_instance=RequestContext(request))
     
