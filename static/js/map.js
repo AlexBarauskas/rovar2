@@ -232,7 +232,12 @@ var rovar = {
 	    if(layers[i]._icon)
 		layers[i]._icon.onclick = layers[i]._onclick;
 	}
-	    
+
+	$('.leaflet-marker-icon').css({'margin-left': (-this._iconsize*this._kLeft).toString()+'px',
+				       'margin-top': (-this._iconsize).toString()+'px',
+				       'width': this._iconsize.toString()+'px',
+				       'height': this._iconsize.toString()+'px'
+				      });
 	
     },
 
