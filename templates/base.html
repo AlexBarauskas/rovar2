@@ -69,13 +69,13 @@
       var infoF  = $('#info-iframe');
       if(infoF.length==0){
       var data_box = $('.data-content');
-      var info = $('<iframe id="info-iframe" src="/info/"/>').css({position: 'absolute', 
-                                 width: data_box.innerWidth()-5,
-                                 height: data_box.innerHeight()-5,
-                                 top: -data_box.innerHeight(),
-                                 'z-index': 1000,
-                                 left: $('#main-panel').width(),
-                            });
+      var info = $('<iframe id="info-iframe" src="/info/?blank=1"/>').css({position: 'absolute', 
+      width: data_box.innerWidth()-5,
+      height: data_box.innerHeight()-5,
+      top: -data_box.innerHeight(),
+      'z-index': 1000,
+      left: $('#main-panel').width(),
+      });
       info.load(function(ev){$(this).animate({top:0});});
       info.appendTo('body');
       }

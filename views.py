@@ -37,6 +37,7 @@ def home(request):
 
 def info(request):
     return render_to_response('info.html',
-                              {'authors': Author.objects.all()},
+                              {'authors': Author.objects.all(),
+                               'show_left_panel': not request.GET.get('blank')},
                               context_instance=RequestContext(request))
     
