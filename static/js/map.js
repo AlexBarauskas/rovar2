@@ -133,7 +133,7 @@ var rovar = {
 				     this.page.identifier = "onbike-"+data.uid;  
 				     this.page.title = data.title;
 				     //console.log(this);
-				     this.page.url = "http://onbike.by/"+data.uid+"/";
+				     this.page.url = "/"+data.uid+"/";
 				 }
 			     });
 		$('#disqus_thread').show();
@@ -312,7 +312,7 @@ var rovar = {
 				     config: function () {  
 					 this.page.identifier = "onbike-"+data.uid;  
 					 this.page.title = data.title;
-					 this.page.url = "http://onbike.by/"+data.uid+"/";
+					 this.page.url = "/"+data.uid+"/";
 				     }
 				 });
 		    $('#disqus_thread').show();
