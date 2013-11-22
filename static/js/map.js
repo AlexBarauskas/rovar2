@@ -28,17 +28,24 @@ function fn_back(){
 	rovar.currentPoint.setIcon(rovar.currentPoint._baseIcon);
 	rovar.currentPoint._icon.onclick = rovar.currentPoint._onclick;
     }
-    if(rovar.currentLine)
+    if(rovar.currentLine){
 	rovar.currentLine.setStyle({'opacity':0.5});
+	rovar.map.removeLayer(rovar.currentLine._pointA);
+	rovar.map.removeLayer(rovar.currentLine._pointB);
+    }
+	
     $('#back-to-banner').hide();
     $('#banner').show();
     
+    var stateObj = { foo: "bar" };
+    history.pushState(stateObj, "page", '/');	  
 
     $('.leaflet-marker-icon').css({'margin-left': (-rovar._iconsize*rovar._kLeft).toString()+'px',
 				   'margin-top': (-rovar._iconsize).toString()+'px',
 				   'width': rovar._iconsize.toString()+'px',
 				   'height': rovar._iconsize.toString()+'px'
 				  });
+
     
 };
 
@@ -115,6 +122,9 @@ var rovar = {
 		video.height(video.height()*(preview.width())/video.width());
 		video.width(preview.width());
 	    }
+	    
+	    var stateObj = { foo: "bar" };
+	    history.pushState(stateObj, "page", '/'+ data.uid +'/');	  
 
 	    if(typeof DISQUS != 'undefined'){
 		DISQUS.reset({
@@ -123,7 +133,7 @@ var rovar = {
 				     this.page.identifier = "onbike-"+data.uid;  
 				     this.page.title = data.title;
 				     //console.log(this);
-				     this.page.url = "http://onbike.by/#"+data.uid;
+				     this.page.url = "http://onbike.by/"+data.uid+"/";
 				 }
 			     });
 		$('#disqus_thread').show();
@@ -186,6 +196,7 @@ var rovar = {
 	//pointB.addTo(this.map);
 	pointA._onclick = function(){show_preview(data, polyline); };
 	pointB._onclick = function(){show_preview(data, polyline); };
+	
 	//pointA._icon.onclick = function(){show_preview(data, polyline); };
 	//pointB._icon.onclick = function(){show_preview(data, polyline); };
 	polyline._pointA = pointA;
@@ -193,6 +204,9 @@ var rovar = {
 
 	polyline._container.onclick = function(){show_preview(data, polyline); };
 	this.elements[data.type[0]][data.type[1]].push(polyline);
+	
+	if(rovar_uid == data.uid)
+	    show_preview(data, polyline);
 	//this.elements[data.type[0]][data.type[1]].push(pointA);
 	//this.elements[data.type[0]][data.type[1]].push(pointB);
     },
@@ -222,8 +236,13 @@ var rovar = {
     },
 
     hide : function(layers){
-	for(var i=layers.length-1; i>=0;i--)
+	for(var i=layers.length-1; i>=0;i--){
 	    this.map.removeLayer(layers[i]);
+	    if(layers[i]._pointA){
+		this.map.removeLayer(layers[i]._pointA);
+		this.map.removeLayer(layers[i]._pointB);
+	    }
+	}
     },
 
     show : function(layers){
@@ -282,6 +301,10 @@ var rovar = {
 		    $('<img/>').attr({'src': data.images[0], 'title': "Show more..."}).appendTo(preview);
 		}
 		preview.append(description).parent().show();
+
+		var stateObj = { foo: "bar" };
+		history.pushState(stateObj, "page", '/'+ data.uid +'/');	  
+
 		if(typeof DISQUS != 'undefined'){
 		    
 		    DISQUS.reset({
@@ -289,7 +312,7 @@ var rovar = {
 				     config: function () {  
 					 this.page.identifier = "onbike-"+data.uid;  
 					 this.page.title = data.title;
-					 this.page.url = "http://onbike.by#"+data.uid;
+					 this.page.url = "http://onbike.by/"+data.uid+"/";
 				     }
 				 });
 		    $('#disqus_thread').show();
@@ -322,6 +345,8 @@ var rovar = {
 	    //				    description
 	    //				   );
 	    this.elements[data.type[0]][data.type[1]].push(point);
+	    if(rovar_uid == data.uid)
+		show_preview(data, point);
 	}
     },
 
@@ -356,7 +381,7 @@ rovar.init();
 
 
 $(function(){
-      $('#back-to-banner').click();
+      $('#back-to-banner').click(fn_back);
 
       var types = $(".type-all");
       for(var i = types.length-1; i>=0; i--){

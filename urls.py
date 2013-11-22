@@ -8,6 +8,7 @@ admin.autodiscover()
 urlpatterns = patterns(
     '',
     url(r'^$', 'onbike.views.home', name='home'),
+    
     url(r'^info/$', 'onbike.views.info', name='info'),
     url(r'^manager/', include('manager.urls')),
     url(r'^map/', include('map.urls')),
@@ -26,6 +27,10 @@ urlpatterns = patterns(
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
+
+
+    url(r'^(?P<uid>[\d\w\-]+)/$', 'onbike.views.home', name='home_uid'),
+
 )
 
 if settings.DEBUG:

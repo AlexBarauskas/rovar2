@@ -7,7 +7,7 @@ from django.template import RequestContext
 
 from account.models import Author
 
-def home(request):
+def home(request, uid=None):
     acl = '0'
     if request.user.is_authenticated():
         acl = '1'
@@ -30,10 +30,10 @@ def home(request):
                               {'tracks': Track.objects.filter(state__lte=acl),
                                'services': services,
                                'parkings': parkings,
-                               'types': Type.objects.all()
+                               'types': Type.objects.all(),
+                               'rovar_uid': uid or request.GET.get('uid'),
                                },
                               context_instance=RequestContext(request))
-
 
 def info(request):
     return render_to_response('info.html',
