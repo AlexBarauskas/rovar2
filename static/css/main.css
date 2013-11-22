@@ -468,6 +468,8 @@ form p{
     height:130px;
     overflow:hidden;
     position:relative;
+    border-radius: 75px;
+    box-shadow: 6px 6px 1px #e95d24;
 }
 
 .authors-item .mask-img img{

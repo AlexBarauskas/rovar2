@@ -24,6 +24,8 @@
     </script>
     {% block content %}
 
+    
+    {% block menu %}
     <div id="social-networks">
       <a href="https://www.facebook.com/onbike.by">
 	<img src="/static/images/facebook.png"/>
@@ -50,10 +52,13 @@
 	</h1>
       </div>
 
-      {% block content_left %}
-      {% endblock content_left %}
-      
+    {% block content_left %}
+    {% endblock content_left %}
+
     </div>
+    {% endblock menu %}
+
+    
 
     <div id="contentWrapper"> 
       {% block content_right %}
@@ -75,6 +80,7 @@
       var info = $('<iframe id="info-iframe" src="/info/?blank=1"/>').css({position: 'absolute', 
       width: data_box.innerWidth()-5,
       height: data_box.innerHeight()-5,
+      'min-height': '700px',
       top: -data_box.innerHeight(),
       'z-index': 1000,
       left: $('#main-panel').width(),
@@ -87,7 +93,5 @@
       }
       });
     </script>
-
-    
   </body>
 </html>
