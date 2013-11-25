@@ -55,6 +55,7 @@ var rovar = {
     _kLeft: 0.317,
 
     init : function(){
+	//$('#map').height($(document).height());
 	var map = new L.Map('map');
 	var self = this;
 	map.on('zoomend', function(ev){

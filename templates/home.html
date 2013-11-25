@@ -28,8 +28,12 @@
 <div class="hr-shadow"></div>
 {% endblock content_left %}
 
+
 {% block content_right %}
-<div id="map" class="data-content"></div>
+<div class="data-content info-iframe" style="">
+  <iframe id="info-iframe" src="/info/?blank=1"></iframe>
+</div>
+<div id="map" class="data-content" style="padding:0;"></div>
 {% endblock content_right %}
 
 
