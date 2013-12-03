@@ -550,7 +550,7 @@ form p{
 
 .popup {
     width: 340px;
-    height: 100px;
+    height: auto;
     position: relative;
     margin: 200px auto;
     text-align: left;
