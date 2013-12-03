@@ -29,12 +29,25 @@ def home(request, uid=None):
     except:
         services = 0
 
+    obj = None
+    uid = uid or request.GET.get('uid')
+    if uid:
+        id, t = uid.split('-')
+        if t == 't':
+            M = Track
+        else:
+            M = Point
+        qs = M.objects.filter(uid=uid)
+        if qs.count() != 0:
+            obj = qs[0]
+
     return render_to_response('home.html',
                               {'tracks': Track.objects.filter(state__lte=acl),
                                'services': services,
                                'parkings': parkings,
                                'types': Type.objects.all(),
-                               'rovar_uid': uid or request.GET.get('uid'),
+                               'rovar_uid': uid,
+                               'obj': obj,
                                },
                               context_instance=RequestContext(request))
 

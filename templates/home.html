@@ -28,8 +28,12 @@
 <div class="hr-shadow"></div>
 {% endblock content_left %}
 
+
 {% block content_right %}
-<div id="map" class="data-content"></div>
+<div class="data-content info-iframe" style="">
+  <iframe id="info-iframe" src="/info/?blank=1"></iframe>
+</div>
+<div id="map" class="data-content" style="padding:0;"></div>
 {% endblock content_right %}
 
 
@@ -42,10 +46,10 @@
 <script type="text/javascript">
   /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
   var disqus_shortname = 'onbikeby'; // required: replace example with your forum shortname
-  //var disqus_identifier = 'a unique identifier for each page where Disqus is present';
-  //var disqus_title = 'a unique title for each page where Disqus is present';
+  var disqus_identifier = '{%if rovar_uid%}{{rovar_uid}}{%else%}home{%endif%}';
+  var disqus_title = '{%if obj%}{{obj.title}}{%else%}home{%endif%}';
   {% if rovar_uid %}
-  var disqus_url = '/{{rovar_uid}}/';
+  var disqus_url = 'http://onbike.by/{{rovar_uid}}/';
   {% endif %}
   
   /* * * DON'T EDIT BELOW THIS LINE * * */

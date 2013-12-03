@@ -55,6 +55,7 @@ var rovar = {
     _kLeft: 0.317,
 
     init : function(){
+	//$('#map').height($(document).height());
 	var map = new L.Map('map');
 	var self = this;
 	map.on('zoomend', function(ev){
@@ -130,10 +131,10 @@ var rovar = {
 		DISQUS.reset({
 				 reload: true,
 				 config: function () {  
-				     this.page.identifier = "onbike-"+data.uid;  
+				     this.page.identifier = data.uid;  
 				     this.page.title = data.title;
 				     //console.log(this);
-				     this.page.url = "/"+data.uid+"/";
+				     this.page.url = "http://onbike.by/"+data.uid+"/";
 				 }
 			     });
 		$('#disqus_thread').show();
@@ -310,9 +311,10 @@ var rovar = {
 		    DISQUS.reset({
 				     reload: true,
 				     config: function () {  
-					 this.page.identifier = "onbike-"+data.uid;  
+					 this.page.identifier = data.uid;  
 					 this.page.title = data.title;
-					 this.page.url = "/"+data.uid+"/";
+					 this.page.url = "http://onbike.by/"+data.uid+"/";
+					 console.log(this);
 				     }
 				 });
 		    $('#disqus_thread').show();
