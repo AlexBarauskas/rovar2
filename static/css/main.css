@@ -556,8 +556,9 @@ form p{
     text-align: left;
     border-radius: 5px;
     border: solid 1px #ccc;
-    background-color: #eee;
+    background-color: #e95d24;
     padding: 30px;
+    color: #FFF;
 }
 
 .popup input{
