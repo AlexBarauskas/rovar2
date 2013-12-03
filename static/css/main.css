@@ -234,11 +234,11 @@ label{
 textarea{
     min-width: 80%;
 }
-input[type="text"]{
+input[type="text"], input[type="password"]{
     min-width: 40%;
 }
 
-textarea, input[type="text"] {
+textarea, input[type="text"], input[type="password"] {
     border: solid 1px #999;
     border-radius: 3px;
     box-shadow: 1px 1px 3px #ccc;
@@ -546,4 +546,24 @@ form p{
 ::-webkit-scrollbar-thumb
 {
     background: rgba(0, 0, 0, 0.5);
+}
+
+.popup {
+    width: 340px;
+    height: 100px;
+    position: relative;
+    margin: 200px auto;
+    text-align: left;
+    border-radius: 5px;
+    border: solid 1px #ccc;
+    background-color: #eee;
+    padding: 30px;
+}
+
+.popup input{
+    float: right;
+}
+
+.popup p{
+    margin-bottom:20px;
 }
