@@ -556,9 +556,9 @@ form p{
     text-align: left;
     border-radius: 5px;
     border: solid 1px #ccc;
-    background-color: #e95d24;
+    background-color: #e9e6de;
     padding: 30px;
-    color: #FFF;
+    color: #e95d24;
 }
 
 .popup input{
@@ -567,4 +567,14 @@ form p{
 
 .popup p{
     margin-bottom:20px;
+}
+
+.login-btn{
+    width: 80%;
+    margin: 0 10%;
+    font-size: 16px;
+    font-weight: bold;
+    color: #e95d24;
+    background: none;
+
 }
