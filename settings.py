@@ -187,6 +187,9 @@ MAIN_HOST = "hivede6-3189.fornex.org"
 
 MAP_TILES = os.path.join(MEDIA_ROOT, 'tiles')
 
+LOGIN_URL = '/account/login/'
+LOGIN_REDIRECT_URL = '/'
+
 try:
     from settings_local import *
 except ImportError:
