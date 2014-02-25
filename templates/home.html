@@ -11,7 +11,6 @@
 <div class="preview">
   <div class="preview-content"></div>
   <div id="disqus_thread" style="display:none"></div>
-  <div class="hr-shadow"></div>
 </div>
 
 <div class="section views">
@@ -20,12 +19,11 @@
     {%for T in types%}
     <li id="type-{{T.obj}}-{{T.id}}" class="type-all">
       <span style="background-color:{{T.color}}">{{T.name}}</span>
-      <span class="number">{{T.count_items}}</span>
+      <span style="color:{{T.color}}" class="number">{{T.count_items}}</span>
     </li>
     {%endfor%}
   </ul>
-</div>  
-<div class="hr-shadow"></div>
+</div>
 {% endblock content_left %}
 
 
