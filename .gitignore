@@ -4,3 +4,10 @@
 settings_local.py
 *.db
 *#
+
+# Media
+media/photos/*
+media/thubnails/*
+
+# DB
+rovar.db
