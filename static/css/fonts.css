@@ -1,0 +1,7 @@
+@font-face {
+	font-family: 'HelveticaMonospacedW10';
+	src: url('../assets/fonts/HelveticaMonospaced/HelveticaMonospacedW10.eot?') format('eot'), 
+	     url('../assets/fonts/HelveticaMonospaced/HelveticaMonospacedW10.woff') format('woff'), 
+	     url('../assets/fonts/HelveticaMonospaced/HelveticaMonospacedW10.ttf')  format('truetype'),
+	     url('../assets/fonts/HelveticaMonospaced/HelveticaMonospacedW10.svg#HelveticaMonospacedW10') format('svg');
+}
