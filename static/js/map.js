@@ -35,6 +35,7 @@ function fn_back(){
     }
 	
     $('#back-to-banner').hide();
+    $('#type').hide();
     $('#banner').show();
     
     var stateObj = { foo: "bar" };
@@ -84,6 +85,7 @@ var rovar = {
 	    //	rovar.elements[data.type[0]][data.type[1]][i].setStyle({'opacity':0.5});
 	    $('#banner').hide();
 	    $('#back-to-banner').show();
+        $('#type').show();
 	    if(rovar.currentPoint){
 		rovar.currentPoint.setIcon(rovar.currentPoint._baseIcon);
 		if(rovar.currentPoint._icon)
@@ -267,6 +269,7 @@ var rovar = {
 	    function show_preview(data, _point){
 		$('#banner').hide();
 		$('#back-to-banner').show();
+        $('#type').show();
 
 		if(rovar.currentPoint){
 		    rovar.currentPoint.setIcon(rovar.currentPoint._baseIcon);

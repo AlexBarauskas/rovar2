@@ -1,112 +1,109 @@
 {% load login %}
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>onbike.by{% block subtitle %}{% endblock subtitle %}</title>
-    <link type="image/png" rel="icon" href="/static/images/favicon.png"/>
-    <link type="text/css" href="/static/css/main.css" rel="stylesheet"/>
-    <link type="text/css" href="/static/account/css/login.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="/static/assets/fonts/webfontkit-20130719-091136/stylesheet.css" type="text/css" charset="utf-8" />
-    <link rel="stylesheet" href="/static/assets/fonts/webfontkit-20130719-091612/stylesheet.css" type="text/css" charset="utf-8" />
+<head>
+<title>onbike.by{% block subtitle %}{% endblock subtitle %}</title>
+<link type="image/png" rel="icon" href="/static/images/favicon.png"/>
+<link type="text/css" href="/static/css/main.css" rel="stylesheet"/>
+<link type="text/css" href="/static/account/css/login.css" rel="stylesheet"/>
+<meta property="og:title" content="ONBIKE.BY" />
+<meta property="og:url" content="http://onbike.by/" />
+<meta property="og:image" content="http://onbike.by/static/images/favicon.png" />
+<meta name="description" content="Мы создаём велосипедную карту города, с помощью которой можно будет легко понять, по какому маршруту лучше добраться до работы, съездить в гости или провести велосипедную экскурсию для гостей столицы."/>
 
-    <meta property="og:title" content="ONBIKE.BY" />
-    <meta property="og:url" content="http://onbike.by/" />
-    <meta property="og:image" content="http://onbike.by/static/images/favicon.png" />
-    <meta name="description" content="Мы создаём велосипедную карту города, с помощью которой можно будет легко понять, по какому маршруту лучше добраться до работы, съездить в гости или провести велосипедную экскурсию для гостей столицы."/>
-    
+{% block css %}
+{% endblock css %}
 
-    {% block css %}
-    {% endblock css %}
-  </head>
-  <body>
-    <script>
-      var rovar_uid='{{rovar_uid}}';
-    </script>
-    {% block content %}
+</head>
+<body>
+<script>
+  var rovar_uid='{{rovar_uid}}';
+</script>
 
-    
-    {% block menu %}
-    <div id="social-networks">
-      <a href="https://www.facebook.com/onbike.by">
-	<img src="/static/images/facebook.png"/>
-      </a>
-      <a href="https://vk.com/onbikeby">
-	<img src="/static/images/vk.png"/>
-      </a>
-      <a href="https://twitter.com/onbike_by">
-	<img src="/static/images/twitter.png"/>
-      </a>
+{% block content %}
+
+{% block menu %}
+<div id="social-networks">
+  <a href="https://www.facebook.com/onbike.by">
+      <img src="/static/images/facebook.png"/>
+  </a>
+  <a href="https://vk.com/onbikeby">
+      <img src="/static/images/vk.png"/>
+  </a>
+  <a href="https://twitter.com/onbike_by">
+      <img src="/static/images/twitter.png"/>
+  </a>
+</div>
+
+<div id="main-panel">
+    <div id="header"  style="background-color:{{T.color}}">
+        <div id="hmenu">
+            <a id="info" href="javascript:;"><img src="/static/icons/info.png"/></a>
+        </div>
+        <h1>
+            <a href="/" id="banner">ONBIKE.BY</a>
+            <a href="javascript:;" id="back-to-banner" style="display:none">&lt;</a>
+        </h1>
+        <div id="type" class="type">#type-name</div>
     </div>
-
-
-    <div id="main-panel">
-      <div id="header">
-	<div id="hmenu">
-	  <a id="info" href="javascript:;"><img src="/static/icons/info.png"/></a>
-	</div>
-	<h1>
-	  <a href="/" id="banner">ONBIKE.BY</a>
-	  <a href="javascript:;" id="back-to-banner" style="display:none">&lt;</a>
-	</h1>
-      </div>
 
     {% block content_left %}
     {% endblock content_left %}
 
-    </div>
-    {% endblock menu %}
-
+</div>
     
+{% endblock menu %}
 
-    <div id="contentWrapper"> 
-      {% block content_right %}
-      {% endblock content_right %}
-    </div>
+<div id="contentWrapper"> 
+  {% block content_right %}
+  {% endblock content_right %}
+</div>
 
-    {% endblock content %}
+{% endblock content %}
 
+<script type="text/javascript" src="/static/js/jquery-1.7.1.min.js"></script>
 
-    <script type="text/javascript" src="/static/js/jquery-1.7.1.min.js"></script>
-    {% block js %}
-    {% endblock js %}
+{% block js %}
+{% endblock js %}
 
-    <script type="text/javascript">
-      $('#info').click(function(ev){
-      var data_box = $('#map');
-      var infoIF  = $('#info-iframe');
-      if(infoIF.length!=0){
-      if((infoIF.attr('class') || '').indexOf('show')){
-        var h = data_box.innerHeight()-5;
-        if(h<670)h=670;
-	//	 h='100%';
-        infoIF.animate({height:h},{complete:function(){infoIF.addClass('show');}});
-      }
-      else{
-        infoIF.animate({height: 0},{complete:function(){infoIF.removeClass('show');}});
-      }
-      }
-      /*
-      var infoF  = $('#info-iframe');
-      if(infoF.length==0){
-      var data_box = $('.data-content');
-      //var info = $('<iframe id="info-iframe" src="/info/?blank=1"/>').css({position: 'absolute', 
-      var info = $('#info-iframe');
-      width: data_box.innerWidth()-5,
-      height: data_box.innerHeight()-5,
-      'min-height': '700px',
-      top: -data_box.innerHeight(),
-      'z-index': 1000,
-      left: $('#main-panel').width(),
-      });
-      info.load(function(ev){$(this).animate({top:0});});
-      //info.appendTo('body');
-      }
-      else{
-      infoF.animate({top: 1.5*infoF.height()},{complete:function(){infoF.css({height:0, top:0});}})
-      }
-      */
+<script type="text/javascript">
+  $('#info').click(function(ev){
+  var data_box = $('#map');
+  var infoIF  = $('#info-iframe');
+  if(infoIF.length!=0){
+  if((infoIF.attr('class') || '').indexOf('show')){
+    var h = data_box.innerHeight()-5;
+    if(h<670)h=670;
+//	 h='100%';
+    infoIF.animate({height:h},{complete:function(){infoIF.addClass('show');}});
+  }
+  else{
+    infoIF.animate({height: 0},{complete:function(){infoIF.removeClass('show');}});
+  }
+  }
+  /*
+  var infoF  = $('#info-iframe');
+  if(infoF.length==0){
+  var data_box = $('.data-content');
+  //var info = $('<iframe id="info-iframe" src="/info/?blank=1"/>').css({position: 'absolute', 
+  var info = $('#info-iframe');
+  width: data_box.innerWidth()-5,
+  height: data_box.innerHeight()-5,
+  'min-height': '700px',
+  top: -data_box.innerHeight(),
+  'z-index': 1000,
+  left: $('#main-panel').width(),
+  });
+  info.load(function(ev){$(this).animate({top:0});});
+  //info.appendTo('body');
+  }
+  else{
+  infoF.animate({top: 1.5*infoF.height()},{complete:function(){infoF.css({height:0, top:0});}})
+  }
+  */
 
-      });
-    </script>
-  </body>
+  });
+</script>
+
+</body>
 </html>
