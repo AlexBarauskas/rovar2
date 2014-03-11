@@ -1,3 +1,13 @@
+h1 {
+    font-size: 22px;
+    padding: 40px 0 40px 10px;
+}
+
+h1.manager {
+    font-size: 22px;
+    padding: 0;
+}
+
 .top-menu{
     padding:10px;
     background: #2A3333;
@@ -6,6 +16,7 @@
 .top-menu h1{
     color:white;
     margin:0;
+    font-size: 18px;
 }
 
 .top-menu li{
@@ -13,17 +24,14 @@
     float:left;
     padding:0px 15px;
     font-size:16px;
-    //background-color:#999;
-    border-right:solid 1px #CCC;
-    
 }
 
 .top-menu li.last{
     border-right:none;
 }
 
-.top-menu li.active{
-    font-weight:bold;
+.top-menu li.active a{
+    color: orange;
 }
 
 .top-menu ul{
@@ -38,26 +46,28 @@
 
 /* Form sets */
 .form-item {
-    //padding: 10px;
     position:relative;
-    border-radius: 5px;
-    border: solid 2px #ccc;
-    box-shadow: 1px 2px 3px #ccc;
+    border-radius: 3px;
     background: #eee;    
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
+
 .form-header {
-    background: #999;
-    padding:5px;
-    border-radius: 5px 5px 0px 0px;
+    font-size: 18px;
+    padding:12px;
+    border-radius: 3px;
 }
+
+.form-header:hover {
+    background: #cecece; 
+}
+
 
 .form-name{
     cursor:pointer;
 }
 
 .form-fields {
-    padding:5px;
     overflow:hidden;
     height:0px;
 }
@@ -82,9 +92,8 @@
     padding: 10px;
     background-color: #CCC;
     color: white;
-    font-weight: bold;
+    font-size: 16px;
     border-radius: 5px;
-    font-size:12px;
 }
 
 .alert.error {
@@ -110,8 +119,186 @@
     height:100px;
     width:auto;
     display:block;
-    }
+}
+    
 .image-item span{
     width:100%;
     font-size:12px;
-    }
+}
+
+.popup {
+    width: 340px;
+    height: auto;
+    position: relative;
+    margin: 200px auto;
+    text-align: left;
+    border-radius: 5px;
+    border: solid 1px #e95d24;
+    background-color: #e9e6de;
+    padding: 30px;
+    color: black;
+}
+
+.popup input{
+    float: right;
+}
+
+.popup p{
+    margin-bottom:20px;
+}
+
+.login-btn{
+    width: 80%;
+    margin: 0 10%;
+    font-size: 16px;
+    font-weight: bold;
+    color: #FFF;
+    background: none;
+    border-radius: 4px;
+    border: solid 1px;
+    padding: 5px 0;
+    box-shadow: 1px 1px 1px #e95d24;
+    background-color: #e95d24;
+}
+
+table{
+    width: 100%;
+    margin-bottom:20px;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+th, td{
+    text-align:left;
+    padding:10px;
+    font-size: 16px;
+    line-height: 36px;
+}
+
+tr:hover {
+    background: #eee;
+}
+
+thead th, table{
+    border-bottom: solid 1px #ccc;
+}
+
+label{
+    min-width: 15%;
+    display: inline-block;
+    vertical-align: top;
+    padding: 10px;
+}
+
+textarea{
+    min-width: 80%;
+}
+input[type="text"], input[type="password"]{
+    min-width: 40%;
+}
+
+textarea, input[type="text"], input[type="password"] {
+    border: solid 1px #999;
+    padding: 10px;
+}
+
+select {
+    border: solid 1px #999;
+    padding: 10px;
+}
+
+.small{
+    font-size:75%;
+}
+
+html, body{
+    margin:0;
+    padding:0;
+}
+
+.clear {
+    clear:both;
+}
+
+.content{
+    width:80%;
+    margin:0 10%;
+}
+
+.errorlist{
+    color:red;
+}
+form p{
+    margin: 20px 0;
+}
+
+.error {
+    font-size:12px;
+    color:red;
+}
+
+.errorlist li,.errorlist ul{
+    margin-top:2px;
+    list-style: circle outside none;
+}
+.close {
+    position: absolute;
+    right: -10px;
+    top: -10px;
+    height: 20px;
+    width: 20px;
+    cursor: pointer;
+    color: white;
+    background-color: black;
+    font-size: 14px;
+    line-height: 20px;
+    border-radius: 20px;
+    text-align: center;
+    text-decoration: none;
+    padding: 2px;
+}
+
+.close:hover {
+    background: red;
+}
+
+.btn, button {
+    text-decoration: none;
+    background-color: #777;
+    padding: 10px;
+    border-radius: 3px;
+    color: #FFF;
+    font-size: 16px;
+    cursor: pointer;
+    opacity: .9;
+}
+
+.btn:hover, button:hover {
+    opacity: 1;
+}
+
+.danger {
+    background-color: #cd463f;
+    border-color:#bd362f;
+}
+
+.edit {
+    background-color: #15d;
+    border-color:#04c;
+}
+
+.success {
+    background-color: #61b361;
+    color: #fff;
+}
+
+.icon-btn {
+    height:24px;
+    margin-left:20px;
+}
+
+.btn-box {
+    padding: 20px 0 80px;
+    border-top: 1px solid #cecece;
+    margin-top: 40px;
+}
