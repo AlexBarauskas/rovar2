@@ -17,6 +17,7 @@ urlpatterns = patterns(
     url(r'^tracks/(?P<track_id>\d+)/edit-post/$', post_edit, name="post-edit-track"),
 
     url(r'^points/$', points, name="manager_points"),
+    url(r'^points/(?P<type_id>\d+)/$', points, name="manager_points"),
     url(r'^points/add/$', point_edit, name="point-add"),
     url(r'^points/(?P<point_id>\d+)/edit/$', point_edit, name="point-edit"),
     url(r'^points/(?P<point_id>\d+)/delete/$', point_delete, name="point-delete"),
