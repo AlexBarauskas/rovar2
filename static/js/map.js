@@ -39,13 +39,13 @@ function fn_back(){
     
     var stateObj = { foo: "bar" };
     history.pushState(stateObj, "page", '/');	  
-
+    /*
     $('.leaflet-marker-icon').css({'margin-left': (-rovar._iconsize*rovar._kLeft).toString()+'px',
 				   'margin-top': (-rovar._iconsize).toString()+'px',
 				   'width': rovar._iconsize.toString()+'px',
 				   'height': rovar._iconsize.toString()+'px'
 				  });
-
+     */
     
 };
 
@@ -58,15 +58,16 @@ var rovar = {
 	//$('#map').height($(document).height());
 	var map = new L.Map('map');
 	var self = this;
+	/*
 	map.on('zoomend', function(ev){
 		   self._iconsize = 36 * ev.target._zoom * ev.target._zoom / (12 * 12);
-		   //console.log(ev.target._zoom, self._iconsize);
 		   $('.leaflet-marker-icon').css({'margin-left': (-self._iconsize*self._kLeft).toString()+'px',
 						  'margin-top': (-self._iconsize).toString()+'px',
 						  'width': self._iconsize.toString()+'px',
 						  'height': self._iconsize.toString()+'px'
 						 });
 	       });
+	 */
 	var minsk = new L.LatLng(53.9, 27.566667);
 	this.copyright = '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors';
 	this.map = map.setView(minsk, 12);
@@ -276,11 +277,13 @@ var rovar = {
 		    
 		rovar.currentPoint = _point;
 		rovar.currentPoint.setIcon(rovar.currentPoint._activeIcon);
-		$('.leaflet-marker-icon').css({'margin-left': (-rovar._iconsize*rovar._kLeft).toString()+'px',
+		/*
+		 $('.leaflet-marker-icon').css({'margin-left': (-rovar._iconsize*rovar._kLeft).toString()+'px',
 					       'margin-top': (-rovar._iconsize).toString()+'px',
 					       'width': rovar._iconsize.toString()+'px',
 					       'height': rovar._iconsize.toString()+'px'
 					      });
+		 */
 
 		rovar.currentPoint._icon.onclick = fn_back;//rovar.currentPoint._onclick;
 		
@@ -325,7 +328,7 @@ var rovar = {
 	    var myIcon =new L.Icon({
 				       iconUrl: data.marker,
 				       iconSize: [this._iconSize, this._iconSize],
-				       iconAnchor: [this._iconSize*this._kLeft, this._iconSize]
+				       iconAnchor: [this._iconSize*this._kLeft, this._iconSize/2]
 				   });
 
 	    var activeIcon =new L.Icon({
