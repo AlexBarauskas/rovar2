@@ -32,7 +32,7 @@ class PointForm(forms.ModelForm):
 
     class Meta:
         model = Point
-        exclude = ('created', 'post')
+        exclude = ('created', 'post', 'uid')
 
 
 class UploadImageForm(forms.ModelForm):

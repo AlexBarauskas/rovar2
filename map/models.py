@@ -73,6 +73,7 @@ class Point(models.Model):
     type = models.ForeignKey(Type,
                              limit_choices_to={'obj': 'p'})
     description = models.CharField(u'Краткое описание', max_length=256, null=False)
+    phones = models.CharField(u'Телефоны', max_length=128, blank=True, null=True)
     coordinates = models.TextField(u'Координаты', default='[]')
     address = models.CharField(u'Адрес', max_length=256, null=False)
     created = models.DateTimeField(auto_now_add=True)

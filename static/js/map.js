@@ -302,7 +302,8 @@ var rovar = {
 		    description = "<p>"+data.description+"</p>";
 		var preview = $('.preview-content').html('')
 		    .append($("<h1>"+data.title+"</h1>").css('color', data.color))
-		    .append($("<p></p>").html(data.address).addClass('description-address'));
+		    .append($("<p></p>").html(data.address).addClass('description-address'))
+		    .append($("<p></p>").html(data.phones).addClass('description-address'));
 		//for(var i=data.images.length-1; i>=0; i--)
 		if(data.images && data.images.length){
 		    $('<img/>').attr({'src': data.images[0], 'title': "Show more..."}).appendTo(preview);

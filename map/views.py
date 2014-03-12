@@ -105,6 +105,10 @@ def point(request, point_id=None):
                  'address': p.address,
                  'uid': p.uid,
                  }
+        if p.phones:
+            point['phones'] = u'Телефоны: %s' % p.phones
+        else:
+            point['phones'] = ''
         if p.type.image:
             point['marker'] = p.type.image.url
             point['marker_active'] = p.type.image.url
