@@ -145,6 +145,11 @@ h1.manager {
 
 .popup p{
     margin-bottom:20px;
+    height:40px;
+}
+
+.popup label{
+    padding:10px 0;
 }
 
 .login-btn{
