@@ -61,6 +61,7 @@ var rovar = {
 	var self = this;
 	
 	map.on('zoomend', function(ev){
+		   var minR = 18;
 		   var p=[], i, j, R, r;
 		   var pins = $('.leaflet-marker-pane img'), N=pins.length-1;
 		   console.log(N);
@@ -68,14 +69,14 @@ var rovar = {
 		       p.push($(pins[i]).position());
 		   }
 		   for(i=0;i<p.length-1;i++){
-		       R = 36;
+		       R = minR;
 		       for(j=i+1;j<p.length;j++){
 			   r= Math.sqrt((p[i].top-p[j].top)*(p[i].top-p[j].top)+(p[i].left-p[j].left)*(p[i].left-p[j].left));   
 			   console.log(r);
 			   if(r<R)
 			       R = r;
 			   }
-		       if(R<36){
+		       if(R<minR){
 			   $(pins[N-i]).css('visibility', 'hidden');
 		       }
 		       else{
