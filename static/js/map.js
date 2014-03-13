@@ -398,8 +398,7 @@ var rovar = {
 		method: 'GET',
 		data: filter,
 		success: function(data){
-		    self._numberPoint = data.ids.length;
-		    self._numberLoadPoint = 0;
+		    self._numberPoint = self._numberPoint + data.ids.length;
 		    for(var i=0;i<data.ids.length;i++){
 			self.loadPoint(data.ids[i]);
 		    }
@@ -431,6 +430,7 @@ $(function(){
       $('#back-to-banner').click(fn_back);
 
       var types = $(".type-all");
+      rovar._numberLoadPoint = 0;
       for(var i = types.length-1; i>=0; i--){
 	  var id = types[i].id.split('-');
 	  if(id[1]=='p'){
