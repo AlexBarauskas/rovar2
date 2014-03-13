@@ -54,44 +54,43 @@ var rovar = {
     elements:{},
     _iconSize: 36,
     _kLeft: 0.317,
+    _numberPoint: 0,
+    _numberLoadPoint: 0,
+
+    _visible_pins : function(){
+	var minR = 18;
+	var p=[], i, j, R, r;
+	var pins = $('.leaflet-marker-pane img'), N=pins.length-1;
+	for(i=N;i>=0;i--){
+	    p.push($(pins[i]).position());
+	}
+	for(i=0;i<p.length-1;i++){
+	    R = minR;
+	    for(j=i+1;j<p.length;j++){
+		r= Math.sqrt((p[i].top-p[j].top)*(p[i].top-p[j].top)+(p[i].left-p[j].left)*(p[i].left-p[j].left));   
+		//console.log(r);
+		if(r<R )
+		    R = r;
+	    }
+	    if(R<minR && pins[N-i].src.indexOf('media/icons/pin-route-b.png')==-1 && pins[N-i].src.indexOf('media/icons/pin-route-a.png')==-1){
+		$(pins[N-i]).css('visibility', 'hidden');
+	    }
+	    else{
+		$(pins[N-i]).css('visibility', 'visible');
+	    }
+	}
+	
+    },
 
     init : function(){
 	//$('#map').height($(document).height());
 	var map = new L.Map('map');
 	var self = this;
 	
+
+	
 	map.on('zoomend', function(ev){
-		   var minR = 18;
-		   var p=[], i, j, R, r;
-		   var pins = $('.leaflet-marker-pane img'), N=pins.length-1;
-		   //console.log(N);
-		   for(i=N;i>=0;i--){
-		       p.push($(pins[i]).position());
-		   }
-		   for(i=0;i<p.length-1;i++){
-		       R = minR;
-		       for(j=i+1;j<p.length;j++){
-			   r= Math.sqrt((p[i].top-p[j].top)*(p[i].top-p[j].top)+(p[i].left-p[j].left)*(p[i].left-p[j].left));   
-			   //console.log(r);
-			   if(r<R )
-			       R = r;
-			   }
-		       if(R<minR && pins[N-i].src.indexOf('media/icons/pin-route-b.png')==-1 && pins[N-i].src.indexOf('media/icons/pin-route-a.png')==-1){
-			   $(pins[N-i]).css('visibility', 'hidden');
-		       }
-		       else{
-			   $(pins[N-i]).css('visibility', 'visible');
-		       }
-		   }
-		   /*
-		    self._iconsize = 36 * ev.target._zoom * ev.target._zoom / (12 * 12); 
-		    
-		   $('.leaflet-marker-icon').css({'margin-left': (-self._iconsize*self._kLeft).toString()+'px',
-						  'margin-top': (-self._iconsize).toString()+'px',
-						  'width': self._iconsize.toString()+'px',
-						  'height': self._iconsize.toString()+'px'
-						 });
-		   */
+		   self._visible_pins();
 	       });
 	
 	var minsk = new L.LatLng(53.9, 27.566667);
@@ -394,10 +393,13 @@ var rovar = {
 
     loadPoints : function(filter){
 	var self = this;
+	
 	$.ajax({url: '/map/available-points/',
 		method: 'GET',
 		data: filter,
 		success: function(data){
+		    self._numberPoint = data.ids.length;
+		    self._numberLoadPoint = 0;
 		    for(var i=0;i<data.ids.length;i++){
 			self.loadPoint(data.ids[i]);
 		    }
@@ -412,6 +414,9 @@ var rovar = {
 		   method: 'GET',
 		   success: function(data){
 		       self.addPoint(data);
+		       self._numberLoadPoint ++;
+		       if(self._numberLoadPoint == self._numberPoint)
+			   self._visible_pins();
 		   }
 	       });	
     }
