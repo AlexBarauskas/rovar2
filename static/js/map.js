@@ -59,16 +59,40 @@ var rovar = {
 	//$('#map').height($(document).height());
 	var map = new L.Map('map');
 	var self = this;
-	/*
+	
 	map.on('zoomend', function(ev){
-		   self._iconsize = 36 * ev.target._zoom * ev.target._zoom / (12 * 12);
+		   var p=[], i, j, R, r;
+		   var pins = $('.leaflet-marker-pane img'), N=pins.length-1;
+		   console.log(N);
+		   for(i=N;i>=0;i--){
+		       p.push($(pins[i]).position());
+		   }
+		   for(i=0;i<p.length-1;i++){
+		       R = 36;
+		       for(j=i+1;j<p.length;j++){
+			   r= Math.sqrt((p[i].top-p[j].top)*(p[i].top-p[j].top)+(p[i].left-p[j].left)*(p[i].left-p[j].left));   
+			   console.log(r);
+			   if(r<R)
+			       R = r;
+			   }
+		       if(R<36){
+			   $(pins[N-i]).css('visibility', 'hidden');
+		       }
+		       else{
+			   $(pins[N-i]).css('visibility', 'visible');
+		       }
+		   }
+		   /*
+		    self._iconsize = 36 * ev.target._zoom * ev.target._zoom / (12 * 12); 
+		    
 		   $('.leaflet-marker-icon').css({'margin-left': (-self._iconsize*self._kLeft).toString()+'px',
 						  'margin-top': (-self._iconsize).toString()+'px',
 						  'width': self._iconsize.toString()+'px',
 						  'height': self._iconsize.toString()+'px'
 						 });
+		   */
 	       });
-	 */
+	
 	var minsk = new L.LatLng(53.9, 27.566667);
 	this.copyright = '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors';
 	this.map = map.setView(minsk, 12);
@@ -146,12 +170,13 @@ var rovar = {
 			     });
 		$('#disqus_thread').show();
 	    }
-
+	    /*
 	    $('.leaflet-marker-icon').css({'margin-left': (-rovar._iconsize*rovar._kLeft).toString()+'px',
 					   'margin-top': (-rovar._iconsize).toString()+'px',
 					   'width': rovar._iconsize.toString()+'px',
 					   'height': rovar._iconsize.toString()+'px'
 					  });
+	     */
 	    
 	}
 	/*var video='', btn='';
