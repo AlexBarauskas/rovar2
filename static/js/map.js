@@ -414,7 +414,7 @@ var rovar = {
 		   method: 'GET',
 		   success: function(data){
 		       self.addPoint(data);
-		       self._numberLoadPoint ++;
+		       self._numberLoadPoint++;
 		       if(self._numberLoadPoint == self._numberPoint)
 			   self._visible_pins();
 		   }
