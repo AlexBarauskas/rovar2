@@ -76,7 +76,11 @@ var rovar = {
 	//L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png',
 	//http://tile.stamen.com/toner-lite/6/36/21.png
 	//L.tileLayer('http://tile.stamen.com/toner-lite/{z}/{x}/{y}.png',
-		    {attribution: this.copyright,key: 'BC9A493B41014CAABB98F0471D759707'}).addTo(this.map);
+		    {attribution: this.copyright,
+		     key: 'BC9A493B41014CAABB98F0471D759707',
+		     minZoom: 12
+		    }).addTo(this.map);
+	this.map.setMaxBounds([[53.775, 27.31304168701172], [54, 27.820472717285156]]);
     },
 
     addTrack : function (data){
