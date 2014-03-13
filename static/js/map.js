@@ -64,7 +64,7 @@ var rovar = {
 		   var minR = 18;
 		   var p=[], i, j, R, r;
 		   var pins = $('.leaflet-marker-pane img'), N=pins.length-1;
-		   console.log(N);
+		   //console.log(N);
 		   for(i=N;i>=0;i--){
 		       p.push($(pins[i]).position());
 		   }
@@ -72,7 +72,7 @@ var rovar = {
 		       R = minR;
 		       for(j=i+1;j<p.length;j++){
 			   r= Math.sqrt((p[i].top-p[j].top)*(p[i].top-p[j].top)+(p[i].left-p[j].left)*(p[i].left-p[j].left));   
-			   console.log(r);
+			   //console.log(r);
 			   if(r<R)
 			       R = r;
 			   }
@@ -354,7 +354,7 @@ var rovar = {
 					 this.page.identifier = data.uid;  
 					 this.page.title = data.title;
 					 this.page.url = "http://onbike.by/"+data.uid+"/";
-					 console.log(this);
+					 //console.log(this);
 				     }
 				 });
 		    $('#disqus_thread').show();
