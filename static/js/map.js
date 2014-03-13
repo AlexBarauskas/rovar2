@@ -73,10 +73,10 @@ var rovar = {
 		       for(j=i+1;j<p.length;j++){
 			   r= Math.sqrt((p[i].top-p[j].top)*(p[i].top-p[j].top)+(p[i].left-p[j].left)*(p[i].left-p[j].left));   
 			   //console.log(r);
-			   if(r<R)
+			   if(r<R )
 			       R = r;
 			   }
-		       if(R<minR){
+		       if(R<minR && pins[N-i].src.indexOf('media/icons/pin-route-b.png')==-1 && pins[N-i].src.indexOf('media/icons/pin-route-a.png')==-1){
 			   $(pins[N-i]).css('visibility', 'hidden');
 		       }
 		       else{
