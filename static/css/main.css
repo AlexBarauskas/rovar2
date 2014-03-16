@@ -91,23 +91,34 @@ html, body {
     background-color: #e95d24;
     color: white;
     margin: 0;
-    padding: 16px;
-    height: 16px;
+    padding: 0 16px;
+    height: 48px;
+    line-height: 48px;
     width: 408px;
     position: fixed;
     z-index: 100;
+
 }
 
-#header .logo{
-    padding:0px;
-    position:relative;
-    top:5px;
+#header .logo {
+    width: 97px;
+    height: 31px;
+    display: block;
+    text-indent: -9999px;
+    background: url(../images/logo.png);
+    background-size: 97px 31px;
+    margin-top: 8px;
 }
 
-#header h1>a{
+#header .back {
+    color: white;
     text-decoration: none;
-    color:white;
+    height: 48px;
+    width: 20px;
+    line-height: 48px;
+    display: block;
 }
+
 
 #header .type {
     display: none;
@@ -147,14 +158,13 @@ html, body {
 
 #hmenu a>img{
     position:relative;
-    top:3px;
+    top:6px;
 }
 
 .social{
     height: 25px;
     width: auto;
     margin-bottom: -8px;
-    border: 10px solid red;
 }
 
 .section{
