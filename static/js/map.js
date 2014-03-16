@@ -155,6 +155,9 @@ var rovar = {
 		video.width(preview.width());
 	    }
 	    
+	    $("#type").html(data.type_name);
+	    $("#header").css('background-color', data.color);
+
 	    var stateObj = { foo: "bar" };
 	    history.pushState(stateObj, "page", '/'+ data.uid +'/');	  
 
@@ -341,6 +344,10 @@ var rovar = {
 		if(data.phones)
 		    preview.append($("<p></p>").html(data.phones));
 		preview.parent().show();
+
+		$("#type").html(data.type_name);
+		$("#header").css('background-color', data.color);
+		
 
 		var stateObj = { foo: "bar" };
 		history.pushState(stateObj, "page", '/'+ data.uid +'/');	  
