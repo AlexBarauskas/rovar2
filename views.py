@@ -9,7 +9,7 @@ from account.models import Author
 
 from django.contrib.auth.decorators import login_required
 
-@login_required
+#@login_required
 def home(request, uid=None):
     acl = '0'
     if request.user.is_authenticated():
@@ -51,7 +51,7 @@ def home(request, uid=None):
                                },
                               context_instance=RequestContext(request))
 
-@login_required
+#@login_required
 def info(request):
     return render_to_response('info.html',
                               {'authors': Author.objects.all(),
