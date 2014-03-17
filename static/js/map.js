@@ -37,6 +37,8 @@ function fn_back(){
     $('#back-to-banner').hide();
     $('#type').hide();
     $('#banner').show();
+    $("#header").css('background-color', "#e95d24");
+
     
     var stateObj = { foo: "bar" };
     history.pushState(stateObj, "page", '/');	  
