@@ -106,6 +106,7 @@ def point(request, point_id=None):
                  'address': p.address,
                  'uid': p.uid,
                  'type_name': p.type.name,
+                 'website': p.website
                  }
         if p.phones:
             point['phones'] = u'Телефоны: %s' % p.phones
