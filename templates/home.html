@@ -17,10 +17,12 @@
   <h1>Показывать на карте:</h1>
   <ul class="control">
     {%for T in types%}
+    {%if T.count_items%}
     <li id="type-{{T.obj}}-{{T.id}}" class="type-all">
       <span style="background-color:{{T.color}}">{{T.name}}</span>
       <span style="color:{{T.color}}" class="number">{{T.count_items}}</span>
     </li>
+    {%endif%}
     {%endfor%}
   </ul>
 </div>
