@@ -76,6 +76,8 @@ class Point(models.Model):
     phones = models.CharField(u'Телефоны', max_length=128, blank=True, null=True)
     coordinates = models.TextField(u'Координаты', default='[]')
     address = models.CharField(u'Адрес', max_length=256, null=False)
+    website = models.URLField(u'Сайт', blank=True, null=True)
+
     created = models.DateTimeField(auto_now_add=True)
     post = models.OneToOneField(Post, null=True)
     uid = models.CharField(max_length=24, null=True)
