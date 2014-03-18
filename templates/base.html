@@ -13,9 +13,9 @@
 <meta name="og:description" content="Велосипедная карта Минска: маршруты, полезные объекты, с видео- и фотоподсказками. Велосипед — друг человека. Onbike.by — друг велосипедиста!"/>
 {%if obj%}
 <meta property="og:title" content="ONBIKE.BY | {{obj.name}}" />
-<meta property="og:url" content="http://onbike.by/{{obj.uid}}" />
+<meta property="og:url" content="http://onbike.by/{{obj.uid}}/" />
 {%if obj.photo_set.0.image.url%}
-<meta property="og:image" content="{{obj.photo_set.0.image.url}}" />
+<meta property="og:image" content="{{obj.photo_set.all.0.image.url}}" />
 {%else%}
 <meta property="og:image" content="http://onbike.by/static/images/onbike-og.png " />
 {%endif%}
