@@ -10,7 +10,7 @@
 <meta property="og:title" content="ONBIKE.BY | {{obj.name}}" />
 <meta property="og:url" content="http://onbike.by/{{obj.uid}}/" />
 {%if obj.photo_set.all.0.image.url%}
-<meta property="og:image" content="{{obj.photo_set.all.0.image.url}}" />
+<meta property="og:image" content="http://onbike.by{{obj.photo_set.all.0.image.url}}" />
 {%else%}
 <meta property="og:image" content="http://onbike.by/static/images/onbike-og.png " />
 {%endif%}
