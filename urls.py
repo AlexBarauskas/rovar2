@@ -1,5 +1,7 @@
 from django.conf.urls.defaults import patterns, include, url
 from django.conf import settings
+from django.views.generic.base import RedirectView
+
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -16,9 +18,11 @@ urlpatterns = patterns(
 
     url(r'^account/logout/$', 'django.contrib.auth.views.logout',
         { 'next_page' : '/' }, name="logout"),
-    url(r'^account/login/$', 'django.contrib.auth.views.login',
-        {'template_name': 'login.html'},
-        name="account_login"),
+    #url(r'^account/login/$', 'django.contrib.auth.views.login',
+    #    {'template_name': 'login.html'},
+    #    name="account_login"),
+    url(r'^account/login/$', RedirectView.as_view(url='/', permanent=False)),
+
 
     #url(r'^account/', include('account.urls')),
                        
