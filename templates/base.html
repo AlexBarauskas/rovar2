@@ -11,6 +11,24 @@
 <meta property="og:image" content="http://onbike.by/static/images/onbike-og.png " />
 <meta name="description" content="Велосипедная карта Минска: маршруты, полезные объекты, с видео- и фотоподсказками. Велосипед — друг человека. Onbike.by — друг велосипедиста!"/>
 <meta name="og:description" content="Велосипедная карта Минска: маршруты, полезные объекты, с видео- и фотоподсказками. Велосипед — друг человека. Onbike.by — друг велосипедиста!"/>
+{%if obj%}
+<meta property="og:title" content="ONBIKE.BY | {{obj.title}}" />
+<meta property="og:url" content="http://onbike.by/{{obj.uid}}" />
+{%if obj.photo_set.0.image.url%}
+<meta property="og:image" content="{{obj.photo_set.0.image.url}}" />
+{%else%}
+<meta property="og:image" content="http://onbike.by/static/images/onbike-og.png " />
+{%endif%}
+<meta name="description" content="{{obj.description}}"/>
+<meta name="og:description" content="{{obj.description}}"/>
+{%else%}
+<meta property="og:title" content="ONBIKE.BY" />
+<meta property="og:url" content="http://onbike.by/" />
+<meta property="og:image" content="http://onbike.by/static/images/onbike-og.png " />
+<meta name="description" content="Велосипедная карта Минска: маршруты, полезные объекты, с видео- и фотоподсказками. Велосипед — друг человека. Onbike.by — друг велосипедиста!"/>
+<meta name="og:description" content="Велосипедная карта Минска: маршруты, полезные объекты, с видео- и фотоподсказками. Велосипед — друг человека. Onbike.by — друг велосипедиста!"/>
+{%endif%}
+
 
 {% block css %}
 {% endblock css %}
