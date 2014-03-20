@@ -28,7 +28,7 @@
       <td>{{p.type}}</td>
       <td><a title="Редактировать расширенное описание пункта" class="icon-btn" href="{% url post-edit-point p.id %}"><img src="/static/icons/edit_post.png"/></a></td>
       <td><a title="Редактировать информацию о пункту" class="icon-btn" href="{% url point-edit p.id %}"><img src="/static/icons/edit.png"/></a></td>
-      <td><img title="Удалить пункт" id={{p.id}} class="delete icon-btn" src="/static/icons/delete.png"/></td>
+      <td><img title="Удалить пункт" id="{{p.id}}" class="delete icon-btn" src="/static/icons/delete.png"/></td>
     </tr>
     {% endfor %}
   </tbody>
