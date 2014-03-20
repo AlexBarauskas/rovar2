@@ -92,7 +92,7 @@ class Point(models.Model):
     def __unicode__(self):
         return self.name
 
-    def to_dist(self):
+    def to_dict(self):
         point = {'coordinates': json.loads(self.coordinates),
                  'title': self.name,
                  'description': self.description,
