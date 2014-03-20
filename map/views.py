@@ -89,7 +89,7 @@ def all_points(request):
         if request.user.is_staff:
             acl = '2'
     kwargs = {'state__lte': acl}
-    points = [p.to_dict for p in Point.objects.filter(**kwargs)]
+    points = [p.to_dict() for p in Point.objects.filter(**kwargs)]
     return HttpResponse(json.dumps(points),
                         mimetype='text/json')
 
