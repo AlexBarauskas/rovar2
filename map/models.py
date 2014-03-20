@@ -2,6 +2,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from blog.models import Post
+import json
 
 OBJ_CHOICES = (('t', u'Маршрут'),
                ('p', u'Точка'),
