@@ -82,6 +82,18 @@ def get_available_points(request):
     return HttpResponse(json.dumps({'ids': points}),
                         mimetype='text/json')
 
+def all_points(request):
+    acl = '0'
+    if request.user.is_authenticated():
+        acl = '1'
+        if request.user.is_staff:
+            acl = '2'
+    kwargs = {'state__lte': acl}
+    points = [p.to_dict for p in Point.objects.get(**kwargs)]
+    return HttpResponse(json.dumps(points),
+                        mimetype='text/json')
+
+
 
 def point(request, point_id=None):
     acl = '0'

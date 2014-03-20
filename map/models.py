@@ -92,6 +92,36 @@ class Point(models.Model):
     def __unicode__(self):
         return self.name
 
+    def to_dist(self):
+        point = {'coordinates': json.loads(self.coordinates),
+                 'title': self.name,
+                 'description': self.description,
+                 'id': self.id,
+                 'color': self.type.color,
+                 'marker': '/static/images/Parking.png',
+                 'marker_active': '/static/images/Parking.png',
+                 'status': 'success',
+                 'images': [ph.image.url for ph in  self.photo_set.all()],
+                 'address': self.address,
+                 'uid': self.uid,
+                 'type_name': self.type.name,
+                 'website': self.website
+                 }
+        if self.phones:
+            point['phones'] = self.phones
+        else:
+            point['phones'] = ''
+        if self.type.image:
+            point['marker'] = self.type.image.url
+            point['marker_active'] = self.type.image.url
+        if self.type.image2:
+            point['marker_active'] = self.type.image2.url
+        point['type'] = [self.type.obj, '%s' % self.type.id]
+        return point
+
+        
+
+
 
 class Photo(models.Model):
     point = models.ForeignKey(Point, null=True)

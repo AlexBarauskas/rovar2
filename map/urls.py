@@ -14,6 +14,7 @@ urlpatterns = patterns(
 
     url(r'^point/$', point, name="get_point"),
     url(r'^point/(?P<point_id>\d+)/$', point, name="get_point_by_id"),
+    url(r'^all-points/$', all_points, name="all_points"),
 
     url(r'^tile/(?P<z>\d+)/(?P<x>\d+)/(?P<y>\d+).png$', tile, name="map_tile"),
 
