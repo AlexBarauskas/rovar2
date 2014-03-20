@@ -15,7 +15,7 @@ $(function(){
 					 url: this.id+'/delete/',
 					 success: function(data){
 					     if(data.success){
-						 box.remove();
+						 box.parent().remove();
 					     }
 					     else{
 						 for(var i=data.errors.length-1;i>=0;i--)
