@@ -46,7 +46,7 @@ table {
 }
 
 html, body {
-    font-family:'HelveticaMonospacedW10', Helvetica, Arial, sans-serif;
+    font-family:'ProximaNovaRegular', Helvetica, Arial, sans-serif;
     height:100%;
     font-size:14px;
 }
@@ -243,16 +243,17 @@ html, body {
     margin-top: 0;
     margin-bottom: 0;
     color: #e95d24;
-    font-size: 26px;
+    font-size: 28px;
+    font-family:'ProximaNovaExtrabold', Helvetica, Arial, sans-serif;
 }
 
 .data-content p{
-    font-family:'HelveticaMonospacedW10', Helvetica, Arial, sans-serif;
+    font-family:'ProximaNovaRegular', Helvetica, Arial, sans-serif;
     margin-top: 0;
     margin-bottom: 0;
     padding: 20px 0 20px;
-    font-size: 17px;
-    line-height: 23px;
+    font-size: 20px;
+    line-height: 26px;
     color: black;
 }
 
@@ -271,7 +272,7 @@ html, body {
 			  font-size:14px;}
 .data-content div {//font-size:18px;
 		   //font-weight: bold;
-           font-family:'HelveticaMonospacedW10', Helvetica, Arial, sans-serif;}
+           font-family:'ProximaNovaRegular', Helvetica, Arial, sans-serif;}
 
 .post-end {margin-bottom:60px; box-shadow: 0px 1px 2px #444}
 

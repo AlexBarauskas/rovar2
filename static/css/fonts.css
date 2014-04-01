@@ -5,3 +5,24 @@
 	     url('../assets/fonts/HelveticaMonospaced/HelveticaMonospacedW10.ttf')  format('truetype'),
 	     url('../assets/fonts/HelveticaMonospaced/HelveticaMonospacedW10.svg#HelveticaMonospacedW10') format('svg');
 }
+
+@font-face {
+	font-family: 'ProximaNovaRegular';
+	src: url('../assets/fonts/ProximaNova/ProximaNovaRegular.eot?') format('eot'), 
+	     url('../assets/fonts/ProximaNova/ProximaNovaRegular.woff') format('woff'), 
+	     url('../assets/fonts/ProximaNova/ProximaNovaRegular.ttf')  format('truetype');
+}
+
+@font-face {
+	font-family: 'ProximaNovaBold';
+	src: url('../assets/fonts/ProximaNova/ProximaNovaBold.eot?') format('eot'), 
+	     url('../assets/fonts/ProximaNova/ProximaNovaBold.woff') format('woff'), 
+	     url('../assets/fonts/ProximaNova/ProximaNovaBold.ttf')  format('truetype');
+}
+
+@font-face {
+	font-family: 'ProximaNovaExtrabold';
+	src: url('../assets/fonts/ProximaNova/ProximaNovaExtrabold.eot?') format('eot'), 
+	     url('../assets/fonts/ProximaNova/ProximaNovaExtrabold.woff') format('woff'), 
+	     url('../assets/fonts/ProximaNova/ProximaNovaExtrabold.ttf')  format('truetype');
+}
