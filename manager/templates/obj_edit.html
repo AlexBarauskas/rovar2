@@ -19,6 +19,14 @@
 </div>
 
 {%endfor%}
+{%if mod_notifi%}
+<h1>Информация для мобильного клиента.</h1>
+<div>
+  <p>Заявка на добавление точки подана {{mod_notifi.created}} с помощью мобильного клиента.</p>
+  <label>Уведомление о принятии решения:</label>
+  <textarea name="mod_notifi">{{mod_notifi.message}}</textarea>
+</div>
+{%endif%}
 <div class="btn-box">
   <button class="btn success" name="submit" value="to_current_page">Сохранить</button>
   <button class="btn edit" name="submit" value="to_section">Сохранить и вернуться к списку</button>
