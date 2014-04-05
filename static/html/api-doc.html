@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>onbike.by</title>
+    <link type="image/png" rel="icon" href="/static/images/favicon.png"/>
+    <link type="text/css" href="/static/css/main.css" rel="stylesheet"/>
+    <link type="text/css" href="/static/account/css/login.css" rel="stylesheet"/>
+    <meta property="og:title" content="ONBIKE.BY" />
+    <meta property="og:url" content="http://onbike.by/" />
+    <meta property="og:image" content="http://onbike.by/static/images/onbike-og.png " />
+    <meta name="description" content="Велосипедная карта Минска: маршруты, полезные объекты, с видео- и фотоподсказками. Велосипед — друг человека. Onbike.by — друг велосипедиста!"/>
+    <meta name="og:description" content="Велосипедная карта Минска: маршруты, полезные объекты, с видео- и фотоподсказками. Велосипед — друг человека. Onbike.by — друг велосипедиста!"/>
+    <link type="text/css" href="/static/leaflet/leaflet.css" rel="stylesheet"/>
+  </head>
+
+  <body>
+<style>
+  #api .method{
+  margin: 0px 10px 20px 10px;
+  padding:10px;
+  background:#FFF;
+  border: solid 1px #ccc;
+  border-radius: 4px;
+  font-size:12px;
+}
+#api .method p{
+  font-size:1em;
+  padding: 1em 0;
+  line-height:1.5em;
+}
+#api .method h1{
+  font-size: 1.5em;
+  color: #5252FF;
+  margin-bottom: 1em;
+  border-bottom: solid 1px;
+}
+#api .method h2{
+  font-size:1.25em;
+  color:#5252FF;
+}
+
+</style>
+
+    <div id="main-panel">
+      <div id="header"  style="background-color:">
+        <div id="hmenu">
+          <a id="info" href="javascript:;"><img src="/static/icons/info.png"/></a>
+        </div>
+        <h1>
+          <a href="/" id="banner" class="logo">ONBIKE.BY</a>
+          <a href="javascript:;" id="back-to-banner" style="display:none" class="back">&lt;</a>
+        </h1>
+        <div id="type" class="type"></div>
+      </div>
+      <div class="section views">
+      </div>
+    </div>
+    <div id="contentWrapper"> 
+      <div id="api" class="data-content" style="padding:0;padding-top:20px;">
+	<div class="method">
+	  <h1>Иничиализация клиента.</h1>
+	  <pre class="fragment">GET: http://onbike.by/api/init
+	  </pre><p> Запрос на инициализацию клиента.<br/>
+	  </p>
+	  <h2>Возвращаемый json:</h2>
+	  <p>{'success': True,<br/>
+	    'uid': 'peronas_key_for_feedback'}<br/>
+	    Параметр "uid" клиент должен сохранить на своей стороне и использовать его для получения состояний.
+	  </p>
+	</div>
+	<div class="method">
+	  <h1>Получение информации о доступных точках. </h1>
+	  <pre class="fragment">GET: http://onbike.by/api/points?page=P&amp;per_page=N
+	  </pre><p> GET-запрос может не содержать параметров.<br/>
+	    В случае отсутствия параметра page или не верного преобразования в целочисленное значение, будет возвращен список всех доступных точек.<br/>
+	    В случае отсутствия или неврно указанного параметра per_page значение по умолчанию принимается 10.<br/>
+	  </p>
+	</div>
+	<div class="method">
+	  <h1>Добавление точки через приложение.</h1>
+	  <pre class="fragment">POST: http://onbike.by/api/point/add
+	  </pre> <h2>Параметры:</h2>
+	  <p>uid - ключ для обратной связи. Если на стороне клиента отсутствует данный идентификатор, то необходимо вызвать метод <a href="http://onbike.by/api/init">http://onbike.by/api/init</a> для его получения.<br/>
+	    title - заголовок для точки (max_length 128)<br/>
+	    type - тип точки. Допустимые значения: shop, bikerental, entertainment, parking, service<br/>
+	    description - описание точки (max_legth 256).<br/>
+	    coordinates - координаты точки. Example: "[53.88988, 27.591129]"<br/>
+	    address - адрес точки (max_length 256). Example: "ул. Станиславского 11а"<br/>
+	    phones - телефоны (max_length 128). Могут быть перечислены через запятую. Поле не обязательное. Позже будет указон шаблон для номера<br/>
+	    website - Не обязательно поле. Мало вероятно что будет использовано при добавлении через клиент.<br/>
+	    image - фотография точки.<br/>
+	  </p>
+	  <h2>Коды ошибок:</h2>
+	  <p>1 - Неверный тип запроса.<br/>
+	    2 - Клиент с указанным uid не инициализирован.<br/>
+	    3 - Одно из полей 'title', 'type', 'description', 'coordinates', 'address' не указано или пустое.<br/>
+	    4 - Указанный тип точки не существует.<br/>
+	    5 - Отсутсвует изображение.<br/>
+	  </p>
+	</div>
+	<div class="method">
+	  <h1>Получение списка сообщений о состояниий заявленных точек. </h1>
+	  <pre class="fragment">GET: http://obike.by/api/messages?uid=&lt;app_uid&gt;
+	  </pre><p> В случае успеха возвращает {'success': True, 'messages': [{'id': &lt;message_id&gt;, 'message': &lt;message_text&gt;}]} </p>
+	</div>
+	<div class="method">
+	  <h1>Изменение статуса сообщения на прочитанное. </h1>
+	  <pre class="fragment">GET: http://obike.by/api/messages/read?uid=&lt;app_uid&gt;&amp;id=&lt;message_id&gt;
+	  </pre><p> Параметр "id" есть идентификатор собщения в списке полученных сообщений(см. "http://obike.by/api/messages?uid="&lt;app_uid&gt;). </p>
+	</div>
+      </div>
+    </div>
+    <script type="text/javascript" src="/static/js/jquery-1.7.1.min.js"></script>
+  </body>
+</html>
