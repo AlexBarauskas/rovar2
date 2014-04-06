@@ -282,7 +282,7 @@ def point_edit(request, point_id=None):
     else:
         form = PointForm(instance=point)
     mod_notifi = None
-    if point.message_set.filter(state='m').count():
+    if point is not None and point.message_set.filter(state='m').count():
         mod_notifi = point.message_set.filter(state='m')[0]
     
         
