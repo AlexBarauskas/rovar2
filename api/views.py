@@ -17,15 +17,19 @@ from api.models import Application, Message, Track, Point, Type, Photo
 #class API(object):
 
 
+@csrf_exempt
 def initialize_app(request):
     '''@brief Иничиализация клиента.
-    GET: http://onbike.by/api/init
+    POST: http://onbike.by/api/init
 Запрос на инициализацию клиента.\n
 Возвращаемый json:
 ---
     {'success': True,\n'uid': 'peronas_key_for_feedback'}\n
 Параметр "uid" клиент должен сохранить на своей стороне и использовать его для получения состояний.
     '''
+    if request.method != "POST":
+        HttpResponse(json.dumps({'success': False,
+                                 'error': "Incorrect method."}), mimetype='text/json')
     try:
         app = Application.objects.create()
         res = {'success': True,
@@ -186,14 +190,18 @@ def messages(request):
                         mimetype='text/json')
 
 
+@csrf_exempt
 def message_read(request):
     '''@brief Изменение статуса сообщения на прочитанное.
-    GET: http://obike.by/api/messages/read?uid=<app_uid>&id=<message_id>
+    POST: http://obike.by/api/messages/read?uid=<app_uid>&id=<message_id>
 Параметр "id" есть идентификатор собщения в списке полученных сообщений(см. "http://obike.by/api/messages?uid="<app_uid>).
     '''
+    if request.method != "POST":
+        HttpResponse(json.dumps({'success': False,
+                                 'error': "Incorrect method."}), mimetype='text/json')
     res = {'success': True}
-    if not Message.objects.filter(app__uid=request.GET.get('uid'),
-                                  id=request.GET.get('id')).update(state='r'):
+    if not Message.objects.filter(app__uid=request.POST.get('uid'),
+                                  id=request.POST.get('id')).update(state='r'):
         res = {'success': False,
                'error': 'Message with id=%s not exists.' % message_id}
     return HttpResponse(json.dumps(res),

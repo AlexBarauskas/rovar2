@@ -4,6 +4,7 @@ import urllib
 import os
 import StringIO
 import time
+import json
 test_img = os.path.join(os.path.dirname(__file__),'python.png')
 print test_img
 
@@ -38,9 +39,8 @@ def _encode_multipart_formdata(fields, files):
     return content_type, body.getvalue()
 
 
-def test_add_point():
-    uid = "ce625f7ff4ddd20e0d5f171d085b68a7"
-    data = {'uid': uid,
+def test_add_point(uid):
+    data = {'uid': str(uid),
             'title': 'title',
             'type': 'shop',
             'description': 'test description',
@@ -56,4 +56,36 @@ def test_add_point():
     response = urllib2.urlopen(req)
     print response.read()
 
-test_add_point()
+
+def init_app():
+    response = urllib2.urlopen('http://localhost:8080/api/init', '')
+    res = response.read()
+    print "INIT %s " % res
+    global UID
+    UID = json.loads(res)['uid']
+
+def get_points():
+    print urllib2.urlopen('http://localhost:8080/api/points').read()
+
+def get_messages(UID):
+    print urllib2.urlopen('http://localhost:8080/api/messages?uid=%s' % UID).read()
+
+
+def change_message(UID, mid):
+    print urllib2.urlopen('http://localhost:8080/api/messages/read', urllib.urlencode({'uid': UID, 'id': mid})).read()
+    
+#uid = "ce625f7ff4ddd20e0d5f171d085b68a7"
+UID = "93e71af0d36f45de941a5ce377c9cda7"
+
+#print "INIT"
+#init_app()
+print "POINTS"
+get_points()
+print "ADD POINT"
+test_add_point(UID)
+print "GET MESSAGES"
+get_messages(UID)
+print "CHANGE MESSAGES"
+change_message(UID, 5)
+
+
