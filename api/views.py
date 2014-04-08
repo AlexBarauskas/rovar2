@@ -20,7 +20,7 @@ from api.models import Application, Message, Track, Point, Type, Photo
 @csrf_exempt
 def initialize_app(request):
     '''@brief Иничиализация клиента.
-    POST: http://onbike.by/api/init
+    POST: http://onbike.by/api/clients
 Запрос на инициализацию клиента.\n
 Возвращаемый json:
 ---
