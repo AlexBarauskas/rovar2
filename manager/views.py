@@ -6,12 +6,15 @@ from django.template.context import RequestContext
 from django.core.exceptions import ObjectDoesNotExist
 
 from django.contrib.admin.views.decorators import staff_member_required
+from django.conf import settings
 
 from map.models import Type, Point, Track, Photo
 from manager.models import EditorImage
 from blog.models import Post
 from forms import TypeForm, TrackForm, PostForm, PointForm, UploadImageForm
 import json
+import os
+import re
 
 from tmp.parse_xml import XMLTrack
 
@@ -344,3 +347,43 @@ def moderation_objects(request):
                               RequestContext(request))
     
 
+from account.models import Author
+@staff_member_required
+def info_page_edit(request):
+    messages = []
+    if request.method == "POST":
+        content = request.POST.get('content', u'').strip().encode('utf-8')
+        author_filed = re.compile(r'(\d+)_(\w+)')
+        if content:
+            tf = open(os.path.join(settings.TEMPLATE_DIRS[0], 'info-content.html'), 'w')
+            tf.write(content)
+            tf.close()
+        authors = {}
+        for key, value in request.POST.iteritems():
+            field = author_filed.findall(key)
+            if field and value:
+                field = field[0]
+                if field[0] not in authors:
+                    authors[field[0]] = {}
+                authors[field[0]][field[1]] = value.strip()
+        for q, v in authors.iteritems():
+            Author.objects.filter(id=q).update(**v)
+        for key, value in request.FILES.iteritems():
+            field = author_filed.findall(key)
+            if field:
+                aid = field[0][0]
+                try:
+                    a = Author.objects.get(id=aid)
+                    a.image = value
+                    a.save()
+                except:
+                    pass
+
+        messages.append({'class': 'success',
+                         'text': u'Изменения успешно сохранены.'})
+    return render_to_response('info_edit.html',
+                              {'show_left_panel': True,
+                               'messages': messages,
+                               'authors': Author.objects.all()
+                               },                              
+                              RequestContext(request))

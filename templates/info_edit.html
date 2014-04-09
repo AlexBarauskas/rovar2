@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+
+{% block css %}
+<!--link type="text/css" href="/static/leaflet/leaflet.css" rel="stylesheet"/-->
+{% endblock css %}
+
+
+{% block menu %}
+{% if show_left_panel %}
+{{block.super}}
+{% endif %}
+{% endblock menu %}
+
+{% block content_right %}
+<style>
+  .editable .editor{
+  display:none;
+  }
+  .btn.close-editor{
+  margin: 10px 0px;
+  width: 250px;
+  background: #626FFF;
+  
+  }
+
+  .thumbnail{
+  position:relative;
+  overflow:hidden;
+  }
+  .thumbnail div{color:#999; position:absolute; width:100%;top:45%;font-weight:bold;font-size:30px;text-align:center;display:none;opacity:0.75;alpha(opacity = 75);}
+  .thumbnail:hover div{display:block;}
+  .thumbnail .force-show{display:block!important;font-size:25px;}
+  .thumbnail>img{height:auto;}
+  .thumbnail input[type="file"] {height: 200%!important;line-height: 16px!important;position: absolute;cursor: pointer;top: -100%;width:100%;opacity: 0;filter:alpha(opacity = 1);left:0;}
+</style>
+<div class="data-content" {% if not show_left_panel %}style="margin-left:0px;"{%else%}style="min-height:700px;"{% endif %}>
+  <form method="POST" action="." enctype="multipart/form-data">
+      {%for m in messages%}
+      <div class="alert form-alert {{m.class}}">
+	{{ m.text }}
+      </div>
+      {%endfor%}
+
+
+    {% csrf_token %}
+    <div class="editable">
+      <div class="display">
+	{%include "info-content.html"%}
+      </div>
+      <div class="editor">
+	<textarea class="textarea-tcm" id="main_content" name="content">
+	    {%include "info-content.html"%}
+	</textarea>
+	<div class="btn close-editor">Завершить редактирование</div>
+      </div>
+    </div>
+
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/ru_RU/all.js#xfbml=1&appId=364131847036990";
+      fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+    </script>
+
+    <div class="fb-like" data-href="http://onbike.by" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
+    <div class="authors">
+      {% for a in authors %}
+      <div class="authors-item">
+	<div class="thumbnail">
+	  <img src="{{a.image.url}}"/>
+	  <div>CHANGE</div>
+	  <input id="thumbnail-{{a.id}}" type="file" name="{{a.id}}_thumbnail" class="input-file" accept="image/*" title="Изменить фото."/>
+	</div>
+	<h1>
+	  <span>
+	    <span class="editable">
+	      <span class="display">{{a.name}}</span>
+	      <span class="editor">
+		<input id="name-{{a.id}}" name="{{a.id}}_name" value="{{a.name}}"/>
+	      </span>
+	    </span>
+	  </span>
+	</h1>
+	<div>
+	  <div class="editable">
+	    <div class="display">{{a.description}}</div>
+	    <div class="editor">
+	      <textarea id="description-{{a.id}}" name="{{a.id}}_description">{{a.description}}</textarea>
+	    </div>
+	  </div>
+	</div>
+	
+      </div>    
+      {% endfor %}
+    </div>
+    <div class="clear">
+      <button class="btn edit">Сохранить изменения</button>
+      <a class="btn" href=".." >Назад</a>
+    </div>
+  </form>
+</div>
+
+{% endblock content_right %}
+
+
+{% block js %}
+<script type="text/javascript" src="/static/js/info-edit.js"></script>
+<script type="text/javascript" src="/static/js/tinymce4/tinymce.min.js"></script>
+<script>
+  $(function(){
+  tinymce.init({
+  convert_urls:false,
+  relative_urls:false,
+  content_css: "/static/css/main.css",
+  theme : "modern",
+  skin: "tinymce-4-lightgray-no-fonts-skin",
+  selector: ".textarea-tcm",
+  plugins: [
+  "advlist autolink lists link image charmap print preview anchor",
+  "searchreplace visualblocks code fullscreen",
+  "insertdatetime media table contextmenu paste"
+  ],
+  toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+  });
+  });
+</script>
+
+{% endblock js %}

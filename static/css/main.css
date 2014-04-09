@@ -408,9 +408,13 @@ html, body {
     line-height: 19px;
     margin-top: 20px;
 }
-.authors-item p{
+.authors-item div{
     font-size: 14px;
     line-height: 18px;
+}
+
+.authors-item>div{
+    padding: 20px 0 20px;
 }
 
 .authors-item img{
