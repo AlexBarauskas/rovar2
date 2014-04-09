@@ -51,18 +51,57 @@ html, body {
     font-size:14px;
 }
 
-#social-networks {
-    width: 110px;
+#lang {
     position:absolute;
     z-index: 1001;
-    right:10px;
-    top:10px;
+    right: 10px;
+    top: 10px;
 }
 
-#social-networks a{
+#lang a{
     text-decoration:none;
     float: right;
     margin-left: 5px;
+    height: 31px;
+    line-height: 31px;
+    background-color: rgba(0,0,0,0.5);
+    color: white;
+    font-size: 15px;
+    padding: 0 10px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
+
+#lang a:hover {
+    background-color: rgba(0,0,0,0.7);
+}
+
+#social-networks {
+    width: 110px;
+    position: absolute;
+    z-index: 1001;
+    right: 10px;
+    bottom: 20px;
+}
+
+#social-networks a {
+    text-decoration:none;
+    float: right;
+    margin-left: 5px;
+    opacity: 0.7;
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
+
+#social-networks a:hover {
+    opacity: 1;
 }
 
 #contentWrapper { 
@@ -401,4 +440,51 @@ html, body {
     height:0;
     min-height:0;
     top:0;
+}
+
+.footer {
+    padding: 16px 16px 28px 16px;
+    border-top: 1px solid #cecece;
+}
+
+.footer ul {
+    
+}
+
+.footer ul li {
+}
+
+.footer ul li a.left {
+    float: left;
+    margin-right: 16px;
+
+}
+
+.footer ul li a.right {
+    float: right;
+    margin-left: 16px;
+}
+
+.footer ul li a {
+    color: black;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(0,0,0,0.3);
+}
+
+.footer ul li a:hover {
+    color: #e95d24;
+    text-decoration: none;
+    border-bottom: 1px solid #e95d24;
+}
+
+.footer ul li a.dotted {
+    color: black;
+    text-decoration: none;
+    border-bottom: 1px dotted black;
+}
+
+.footer ul li a.dotted:hover {
+    color: #e95d24;
+    text-decoration: none;
+    border-bottom: 1px dotted #e95d24;
 }
