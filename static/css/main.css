@@ -54,8 +54,8 @@ html, body {
 #lang {
     position:absolute;
     z-index: 1001;
-    right:120px;
-    top:10px;
+    right: 10px;
+    top: 10px;
 }
 
 #lang a{
@@ -83,10 +83,10 @@ html, body {
 
 #social-networks {
     width: 110px;
-    position:absolute;
+    position: absolute;
     z-index: 1001;
-    right:10px;
-    top:10px;
+    right: 10px;
+    bottom: 20px;
 }
 
 #social-networks a {
@@ -440,4 +440,51 @@ html, body {
     height:0;
     min-height:0;
     top:0;
+}
+
+.footer {
+    padding: 16px;
+    border-top: 1px solid #cecece;
+}
+
+.footer ul {
+    
+}
+
+.footer ul li {
+}
+
+.footer ul li a.left {
+    float: left;
+    margin-right: 16px;
+
+}
+
+.footer ul li a.right {
+    float: right;
+    margin-left: 16px;
+}
+
+.footer ul li a {
+    color: black;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(0,0,0,0.3);
+}
+
+.footer ul li a:hover {
+    color: #e95d24;
+    text-decoration: none;
+    border-bottom: 1px solid #e95d24;
+}
+
+.footer ul li a.dotted {
+    color: black;
+    text-decoration: none;
+    border-bottom: 1px dotted black;
+}
+
+.footer ul li a.dotted:hover {
+    color: #e95d24;
+    text-decoration: none;
+    border-bottom: 1px dotted #e95d24;
 }
