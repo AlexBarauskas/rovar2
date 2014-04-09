@@ -26,7 +26,9 @@ urlpatterns = patterns(
 
     url(r'^tiny/image_list.js$', js_image_list, name="tiny-image-list"),
     url(r'^(?P<img_id>\d+)/delete/$', editor_img_del, name="editor_img_del"),
-    url(r'^points/(?P<point_id>\d+)/edit/(?P<img_id>\d+)/delete/$', photo_img_del, name="photo_img_del")
+    url(r'^points/(?P<point_id>\d+)/edit/(?P<img_id>\d+)/delete/$', photo_img_del, name="photo_img_del"),
+
+    url(r'^moderation/$', moderation_objects, name="moderation_objects"),
     )
 
 

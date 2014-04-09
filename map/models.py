@@ -28,7 +28,11 @@ class Type(models.Model):
     image2 = models.ImageField(upload_to="icons/", null=True, blank=True)
     
     def count_items(self):
-        return self.track_set.count() or self.point_set.count()
+        try:
+            return self.track_set.filter(state__lte=self.acl).count() or self.point_set.filter(state__lte=self.acl).count()
+        except:
+            return self.track_set.count() or self.point_set.count()
+        
     
     def obj_name(self):
         return "%s - %s" % (dict(OBJ_CHOICES)[self.obj], self.name)
@@ -74,9 +78,10 @@ class Point(models.Model):
     type = models.ForeignKey(Type,
                              limit_choices_to={'obj': 'p'})
     description = models.CharField(u'Краткое описание', max_length=256, null=False)
-    phones = models.CharField(u'Телефоны', max_length=128, blank=True, null=True)
     coordinates = models.TextField(u'Координаты', default='[]')
     address = models.CharField(u'Адрес', max_length=256, null=False)
+
+    phones = models.CharField(u'Телефоны', max_length=128, blank=True, null=True)
     website = models.URLField(u'Сайт', blank=True, null=True)
 
     created = models.DateTimeField(auto_now_add=True)

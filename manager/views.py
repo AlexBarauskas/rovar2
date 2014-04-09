@@ -15,6 +15,8 @@ import json
 
 from tmp.parse_xml import XMLTrack
 
+from api.models import Message
+
 
 @staff_member_required
 def default(request):
@@ -246,12 +248,14 @@ def points(request, type_id=None):
 
 @staff_member_required
 def point_edit(request, point_id=None):
+    start_acl = None
     if point_id is not None:
         point = get_object_or_404(Point, id=point_id)
         title = u'Редактирование точки'
+        start_acl = point.state
     else:
         point = None
-        title = u'Новый маршрут'
+        title = u'Новая точка'
     messages = []
     if request.method == "POST":
         form = PointForm(request.POST, request.FILES,  instance=point)
@@ -261,6 +265,14 @@ def point_edit(request, point_id=None):
                 ph = Photo.objects.get_or_create(point=_point, image=f)
                 #ph.save()
             messages.append(u"Изменения успешно сохранены.")
+
+            if start_acl is not None and point.state != start_acl and point.message_set.filter(state='m').count():
+                mod_notifi = point.message_set.filter(state='m')[0]
+                mod_notifi.message = request.POST.get('mod_notifi') or mod_notifi.message
+                mod_notifi.state = 'f'
+                mod_notifi.save()
+                
+            
             if request.POST.get('submit', 'to_current_page') == 'to_section':
                 return HttpResponseRedirect(reverse('manager_points'))
             if point is None:
@@ -269,6 +281,12 @@ def point_edit(request, point_id=None):
                 
     else:
         form = PointForm(instance=point)
+    mod_notifi = None
+    if point is not None and point.message_set.filter(state='m').count():
+        mod_notifi = point.message_set.filter(state='m')[0]
+    
+        
+        
     
     return render_to_response('obj_edit.html',
                               {'form': form,
@@ -276,6 +294,7 @@ def point_edit(request, point_id=None):
                                'title': title,
                                'back_url': reverse('manager_points'),
                                'info': {'messages': messages},
+                               'mod_notifi': mod_notifi
                                },                              
                               RequestContext(request))
 
@@ -314,4 +333,14 @@ def photo_img_del(request, point_id, img_id):
     #
     return HttpResponse(json.dumps(res),
                         content_type="text/json")
+
+
+@staff_member_required
+def moderation_objects(request):
+    messages = Message.objects.filter(state='m')
+    return render_to_response('manager_moderation.html',
+                              {'objects': messages,
+                               },                              
+                              RequestContext(request))
+    
 

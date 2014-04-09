@@ -78,6 +78,7 @@ def get_available_points(request):
             query['type'] = Type.objects.get(id=request.GET['type'])
         except:
             pass
+    print query
     points = [p.id for p in Point.objects.filter(**query)]
     return HttpResponse(json.dumps({'ids': points}),
                         mimetype='text/json')
