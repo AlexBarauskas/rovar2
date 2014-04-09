@@ -51,6 +51,36 @@ html, body {
     font-size:14px;
 }
 
+#lang {
+    position:absolute;
+    z-index: 1001;
+    right:120px;
+    top:10px;
+}
+
+#lang a{
+    text-decoration:none;
+    float: right;
+    margin-left: 5px;
+    height: 31px;
+    line-height: 31px;
+    background-color: rgba(0,0,0,0.5);
+    color: white;
+    font-size: 15px;
+    padding: 0 10px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
+
+#lang a:hover {
+    background-color: rgba(0,0,0,0.7);
+}
+
 #social-networks {
     width: 110px;
     position:absolute;
@@ -59,10 +89,19 @@ html, body {
     top:10px;
 }
 
-#social-networks a{
+#social-networks a {
     text-decoration:none;
     float: right;
     margin-left: 5px;
+    opacity: 0.7;
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
+
+#social-networks a:hover {
+    opacity: 1;
 }
 
 #contentWrapper { 
