@@ -15,8 +15,8 @@ class Application(models.Model):
     uid = models.CharField(max_length=56, default=make_uid, unique=True)
     created = models.DateTimeField(auto_now_add=True)
 
-    def add_message(self, point=None, track=None):
-        Message.objects.create(point=point, track=track, app=self)
+    def add_message(self, point=None, track=None, method='a'):
+        Message.objects.create(point=point, track=track, app=self, method=method)
         
 
     
@@ -36,4 +36,9 @@ class Message(models.Model):
     state = models.CharField(max_length=1,
                              choices=STATE_CHOICES,
                              default='m')
+    method = models.CharField(max_length=1,
+                             choices=(('a', u'Добавление точки'),
+                                      ('u', u'Предложение на изменение'),
+                                      )
+                             default='a')
     message = models.TextField(default=u'Ваше предложение принято.')

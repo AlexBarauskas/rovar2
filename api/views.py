@@ -252,6 +252,6 @@ description - что хотим предложить.
     offer, c = Offer.objects.get_or_create(point=point,
                                            description=description)
     if c:
-        app.add_message(point=point)
+        app.add_message(point=point, method="u")
     return HttpResponse(json.dumps(res),
                         mimetype='text/json')
