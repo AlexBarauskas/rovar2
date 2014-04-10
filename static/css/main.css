@@ -299,7 +299,8 @@ html, body {
 .data-content {
     //width:100%;
     margin-left:440px;
-    padding: 30px;
+    //padding: 30px;
+    padding:0;
     min-height:100%;
     background-color:#e9e6de;
     //float:left;
@@ -396,7 +397,8 @@ html, body {
 }
 
 .authors-item {
-    float:left;
+    display:inline-block;
+    vertical-align: top;
     width: 20%;
     padding: 1.5%;
     text-align:center;
@@ -491,4 +493,11 @@ html, body {
     color: #e95d24;
     text-decoration: none;
     border-bottom: 1px dotted #e95d24;
+}
+
+#info-share-btns>div{
+    margin-right:20px;
+    display:inline-block;
+    position:relative;
+    top:0;
 }

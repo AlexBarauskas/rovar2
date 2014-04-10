@@ -12,33 +12,39 @@
 {% endblock menu %}
 
 {% block content_right %}
-
-<div class="data-content" {% if not show_left_panel %}style="margin-left:0px;"{%else%}style="min-height:700px;"{% endif %}>
-  {%include "info-content.html"%}
-  <div id="fb-root"></div>
-  <script>(function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/ru_RU/all.js#xfbml=1&appId=364131847036990";
-    fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));</script>
-
-  <div class="fb-like" data-href="http://onbike.by" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
-
-  <div class="authors">
-    {% for a in authors %}
-    <div class="authors-item">
+<div class="data-content" {% if not show_left_panel %}style="margin-left:0px;"{%else%}style="min-height:100%;"{% endif %}>
+  <div style="padding:30px">
+    {%include "info-content.html"%}
+    <div class="authors">
+      {% for a in authors %}
+      <div class="authors-item">
         <img src="{{a.image.url}}"/>
         <h1>{{a.name}}</h1>
         <p>{{a.description}}</p>
-    </div>    
-    {% endfor %}
+      </div>    
+      {% endfor %}
+    </div>
+    <div id="info-share-btns">
+      <div>
+	<div class="fb-share-button" data-href="http://onbike.by" data-width="64" data-type="box_count"></div>
+      </div>
+      <div style="top:4px">
+	<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://onbike.by" data-via="your_screen_name" data-lang="en" data-related="anywhereTheJavascriptAPI" data-count="vertical">Tweet</a>
+      </div>
+    </div>
   </div>
 </div>
-
 {% endblock content_right %}
 
-
 {% block js %}
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/ru_RU/all.js#xfbml=1&appId=364131847036990";
+  fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 {% endblock js %}

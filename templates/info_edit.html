@@ -54,18 +54,6 @@
 	<div class="btn close-editor">Завершить редактирование</div>
       </div>
     </div>
-
-    <div id="fb-root"></div>
-    <script>(function(d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      js = d.createElement(s); js.id = id;
-      js.src = "//connect.facebook.net/ru_RU/all.js#xfbml=1&appId=364131847036990";
-      fjs.parentNode.insertBefore(js, fjs);
-      }(document, 'script', 'facebook-jssdk'));
-    </script>
-
-    <div class="fb-like" data-href="http://onbike.by" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
     <div class="authors">
       {% for a in authors %}
       <div class="authors-item">
@@ -92,11 +80,13 @@
 	    </div>
 	  </div>
 	</div>
-	
       </div>    
       {% endfor %}
     </div>
-    <div class="clear">
+    <div class="clear" style="position:relative; top:-83px;">
+      <div class="fb-share-button" data-href="http://onbike.by" data-width="64" data-type="box_count"></div>
+    </div>
+    <div>
       <button class="btn edit">Сохранить изменения</button>
       <a class="btn" href=".." >Назад</a>
     </div>
@@ -127,5 +117,13 @@
   });
   });
 </script>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/ru_RU/all.js#xfbml=1&appId=364131847036990";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 
 {% endblock js %}
