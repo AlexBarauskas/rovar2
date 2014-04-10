@@ -39,6 +39,6 @@ class Message(models.Model):
     method = models.CharField(max_length=1,
                              choices=(('a', u'Добавление точки'),
                                       ('u', u'Предложение на изменение'),
-                                      )
+                                      ),
                              default='a')
     message = models.TextField(default=u'Ваше предложение принято.')
