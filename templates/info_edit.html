@@ -33,7 +33,8 @@
   .thumbnail>img{height:auto;}
   .thumbnail input[type="file"] {height: 200%!important;line-height: 16px!important;position: absolute;cursor: pointer;top: -100%;width:100%;opacity: 0;filter:alpha(opacity = 1);left:0;}
 </style>
-<div class="data-content" {% if not show_left_panel %}style="margin-left:0px;"{%else%}style="min-height:700px;"{% endif %}>
+<div class="data-content" {% if not show_left_panel %}style="margin-left:0px;"{%else%}style="min-height:100%;"{% endif %}>
+  <div style="padding:30px">
   <form method="POST" action="." enctype="multipart/form-data">
       {%for m in messages%}
       <div class="alert form-alert {{m.class}}">
@@ -83,14 +84,20 @@
       </div>    
       {% endfor %}
     </div>
-    <div class="clear" style="position:relative; top:-83px;">
-      <div class="fb-share-button" data-href="http://onbike.by" data-width="64" data-type="box_count"></div>
+    <div id="info-share-btns">
+      <div>
+	<div class="fb-share-button" data-href="http://onbike.by" data-width="64" data-type="box_count"></div>
+      </div>
+      <div style="top:4px">
+	<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://onbike.by" data-via="your_screen_name" data-lang="en" data-related="anywhereTheJavascriptAPI" data-count="vertical">Tweet</a>
+      </div>
     </div>
     <div>
       <button class="btn edit">Сохранить изменения</button>
       <a class="btn" href=".." >Назад</a>
     </div>
   </form>
+  </div>
 </div>
 
 {% endblock content_right %}
@@ -125,5 +132,5 @@
   js.src = "//connect.facebook.net/ru_RU/all.js#xfbml=1&appId=364131847036990";
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
-
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 {% endblock js %}
