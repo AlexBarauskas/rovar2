@@ -99,6 +99,15 @@
 	  </p>
 	</div>
 	<div class="method">
+	  <h1>Предложение по изменению информации о точке. </h1>
+	  <pre class="fragment">POST: http://obike.by/api/points/offer
+	  </pre> <h2>Параметры:</h2>
+	  <p>id - ID точки(получен клиентом вместе с информацией о точке)<br/>
+	    uid - ключ для обратной связи(идентификатор клиента).<br/>
+	    description - что хотим предложить. 
+	  </p>
+	</div>
+	<div class="method">
 	  <h1>Получение списка сообщений о состояниий заявленных точек. </h1>
 	  <pre class="fragment">GET: http://obike.by/api/messages?uid=&lt;app_uid&gt;
 	  </pre><p> В случае успеха возвращает {'success': True, 'messages': [{'id': &lt;message_id&gt;, 'message': &lt;message_text&gt;}]} </p>

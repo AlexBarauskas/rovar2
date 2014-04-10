@@ -4,7 +4,7 @@ import time
 import random
 import hashlib
 
-from map.models import Track, Point, Type, Photo
+from map.models import Track, Point, Type, Photo, Offer
 
 
 def make_uid():

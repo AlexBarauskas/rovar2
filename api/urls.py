@@ -7,6 +7,8 @@ urlpatterns = patterns(
     url(r'^clients$', initialize_app, name="api_initialize_app"),
     url(r'^points$', points, name="api_get_points"),
     url(r'^point/add$', add_point, name="api_add_point"),
+    url(r'^point/offer$', point_offer, name="api_point_offer"),
+
 
     url(r'^messages$', messages, name="api_messages"),
     url(r'^messages/read$', message_read, name="api_message_read"),

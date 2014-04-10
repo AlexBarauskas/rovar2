@@ -125,12 +125,17 @@ class Point(models.Model):
         point['type'] = [self.type.obj, '%s' % self.type.id]
         return point
 
-        
-
-
 
 class Photo(models.Model):
     point = models.ForeignKey(Point, null=True)
     track = models.ForeignKey(Track, null=True)
     image = models.ImageField(upload_to="photos/")
     description = models.TextField(u'Описание', default='', null=True)
+
+
+class Offer(models.Model):
+    created = models.DateTimeField(auto_now_add=True)
+    point = models.ForeignKey(Point, null=True)
+    track = models.ForeignKey(Track, null=True)
+    description = models.TextField(u'Описание', default='', null=True)
+    

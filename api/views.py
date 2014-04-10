@@ -10,7 +10,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 import json
 
-from api.models import Application, Message, Track, Point, Type, Photo
+from api.models import Application, Message, Track, Point, Type, Photo, Offer
 #http://blogs.cs.st-andrews.ac.uk/jfdm/2013/04/04/documenting-python-using-doxygen/
 
 
@@ -206,4 +206,52 @@ def message_read(request):
                'error': 'Message with id=%s not exists.' % message_id}
     return HttpResponse(json.dumps(res),
                         mimetype='text/json')
+
     
+@csrf_exempt
+def point_offer(request):
+    '''@brief Предложение по изменению информации о точке.
+    POST: http://obike.by/api/points/offer
+Параметры:
+---
+id - ID точки(получен клиентом вместе с информацией о точке)\n
+uid - ключ для обратной связи(идентификатор клиента).\n
+description - что хотим предложить.
+'''
+    if request.method != "POST":
+        HttpResponse(json.dumps({'success': False,
+                                 'error': "Incorrect method."
+                                 }),
+                     mimetype='text/json')
+    # check description
+    description = request.POST.get('description', "").strip()
+    if not description:
+        HttpResponse(json.dumps({'success': False,
+                                 'error': "Description is required."
+                                 }),
+                     mimetype='text/json')
+    # check app uid
+    uid = request.POST.get('uid', '')
+    if Application.objects.filter(uid=uid).count() == 0:
+        return HttpResponse(json.dumps({'success': False,
+                                        'message': "Your client is not authorized."
+                                        }),
+                            mimetype='text/json')
+    # check point
+    pid = request.POST.get('id', '')
+    try:
+        point = Point.objects.get(id=pid)
+    except:
+        return HttpResponse(json.dumps({'success': False,
+                                        'message': "Object not found."
+                                        }),
+                            mimetype='text/json')
+    
+    res = {'success': True}
+    app = Application.objects.get(uid=uid)
+    offer, c = Offer.objects.get_or_create(point=point,
+                                           description=description)
+    if c:
+        app.add_message(point=point)
+    return HttpResponse(json.dumps(res),
+                        mimetype='text/json')
