@@ -75,7 +75,7 @@
 	</h1>
 	<div>
 	  <div class="editable">
-	    <div class="display">{{a.description}}</div>
+	    <div class="display">{{a.description|safe}}</div>
 	    <div class="editor">
 	      <textarea id="description-{{a.id}}" name="{{a.id}}_description">{{a.description}}</textarea>
 	    </div>
