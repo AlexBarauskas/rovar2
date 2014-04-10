@@ -20,7 +20,7 @@
       <div class="authors-item">
         <img src="{{a.image.url}}"/>
         <h1>{{a.name}}</h1>
-        <div>{{a.description}}</div>
+        <div>{{a.description|safe}}</div>
       </div>    
       {% endfor %}
     </div>
