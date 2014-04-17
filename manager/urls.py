@@ -29,6 +29,7 @@ urlpatterns = patterns(
     url(r'^points/(?P<point_id>\d+)/edit/(?P<img_id>\d+)/delete/$', photo_img_del, name="photo_img_del"),
 
     url(r'^moderation/$', moderation_objects, name="moderation_objects"),
+    url(r'^moderation/(?P<message_id>\d+)/$', moderation_object, name="moderation_object"),
 
     url(r'^info/$', info_page_edit, name="info_edit"),
 

@@ -74,7 +74,7 @@ def change_message(UID, mid):
     print urllib2.urlopen('http://localhost:8080/api/messages/read', urllib.urlencode({'uid': UID, 'id': mid})).read()
 
 def update_point(UID):
-    print urllib2.urlopen('http://localhost:8080/api/point/offer', urllib.urlencode({'uid': UID, 'id': 1, 'description': "TEST"})).read()
+    print urllib2.urlopen('http://localhost:8080/api/point/offer', urllib.urlencode({'uid': UID, 'id': 1, 'description': "TEST 1"})).read()
 
     
 #uid = "ce625f7ff4ddd20e0d5f171d085b68a7"

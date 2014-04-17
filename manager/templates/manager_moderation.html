@@ -5,6 +5,8 @@
 <table>
   <thead>
     <tr>
+      <th>Метод</th>
+      <th>Состояние нотификации<th>
       <th>Название</th>
       <th>Дата создания</th>
       <th>Тип</th>
@@ -16,20 +18,18 @@
   <tbody>
     {% for obj in objects%}
     <tr>
+      <td>{%if obj.method == 'a'%}Добавление{%else%}Изменение{%endif%}</td>
+      <td>{{obj.state}}</td>
       {%if obj.point%}
       <td>{{obj.point.name}}</td>
       <td>{{obj.point.created}}</td>
       <td>{{obj.point.type}}</td>
-      <!--td><a title="Редактировать расширенное описание пункта" class="icon-btn" href="{% url post-edit-point obj.point.id %}"><img src="/static/icons/edit_post.png"/></a></td-->
       <td><a title="Редактировать информацию о пункту" class="icon-btn" href="{% url point-edit obj.point.id %}"><img src="/static/icons/edit.png"/></a></td>
-      <td><img title="Удалить пункт" id="{{obj.point.id}}" class="delete icon-btn" src="/static/icons/delete.png"/></td>
       {%else%}
       <td>{{obj.track.name}}</td>
       <td>{{obj.track.created}}</td>
       <td>{{obj.track.type}}</td>
-      <!--td><a title="Редактировать расширенное описание маршрута" class="icon-btn" href="{% url post-edit-track t.id %}"><img src="/static/icons/edit_post.png"/></a></td-->
       <td><a title="Редактировать информацию о маршруте" class="icon-btn" href="{% url track-edit obj.track.id %}"><img src="/static/icons/edit.png"/></a></td>
-      <td><img title="Удалить маршрут" id="{{obj.track.id}}" class="delete icon-btn" src="/static/icons/delete.png"/></td>
       {%endif%}
     </tr>
     {% endfor %}

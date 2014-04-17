@@ -59,7 +59,7 @@ GET-запрос может не содержать параметров.\n
         try:
             page = int(page)
         except:
-            pass
+            page = None
     if page is not None:
         per_page = request.GET.get('per_page', 10)
         try:
@@ -253,5 +253,6 @@ description - что хотим предложить.
                                            description=description)
     if c:
         app.add_message(point=point, method="u")
+    
     return HttpResponse(json.dumps(res),
                         mimetype='text/json')

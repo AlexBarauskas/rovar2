@@ -44,17 +44,69 @@
 </div>
 <div id="map" class="data-content" style="padding:0;"></div>
 <div id="lang">
-    <a href="#">
+    <a id="add-point-btn"  href="javascript:;">
         + Добавить точку
     </a>
 </div>
+<div id="add-point-dialog" style="display:none">
+  <h1>Добавление точки</h1>
+  <form id="add-point-form" method="POST" action="." enctype="multipart/form-data">
+    
+    <div class="input">
+      <label>Координаты</label>
+      <input type="text" value="" name="coordinates" disabled="disabled"/>
+    </div>
+    <div class="input">
+      <label>Название</label>
+      <input type="text" value="" name="title"/>
+    </div>
+    <div class="input">
+      <label>Категория</label>
+      <select name="type">
+	shop, bikerental, entertainment, parking, service
+	<option value="shop">Магазин</option>
+	<option value="bikerental">Прокат</option>
+	<option value="entertainment">Развлечение</option>
+	<option value="parking">Парковка</option>
+	<option value="service">Сервис</option>
+      </select>
+    </div>
+    <div class="input">
+      <label>Описание</label>
+      <textarea type="text" name="description"></textarea>
+    </div>
+    <div class="input">
+      <label>Адрес</label>
+      <input type="text" value="" name="address"/>
+    </div>
+    <div class="input">
+      <label>Телефоны</label>
+      <input type="text" value="" name="phones"/>
+    </div>
+    <div class="input">
+      <label>Сайт</label>
+      <input type="text" value="" name="website"/>
+    </div>
+    <div class="input">
+      <label>Фото</label>
+      <input type="file" value="" accept="image/*" name="image"/>
+    </div>
+    <div class="btn-box">
+      <button class="btn success">Добавить</button>
+      <a class="btn" id="add-point-form-close" href="javascript:;">Отмена</a>
+    </div>
+  </form>
+</div>
+
 {% endblock content_right %}
+
 
 
 {% block js %}
 <script type="text/javascript" src="/static/leaflet/leaflet-src.js"></script>
 <script type="text/javascript" src="/static/leaflet/leaflet.js"></script>
 <script type="text/javascript" src="/static/js/map.js"></script>
+<script type="text/javascript" src="/static/js/add-point.js"></script>
 
 
 <script type="text/javascript">

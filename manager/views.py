@@ -288,9 +288,6 @@ def point_edit(request, point_id=None):
     if point is not None and point.message_set.filter(state='m').count():
         mod_notifi = point.message_set.filter(state='m')[0]
     
-        
-        
-    
     return render_to_response('obj_edit.html',
                               {'form': form,
                                'comments_instance': point,
@@ -385,5 +382,14 @@ def info_page_edit(request):
                               {'show_left_panel': True,
                                'messages': messages,
                                'authors': Author.objects.all()
+                               },                              
+                              RequestContext(request))
+
+
+@staff_member_required
+def moderation_object(request, message_id):
+    message = get_object_or_404(Message, id=message_id, point__isnull=False)
+    return render_to_response('manager_moderation_obj.html',
+                              {'obj': message,
                                },                              
                               RequestContext(request))

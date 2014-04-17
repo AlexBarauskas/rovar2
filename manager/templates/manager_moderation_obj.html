@@ -1,0 +1,31 @@
+{% extends 'base_manager.html' %}
+
+{% block inner_content %}
+<h1>{{obj.point.name}}</h1>
+<div>Статус заявки: <b style="font-weight:bold">{{obj.get_state_display}}</b></div>
+{%if obj.method == 'a' %}
+<p>
+  Запрос на добавление данной точки был сформирован {{obj.created}} через клиентское приложение с идентификатором "{{obj.app.uid}}".
+</p>
+{%else%}
+<p>
+  Предложение по изменению данной точки поступило {{obj.created}} через клиентское приложение с идентификатором "{{obj.app.uid}}".
+</p>
+<h1>Список всех предложений по изменению данного объекта:</h1>
+<ul>
+  {%for offer in obj.point.offer_set.all%}
+  <li>
+    <h3>{{offer.created}}</h3>
+    <p>{{offer.description}}</p>
+  </li>
+  {%endfor%}
+</ul>
+{%endif%}
+
+<div class="btn-broup">
+  {%if obj.method == 'a' and obj.state == 'm'%}
+  <button>Принять без изменений</button>
+  {%endif%}
+</div>
+
+{% endblock inner_content %}
