@@ -69,7 +69,7 @@ GET-запрос может не содержать параметров.\n
     kwargs = {'state__lte': acl}
     points = Point.objects.filter(**kwargs)
     if page is not None:
-        posins = points[page * per_page:(page + 1) * per_page]
+        points = points[page * per_page:(page + 1) * per_page]
     points = [p.to_dict() for p in points]
     return HttpResponse(json.dumps(points),
                         mimetype='text/json')
