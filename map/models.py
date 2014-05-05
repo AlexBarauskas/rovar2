@@ -118,7 +118,7 @@ class Point(models.Model):
                  'images': [ph.image.url for ph in  self.photo_set.all()],
                  'address': self.address,
                  'uid': self.uid,
-                 'slug': IDSTYPE.get(self.id, 'other'),
+                 'slug': IDSTYPE.get(self.type.id, 'other'),
                  'type_name': self.type.name,
                  'website': self.website
                  }
