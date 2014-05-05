@@ -4,6 +4,7 @@ var addpoint = {
     run: false,
     init: function(){
 	//var ths = this;
+/*
 	$("#add-point-btn").click(
 	    function(){
 		$("#map").css('cursor', "crosshair");
@@ -14,7 +15,7 @@ var addpoint = {
 	$("#add-point-form-close").click(
 	    function(){addpoint.hideDialog();}
 	);
-	
+*/	
     },
     hideDialog: function(){
 	$("#add-point-dialog").hide();

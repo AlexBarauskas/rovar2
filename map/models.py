@@ -69,6 +69,14 @@ class Track(models.Model):
         return self.name
 
 
+TYPEIDS = {"entertainment": 7,
+           "bikerental": 6,
+           "shop": 5,
+           "service": 2,
+           "parking": 3,
+           }
+IDSTYPE =  {2: 'service', 3: 'parking', 5: 'shop', 6: 'bikerental', 7: 'entertainment'}
+
 class Point(models.Model):
     name = models.CharField(u'Наименование', max_length=128, null=False)
     state = models.CharField(u'Доступ',
@@ -110,6 +118,7 @@ class Point(models.Model):
                  'images': [ph.image.url for ph in  self.photo_set.all()],
                  'address': self.address,
                  'uid': self.uid,
+                 'slug': IDSTYPE.get(self.id, 'other'),
                  'type_name': self.type.name,
                  'website': self.website
                  }
