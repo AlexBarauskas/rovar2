@@ -60,6 +60,7 @@ var rovar = {
     _numberLoadPoint: 0,
 
     _visible_pins : function(){
+	return ;
 	var minR = 18;
 	var p=[], i, j, R, r;
 	var pins = $('.leaflet-marker-pane img'), N=pins.length-1;
@@ -304,7 +305,7 @@ var rovar = {
 	    function show_preview(data, _point){
 		$('#banner').hide();
 		$('#back-to-banner').show();
-        $('#type').show();
+		$('#type').show();
 
 		if(rovar.currentPoint){
 		    rovar.currentPoint.setIcon(rovar.currentPoint._baseIcon);
