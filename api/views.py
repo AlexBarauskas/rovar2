@@ -137,7 +137,6 @@ image - фотография точки.\n
 
     # check required fields
     required_fields = ['title', 'type', 'description', 'address']
-                                         description
     values = [request.POST.get(field) for field in required_fields]
     values.append(request.POST.get('coordinates[]') or request.POST.get('coordinates'))
     try:
