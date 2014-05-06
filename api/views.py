@@ -123,6 +123,10 @@ image - фотография точки.\n
                                         }),
                             mimetype='text/json')
     # check app uid
+    try:
+        print request.POST
+    except:
+        print "Error POST"
     uid = request.POST.get('uid', '')
     if Application.objects.filter(uid=uid).count() == 0:
         return HttpResponse(json.dumps({'success': False,
@@ -134,6 +138,10 @@ image - фотография точки.\n
     # check required fields
     required_fields = ['title', 'type', 'description', 'coordinates', 'address']
     values = [request.POST.get(field) for field in required_fields]
+    try:
+        print values
+    except:
+        pass
     if all(values):
         kwargs = {'name': values[0],
                   'type': values[1],
