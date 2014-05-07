@@ -265,3 +265,39 @@ description - что хотим предложить.
     
     return HttpResponse(json.dumps(res),
                         mimetype='text/json')
+
+
+
+def tracks(request):
+    '''@brief Получение информации о доступных маршрутах.
+    GET: http://onbike.by/api/tracks?page=P&per_page=N
+GET-запрос может не содержать параметров.\n
+В случае отсутствия параметра page или не верного преобразования в целочисленное значение, будет возвращен список всех доступных точек.\n
+В случае отсутствия или неврно указанного параметра per_page значение по умолчанию принимается 10.\n
+    '''
+    acl = '0'
+    if request.user.is_authenticated():
+        acl = '1'
+        if request.user.is_staff:
+            acl = '2'
+    page = None
+    per_page = None
+    if 'page' in request.GET:
+        page = request.GET.get('page', 0)
+        try:
+            page = int(page)
+        except:
+            page = None
+    if page is not None:
+        per_page = request.GET.get('per_page', 10)
+        try:
+            per_page = int(per_page)
+        except:
+            per_page = 10
+    kwargs = {'state__lte': acl}
+    tracks = Track.objects.filter(**kwargs)
+    if page is not None:
+        tracks = tracks[page * per_page:(page + 1) * per_page]
+    tracks = [p.to_dict() for p in tracks]
+    return HttpResponse(json.dumps(tracks),
+                        mimetype='text/json')

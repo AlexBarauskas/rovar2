@@ -15,10 +15,10 @@
 
 <div class="section views">
   <h1>Показывать на карте:</h1>
-  <ul class="control">
+  <ul id="type-btns" class="control">
     {%for T in types%}
     {%if T.count_items%}
-    <li id="type-{{T.obj}}-{{T.id}}" class="type-all">
+    <li id="{{T.slug}}" class="type-all">
       <span style="background-color:{{T.color}}">{{T.name}}</span>
       <span style="color:{{T.color}}" class="number">{{T.count_items}}</span>
     </li>
@@ -105,7 +105,7 @@
 {% block js %}
 <script type="text/javascript" src="/static/leaflet/leaflet-src.js"></script>
 <script type="text/javascript" src="/static/leaflet/leaflet.js"></script>
-<script type="text/javascript" src="/static/js/map.js"></script>
+<script type="text/javascript" src="/static/js/map.api.js"></script>
 <script type="text/javascript" src="/static/js/add-point.js"></script>
 
 

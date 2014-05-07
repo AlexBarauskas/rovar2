@@ -1,5 +1,5 @@
 var rovar = {
-    elements:{},
+    elements:{'points': {}, 'tracks': {}},
     _iconSize: 36,
     _kLeft: 0.317,
     _numberPoint: 0,
@@ -29,13 +29,44 @@ var rovar = {
     backToHome : function(){
 	if(this.currentPoint)
 	    this._hidePointInfo(this.currentPoint);
+	if(this.currentTrack)
+	    this._hideTrackInfo(this.currentTrack);
+
     },
+    
+    hide : function(type_name){
+	if(this.currentPoint)
+	    if(this.currentPoint._data.type_slug == type_name)
+		this._hidePointInfo(this.currentPoint);
+	if(this.currentTrack)
+	    if(this.currentTrack._data.type_slug == type_name)
+		this._hideTrackInfo(this.currentTrack);
+
+	$("img."+type_name + ', div.' + type_name).hide();
+	for(key in this.elements.tracks){
+	    if(key == type_name)
+		for(id in this.elements.tracks[key])
+		    $(this.elements.tracks[key][id]._container).hide();
+	}
+    },
+
+    show : function(type_name){
+	$("img."+type_name + ', div.' + type_name).show();
+	for(key in this.elements.tracks){
+	    if(key == type_name)
+		for(id in this.elements.tracks[key])
+		    $(this.elements.tracks[key][id]._container).show();
+	}
+
+    },
+
 
     _hidePointInfo : function(point){
 	var self = this;
 	point.setIcon(point._data.unactiveIcon);
 	$(point._icon).click(function(){self._showPointInfo(point);});
 	$(point._icon).addClass(point._data.type_slug);
+	$(point._icon).attr('id', 'iconp-'+point._data.id.toString());
 
 	$('.preview-content').html('');
 	$('.preview').hide();
@@ -52,6 +83,9 @@ var rovar = {
     _showPointInfo : function(point){
 	if(this.currentPoint)
 	    this._hidePointInfo(this.currentPoint);
+	if(this.currentTrack)
+	    this._hideTrackInfo(this.currentTrack);
+
 	var self = this;
 	point.setIcon(point._data.activeIcon);
 	$(point._icon).click(function(){self._hidePointInfo(point);});
@@ -117,14 +151,20 @@ var rovar = {
 	point._data = data;
 	point.addTo(this.map);
 	$(point._icon).addClass(type);
+	$(point._icon).attr('id', 'iconp-'+point._data.id.toString());
 	$(point._icon).click(function(){self._showPointInfo(point);});
 
-	if(type in this.elements){
-	    this.elements[type][eid] = point;    
+	if(type in this.elements.points){
+	    this.elements.points[type][eid] = point;    
 	}else{
-	    this.elements[type] = {};    
-	    this.elements[type][eid] = point;
+	    this.elements.points[type] = {};    
+	    this.elements.points[type][eid] = point;
 	}
+
+	//Если определен текущий элемент
+	if(rovar_uid == data.uid)
+	    this._showPointInfo(point);
+
     },
     
     loadPoints : function(){
@@ -133,16 +173,254 @@ var rovar = {
 		method: 'GET',
 		data: {uid: 'webclient'},
 		success: function(data){
-		    for(var i=data.length-1; i>=0; i--)
+		    for(var i=data.length-1; i>=0; i--){
 			self._addPointToMap(data[i]);
+		    }
+		    for(var key in self.elements.points){
+			self._pointGroup(key);
+		    }
+		    self.map.on('zoomend', function(ev){
+				    for(var key in self.elements.points){
+					self._pointGroup(key);
+				    }
+				});
+		}
+	       });	
+    },
+
+    _pointGroup : function(type_name){
+	$('div.pingrop-' + type_name).remove();
+	$('img.' + type_name).css('visibility', 'visible');
+	var pins = this.elements.points[type_name];
+	var minX=60, maxX=50, minY=30, maxY=20, c;
+	var color;
+	for(id in pins){
+	    pins[id]._use = false;
+	}
+	color = pins[id]._data.color;
+
+	minX = rovar.map.getBounds()._southWest.lat;
+	maxX = rovar.map.getBounds()._northEast.lat;
+	minY = rovar.map.getBounds()._southWest.lng;
+	maxY = rovar.map.getBounds()._northEast.lng;
+	
+	var dt = Math.max(maxY-minY,maxX-minX)/45;
+	var w = maxX - minX;
+	var h = maxY - minY;
+	var i=0, j=0, x0, x1, y0, y1, local_pins, k, p, X, Y;
+	for(i=0; i<(w / dt + 1); i++){
+	    for(j=0; j<(h / dt + 1); j++){
+		local_pins = [];
+		x0 = minX + (i-0.1)*dt;
+		x1 = minX + (i+1.1)*dt;
+		y0 = minY + (j-0.1)*dt;
+		y1 = minY + (j+1.1)*dt;
+		for(id in pins){
+		    p = pins[id]._data.coordinates;
+		    if(!pins[id]._use && p[0]>=x0 && p[0]<x1 && p[1]>=y0 && p[1]<y1){
+			local_pins.push(pins[id]);
+			pins[id]._use = true;
+		    }
+		}
+		if(local_pins.length>1){
+		    X=0; Y=0;
+		    for(k=local_pins.length-1; k>=0; k--){
+			p = local_pins[k]._data.coordinates;
+			X += p[0];
+			Y += p[1];
+			$(local_pins[k]._icon).css('visibility', 'hidden');
+		    }
+
+		    var groupIcon = new L.divIcon({className: type_name + ' pingrop pingrop-' + type_name,
+						   html:local_pins.length,
+						   iconSize: [this._iconSize*0.66, this._iconSize*0.66],
+						   iconAnchor: [this._iconSize*0.66/2, this._iconSize*0.66/2]
+						  });
+		    X = X/local_pins.length; 
+		    Y = Y/local_pins.length;
+		    var point = L.marker([X, Y], {color: 'red', icon: groupIcon});
+		    point.addTo(this.map);
+
+		    function fn_click(ev){
+			var c = ($(this).attr('id').split('-'));
+			c = [parseFloat(c[0]), parseFloat(c[1])];
+			rovar.map.panTo(c);
+			rovar.map.zoomIn(2);
+		    }
+		    $(point._icon).attr('title', type_name + ':' + local_pins.length);
+		    $(point._icon).attr('id', X.toString() + "-" + Y.toString());
+		    
+		    $(point._icon).css({'background-color': color,
+					'border-radius': "100%",
+					'line-height': this._iconSize*0.75 + 'px',
+					'color': 'white',
+					'vertical-align': 'middle',
+					'font-size': this._iconSize*0.75/2 + 'px',
+					'font-weight': 'bold',
+					'text-align': 'center'
+				       });
+
+		    var coordinates = point.getLatLng();
+		    $(point._icon).click(fn_click);
+		}
+	    }
+	}	
+    },
+
+    _hideTrackInfo : function(track){
+	var self = this;
+	$(track._data.pointA._icon).hide();
+	$(track._data.pointB._icon).hide();
+	track._container.onclick = function(){self._showTrackInfo(track);};
+	track.setStyle({'opacity':0.5});
+
+	$('.preview-content').html('');
+	$('.preview').hide();
+
+	var stateObj = { foo: "bar" };
+	history.pushState(stateObj, "page", '/');	  
+
+	$('#back-to-banner').hide();
+	$('#type').hide();
+	$('#banner').show();
+	$("#header").css('background-color', "#e95d24");
+
+    },
+
+    _showTrackInfo : function(track){
+	var self = this;
+	if(this.currentPoint)
+	    this._hidePointInfo(this.currentPoint);
+	if(this.currentTrack)
+	    this._hideTrackInfo(this.currentTrack);
+	this.currentTrack = track;
+
+	$(track._data.pointA._icon).show();
+	$(track._data.pointB._icon).show();
+	track._container.onclick = function(){self._hideTrackInfo(track);};
+	track.setStyle({'opacity':1});
+
+	$('#banner').hide();
+	$('#back-to-banner').show();
+        $('#type').show();
+	var data = track._data;
+	
+	var preview = $('.preview-content').html('')
+	    .append($("<h1>"+data.title+"</h1>").css('color', data.color));
+	if(data.duration)
+	    preview.append($("<p></p>").html('Время в пути: '+data.duration).addClass('description-address'));
+	if(data.video!=''){
+	    var video = $(data.video);
+	    preview.append(video);
+	    //if(preview.width()<preview.find('iframe').width())	    
+	}
+	var description;
+	if(data.post_url)
+	    description = "<p><a href=\""+data.post_url+"\">"+data.description+"</a></p>";
+	else
+	    description = "<p>"+data.description+"</p>";
+	preview.append(description);
+	preview.parent().show();
+	if(typeof video != 'undefined'){
+	    video.height(video.height()*(preview.width())/video.width());
+	    video.width(preview.width());
+	}
+	
+	$("#type").html(data.type_name);
+	$("#header").css('background-color', data.color);
+
+
+	var stateObj = { foo: "bar" };
+	history.pushState(stateObj, "page", '/'+ data.uid +'/');	  
+
+	if(typeof DISQUS != 'undefined'){
+	    DISQUS.reset({
+			     reload: true,
+			     config: function () {  
+				 this.page.identifier = data.uid;  
+				 this.page.title = data.title;
+				 //console.log(this);
+				 this.page.url = "http://onbike.by/"+data.uid+"/";
+			     }
+			 });
+	    $('#disqus_thread').show();
+	}
+
+
+    },
+
+    _addTrackToMap : function(data){
+	var self = this;
+	var type = data.type_slug;
+	var eid = data.id;
+
+	var polyline = L.polyline(data.route, {color: data.color});
+	polyline.addTo(this.map);
+	polyline._data = data;
+	polyline._container.onclick = function(){self._showTrackInfo(polyline);};
+	var pointA =new L.Icon({
+				    iconUrl: data.marker_a,
+				    iconSize: [this._iconSize, this._iconSize],
+				    iconAnchor: [this._iconSize*this._kLeft, this._iconSize]
+			       });
+	var pointB =new L.Icon({
+				    iconUrl: data.marker_b,
+				    iconSize: [this._iconSize, this._iconSize],
+				    iconAnchor: [this._iconSize*this._kLeft, this._iconSize]
+				});
+	polyline._data.pointA = L.marker(data.route[0], {color: 'red', icon: pointA});
+	polyline._data.pointB = L.marker(data.route[data.route.length-1], {color: 'red', icon: pointB});
+	polyline._data.pointA.addTo(rovar.map);
+	polyline._data.pointB.addTo(rovar.map);
+	$(polyline._data.pointA._icon).hide().click(function(e){self._hideTrackInfo(polyline);});
+	$(polyline._data.pointB._icon).hide().click(function(e){self._hideTrackInfo(polyline);});
+	
+
+
+	if(type in this.elements.tracks){
+	    this.elements.tracks[type][eid] = polyline;    
+	}else{
+	    this.elements.tracks[type] = {};    
+	    this.elements.tracks[type][eid] = polyline;
+	}
+
+	if(rovar_uid == data.uid)
+	    this._showTrackInfo(polyline);
+
+    },
+
+    loadTracks : function(){
+	var self = this;
+	$.ajax({url: '/api/tracks',
+		method: 'GET',
+		data: {uid: 'webclient'},
+		success: function(data){
+		    for(var i=data.length-1; i>=0; i--){
+			self._addTrackToMap(data[i]);
+		    }
 		}
 	       });	
     }
+    
+
 };
 
 
 $(function(){
       rovar.init();
       rovar.loadPoints();
+      rovar.loadTracks();
       $('#back-to-banner').click(function(){rovar.backToHome();});
+      $('#type-btns li').click(function(ev){
+				   var type = this.attributes.id.value;
+				   if($(this).attr('class').indexOf('disable')>=0){
+				       $(this).removeClass('disable');
+				       rovar.show(type);
+				   }
+				   else{
+				       $(this).addClass('disable');
+				       rovar.hide(type);
+				   }
+				       
+			       });
   });

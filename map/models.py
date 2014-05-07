@@ -15,6 +15,14 @@ ACCESS = (('0', u'Все пользователи'),
           ('3', u'Никто'),
           )
 
+TYPEIDS = {"entertainment": 7,
+           "bikerental": 6,
+           "shop": 5,
+           "service": 2,
+           "parking": 3,
+           }
+IDSTYPE =  {2: 'service', 3: 'parking', 5: 'shop', 6: 'bikerental', 7: 'entertainment'}
+
 
 class Type(models.Model):
     obj = models.CharField(u'Объект',
@@ -26,6 +34,9 @@ class Type(models.Model):
     color = models.CharField(u'Цвет', max_length=7, default="#0000FF")
     image = models.ImageField(upload_to="icons/", null=True, blank=True)
     image2 = models.ImageField(upload_to="icons/", null=True, blank=True)
+    slug = models.CharField(u'Text ID', max_length=24, default="other")
+    # ALTER TABLE map_type ADD  "slug" varchar(24) NOT NULL default 'other';
+
     
     def count_items(self):
         try:
@@ -36,6 +47,9 @@ class Type(models.Model):
     
     def obj_name(self):
         return "%s - %s" % (dict(OBJ_CHOICES)[self.obj], self.name)
+
+    def get_slug(self):
+        return IDSTYPE.get(self.id, 'other')
 
     def __unicode__(self):
         return self.name
@@ -65,17 +79,34 @@ class Track(models.Model):
             self.save()
         return res
 
+    def to_dict(self):
+        track = {'route': json.loads(self.coordinates),
+                 'title': self.name,
+                 'description': self.description,
+                 'video': self.video or '',
+                 'id': self.id,
+                 'type': [self.type.obj, '%s' % self.type.id],
+                 'color': self.color or self.type.color,
+                 'uid': self.uid,
+                 'type_name': self.type.name,
+                 'type_slug': self.type.slug,
+                 }
+        if self.duration:
+            track['duration'] = '%s мин' % self.duration
+        if self.post:
+            track['post_url'] = reverse('blog_post', args=[self.post.id])
+        if self.type.image:
+            track['marker_a'] = self.type.image.url
+            track['marker_b'] = self.type.image.url
+        if self.type.image2:
+            track['marker_b'] = self.type.image2.url
+        return track
+
+
     def __unicode__(self):
         return self.name
 
 
-TYPEIDS = {"entertainment": 7,
-           "bikerental": 6,
-           "shop": 5,
-           "service": 2,
-           "parking": 3,
-           }
-IDSTYPE =  {2: 'service', 3: 'parking', 5: 'shop', 6: 'bikerental', 7: 'entertainment'}
 
 class Point(models.Model):
     name = models.CharField(u'Наименование', max_length=128, null=False)
@@ -118,7 +149,7 @@ class Point(models.Model):
                  'images': [ph.image.url for ph in  self.photo_set.all()],
                  'address': self.address,
                  'uid': self.uid,
-                 'type_slug': IDSTYPE.get(self.type.id, 'other'),
+                 'type_slug': self.type.slug,
                  'type_name': self.type.name,
                  'website': self.website
                  }
