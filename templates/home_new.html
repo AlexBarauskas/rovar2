@@ -4,8 +4,16 @@
 <link type="text/css" href="/static/leaflet/leaflet.css" rel="stylesheet"/>
 {% endblock css %}
 
-
-
+{% block preload %}
+<div style="position:absolute; top:-5000">
+    {%for T in types%}
+    {%if T.count_items%}
+    <img src="{{T.image.url}}"/>
+    <img src="{{T.image2.url}}"/>
+    {%endif%}
+    {%endfor%}
+</div>
+{% endblock preload %}
 
 {% block content_left %}
 <div class="preview">
