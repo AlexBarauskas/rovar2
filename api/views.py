@@ -8,6 +8,9 @@ from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 
+from django.core.validators import validate_email
+from django.core.validators import URLValidator
+
 import json
 
 from api.models import Application, Message, Track, Point, Type, Photo, Offer
@@ -16,6 +19,7 @@ from api.models import Application, Message, Track, Point, Type, Photo, Offer
 
 #class API(object):
 
+validate_url = URLValidator(verify_exists=False)
 
 @csrf_exempt
 def initialize_app(request):
@@ -84,12 +88,17 @@ TYPEIDS = {"entertainment": 7,
            "parking": 3,
            }
 def __string_type_to_object(stype):
-    if settings.DEBUG:
-        return Type.objects.filter(obj='p')[0]
     try:
-        return Type.objects.get(id=TYPEIDS.get(stype))
+        return Type.objects.get(slug=stype)
     except:
-        None
+        return None
+
+#    if settings.DEBUG:
+#        return Type.objects.filter(obj='p')[0]
+#    try:
+#        return Type.objects.get(id=TYPEIDS.get(stype))
+#    except:
+#        None
 
 
 @csrf_exempt
@@ -114,6 +123,8 @@ image - фотография точки.\n
 3 - Одно из полей 'title', 'type', 'description', 'coordinates', 'address' не указано или пустое.\n
 4 - Указанный тип точки не существует.\n
 5 - Отсутсвует изображение.\n
+6 - Введен не валидный URL для поля website.\n
+>=100 - Ошибки вебклиента. Для мобильных клиентов возвращаться не должны.\n
 '''
     # check request type
     if request.method != 'POST':
@@ -128,10 +139,24 @@ image - фотография точки.\n
     except:
         print "Error POST"
     uid = request.POST.get('uid', '')
-    if Application.objects.filter(uid=uid).count() == 0:
+    if Application.objects.filter(uid=uid).count() == 0 or (uid == 'webclient' and not request.session.get('human')):
         return HttpResponse(json.dumps({'success': False,
                                         'error_code': 2,
                                         'message': 'Your client is not authorized.'
+                                        }),
+                            mimetype='text/json')
+
+    email = request.POST.get('email', '').strip()
+    if email != '':
+        try:
+            validate_email(email)
+        except:
+            email = ''
+
+    if uid == 'webclient' and email == '':
+        return HttpResponse(json.dumps({'success': False,
+                                        'error_code': 100,
+                                        'message': 'Email is required.'
                                         }),
                             mimetype='text/json')
 
@@ -174,16 +199,29 @@ image - фотография точки.\n
     # get not required fileds
     kwargs['phones'] = request.POST.get('phones')
     kwargs['website'] = request.POST.get('website')
+    if kwargs['website']:
+        try:
+            validate_url(kwargs['website'])
+        except:
+            return HttpResponse(json.dumps({'success': False,
+                                            'error_code': 6,
+                                            'message': 'Enter a valid website.'
+                                            }),
+                                mimetype='text/json')
+    if request.user.is_authenticated and request.user.is_superuser:
+        kwargs['state'] = '0'
     # create poin
     p = Point.objects.create(**kwargs)
+    
     # add photos
     for photo in photos:
         Photo.objects.create(point=p,
                              image=photo
                              )
     # create app_message
-    app = Application.objects.get(uid=uid)
-    app.add_message(point=p)
+    if not (request.user.is_authenticated and request.user.is_superuser):
+        app = Application.objects.get(uid=uid)
+        app.add_message(point=p)
     return HttpResponse(json.dumps({'success': True}),
                         mimetype='text/json')
 
@@ -241,7 +279,8 @@ description - что хотим предложить.
                      mimetype='text/json')
     # check app uid
     uid = request.POST.get('uid', '')
-    if Application.objects.filter(uid=uid).count() == 0:
+    #if Application.objects.filter(uid=uid).count() == 0 :
+    if Application.objects.filter(uid=uid).count() == 0 or (uid == 'webclient' and not request.session.get('human')):
         return HttpResponse(json.dumps({'success': False,
                                         'message': "Your client is not authorized."
                                         }),

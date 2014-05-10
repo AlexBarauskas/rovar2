@@ -15,8 +15,8 @@ class Application(models.Model):
     uid = models.CharField(max_length=56, default=make_uid, unique=True)
     created = models.DateTimeField(auto_now_add=True)
 
-    def add_message(self, point=None, track=None, method='a'):
-        Message.objects.create(point=point, track=track, app=self, method=method)
+    def add_message(self, point=None, track=None, method='a', email=None):
+        Message.objects.create(point=point, track=track, app=self, method=method, email=email)
         
 
     
@@ -42,3 +42,4 @@ class Message(models.Model):
                                       ),
                              default='a')
     message = models.TextField(default=u'Ваше предложение принято.')
+    email = models.EmailField(null=True)

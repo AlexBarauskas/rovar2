@@ -11,6 +11,7 @@ from django.contrib.auth.decorators import login_required
 
 #@login_required
 def home(request, uid=None):
+    request.session['human'] = True;
     acl = '0'
     if request.user.is_authenticated():
         acl = '1'

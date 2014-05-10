@@ -1,3 +1,5 @@
+var __addClick;
+
 var rovar = {
     elements:{'points': {}, 'tracks': {}},
     sort_ids: {},
@@ -362,15 +364,15 @@ var rovar = {
 	polyline._data = data;
 	polyline._container.onclick = function(){self._showTrackInfo(polyline);};
 	var pointA =new L.Icon({
-				    iconUrl: data.marker_a,
-				    iconSize: [this._iconSize, this._iconSize],
-				    iconAnchor: [this._iconSize*this._kLeft, this._iconSize]
+				   iconUrl: data.marker_a,
+				   iconSize: [this._iconSize, this._iconSize],
+				   iconAnchor: [this._iconSize*this._kLeft, this._iconSize]
 			       });
 	var pointB =new L.Icon({
-				    iconUrl: data.marker_b,
-				    iconSize: [this._iconSize, this._iconSize],
-				    iconAnchor: [this._iconSize*this._kLeft, this._iconSize]
-				});
+				   iconUrl: data.marker_b,
+				   iconSize: [this._iconSize, this._iconSize],
+				   iconAnchor: [this._iconSize*this._kLeft, this._iconSize]
+			       });
 	polyline._data.pointA = L.marker(data.route[0], {color: 'red', icon: pointA});
 	polyline._data.pointB = L.marker(data.route[data.route.length-1], {color: 'red', icon: pointB});
 	polyline._data.pointA.addTo(rovar.map);
@@ -418,14 +420,7 @@ var rovar = {
 
 	minX = rovar.map.getBounds()._southWest.lat;
 	maxX = rovar.map.getBounds()._northEast.lat;
-	//minY = rovar.map.getBounds()._southWest.lng;
-	//maxY = rovar.map.getBounds()._northEast.lng;
-
 	var dt = (maxX-minX)/($(this.map._container).width()/(this._iconSize*1.25));
-
-	//var mz = this.map.getZoom();
-	//var dt = 0.005*(1-(mz*mz - 12*12)/(18*18.0-12*12.0)) + 0.0000000005*(1 - (mz*mz - 12*12)/(18*18.0-12*12.0));
-	//console.log(dt, this.map.getZoom());
 
 	var pins = this.elements.points[type_name];
 	var minX=60, maxX=50, minY=30, maxY=20, c;
@@ -438,7 +433,7 @@ var rovar = {
 
 	color = pins[id0]._data.color;
 
-	if(true || !this.sort_ids[type_name]){
+	if(!this.sort_ids[type_name]){
 	    for(id0 in pins){
 		p0 = pins[id0]._data.coordinates;
 		c = 0;
@@ -459,18 +454,6 @@ var rovar = {
 	    ids = this.sort_ids[type_name];
 	}
 
-	
-	//var dt = Math.max(maxY-minY,maxX-minX)/30;
-	//console.log(dt, this.map.getZoom());
-	
-	
-	
-	//var w = maxX - minX;
-	//var h = maxY - minY;
-
-	//for(i=0; i<(w / dt + 1); i++){
-	//    for(j=0; j<(h / dt + 1); j++){
-	//console.log(ids);
 	for(i = 0; i < ids.length; i++){
 	    id0 = ids[i][0];
 	    
@@ -486,7 +469,7 @@ var rovar = {
 			pins[id]._use = true;
 		    }
 		}
-		    
+		
 		if(local_pins.length>1){
 		    X=0; Y=0;
 		    for(k=local_pins.length-1; k>=0; k--){
@@ -533,12 +516,58 @@ var rovar = {
 		else{
 		    $(local_pins[0]._icon).css('visibility', 'visible');
 		}
-
 	    }
 	}
-	//}	
-    }
+	return true;
+    },
 
+    addPoint : function(){
+	var self = this;
+	$(this.map._container).css('cursor', "crosshair");
+	__addClick = function(e){self._setCoordinates(e);};
+	this.map.on('mousedown',__addClick);
+    },
+
+    _setCoordinates: function(e){
+	$('input[name="coordinates"]').val('[' + e.latlng.lat.toString() + ', ' + e.latlng.lng.toString() + ']');
+	$("#map").attr('style', "");
+	this.map.off('mousedown', __addClick);
+
+	$("#ajax-errors").html("");
+
+	//$("#add-point-dialog input[type=\"text\"]").val('');
+	//$("#add-point-dialog input[name=\"description\"]").val('');
+	$("#add-point-dialog .for-clear").val('');
+	var d=$("#add-point-dialog").show();
+	
+	$('#add-point-dialog').animate({'opacity':1}, 500);
+	d.css('left', ($(document).innerWidth() - d.innerWidth())/2);
+	if(($(document).innerHeight() - d.innerHeight())/2 >= 0)
+	    d.css('top', ($(document).innerHeight() - d.innerHeight())/2);
+	
+    },
+
+
+    __errors : {
+	1 : "Неверный тип запроса.",
+	2 : "Ваш клиент не инициализирован.",
+	3 : "Поля 'Название', 'Категория', 'Описание', 'Адрес' являются обязательными.",
+	4 : "Указанный тип точки не существует.",
+	5 : "Вы не выбрали изображение или оно не верного формата.",
+	6 : "Не верный URL для поля 'Cайт'.",
+	100 : "Введите email для обратной связи."
+	
+    },
+
+    callbackAddPoint: function(data){
+	console.log(data);
+	if(!data.success){
+	    $("#ajax-errors").html($("<p>").text(this.__errors[data.error_code] || "Неизвестная ошибка."));
+	}else{
+	    $("#ajax-errors").html($("<p class=\"success\">").text("Ваше предложение будет рассмотрено модератором."));
+	    setTimeout("$('#add-point-dialog').animate({'opacity':0.25}, 500, 'swing', function(){$('#add-point-dialog').hide()})", 2000);
+	}
+    }
 
 };
 
@@ -547,8 +576,16 @@ $(function(){
       rovar.init();
       rovar.loadPoints();
       rovar.loadTracks();
-      $('#back-to-banner').click(function(){rovar.backToHome();});
-      $('#type-btns li').click(function(ev){
+      $("#add-point-btn").click(function(){rovar.addPoint();});
+      $("#back-to-banner").click(function(){rovar.backToHome();});
+      $("#add-point-form-close").click(
+	  function(){$("#add-point-dialog").hide();
+		     $("#ajax-errors").html("");
+		    }
+      );
+      $("#add-point-form").ajaxForm(function(data){rovar.callbackAddPoint(data);});
+
+      $("#type-btns li").click(function(ev){
 				   var type = this.attributes.id.value;
 				   if($(this).attr('class').indexOf('disable')>=0){
 				       $(this).removeClass('disable');
@@ -558,6 +595,6 @@ $(function(){
 				       $(this).addClass('disable');
 				       rovar.hide(type);
 				   }
-				       
+				   
 			       });
   });
