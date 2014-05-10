@@ -151,7 +151,6 @@ INSTALLED_APPS = (
     'account',
     'blog',
     'api',
-    'captcha'
 )
 
 # A sample logging configuration. The only tangible logging
