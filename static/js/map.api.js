@@ -562,9 +562,9 @@ var rovar = {
     callbackAddPoint: function(data){
 	console.log(data);
 	if(!data.success){
-	    $("#ajax-errors").html($("<p>").text(this.__errors[data.error_code] || "Неизвестная ошибка."));
+	    $("#ajax-errors").html($("<p class=\"error alert\">").text(this.__errors[data.error_code] || "Неизвестная ошибка."));
 	}else{
-	    $("#ajax-errors").html($("<p class=\"success\">").text("Ваше предложение будет рассмотрено модератором."));
+	    $("#ajax-errors").html($("<p class=\"success alert\">").text("Ваше предложение будет рассмотрено модератором."));
 	    setTimeout("$('#add-point-dialog').animate({'opacity':0.25}, 500, 'swing', function(){$('#add-point-dialog').hide()})", 2000);
 	}
     }
