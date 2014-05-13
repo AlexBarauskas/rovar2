@@ -380,9 +380,19 @@ def info_page_edit(request):
 
 @staff_member_required
 def moderation_objects(request):
-    messages = Message.objects.filter(state='m')
+    q = {'state': 'm'}
+    if 'state' in request.GET:
+        q['state'] = request.GET['state']
+        if q['state'] == 'all':
+            del q['state']
+    if 'type' in request.GET:
+        q['point__type__slug'] = request.GET['type']
+    messages = Message.objects.filter(**q)
     return render_to_response('manager_moderation.html',
                               {'objects': messages,
+                               'types': Type.objects.filter(obj='p'),
+                               'cur_type': request.GET.get('type', 'all'),
+                               'cur_state': request.GET.get('state', 'm'),
                                },                              
                               RequestContext(request))
     
