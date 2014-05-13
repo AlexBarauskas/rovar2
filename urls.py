@@ -24,7 +24,6 @@ urlpatterns = patterns(
     #    name="account_login"),
     url(r'^account/login/$', RedirectView.as_view(url='/', permanent=False)),
 
-
     #url(r'^account/', include('account.urls')),
                        
 #    url(r'^login/$','django.contrib.auth.views.login',{ 'template_name' : 'login.html'},name="login"),

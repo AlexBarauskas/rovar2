@@ -150,7 +150,7 @@ INSTALLED_APPS = (
     'map',
     'account',
     'blog',
-    'api'
+    'api',
 )
 
 # A sample logging configuration. The only tangible logging

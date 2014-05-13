@@ -506,12 +506,63 @@ html, body {
 /*ADD POINT DIALOG*/
 #add-point-dialog{
     position: fixed;
-    width: 400px;
+    width: 440px;
     height: auto;
     margin: 0;
-    padding: 10px;
+    //padding: 10px;
     z-index: 999;
     top: 0;
     background-color: white;
-    border:solid 1px #333;
+    border: solid 1px #C53900;
+    box-shadow: 0px 0px 1px white;
+
+}
+
+#add-point-dialog form{
+    margin: 0 20px;
+}
+
+
+#add-point-dialog h1{
+    font-size:2em;
+    color: white;
+    background-color:#e95d24;
+    padding:10px;
+}
+
+#add-point-dialog .input{
+    margin: 10px 0;
+}
+
+#add-point-dialog .input label{
+    width:100px;
+}
+
+#add-point-dialog .input input{
+    width:280px;
+    padding: 5px;
+    border-color: #FFC266;
+}
+
+#add-point-dialog textarea{
+    width:384px;
+    padding: 5px;
+    border-color: #FFC266;
+}
+
+#add-point-dialog select{
+padding: 5px;
+border-color: #ffc266;
+background-color: #FF902A;
+color: white;
+}
+
+#add-point-dialog .btn-box{
+    padding: 10px 0 10px;
+    margin-top: 0px;
+    text-align:center;
+}
+
+#add-point-dialog .btn{
+    margin: 0 40px;
 }

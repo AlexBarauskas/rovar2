@@ -4,8 +4,16 @@
 <link type="text/css" href="/static/leaflet/leaflet.css" rel="stylesheet"/>
 {% endblock css %}
 
-
-
+{% block preload %}
+<div style="position:absolute; top:-5000">
+    {%for T in types%}
+    {%if T.count_items%}
+    <img src="{{T.image.url}}"/>
+    <img src="{{T.image2.url}}"/>
+    {%endif%}
+    {%endfor%}
+</div>
+{% endblock preload %}
 
 {% block content_left %}
 <div class="preview">
@@ -50,15 +58,15 @@
 </div>
 <div id="add-point-dialog" style="display:none">
   <h1>Добавление точки</h1>
-  <form id="add-point-form" method="POST" action="." enctype="multipart/form-data">
+  <form id="add-point-form" method="POST" action="/api/point/add" enctype="multipart/form-data">
     
-    <div class="input">
+      <input type="hidden" value="" name="coordinates"/>
+    <!--div class="input">
       <label>Координаты</label>
-      <input type="text" value="" name="coordinates" disabled="disabled"/>
-    </div>
+    </div-->
     <div class="input">
       <label>Название</label>
-      <input type="text" value="" name="title"/>
+      <input class="for-clear" type="text" value="" name="title"/>
     </div>
     <div class="input">
       <label>Категория</label>
@@ -73,28 +81,36 @@
     </div>
     <div class="input">
       <label>Описание</label>
-      <textarea type="text" name="description"></textarea>
+      <textarea class="for-clear" type="text" name="description"></textarea>
     </div>
     <div class="input">
       <label>Адрес</label>
-      <input type="text" value="" name="address"/>
+      <input class="for-clear" type="text" value="" name="address"/>
     </div>
     <div class="input">
       <label>Телефоны</label>
-      <input type="text" value="" name="phones"/>
+      <input class="for-clear" type="text" value="" name="phones"/>
     </div>
     <div class="input">
       <label>Сайт</label>
-      <input type="text" value="" name="website"/>
+      <input class="for-clear" type="text" value="" name="website"/>
     </div>
     <div class="input">
       <label>Фото</label>
       <input type="file" value="" accept="image/*" name="image"/>
     </div>
-    <div class="btn-box">
+    <div class="input">
+      <label>Email</label>
+      <input type="text" value="{%if user.is_authenticated%}{{user.email}}{%endif%}" name="email"/>
+    </div>
+    
+    <div id="ajax-errors">
+    </div>
+    <div class="btn-box" style="padding: 10px 0 10px;margin-top: 0px;">
       <button class="btn success">Добавить</button>
       <a class="btn" id="add-point-form-close" href="javascript:;">Отмена</a>
     </div>
+    <input type="hidden" value="webclient" name="uid"/>
   </form>
 </div>
 
@@ -106,7 +122,7 @@
 <script type="text/javascript" src="/static/leaflet/leaflet-src.js"></script>
 <script type="text/javascript" src="/static/leaflet/leaflet.js"></script>
 <script type="text/javascript" src="/static/js/map.api.js"></script>
-<script type="text/javascript" src="/static/js/add-point.js"></script>
+<!--script type="text/javascript" src="/static/js/add-point.js"></script-->
 
 
 <script type="text/javascript">

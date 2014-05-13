@@ -1,5 +1,8 @@
+var __addClick;
+
 var rovar = {
     elements:{'points': {}, 'tracks': {}},
+    sort_ids: {},
     _iconSize: 36,
     _kLeft: 0.317,
     _numberPoint: 0,
@@ -154,6 +157,8 @@ var rovar = {
 	$(point._icon).attr('id', 'iconp-'+point._data.id.toString());
 	$(point._icon).click(function(){self._showPointInfo(point);});
 
+	$(point._icon).attr('title', type + ': ' + data.id);
+
 	if(type in this.elements.points){
 	    this.elements.points[type][eid] = point;    
 	}else{
@@ -197,7 +202,7 @@ var rovar = {
 	       });	
     },
 
-    _pointGroup : function(type_name){
+    _pointGroup1 : function(type_name){
 	$('div.pingrop-' + type_name).remove();
 	//$('img.' + type_name).css('visibility', 'visible');
 	var pins = this.elements.points[type_name];
@@ -223,17 +228,7 @@ var rovar = {
 	maxX = rovar.map.getBounds()._northEast.lat;
 	minY = rovar.map.getBounds()._southWest.lng;
 	maxY = rovar.map.getBounds()._northEast.lng;
-	var dt = Math.max(maxY-minY,maxX-minX)/45;
-	/*
-	minX = Math.max(minX, rovar.map.getBounds()._southWest.lat);
-	maxX = Math.min(maxX, rovar.map.getBounds()._northEast.lat);
-	minY = Math.max(minY, rovar.map.getBounds()._southWest.lng);
-	maxY = Math.min(maxY, rovar.map.getBounds()._northEast.lng);
-	var dt = Math.max(maxY-minY,maxX-minX)/10;
-	
-	var dt = Math.max(rovar.map.getBounds()._northEast.lat - rovar.map.getBounds()._southWest.lat,
-			  rovar.map.getBounds()._northEast.lng - rovar.map.getBounds()._southWest.lng)/45;
-	 */
+	var dt = Math.max(maxY-minY,maxX-minX)/30;
 	var w = maxX - minX;
 	var h = maxY - minY;
 	var i=0, j=0, x0, x1, y0, y1, local_pins, k, p, X, Y;
@@ -391,15 +386,15 @@ var rovar = {
 	polyline._data = data;
 	polyline._container.onclick = function(){self._showTrackInfo(polyline);};
 	var pointA =new L.Icon({
-				    iconUrl: data.marker_a,
-				    iconSize: [this._iconSize, this._iconSize],
-				    iconAnchor: [this._iconSize*this._kLeft, this._iconSize]
+				   iconUrl: data.marker_a,
+				   iconSize: [this._iconSize, this._iconSize],
+				   iconAnchor: [this._iconSize*this._kLeft, this._iconSize]
 			       });
 	var pointB =new L.Icon({
-				    iconUrl: data.marker_b,
-				    iconSize: [this._iconSize, this._iconSize],
-				    iconAnchor: [this._iconSize*this._kLeft, this._iconSize]
-				});
+				   iconUrl: data.marker_b,
+				   iconSize: [this._iconSize, this._iconSize],
+				   iconAnchor: [this._iconSize*this._kLeft, this._iconSize]
+			       });
 	polyline._data.pointA = L.marker(data.route[0], {color: 'red', icon: pointA});
 	polyline._data.pointB = L.marker(data.route[data.route.length-1], {color: 'red', icon: pointB});
 	polyline._data.pointA.addTo(rovar.map);
@@ -432,8 +427,169 @@ var rovar = {
 		    }
 		}
 	       });	
-    }
+    },
     
+
+
+    _pointGroup : function(type_name){
+	var i=0, j=0, x0, x1, y0, y1, local_pins, k, p0, p, X, Y, t, id, id0;
+
+	$('div.pingrop-' + type_name).remove();
+	$('img.' + type_name).css('visibility', 'visible');
+	if(this.map.getZoom() == this.map.getMaxZoom()){
+	    return false;
+	}
+
+	minX = rovar.map.getBounds()._southWest.lat;
+	maxX = rovar.map.getBounds()._northEast.lat;
+	var dt = (maxX-minX)/($(this.map._container).width()/(this._iconSize*1.25));
+
+	var pins = this.elements.points[type_name];
+	var minX=60, maxX=50, minY=30, maxY=20, c;
+	var color;
+	var ids = [];
+
+	for(id0 in pins){
+	    pins[id0]._use = false;
+	}
+
+	color = pins[id0]._data.color;
+
+	if(!this.sort_ids[type_name]){
+	    for(id0 in pins){
+		p0 = pins[id0]._data.coordinates;
+		c = 0;
+		for(id in pins){
+		    p = pins[id]._data.coordinates;
+		    if(id!=id0 && Math.sqrt((p0[0]-p[0])*(p0[0]-p[0]) + (p0[1]-p[1])*(p0[1]-p[1]))<dt){
+			c += 1;
+		    }
+		}
+		if(c>0){
+		    ids.push([id0, c]);
+		}
+	    }
+	    ids.sort(function(a,b){return a[1]<b[1];});
+	    this.sort_ids[type_name] = ids;
+	}
+	else{
+	    ids = this.sort_ids[type_name];
+	}
+
+	for(i = 0; i < ids.length; i++){
+	    id0 = ids[i][0];
+	    
+	    local_pins = [];
+	    if(!pins[id0]._use){
+		local_pins = [pins[id0]];
+		p0 = pins[id0]._data.coordinates;
+		pins[id0]._use = true;
+		for(id in pins){
+		    p = pins[id]._data.coordinates;
+		    if(!pins[id]._use && id!=id0 && Math.sqrt((p0[0]-p[0])*(p0[0]-p[0]) + (p0[1]-p[1])*(p0[1]-p[1]))<dt){
+			local_pins.push(pins[id]);
+			pins[id]._use = true;
+		    }
+		}
+		
+		if(local_pins.length>1){
+		    X=0; Y=0;
+		    for(k=local_pins.length-1; k>=0; k--){
+			p = local_pins[k]._data.coordinates;
+			X += p[0];
+			Y += p[1];
+			$(local_pins[k]._icon).css('visibility', 'hidden');
+		    }
+		    
+		    var groupIcon = new L.divIcon({className: type_name + ' pingrop pingrop-' + type_name,
+						   html:local_pins.length,
+						   iconSize: [this._iconSize*0.66, this._iconSize*0.66],
+						   iconAnchor: [this._iconSize*0.66/2, this._iconSize*0.66/2]
+						  });
+		    X = X/local_pins.length; 
+		    Y = Y/local_pins.length;
+		    var point = L.marker([X, Y], {color: 'red', icon: groupIcon});
+		    point.addTo(this.map);
+
+		    function fn_click(ev){
+			var c = ($(this).attr('id').split('-'));
+			c = [parseFloat(c[0]), parseFloat(c[1])];
+			rovar.map.panTo(c);
+			rovar.map.zoomIn(2);
+		    }
+		    t=[];
+		    local_pins.forEach(function(i){t.push(i._data.id);});
+		    $(point._icon).attr('title', type_name + ':' + local_pins.length + ' ' + t.join(','));
+		    $(point._icon).attr('id', X.toString() + "-" + Y.toString());
+		    
+		    $(point._icon).css({'background-color': color,
+					'border-radius': "100%",
+					'line-height': this._iconSize*0.75 + 'px',
+					'color': 'white',
+					'vertical-align': 'middle',
+					'font-size': this._iconSize*0.75/2 + 'px',
+					'font-weight': 'bold',
+					'text-align': 'center'
+				       });
+
+		    var coordinates = point.getLatLng();
+		    $(point._icon).click(fn_click);
+		}
+		else{
+		    $(local_pins[0]._icon).css('visibility', 'visible');
+		}
+	    }
+	}
+	return true;
+    },
+
+    addPoint : function(){
+	var self = this;
+	$(this.map._container).css('cursor', "crosshair");
+	__addClick = function(e){self._setCoordinates(e);};
+	this.map.on('mousedown',__addClick);
+    },
+
+    _setCoordinates: function(e){
+	$('input[name="coordinates"]').val('[' + e.latlng.lat.toString() + ', ' + e.latlng.lng.toString() + ']');
+	$("#map").attr('style', "");
+	this.map.off('mousedown', __addClick);
+
+	$("#ajax-errors").html("");
+
+	//$("#add-point-dialog input[type=\"text\"]").val('');
+	//$("#add-point-dialog input[name=\"description\"]").val('');
+	$("#add-point-dialog .for-clear").val('');
+	var d=$("#add-point-dialog").show();
+	
+	$('#add-point-dialog').animate({'opacity':1}, 500);
+	d.css('left', ($(document).innerWidth() - d.innerWidth())/2);
+	if(($(document).innerHeight() - d.innerHeight())/2 >= 0)
+	    d.css('top', ($(document).innerHeight() - d.innerHeight())/2);
+	
+    },
+
+
+    __errors : {
+	1 : "Неверный тип запроса.",
+	2 : "Ваш клиент не инициализирован.",
+	3 : "Поля 'Название', 'Категория', 'Описание', 'Адрес' являются обязательными.",
+	4 : "Указанный тип точки не существует.",
+	5 : "Вы не выбрали изображение или оно не верного формата.",
+	6 : "Не верный URL для поля 'Cайт'.",
+	100 : "Введите email для обратной связи."
+	
+    },
+
+    callbackAddPoint: function(data){
+	console.log(data);
+	if(!data.success){
+	    $("#ajax-errors").html($("<p class=\"error alert\">").text(this.__errors[data.error_code] || "Неизвестная ошибка."));
+	}else{
+	    $("#ajax-errors").html($("<p class=\"success alert\">").text("Ваше предложение будет рассмотрено модератором."));
+	    setTimeout("$('#add-point-dialog').animate({'opacity':0.25}, 500, 'swing', function(){$('#add-point-dialog').hide()})", 2000);
+	}
+    }
 
 };
 
@@ -442,8 +598,16 @@ $(function(){
       rovar.init();
       rovar.loadPoints();
       rovar.loadTracks();
-      $('#back-to-banner').click(function(){rovar.backToHome();});
-      $('#type-btns li').click(function(ev){
+      $("#add-point-btn").click(function(){rovar.addPoint();});
+      $("#back-to-banner").click(function(){rovar.backToHome();});
+      $("#add-point-form-close").click(
+	  function(){$("#add-point-dialog").hide();
+		     $("#ajax-errors").html("");
+		    }
+      );
+      $("#add-point-form").ajaxForm(function(data){rovar.callbackAddPoint(data);});
+
+      $("#type-btns li").click(function(ev){
 				   var type = this.attributes.id.value;
 				   if($(this).attr('class').indexOf('disable')>=0){
 				       $(this).removeClass('disable');
@@ -453,6 +617,6 @@ $(function(){
 				       $(this).addClass('disable');
 				       rovar.hide(type);
 				   }
-				       
+				   
 			       });
   });
