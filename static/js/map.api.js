@@ -179,6 +179,15 @@ var rovar = {
 		    for(var key in self.elements.points){
 			self._pointGroup(key);
 		    }
+
+		    
+
+		    self.map.on('moveend', function(ev){
+				    for(var key in self.elements.points){
+					self._pointGroup(key);
+				    }
+				});
+
 		    self.map.on('zoomend', function(ev){
 				    for(var key in self.elements.points){
 					self._pointGroup(key);
@@ -190,12 +199,23 @@ var rovar = {
 
     _pointGroup : function(type_name){
 	$('div.pingrop-' + type_name).remove();
-	$('img.' + type_name).css('visibility', 'visible');
+	//$('img.' + type_name).css('visibility', 'visible');
 	var pins = this.elements.points[type_name];
 	var minX=60, maxX=50, minY=30, maxY=20, c;
 	var color;
+	
 	for(id in pins){
 	    pins[id]._use = false;
+	  /*  c = pins[id]._data.coordinates; 
+	    if(c[0]<minX)
+		minX = c[0];
+	    if(c[0]>maxX)
+		maxX = c[0];
+	    if(c[1]<minY)
+		minY = c[1];
+	    if(c[1]>maxY)
+		maxY = c[1];
+	 */
 	}
 	color = pins[id]._data.color;
 
@@ -203,18 +223,27 @@ var rovar = {
 	maxX = rovar.map.getBounds()._northEast.lat;
 	minY = rovar.map.getBounds()._southWest.lng;
 	maxY = rovar.map.getBounds()._northEast.lng;
-	
 	var dt = Math.max(maxY-minY,maxX-minX)/45;
+	/*
+	minX = Math.max(minX, rovar.map.getBounds()._southWest.lat);
+	maxX = Math.min(maxX, rovar.map.getBounds()._northEast.lat);
+	minY = Math.max(minY, rovar.map.getBounds()._southWest.lng);
+	maxY = Math.min(maxY, rovar.map.getBounds()._northEast.lng);
+	var dt = Math.max(maxY-minY,maxX-minX)/10;
+	
+	var dt = Math.max(rovar.map.getBounds()._northEast.lat - rovar.map.getBounds()._southWest.lat,
+			  rovar.map.getBounds()._northEast.lng - rovar.map.getBounds()._southWest.lng)/45;
+	 */
 	var w = maxX - minX;
 	var h = maxY - minY;
 	var i=0, j=0, x0, x1, y0, y1, local_pins, k, p, X, Y;
 	for(i=0; i<(w / dt + 1); i++){
 	    for(j=0; j<(h / dt + 1); j++){
 		local_pins = [];
-		x0 = minX + (i-0.1)*dt;
-		x1 = minX + (i+1.1)*dt;
-		y0 = minY + (j-0.1)*dt;
-		y1 = minY + (j+1.1)*dt;
+		x0 = minX + (i-0.15)*dt;
+		x1 = minX + (i+1.15)*dt;
+		y0 = minY + (j-0.15)*dt;
+		y1 = minY + (j+1.15)*dt;
 		for(id in pins){
 		    p = pins[id]._data.coordinates;
 		    if(!pins[id]._use && p[0]>=x0 && p[0]<x1 && p[1]>=y0 && p[1]<y1){
@@ -262,6 +291,9 @@ var rovar = {
 
 		    var coordinates = point.getLatLng();
 		    $(point._icon).click(fn_click);
+		}
+		else if(local_pins.length==1){
+		    $(local_pins[0]._icon).css('visibility', 'visible');
 		}
 	    }
 	}	
