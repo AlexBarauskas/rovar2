@@ -18,7 +18,8 @@
   <tbody>
     {% for obj in objects%}
     <tr>
-      <td>{%if obj.method == 'a'%}Добавление{%else%}Изменение{%endif%}</td>
+      <td>{%if obj.method == 'a'%}Добавление{%else%}Изменение{%endif%}
+      </td>
       <td>{{obj.state}}</td>
       {%if obj.point%}
       <td>{{obj.point.name}}</td>

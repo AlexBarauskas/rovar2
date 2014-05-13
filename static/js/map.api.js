@@ -202,97 +202,6 @@ var rovar = {
 	       });	
     },
 
-    _pointGroup1 : function(type_name){
-	$('div.pingrop-' + type_name).remove();
-	//$('img.' + type_name).css('visibility', 'visible');
-	var pins = this.elements.points[type_name];
-	var minX=60, maxX=50, minY=30, maxY=20, c;
-	var color;
-	
-	for(id in pins){
-	    pins[id]._use = false;
-	  /*  c = pins[id]._data.coordinates; 
-	    if(c[0]<minX)
-		minX = c[0];
-	    if(c[0]>maxX)
-		maxX = c[0];
-	    if(c[1]<minY)
-		minY = c[1];
-	    if(c[1]>maxY)
-		maxY = c[1];
-	 */
-	}
-	color = pins[id]._data.color;
-
-	minX = rovar.map.getBounds()._southWest.lat;
-	maxX = rovar.map.getBounds()._northEast.lat;
-	minY = rovar.map.getBounds()._southWest.lng;
-	maxY = rovar.map.getBounds()._northEast.lng;
-	var dt = Math.max(maxY-minY,maxX-minX)/30;
-	var w = maxX - minX;
-	var h = maxY - minY;
-	var i=0, j=0, x0, x1, y0, y1, local_pins, k, p, X, Y;
-	for(i=0; i<(w / dt + 1); i++){
-	    for(j=0; j<(h / dt + 1); j++){
-		local_pins = [];
-		x0 = minX + (i-0.15)*dt;
-		x1 = minX + (i+1.15)*dt;
-		y0 = minY + (j-0.15)*dt;
-		y1 = minY + (j+1.15)*dt;
-		for(id in pins){
-		    p = pins[id]._data.coordinates;
-		    if(!pins[id]._use && p[0]>=x0 && p[0]<x1 && p[1]>=y0 && p[1]<y1){
-			local_pins.push(pins[id]);
-			pins[id]._use = true;
-		    }
-		}
-		if(local_pins.length>1){
-		    X=0; Y=0;
-		    for(k=local_pins.length-1; k>=0; k--){
-			p = local_pins[k]._data.coordinates;
-			X += p[0];
-			Y += p[1];
-			$(local_pins[k]._icon).css('visibility', 'hidden');
-		    }
-
-		    var groupIcon = new L.divIcon({className: type_name + ' pingrop pingrop-' + type_name,
-						   html:local_pins.length,
-						   iconSize: [this._iconSize*0.66, this._iconSize*0.66],
-						   iconAnchor: [this._iconSize*0.66/2, this._iconSize*0.66/2]
-						  });
-		    X = X/local_pins.length; 
-		    Y = Y/local_pins.length;
-		    var point = L.marker([X, Y], {color: 'red', icon: groupIcon});
-		    point.addTo(this.map);
-
-		    function fn_click(ev){
-			var c = ($(this).attr('id').split('-'));
-			c = [parseFloat(c[0]), parseFloat(c[1])];
-			rovar.map.panTo(c);
-			rovar.map.zoomIn(2);
-		    }
-		    $(point._icon).attr('title', type_name + ':' + local_pins.length);
-		    $(point._icon).attr('id', X.toString() + "-" + Y.toString());
-		    
-		    $(point._icon).css({'background-color': color,
-					'border-radius': "100%",
-					'line-height': this._iconSize*0.75 + 'px',
-					'color': 'white',
-					'vertical-align': 'middle',
-					'font-size': this._iconSize*0.75/2 + 'px',
-					'font-weight': 'bold',
-					'text-align': 'center'
-				       });
-
-		    var coordinates = point.getLatLng();
-		    $(point._icon).click(fn_click);
-		}
-		else if(local_pins.length==1){
-		    $(local_pins[0]._icon).css('visibility', 'visible');
-		}
-	    }
-	}	
-    },
 
     _hideTrackInfo : function(track){
 	var self = this;
@@ -442,7 +351,7 @@ var rovar = {
 
 	minX = rovar.map.getBounds()._southWest.lat;
 	maxX = rovar.map.getBounds()._northEast.lat;
-	var dt = (maxX-minX)/($(this.map._container).width()/(this._iconSize*1.25));
+	var dt = (maxX-minX)/($(this.map._container).width()/(this._iconSize*1.5));
 
 	var pins = this.elements.points[type_name];
 	var minX=60, maxX=50, minY=30, maxY=20, c;

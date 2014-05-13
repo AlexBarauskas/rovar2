@@ -335,15 +335,6 @@ def photo_img_del(request, point_id, img_id):
                         content_type="text/json")
 
 
-@staff_member_required
-def moderation_objects(request):
-    messages = Message.objects.filter(state='m')
-    return render_to_response('manager_moderation.html',
-                              {'objects': messages,
-                               },                              
-                              RequestContext(request))
-    
-
 from account.models import Author
 @staff_member_required
 def info_page_edit(request):
@@ -386,6 +377,15 @@ def info_page_edit(request):
                               RequestContext(request))
 
 
+
+@staff_member_required
+def moderation_objects(request):
+    messages = Message.objects.filter(state='m')
+    return render_to_response('manager_moderation.html',
+                              {'objects': messages,
+                               },                              
+                              RequestContext(request))
+    
 @staff_member_required
 def moderation_object(request, message_id):
     message = get_object_or_404(Message, id=message_id, point__isnull=False)
