@@ -25,6 +25,9 @@
     <li class="last{% if menu_item == 'points' %} active{% endif %}">
       <a href="{% url manager_points %}">Места</a>
     </li>
+    <li class="last{% if menu_item == 'moderation' %} active{% endif %}">
+      <a href="{% url moderation_objects %}">Модерация{%if number_moderation%}({{number_moderation}}){%endif%}</a>
+    </li>
   </ul>
 <div class="clear"></div>
 </div>

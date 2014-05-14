@@ -139,6 +139,7 @@ image - фотография точки.\n
     except:
         print "Error POST"
     uid = request.POST.get('uid', '')
+    print request.session.get('human')
     if Application.objects.filter(uid=uid).count() == 0 or (uid == 'webclient' and not request.session.get('human')):
         return HttpResponse(json.dumps({'success': False,
                                         'error_code': 2,

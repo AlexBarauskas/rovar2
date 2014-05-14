@@ -11,7 +11,7 @@ from django.conf import settings
 from map.models import Type, Point, Track, Photo
 from manager.models import EditorImage
 from blog.models import Post
-from forms import TypeForm, TrackForm, PostForm, PointForm, UploadImageForm
+from forms import TypeForm, TrackForm, PostForm, PointForm, UploadImageForm, MessageForm, BasePointForm
 import json
 import os
 import re
@@ -251,11 +251,11 @@ def points(request, type_id=None):
 
 @staff_member_required
 def point_edit(request, point_id=None):
-    start_acl = None
+    #start_acl = None
     if point_id is not None:
         point = get_object_or_404(Point, id=point_id)
         title = u'Редактирование точки'
-        start_acl = point.state
+        #start_acl = point.state
     else:
         point = None
         title = u'Новая точка'
@@ -269,11 +269,11 @@ def point_edit(request, point_id=None):
                 #ph.save()
             messages.append(u"Изменения успешно сохранены.")
 
-            if start_acl is not None and point.state != start_acl and point.message_set.filter(state='m').count():
-                mod_notifi = point.message_set.filter(state='m')[0]
-                mod_notifi.message = request.POST.get('mod_notifi') or mod_notifi.message
-                mod_notifi.state = 'f'
-                mod_notifi.save()
+            #if start_acl is not None and point.state != start_acl and point.message_set.filter(state='m').count():
+            #    mod_notifi = point.message_set.filter(state='m')[0]
+            #    mod_notifi.message = request.POST.get('mod_notifi') or mod_notifi.message
+            #    mod_notifi.state = 'f'
+            #    mod_notifi.save()
                 
             
             if request.POST.get('submit', 'to_current_page') == 'to_section':
@@ -294,7 +294,7 @@ def point_edit(request, point_id=None):
                                'title': title,
                                'back_url': reverse('manager_points'),
                                'info': {'messages': messages},
-                               'mod_notifi': mod_notifi
+                               #'mod_notifi': mod_notifi
                                },                              
                               RequestContext(request))
 
@@ -398,8 +398,26 @@ def moderation_objects(request):
     
 @staff_member_required
 def moderation_object(request, message_id):
+    messages = []
     message = get_object_or_404(Message, id=message_id, point__isnull=False)
+    form = None
+    if request.method == "POST":
+        mform = MessageForm(request.POST, instance=message)
+        if message.point:
+            form = BasePointForm(request.POST, instance=message.point, prefix="point")
+    else:
+        mform = MessageForm(instance=message)
+        if message.point:
+            form = BasePointForm(instance=message.point, prefix="point")
+    if request.method == "POST":
+        if all([mform.is_valid(), form.is_valid()]):
+            mform.save()
+            form.save()
+            messages.append(u'Изменения успешно сохранены')
     return render_to_response('manager_moderation_obj.html',
                               {'obj': message,
+                               'info': {'messages': messages},
+                               'mform': mform,
+                               'form': form
                                },                              
                               RequestContext(request))

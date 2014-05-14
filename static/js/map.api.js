@@ -67,6 +67,7 @@ var rovar = {
     _hidePointInfo : function(point){
 	var self = this;
 	point.setIcon(point._data.unactiveIcon);
+	$(point._icon).css('z-index', $(point._icon).css('z-index')-5000);
 	$(point._icon).click(function(){self._showPointInfo(point);});
 	$(point._icon).addClass(point._data.type_slug);
 	$(point._icon).attr('id', 'iconp-'+point._data.id.toString());
@@ -91,6 +92,7 @@ var rovar = {
 
 	var self = this;
 	point.setIcon(point._data.activeIcon);
+	$(point._icon).css('z-index', $(point._icon).css('z-index')+5000);
 	$(point._icon).click(function(){self._hidePointInfo(point);});
 	this.currentPoint = point;
 
@@ -101,12 +103,15 @@ var rovar = {
 
 	var description,
 	data = point._data;
+	var title = data.title;
+	if(data.website)
+	    title = '<a target="blank" href="'+data.website+'" style="color:' + data.color + '">'+title+'</a>';
 	if(data.post_url)
 	    description = "<p><a href=\""+data.post_url+"\">"+data.description+"</a></p>";
 	else
 	    description = "<p>"+data.description+"</p>";
 	var preview = $('.preview-content').html('')
-	    .append($("<h1>"+data.title+"</h1>").css('color', data.color))
+	    .append($("<h1>"+title+"</h1>").css('color', data.color))
 	    .append($("<p></p>").html(data.address).addClass('description-address'));
 	if(data.images && data.images.length){
 	    $('<img/>').attr({'src': data.images[0], 'title': "Show more..."}).appendTo(preview);

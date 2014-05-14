@@ -4,16 +4,16 @@
 <h1>Объекты для модерирования</h1>
 <p>
   <div>
-    <label><input type="radio"{%if cur_state == 'm'%} checked="checked"{%endif%} name="state" value="m"/>Пступившие</label>
+    <label><input type="radio"{%if cur_state == 'm'%} checked="checked"{%endif%} name="state" value="m"/>На рассмотрении модератором</label>
   </div>
   <div>
-    <label><input type="radio"{%if cur_state == 'f'%} checked="checked"{%endif%} name="state" value="f"/>Рассмотренные</label>
+    <label><input type="radio"{%if cur_state == 'f'%} checked="checked"{%endif%} name="state" value="f"/>Для отправки</label>
   </div>
   <div>
-    <label><input type="radio"{%if cur_state == 's'%} checked="checked"{%endif%} name="state" value="s"/>Уведомление отправлено клиенту</label>
+    <label><input type="radio"{%if cur_state == 's'%} checked="checked"{%endif%} name="state" value="s"/>Отправлено</label>
   </div>
   <div>
-    <label><input type="radio"{%if cur_state == 'r'%} checked="checked"{%endif%} name="state" value="r"/>Клиент получил уведомление</label>
+    <label><input type="radio"{%if cur_state == 'r'%} checked="checked"{%endif%} name="state" value="r"/>Прочитано</label>
   </div>
 </p>
 <ul class="filter-links">
@@ -27,9 +27,10 @@
 <table>
   <thead>
     <tr>
+      <th></th>
       <th>Метод</th>
-      <th>Состояние нотификации</th>
-      <th>Название</th>
+      <th>Состояние уведомления</th>
+      <th>Клиент</th>
       <th>Дата создания</th>
       <th>Тип</th>
       <th></th>
@@ -39,19 +40,20 @@
   <tbody>
     {% for obj in objects%}
     <tr>
-      <td>{%if obj.method == 'a'%}Добавление{%else%}Изменение{%endif%}
-      </td>
-      <td>{{obj.state}}</td>
       {%if obj.point%}
-      <td>{{obj.point.name}}</td>
+      <td><a href="{% url moderation_object obj.id %}">{{obj.point.name}}</a></td>
+      {%else%}
+      <td><a href="{% url moderation_object obj.id %}">{{obj.track.name}}</a></td>
+      {%endif%}
+      <td>{%if obj.method == 'a'%}Добавление{%else%}Изменение{%endif%}</td>
+      <td>{{obj.get_state_display}}</td>
+      <td>{%if obj.email %}web{%else%}mobile{%endif%}</td>
+      {%if obj.point%}
       <td>{{obj.point.created}}</td>
       <td>{{obj.point.type}}</td>
-      <td><a title="Редактировать информацию о пункту" class="icon-btn" href="{% url point-edit obj.point.id %}"><img src="/static/icons/edit.png"/></a></td>
       {%else%}
-      <td>{{obj.track.name}}</td>
       <td>{{obj.track.created}}</td>
       <td>{{obj.track.type}}</td>
-      <td><a title="Редактировать информацию о маршруте" class="icon-btn" href="{% url track-edit obj.track.id %}"><img src="/static/icons/edit.png"/></a></td>
       {%endif%}
     </tr>
     {% endfor %}
@@ -65,10 +67,19 @@
   <script>
     $(function(){
     $('input[name="state"]').change(function(ev){
-    var links = $('.filter-links a');
-    for(var i=links.length-1;i>=0;i--){
-    links[i].href = links[i].href.replace(/(state=\w)/gi, 'state='+this.value);
+    if(document.location.href.indexOf('?')>0){
+    if(document.location.href.indexOf('state=')>0)
+    document.location.href = document.location.href.replace(/(state=\w)/gi, 'state='+this.value);
+    else
+    document.location.href = document.location.href + '&state='+this.value;
     }
+    else{
+    document.location.href = document.location.href + '?state='+this.value;
+    }
+    //var links = $('.filter-links a');
+    //for(var i=links.length-1;i>=0;i--){
+    //links[i].href = links[i].href.replace(/(state=\w)/gi, 'state='+this.value);
+    //}
     });
     });
   </script>

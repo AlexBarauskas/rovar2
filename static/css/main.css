@@ -439,6 +439,7 @@ html, body {
     border: none;
     overflow:auto;
     height: 100%;
+    background-color: #e9e6de;
 }
 
 .data-content.info-iframe{

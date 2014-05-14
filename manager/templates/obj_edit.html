@@ -13,11 +13,12 @@
 {{form.as_p}}
 {%for p in form.instance.photo_set.all%}
 <div class="image-item">
-  <a id="{{p.id}}" class="close delete" href="javascript:;">X</a>
-  <img src="{{p.image.url}}"/>
-  <span>{{p.image.name}}</span>
+  <div>
+    <a id="{{p.id}}" class="close delete" href="javascript:;">X</a>
+    <img src="{{p.image.url}}"/>
+    <span>{{p.image.name}}</span>
+  </div>
 </div>
-
 {%endfor%}
 {%if mod_notifi%}
 <h1>Информация для мобильного клиента.</h1>
