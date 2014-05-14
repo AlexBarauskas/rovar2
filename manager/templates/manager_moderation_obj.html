@@ -17,6 +17,10 @@
 <p>
   Предложение по изменению данной точки поступило {{obj.created}} через клиентское приложение с идентификатором "{{obj.app.uid}}".
 </p>
+<h2>Описание:</h2>
+<p>
+  {{obj.description}}
+</p>
 {%endif%}
 <form action="." method="POST" enctype="multipart/form-data">
   {% csrf_token %}
@@ -34,7 +38,11 @@
   {%endif%}
   <div>
     <h1>Обратная связь</h1>
+    {%if mform%}
     {{mform.as_p}}
+    {%else%}
+    <p>{{obj.email}}</p>
+    {%endif%}
   </div>
   <div class="btn-broup">
     {%if obj.method == 'a' and obj.state == 'm'%}

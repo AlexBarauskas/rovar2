@@ -402,16 +402,23 @@ def moderation_object(request, message_id):
     message = get_object_or_404(Message, id=message_id, point__isnull=False)
     form = None
     if request.method == "POST":
-        mform = MessageForm(request.POST, instance=message)
+        if message.app.uid != 'webclient':
+            mform = MessageForm(request.POST, instance=message)
+        else:
+            mform = None
         if message.point:
             form = BasePointForm(request.POST, instance=message.point, prefix="point")
     else:
-        mform = MessageForm(instance=message)
+        if message.app.uid != 'webclient':
+            mform = MessageForm(instance=message)
+        else:
+            mform = None
         if message.point:
             form = BasePointForm(instance=message.point, prefix="point")
     if request.method == "POST":
-        if all([mform.is_valid(), form.is_valid()]):
-            mform.save()
+        if all([mform is None or mform.is_valid(), form.is_valid()]):
+            if mform is not None:
+                mform.save()
             form.save()
             messages.append(u'Изменения успешно сохранены')
     return render_to_response('manager_moderation_obj.html',

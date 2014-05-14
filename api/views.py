@@ -222,7 +222,7 @@ image - фотография точки.\n
     # create app_message
     if not (request.user.is_authenticated and request.user.is_superuser):
         app = Application.objects.get(uid=uid)
-        app.add_message(point=p)
+        app.add_message(point=p, email=email)
     return HttpResponse(json.dumps({'success': True}),
                         mimetype='text/json')
 
