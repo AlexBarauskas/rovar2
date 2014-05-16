@@ -504,6 +504,20 @@ html, body {
     top:0;
 }
 
+#images-preview img{
+    position:absolute;
+    display:none;
+    left:0;
+    top:0;
+}
+#images-preview img.active{
+    display:block;
+}
+#images-preview {
+    overflow:hidden;
+    position:relative;
+}
+
 /*ADD POINT DIALOG*/
 #add-point-dialog{
     position: fixed;
