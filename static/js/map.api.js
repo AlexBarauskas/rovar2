@@ -479,12 +479,15 @@ var rovar = {
     },
 
     addPoint : function(){
+	if(!this._runAddPoint){
+	    
 	this._runAddPoint = true;
 	$("#add-point-btn").html("Выберите место на карте (Esc для отмены)");
 	var self = this;
-	$(this.map._container).css('cursor', "url('/static/icons/pin-add-cursor.png') "+this._iconSize + ' ' + this._iconSize.toString() +",crosshair");
+	$(this.map._container).css('cursor', "url('/static/icons/pin-add.png') "+(this._iconSize*this._kLeft).toString() + ' ' + (this._iconSize-1).toString() +",crosshair");
 	__addClick = function(e){self._setCoordinates(e);};
 	this.map.on('mousedown',__addClick);
+	}
     },
 
     _setCoordinates: function(e){
