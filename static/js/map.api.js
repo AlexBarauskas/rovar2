@@ -1,5 +1,6 @@
 var __addClick;
 
+
 var rovar = {
     elements:{'points': {}, 'tracks': {}},
     sort_ids: {},
@@ -464,7 +465,17 @@ var rovar = {
 	return true;
     },
 
+    closeAddPoint : function(){	
+	$("#add-point-btn").html("+ Добавить точку");
+	$("#add-point-dialog").hide();
+	$("#ajax-errors").html("");
+	$("#map").attr('style', "");
+	this._runAddPoint = false;
+    },
+
     addPoint : function(){
+	this._runAddPoint = true;
+	$("#add-point-btn").html("Выберите место на карте (Esc для отмены)");
 	var self = this;
 	$(this.map._container).css('cursor', "crosshair");
 	__addClick = function(e){self._setCoordinates(e);};
@@ -475,19 +486,13 @@ var rovar = {
 	$('input[name="coordinates"]').val('[' + e.latlng.lat.toString() + ', ' + e.latlng.lng.toString() + ']');
 	$("#map").attr('style', "");
 	this.map.off('mousedown', __addClick);
-
 	$("#ajax-errors").html("");
-
-	//$("#add-point-dialog input[type=\"text\"]").val('');
-	//$("#add-point-dialog input[name=\"description\"]").val('');
 	$("#add-point-dialog .for-clear").val('');
 	var d=$("#add-point-dialog").show();
-	
 	$('#add-point-dialog').animate({'opacity':1}, 500);
 	d.css('left', ($(document).innerWidth() - d.innerWidth())/2);
 	if(($(document).innerHeight() - d.innerHeight())/2 >= 0)
 	    d.css('top', ($(document).innerHeight() - d.innerHeight())/2);
-	
     },
 
 
@@ -503,10 +508,12 @@ var rovar = {
     },
 
     callbackAddPoint: function(data){
-	console.log(data);
+	//console.log(data);
 	if(!data.success){
 	    $("#ajax-errors").html($("<p class=\"error alert\">").text(this.__errors[data.error_code] || "Неизвестная ошибка."));
 	}else{
+	    this._runAddPoint = false;
+	    $("#add-point-btn").html("+ Добавить точку");
 	    $("#ajax-errors").html($("<p class=\"success alert\">").text("Ваше предложение будет рассмотрено модератором."));
 	    setTimeout("$('#add-point-dialog').animate({'opacity':0.25}, 500, 'swing', function(){$('#add-point-dialog').hide()})", 2000);
 	}
@@ -521,11 +528,7 @@ $(function(){
       rovar.loadTracks();
       $("#add-point-btn").click(function(){rovar.addPoint();});
       $("#back-to-banner").click(function(){rovar.backToHome();});
-      $("#add-point-form-close").click(
-	  function(){$("#add-point-dialog").hide();
-		     $("#ajax-errors").html("");
-		    }
-      );
+      $("#add-point-form-close").click(function(){rovar.closeAddPoint();});
       $("#add-point-form").ajaxForm(function(data){rovar.callbackAddPoint(data);});
 
       $("#type-btns li").click(function(ev){
@@ -540,4 +543,8 @@ $(function(){
 				   }
 				   
 			       });
+
+      $(document).keyup(function(e) {
+			    if (e.keyCode == 27 & rovar._runAddPoint){rovar.closeAddPoint();}
+			});
   });
