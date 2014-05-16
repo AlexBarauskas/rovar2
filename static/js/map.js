@@ -117,7 +117,7 @@ var rovar = {
 	    //	rovar.elements[data.type[0]][data.type[1]][i].setStyle({'opacity':0.5});
 	    $('#banner').hide();
 	    $('#back-to-banner').show();
-        $('#type').show();
+            $('#type').show();
 	    if(rovar.currentPoint){
 		rovar.currentPoint.setIcon(rovar.currentPoint._baseIcon);
 		if(rovar.currentPoint._icon)
@@ -137,6 +137,7 @@ var rovar = {
 	    track.setStyle({'opacity':1});
 	    rovar.map.removeLayer(rovar.currentLine);
 	    rovar.currentLine.addTo(rovar.map);
+
 	    var preview = $('.preview-content').html('')
 		.append($("<h1>"+data.title+"</h1>").css('color', data.color));
 	    if(data.duration)
@@ -160,6 +161,7 @@ var rovar = {
 	    
 	    $("#type").html(data.type_name);
 	    $("#header").css('background-color', data.color);
+
 
 	    var stateObj = { foo: "bar" };
 	    history.pushState(stateObj, "page", '/'+ data.uid +'/');	  

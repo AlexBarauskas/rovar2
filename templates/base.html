@@ -6,6 +6,7 @@
 <link type="image/png" rel="icon" href="/static/images/favicon.png"/>
 <link type="text/css" href="/static/css/main.css" rel="stylesheet"/>
 <link type="text/css" href="/static/account/css/login.css" rel="stylesheet"/>
+<link  href="http://cdnjs.cloudflare.com/ajax/libs/fotorama/4.5.1/fotorama.css" rel="stylesheet"> <!-- 3 KB -->
 {%if obj%}
 <meta property="og:title" content="ONBIKE.BY | {{obj.name}}" />
 <meta property="og:url" content="http://onbike.by/{{obj.uid}}/" />
@@ -79,9 +80,9 @@
 
 {% endblock content %}
 
-<script type="text/javascript" src="/static/js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery.min.js"></script>
 <script type="text/javascript" src="/static/js/jquery.form.js"></script>
-
+<script src="http://cdnjs.cloudflare.com/ajax/libs/fotorama/4.5.1/fotorama.js"></script>
 {% block js %}
 {% endblock js %}
 

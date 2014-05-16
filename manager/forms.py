@@ -2,6 +2,7 @@
 from django import forms
 
 from map.models import Type, Point, Track
+from api.models import Message
 from manager.models import EditorImage
 from blog.models import Post
 
@@ -26,16 +27,27 @@ class PostForm(forms.ModelForm):
         model = Post
         exclude = ('created')
 
-class PointForm(forms.ModelForm):
-    photos = forms.FileField(label=u'Фотографии', required=False,
-                             widget=forms.ClearableFileInput(attrs={'multiple':'true'}))
 
+class BasePointForm(forms.ModelForm):
     class Meta:
         model = Point
         exclude = ('created', 'post', 'uid')
+
+
+class PointForm(BasePointForm):
+    photos = forms.FileField(label=u'Фотографии', required=False,
+                             widget=forms.ClearableFileInput(attrs={'multiple':'true'}))
+
+
 
 
 class UploadImageForm(forms.ModelForm):
     class Meta:
         model = EditorImage
         exclude = ('created',)
+
+class MessageForm(forms.ModelForm):
+    class Meta:
+        model = Message
+        fields = ('message', 'state')
+    

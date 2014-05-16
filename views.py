@@ -36,6 +36,7 @@ def home(request, uid=None):
                                'types': types,
                                'rovar_uid': uid,
                                'obj': obj,
+                               'authors': Author.objects.all(),
                                },
                               context_instance=RequestContext(request))
 

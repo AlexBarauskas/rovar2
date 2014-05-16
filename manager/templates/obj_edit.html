@@ -11,14 +11,18 @@
 <form action="." method="POST" enctype="multipart/form-data">
 {% csrf_token %}
 {{form.as_p}}
+{%if form.instance.pk%}
 {%for p in form.instance.photo_set.all%}
 <div class="image-item">
-  <a id="{{p.id}}" class="close delete" href="javascript:;">X</a>
-  <img src="{{p.image.url}}"/>
-  <span>{{p.image.name}}</span>
+  <div>
+    <a id="{{p.id}}" class="close delete" href="javascript:;">X</a>
+    <img src="{{p.image.url}}"/>
+    <span>{{p.image.name}}</span>
+  </div>
 </div>
-
 {%endfor%}
+{%endif%}
+
 {%if mod_notifi%}
 <h1>Информация для мобильного клиента.</h1>
 <div>

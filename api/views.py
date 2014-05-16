@@ -139,6 +139,7 @@ image - фотография точки.\n
     except:
         print "Error POST"
     uid = request.POST.get('uid', '')
+    print request.session.get('human')
     if Application.objects.filter(uid=uid).count() == 0 or (uid == 'webclient' and not request.session.get('human')):
         return HttpResponse(json.dumps({'success': False,
                                         'error_code': 2,
@@ -221,7 +222,7 @@ image - фотография точки.\n
     # create app_message
     if not (request.user.is_authenticated and request.user.is_superuser):
         app = Application.objects.get(uid=uid)
-        app.add_message(point=p)
+        app.add_message(point=p, email=email)
     return HttpResponse(json.dumps({'success': True}),
                         mimetype='text/json')
 
@@ -300,7 +301,7 @@ description - что хотим предложить.
     offer, c = Offer.objects.get_or_create(point=point,
                                            description=description)
     if c:
-        app.add_message(point=point, method="u")
+        app.add_message(point=point, method="u", description=description)
     
     return HttpResponse(json.dumps(res),
                         mimetype='text/json')

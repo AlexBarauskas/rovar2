@@ -107,7 +107,25 @@ class Track(models.Model):
         return self.name
 
 
+def iso_phone(number):
+    res = tuple([i for i in number if i>='0' and i<='9'])
+    if len(res) == 12:
+        return "+%s%s%s (%s%s) %s%s%s-%s%s-%s%s" % res
+    elif len(res) == 9:
+        return "+375 (%s%s) %s%s%s-%s%s-%s%s" % res
+    elif len(res) == 7:
+        return "+375 (29) %s%s%s-%s%s-%s%s" % res
+    res = ''.join(res)
+    if res.startswith('80') and len(res) == 11:
+        return "+375 (%s%s) %s%s%s-%s%s-%s%s" % tuple(res[2:])
+    if len(res)>0 and len(res)%12 == 0 :
+        return ', '.join([iso_phone(res[n*12:(n+1)*12]) for n in range(len(res)/12)])
+    return res
+        
+    
 
+## Phone template +375 (29) 662-73-44
+## phone_re=re.compile('(\+\d\d\d \(\d\d\) \d\d\d\-\d\d\-\d\d)')
 class Point(models.Model):
     name = models.CharField(u'Наименование', max_length=128, null=False)
     state = models.CharField(u'Доступ',
@@ -128,6 +146,8 @@ class Point(models.Model):
     uid = models.CharField(max_length=24, null=True)
 
     def save(self, *args, **kwargs):
+        if self.phones:
+            self.phones = ', '.join([j for j in [iso_phone(j) for j in self.phones.split(',')] if j])
         res = super(Point, self).save(*args, **kwargs)
         if not self.uid:
             self.uid = "%s-%s" % (self.id, self.type.obj)

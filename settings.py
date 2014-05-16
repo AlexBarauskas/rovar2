@@ -118,6 +118,7 @@ TEMPLATE_DIRS = (
 TEMPLATE_CONTEXT_PROCESSORS = (
     "django.contrib.auth.context_processors.auth",
     "manager.context_processor.manager_menu_item",
+    "manager.context_processor.moderation_count",
     'account.context_processors.get_account',
 )
 
@@ -190,6 +191,14 @@ MAP_TILES = os.path.join(MEDIA_ROOT, 'tiles')
 
 LOGIN_URL = '/account/login/'
 LOGIN_REDIRECT_URL = '/'
+
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+    }
+}
 
 try:
     from settings_local import *

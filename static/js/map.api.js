@@ -1,5 +1,6 @@
 var __addClick;
 
+
 var rovar = {
     elements:{'points': {}, 'tracks': {}},
     sort_ids: {},
@@ -67,6 +68,7 @@ var rovar = {
     _hidePointInfo : function(point){
 	var self = this;
 	point.setIcon(point._data.unactiveIcon);
+	$(point._icon).css('z-index', $(point._icon).css('z-index')-5000);
 	$(point._icon).click(function(){self._showPointInfo(point);});
 	$(point._icon).addClass(point._data.type_slug);
 	$(point._icon).attr('id', 'iconp-'+point._data.id.toString());
@@ -91,6 +93,7 @@ var rovar = {
 
 	var self = this;
 	point.setIcon(point._data.activeIcon);
+	$(point._icon).css('z-index', $(point._icon).css('z-index')+5000);
 	$(point._icon).click(function(){self._hidePointInfo(point);});
 	this.currentPoint = point;
 
@@ -101,15 +104,23 @@ var rovar = {
 
 	var description,
 	data = point._data;
+	var title = data.title;
+	if(data.website)
+	    title = '<a target="blank" href="'+data.website+'" style="color:' + data.color + '">'+title+'</a>';
 	if(data.post_url)
 	    description = "<p><a href=\""+data.post_url+"\">"+data.description+"</a></p>";
 	else
 	    description = "<p>"+data.description+"</p>";
 	var preview = $('.preview-content').html('')
-	    .append($("<h1>"+data.title+"</h1>").css('color', data.color))
+	    .append($("<h1>"+title+"</h1>").css('color', data.color))
 	    .append($("<p></p>").html(data.address).addClass('description-address'));
 	if(data.images && data.images.length){
-	    $('<img/>').attr({'src': data.images[0], 'title': "Show more..."}).appendTo(preview);
+	    var imgs_preview = $('<div>').addClass('fotorama').appendTo(preview);
+	    for(var imgiter = data.images.length-1; imgiter>=0; imgiter--){
+		$('<img/>').attr({'src': data.images[imgiter]})
+		    .appendTo(imgs_preview);
+	    }
+	    $('.fotorama').fotorama({'nav':false});
 	}
 	preview.append(description);
 	if(data.phones)
@@ -157,7 +168,7 @@ var rovar = {
 	$(point._icon).attr('id', 'iconp-'+point._data.id.toString());
 	$(point._icon).click(function(){self._showPointInfo(point);});
 
-	$(point._icon).attr('title', type + ': ' + data.id);
+	//$(point._icon).attr('title', type + ': ' + data.id);
 
 	if(type in this.elements.points){
 	    this.elements.points[type][eid] = point;    
@@ -184,6 +195,15 @@ var rovar = {
 		    for(var key in self.elements.points){
 			self._pointGroup(key);
 		    }
+
+		    
+
+		    self.map.on('moveend', function(ev){
+				    for(var key in self.elements.points){
+					self._pointGroup(key);
+				    }
+				});
+
 		    self.map.on('zoomend', function(ev){
 				    for(var key in self.elements.points){
 					self._pointGroup(key);
@@ -193,84 +213,6 @@ var rovar = {
 	       });	
     },
 
-    _pointGroup1 : function(type_name){
-	$('div.pingrop-' + type_name).remove();
-	$('img.' + type_name).css('visibility', 'visible');
-	var pins = this.elements.points[type_name];
-	var minX=60, maxX=50, minY=30, maxY=20, c;
-	var color;
-	for(id in pins){
-	    pins[id]._use = false;
-	}
-	color = pins[id]._data.color;
-
-	minX = rovar.map.getBounds()._southWest.lat;
-	maxX = rovar.map.getBounds()._northEast.lat;
-	minY = rovar.map.getBounds()._southWest.lng;
-	maxY = rovar.map.getBounds()._northEast.lng;
-	
-	var dt = Math.max(maxY-minY,maxX-minX)/30;
-	var w = maxX - minX;
-	var h = maxY - minY;
-	var i=0, j=0, x0, x1, y0, y1, local_pins, k, p, X, Y;
-	for(i=0; i<(w / dt + 1); i++){
-	    for(j=0; j<(h / dt + 1); j++){
-		local_pins = [];
-		x0 = minX + (i-0.1)*dt;
-		x1 = minX + (i+1.1)*dt;
-		y0 = minY + (j-0.1)*dt;
-		y1 = minY + (j+1.1)*dt;
-		for(id in pins){
-		    p = pins[id]._data.coordinates;
-		    if(!pins[id]._use && p[0]>=x0 && p[0]<x1 && p[1]>=y0 && p[1]<y1){
-			local_pins.push(pins[id]);
-			pins[id]._use = true;
-		    }
-		}
-		if(local_pins.length>1){
-		    X=0; Y=0;
-		    for(k=local_pins.length-1; k>=0; k--){
-			p = local_pins[k]._data.coordinates;
-			X += p[0];
-			Y += p[1];
-			$(local_pins[k]._icon).css('visibility', 'hidden');
-		    }
-
-		    var groupIcon = new L.divIcon({className: type_name + ' pingrop pingrop-' + type_name,
-						   html:local_pins.length,
-						   iconSize: [this._iconSize*0.66, this._iconSize*0.66],
-						   iconAnchor: [this._iconSize*0.66/2, this._iconSize*0.66/2]
-						  });
-		    X = X/local_pins.length; 
-		    Y = Y/local_pins.length;
-		    var point = L.marker([X, Y], {color: 'red', icon: groupIcon});
-		    point.addTo(this.map);
-
-		    function fn_click(ev){
-			var c = ($(this).attr('id').split('-'));
-			c = [parseFloat(c[0]), parseFloat(c[1])];
-			rovar.map.panTo(c);
-			rovar.map.zoomIn(2);
-		    }
-		    $(point._icon).attr('title', type_name + ':' + local_pins.length);
-		    $(point._icon).attr('id', X.toString() + "-" + Y.toString());
-		    
-		    $(point._icon).css({'background-color': color,
-					'border-radius': "100%",
-					'line-height': this._iconSize*0.75 + 'px',
-					'color': 'white',
-					'vertical-align': 'middle',
-					'font-size': this._iconSize*0.75/2 + 'px',
-					'font-weight': 'bold',
-					'text-align': 'center'
-				       });
-
-		    var coordinates = point.getLatLng();
-		    $(point._icon).click(fn_click);
-		}
-	    }
-	}	
-    },
 
     _hideTrackInfo : function(track){
 	var self = this;
@@ -420,7 +362,7 @@ var rovar = {
 
 	minX = rovar.map.getBounds()._southWest.lat;
 	maxX = rovar.map.getBounds()._northEast.lat;
-	var dt = (maxX-minX)/($(this.map._container).width()/(this._iconSize*1.25));
+	var dt = (maxX-minX)/($(this.map._container).width()/(this._iconSize*1.5));
 
 	var pins = this.elements.points[type_name];
 	var minX=60, maxX=50, minY=30, maxY=20, c;
@@ -497,7 +439,7 @@ var rovar = {
 		    }
 		    t=[];
 		    local_pins.forEach(function(i){t.push(i._data.id);});
-		    $(point._icon).attr('title', type_name + ':' + local_pins.length + ' ' + t.join(','));
+		    //$(point._icon).attr('title', type_name + ':' + local_pins.length + ' ' + t.join(','));
 		    $(point._icon).attr('id', X.toString() + "-" + Y.toString());
 		    
 		    $(point._icon).css({'background-color': color,
@@ -518,33 +460,56 @@ var rovar = {
 		}
 	    }
 	}
+	if($('#type-btns #'+type_name).attr('class').indexOf('disable')>=0)
+	    $("img."+type_name + ', div.' + type_name).hide();
 	return true;
     },
 
+    closeAddPoint : function(){	
+	$("#add-point-btn").html("+ Добавить точку");
+	$("#add-point-dialog").hide();
+	$("#ajax-errors").html("");
+	$("#map").attr('style', "");
+	this._runAddPoint = false;
+	if(this._addedPoint){
+	    this.map.removeLayer(this._addedPoint);
+	    this._addedPoint = null;
+	}
+	    
+    },
+
     addPoint : function(){
+	if(!this._runAddPoint){
+	    
+	this._runAddPoint = true;
+	$("#add-point-btn").html("Выберите место на карте (Esc для отмены)");
 	var self = this;
-	$(this.map._container).css('cursor', "crosshair");
+	$(this.map._container).css('cursor', "url('/static/icons/pin-add.png') "+(this._iconSize*this._kLeft).toString() + ' ' + (this._iconSize-1).toString() +",crosshair");
 	__addClick = function(e){self._setCoordinates(e);};
 	this.map.on('mousedown',__addClick);
+	}
     },
 
     _setCoordinates: function(e){
+	var addicon = new L.icon({
+					  iconUrl: "/static/icons/pin-add.png",
+					  iconSize: [this._iconSize, this._iconSize],
+					  iconAnchor: [this._iconSize*this._kLeft, this._iconSize]
+				      });
+
+	this._addedPoint = L.marker(e.latlng, {color: 'red', icon: addicon});
+	this._addedPoint.addTo(this.map);
+
 	$('input[name="coordinates"]').val('[' + e.latlng.lat.toString() + ', ' + e.latlng.lng.toString() + ']');
 	$("#map").attr('style', "");
 	this.map.off('mousedown', __addClick);
-
 	$("#ajax-errors").html("");
-
-	//$("#add-point-dialog input[type=\"text\"]").val('');
-	//$("#add-point-dialog input[name=\"description\"]").val('');
 	$("#add-point-dialog .for-clear").val('');
 	var d=$("#add-point-dialog").show();
-	
 	$('#add-point-dialog').animate({'opacity':1}, 500);
 	d.css('left', ($(document).innerWidth() - d.innerWidth())/2);
 	if(($(document).innerHeight() - d.innerHeight())/2 >= 0)
 	    d.css('top', ($(document).innerHeight() - d.innerHeight())/2);
-	
     },
 
 
@@ -560,10 +525,12 @@ var rovar = {
     },
 
     callbackAddPoint: function(data){
-	console.log(data);
+	//console.log(data);
 	if(!data.success){
 	    $("#ajax-errors").html($("<p class=\"error alert\">").text(this.__errors[data.error_code] || "Неизвестная ошибка."));
 	}else{
+	    this._runAddPoint = false;
+	    $("#add-point-btn").html("+ Добавить точку");
 	    $("#ajax-errors").html($("<p class=\"success alert\">").text("Ваше предложение будет рассмотрено модератором."));
 	    setTimeout("$('#add-point-dialog').animate({'opacity':0.25}, 500, 'swing', function(){$('#add-point-dialog').hide()})", 2000);
 	}
@@ -578,11 +545,7 @@ $(function(){
       rovar.loadTracks();
       $("#add-point-btn").click(function(){rovar.addPoint();});
       $("#back-to-banner").click(function(){rovar.backToHome();});
-      $("#add-point-form-close").click(
-	  function(){$("#add-point-dialog").hide();
-		     $("#ajax-errors").html("");
-		    }
-      );
+      $("#add-point-form-close").click(function(){rovar.closeAddPoint();});
       $("#add-point-form").ajaxForm(function(data){rovar.callbackAddPoint(data);});
 
       $("#type-btns li").click(function(ev){
@@ -597,4 +560,8 @@ $(function(){
 				   }
 				   
 			       });
+
+      $(document).keyup(function(e) {
+			    if (e.keyCode == 27 & rovar._runAddPoint){rovar.closeAddPoint();}
+			});
   });
