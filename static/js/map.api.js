@@ -161,7 +161,7 @@ var rovar = {
 		//    .click(function(ev){if(ev.offsetX<220)next_imgpv(-1);else next_imgpv(1);})
 		    .appendTo(imgs_preview);
 	    }
-	    $('.fotorama').fotorama();
+	    $('.fotorama').fotorama({'nav':false});
 	    //imgs_preview.find('img').first().addClass('active');
 	    //imgs_preview.css('height', imgs_preview.find('img.active').height());
 	    /*if(data.images.length > 1){
