@@ -15,6 +15,7 @@ from forms import TypeForm, TrackForm, PostForm, PointForm, UploadImageForm, Mes
 import json
 import os
 import re
+from django.views.decorators.csrf import csrf_exempt
 
 from tmp.parse_xml import XMLTrack
 
@@ -89,6 +90,7 @@ def types(request):
     
 
 @staff_member_required
+@csrf_exempt
 def type_delete(request, type_id):
     errors = []
     try:
@@ -170,6 +172,7 @@ def track_edit(request, track_id=None):
     
 
 @staff_member_required
+@csrf_exempt
 def track_delete(request, track_id):
     errors = []
     try:
@@ -299,6 +302,7 @@ def point_edit(request, point_id=None):
                               RequestContext(request))
 
 @staff_member_required
+@csrf_exempt
 def point_delete(request, point_id):
     errors = []
     try:
