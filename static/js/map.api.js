@@ -1,8 +1,6 @@
 var __addClick;
 
-var tmp;
-
-function imgpv_load(){
+/*function imgpv_load(){
     var imgs_preview = $('#images-preview');
     $('#images-preview .row-left, #images-preview .row-right').css({'line-height': imgs_preview.find('img.active').height()+'px'});
     imgs_preview.animate({'height': imgs_preview.find('img.active').height()});
@@ -38,7 +36,7 @@ function next_imgpv(inc){
 	}
     }
 }
-
+*/
 
 var rovar = {
     elements:{'points': {}, 'tracks': {}},
@@ -154,20 +152,24 @@ var rovar = {
 	    .append($("<h1>"+title+"</h1>").css('color', data.color))
 	    .append($("<p></p>").html(data.address).addClass('description-address'));
 	if(data.images && data.images.length){
-	    var imgs_preview = $('<div>').attr('id', 'images-preview').appendTo(preview);
+	    //var imgs_preview = $('<div>').attr('id', 'images-preview').appendTo(preview);
+	    //class="fotorama"
+	    var imgs_preview = $('<div>').addClass('fotorama').appendTo(preview);
 	    for(var imgiter = data.images.length-1; imgiter>=0; imgiter--){
-		$('<img/>').attr({'src': data.images[imgiter], 'onload':'imgpv_load()'})
-		    .click(function(ev){if(ev.offsetX<220)next_imgpv(-1);else next_imgpv(1);})
+		$('<img/>').attr({'src': data.images[imgiter]})
+		//, 'onload':'imgpv_load()'})
+		//    .click(function(ev){if(ev.offsetX<220)next_imgpv(-1);else next_imgpv(1);})
 		    .appendTo(imgs_preview);
 	    }
-	    imgs_preview.find('img').first().addClass('active');
-	    imgs_preview.css('height', imgs_preview.find('img.active').height());
-	    if(data.images.length > 1){
+	    $('.fotorama').fotorama();
+	    //imgs_preview.find('img').first().addClass('active');
+	    //imgs_preview.css('height', imgs_preview.find('img.active').height());
+	    /*if(data.images.length > 1){
 		$('<div class="row-left">&#8249;</div>').click(function(ev){next_imgpv(-1);})
 		    .appendTo(imgs_preview);
 		$('<div class="row-right">&#8250;</div>').click(function(ev){next_imgpv(1);})
 		    .appendTo(imgs_preview);
-	    }
+	    }*/
 	    //$('<img/>').attr({'src': data.images[0], 'title': "Show more..."}).appendTo(preview);
 	}
 	preview.append(description);
