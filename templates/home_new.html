@@ -6,13 +6,14 @@
 {% endblock css %}
 
 {% block preload %}
-<div style="position:absolute; top:-5000">
+<div style="position:absolute; top:-5000px">
   {%for T in types%}
   {%if T.count_items%}
   <img src="{{T.image.url}}"/>
   <img src="{{T.image2.url}}"/>
   {%endif%}
   {%endfor%}
+  <img src="/static/icons/pin-add.png"/>
 </div>
 {% endblock preload %}
 
@@ -131,7 +132,7 @@
     <div id="ajax-errors">
     </div>
     <div class="btn-box" style="padding: 10px 0 10px;margin-top: 0px;">
-      <button class="btn success">Добавить</button>
+      <button class="btn success">Добавить точку</button>
       <a class="btn" id="add-point-form-close" href="javascript:;">Отмена</a>
     </div>
     <input type="hidden" value="webclient" name="uid"/>

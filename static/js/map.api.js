@@ -471,18 +471,32 @@ var rovar = {
 	$("#ajax-errors").html("");
 	$("#map").attr('style', "");
 	this._runAddPoint = false;
+	if(this._addedPoint){
+	    this.map.removeLayer(this._addedPoint);
+	    this._addedPoint = null;
+	}
+	    
     },
 
     addPoint : function(){
 	this._runAddPoint = true;
 	$("#add-point-btn").html("Выберите место на карте (Esc для отмены)");
 	var self = this;
-	$(this.map._container).css('cursor', "crosshair");
+	$(this.map._container).css('cursor', "url('/static/icons/pin-add-cursor.png') "+this._iconSize + ' ' + this._iconSize.toString() +",crosshair");
 	__addClick = function(e){self._setCoordinates(e);};
 	this.map.on('mousedown',__addClick);
     },
 
     _setCoordinates: function(e){
+	var addicon = new L.icon({
+					  iconUrl: "/static/icons/pin-add.png",
+					  iconSize: [this._iconSize, this._iconSize],
+					  iconAnchor: [this._iconSize*this._kLeft, this._iconSize]
+				      });
+
+	this._addedPoint = L.marker(e.latlng, {color: 'red', icon: addicon});
+	this._addedPoint.addTo(this.map);
+
 	$('input[name="coordinates"]').val('[' + e.latlng.lat.toString() + ', ' + e.latlng.lng.toString() + ']');
 	$("#map").attr('style', "");
 	this.map.off('mousedown', __addClick);
