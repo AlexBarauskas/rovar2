@@ -4,6 +4,7 @@ var tmp;
 
 function imgpv_load(){
     var imgs_preview = $('#images-preview');
+    $('#images-preview .row-left, #images-preview .row-right').css({'line-height': imgs_preview.find('img.active').height()+'px'});
     imgs_preview.animate({'height': imgs_preview.find('img.active').height()});
 }
 
@@ -16,6 +17,7 @@ function next_imgpv(inc){
 	if((inc>=0 & i<0) | (inc<0 & i<-1)){
 	    imgs_preview.find('img').first().addClass('active');
 	    imgs_preview.animate({'height': imgs_preview.find('img.active').height()});
+	    $('#images-preview .row-left, #images-preview .row-right').animate({'line-height': imgs_preview.find('img.active').height()+'px'});
 	}
 	else{
 	    console.log(i);
@@ -30,6 +32,7 @@ function next_imgpv(inc){
 	    nci.css('opacity', 0);
 	    ci.animate({'opacity': 0}, {queue: false});
 	    imgs_preview.animate({'height': nci.height()}, {queue: false});
+	    $('#images-preview .row-left, #images-preview .row-right').animate({'line-height': nci.height()+'px'});
 	    nci.animate({'opacity': 1}, {queue: false});
 	    ci.removeClass('active');
 	}
@@ -159,6 +162,12 @@ var rovar = {
 	    }
 	    imgs_preview.find('img').first().addClass('active');
 	    imgs_preview.css('height', imgs_preview.find('img.active').height());
+	    if(data.images.length > 1){
+		$('<div class="row-left">&#8249;</div>').click(function(ev){next_imgpv(-1);})
+		    .appendTo(imgs_preview);
+		$('<div class="row-right">&#8250;</div>').click(function(ev){next_imgpv(1);})
+		    .appendTo(imgs_preview);
+	    }
 	    //$('<img/>').attr({'src': data.images[0], 'title': "Show more..."}).appendTo(preview);
 	}
 	preview.append(description);

@@ -518,6 +518,35 @@ html, body {
     position:relative;
 }
 
+#images-preview .row-left, #images-preview .row-right{
+    top: 0;
+    position: absolute;
+    width: 220px;
+    height: 100%;
+    vertical-align: middle;
+    text-align: center;
+    font-size: 8em;
+    z-index: 10;
+    color: #333;
+    text-shadow: 0px 0px 5px #fff;
+    opacity: 0.5;
+    cursor:pointer;
+}
+
+#images-preview .row-left:hover, #images-preview .row-right:hover{
+    opacity: 0.75;
+}
+
+#images-preview .row-left{
+    left:0;
+    text-align:left;
+}
+
+#images-preview .row-right{
+    right:0;
+    text-align:right;
+}
+
 /*ADD POINT DIALOG*/
 #add-point-dialog{
     position: fixed;
