@@ -103,10 +103,9 @@
       <label>Email</label>
       <input type="text" value="{%if user.is_authenticated%}{{user.email}}{%endif%}" name="email"/>
     </div>
-    
     <div id="ajax-errors">
     </div>
-    <div class="btn-box" style="padding: 10px 0 10px;margin-top: 0px;">
+    <div class="btn-box">
       <button class="btn success">Добавить</button>
       <a class="btn" id="add-point-form-close" href="javascript:;">Отмена</a>
     </div>
