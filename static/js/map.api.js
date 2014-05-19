@@ -86,7 +86,7 @@ var rovar = {
     },
 
     _showPointInfo : function(point){
-	if(this._runAddPoint){return false;}
+	if(!this._runAddPoint){
 	if(this.currentPoint)
 	    this._hidePointInfo(this.currentPoint);
 	if(this.currentTrack)
@@ -143,7 +143,7 @@ var rovar = {
 			 });
 	    $('#disqus_thread').show();
 	}	
-	return true;
+	}
     },
 
 
@@ -236,7 +236,7 @@ var rovar = {
     },
 
     _showTrackInfo : function(track){
-	if(this._runAddPoint){return false;}
+	if(!this._runAddPoint){
 	var self = this;
 	if(this.currentPoint)
 	    this._hidePointInfo(this.currentPoint);
@@ -294,7 +294,7 @@ var rovar = {
 			 });
 	    $('#disqus_thread').show();
 	}
-	return true;
+}
     },
 
     _addTrackToMap : function(data){
@@ -470,7 +470,10 @@ var rovar = {
 	$("#add-point-btn").html("+ Добавить точку");
 	$("#add-point-dialog").hide();
 	$("#ajax-errors").html("");
+
 	$("#map").attr('style', "");
+	$('.leaflet-clickable').css('cursor', 'pointer');
+
 	this._runAddPoint = false;
 	if(this._addedPoint){
 	    this.map.removeLayer(this._addedPoint);
@@ -482,17 +485,13 @@ var rovar = {
     addPoint : function(){
 	if(!this._runAddPoint){
 	    
-	    this._runAddPoint = true;
-	    $("#add-point-btn").html("Выберите место на карте (Esc для отмены)");
-	    var self = this;
-
-	    /*
-	    var css_cursor = "url('/static/icons/pin-add.png') "+(this._iconSize*this._kLeft).toString() + ' ' + (this._iconSize-1).toString() +",crosshair";
-	    $(this.map._container).css('cursor', css_cursor);
-	    $('.leaflet-marker-icon').css('cursor', css_cursor);
-	     */
-	    __addClick = function(e){self._setCoordinates(e);};
-	    this.map.on('mousedown',__addClick);
+	this._runAddPoint = true;
+	$("#add-point-btn").html("Выберите место на карте (Esc для отмены)");
+	var self = this;
+	$(this.map._container).css('cursor', "url('/static/icons/pin-add.png') "+(this._iconSize*this._kLeft).toString() + ' ' + (this._iconSize-1).toString() +",crosshair");
+	$('.leaflet-clickable').css('cursor', "url('/static/icons/pin-add.png') "+(this._iconSize*this._kLeft).toString() + ' ' + (this._iconSize-1).toString() +",crosshair");
+	__addClick = function(e){self._setCoordinates(e);};
+	this.map.on('mousedown',__addClick);
 	}
     },
 
@@ -509,7 +508,7 @@ var rovar = {
 	$('input[name="coordinates"]').val('[' + e.latlng.lat.toString() + ', ' + e.latlng.lng.toString() + ']');
 
 	$("#map").attr('style', "");
-	$('.leaflet-marker-icon').attr('style', "");
+	$('.leaflet-clickable').css('cursor', 'pointer');
 
 	this.map.off('mousedown', __addClick);
 	$("#ajax-errors").html("");
