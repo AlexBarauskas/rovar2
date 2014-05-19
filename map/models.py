@@ -199,3 +199,12 @@ class Offer(models.Model):
     track = models.ForeignKey(Track, null=True)
     description = models.TextField(u'Описание', default='', null=True)
     
+
+class Translation(models.Model):
+    point = models.ForeignKey(Point, null=True)
+    track = models.ForeignKey(Track, null=True)
+    language = models.CharField(max_length=2, null=False)
+    
+    name = models.CharField(u'Наименование', max_length=128, null=False)
+    description = models.CharField(u'Краткое описание', max_length=256, null=False)
+    address = models.CharField(u'Адрес', max_length=256, null=True)

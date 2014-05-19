@@ -57,7 +57,7 @@ def editor_img_del(request, img_id):
     if img is not None:
         img.delete()
         res = {'success': True}
-    #
+    
     return HttpResponse(json.dumps(res),
                         content_type="text/json")
 
