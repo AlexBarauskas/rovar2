@@ -19,76 +19,76 @@ msgstr ""
 
 #: templates/home_new.html:29
 msgid "Показывать на карте:"
-msgstr ""
+msgstr "Паказваць на карце"
 
 #: templates/home_new.html:43
 msgid "О проекте"
-msgstr ""
+msgstr "Пра праект"
 
 #: templates/home_new.html:44
 msgid "Блог"
-msgstr ""
+msgstr "Блог"
 
 #: templates/home_new.html:84
 msgid "+ Добавить точку"
-msgstr ""
+msgstr "+ Дадаць месца"
 
 #: templates/home_new.html:96
-msgid "Название"
+msgid "Назва"
 msgstr ""
 
 #: templates/home_new.html:100
 msgid "Категория"
-msgstr ""
+msgstr "Катэгорыя"
 
 #: templates/home_new.html:103
 msgid "Магазины"
-msgstr ""
+msgstr "Крамы"
 
 #: templates/home_new.html:104
 msgid "Прокаты"
-msgstr ""
+msgstr "Пракаты"
 
 #: templates/home_new.html:105
 msgid "Развлечения"
-msgstr ""
+msgstr "Забавы"
 
 #: templates/home_new.html:106
 msgid "Велопарковки"
-msgstr ""
+msgstr "Паркоўкі"
 
 #: templates/home_new.html:107
 msgid "Сервисы"
-msgstr ""
+msgstr "Майстэрнi"
 
 #: templates/home_new.html:111
 msgid "Описание"
-msgstr ""
+msgstr "Апісанне"
 
 #: templates/home_new.html:115
 msgid "Адрес"
-msgstr ""
+msgstr "Адрас"
 
 #: templates/home_new.html:119
 msgid "Телефоны"
-msgstr ""
+msgstr "Тэлефоны"
 
 #: templates/home_new.html:123
 msgid "Сайт"
-msgstr ""
+msgstr "Сайт"
 
 #: templates/home_new.html:127
 msgid "Фото"
-msgstr ""
+msgstr "Фотаздымак"
 
 #: templates/home_new.html:131
 msgid "Email"
-msgstr ""
+msgstr "Email"
 
 #: templates/home_new.html:137
 msgid "Добавить точку"
-msgstr ""
+msgstr "Дадаць месца"
 
 #: templates/home_new.html:138
 msgid "Отмена"
-msgstr ""
+msgstr "Адмена"
