@@ -19,7 +19,6 @@
 {% endblock preload %}
 
 {% block content_left %}
-{% get_current_language as LANGUAGE_CODE %}
 {% get_available_languages as LANGUAGES %}
 <div class="preview">
   <div class="preview-content"></div>
@@ -27,12 +26,12 @@
 </div>
 
 <div class="section views">
-  <h1>Показывать на карте:</h1>
+  <h1>{% trans "Показывать на карте:" %}</h1>
   <ul id="type-btns" class="control">
     {%for T in types%}
     {%if T.count_items%}
     <li id="{{T.slug}}" class="type-all">
-      <span style="background-color:{{T.color}}">{{T.name}}</span>
+      <span style="background-color:{{T.color}}">{% trans T.name %}</span>
       <span style="color:{{T.color}}" class="number">{{T.count_items}}</span>
     </li>
     {%endif%}
@@ -41,8 +40,8 @@
 </div>
 <div class="footer">
   <ul>
-    <li><a class="left" href="#">О проекте</a></li>
-    <li><a class="left" href="#">Блог</a></li>
+    <li><a class="left" href="#">{% trans "О проекте" %}</a></li>
+    <li><a class="left" href="#">{% trans "Блог" %}</a></li>
     <li><a class="left" href="#">API</a></li>
     {%for c, t in LANGUAGES%}
     {%if LANGUAGE_CODE != c%}<li><a class="right dotted" href="{%url set_language%}?language={{c}}">{{t}}</a></li>{%endif%}
@@ -82,11 +81,11 @@
 <div id="map" class="data-content" style="padding:0;"></div>
 <div id="lang">
   <a id="add-point-btn"  href="javascript:;">
-    + Добавить точку
+    {% trans "+ Добавить точку" %}
   </a>
 </div>
 <div id="add-point-dialog" style="display:none">
-  <h1>Добавление точки</h1>
+  <h1>{% trans "Добавление точки"}</h1>
   <form id="add-point-form" method="POST" action="/api/point/add" enctype="multipart/form-data">
     
     <input type="hidden" value="" name="coordinates"/>
@@ -94,49 +93,49 @@
 	<label>Координаты</label>
     </div-->
     <div class="input">
-      <label>Название</label>
+      <label>{% trans "Название" %}</label>
       <input class="for-clear" type="text" value="" name="title"/>
     </div>
     <div class="input">
-      <label>Категория</label>
+      <label>{% trans "Категория" %}</label>
       <select name="type">
 	shop, bikerental, entertainment, parking, service
-	<option value="shop">Магазин</option>
-	<option value="bikerental">Прокат</option>
-	<option value="entertainment">Развлечение</option>
-	<option value="parking">Парковка</option>
-	<option value="service">Сервис</option>
+	<option value="shop">{% trans "Магазины"%}</option>
+	<option value="bikerental">{% trans "Прокаты" %}</option>
+	<option value="entertainment">{% trans "Развлечения"%}</option>
+	<option value="parking">{% trans "Велопарковки" %}</option>
+	<option value="service">{% trans "Сервисы" %}</option>
       </select>
     </div>
     <div class="input">
-      <label>Описание</label>
+      <label>{% trans "Описание" %}</label>
       <textarea class="for-clear" type="text" name="description"></textarea>
     </div>
     <div class="input">
-      <label>Адрес</label>
+      <label>{% trans "Адрес" %}</label>
       <input class="for-clear" type="text" value="" name="address"/>
     </div>
     <div class="input">
-      <label>Телефоны</label>
+      <label>{% trans "Телефоны" %}</label>
       <input class="for-clear" type="text" value="" name="phones"/>
     </div>
     <div class="input">
-      <label>Сайт</label>
+      <label>{% trans "Сайт" %}</label>
       <input class="for-clear" type="text" value="" name="website"/>
     </div>
     <div class="input">
-      <label>Фото</label>
+      <label>{% trans "Фото" %}</label>
       <input type="file" value="" accept="image/*" name="image"/>
     </div>
     <div class="input">
-      <label>Email</label>
+      <label>{% trans "Email" %}</label>
       <input type="text" value="{%if user.is_authenticated%}{{user.email}}{%endif%}" name="email"/>
     </div>
     <div id="ajax-errors">
     </div>
     <div class="btn-box">
-      <button class="btn success">Добавить точку</button>
-      <a class="btn" id="add-point-form-close" href="javascript:;">Отмена</a>
+      <button class="btn success">{% trans "Добавить точку" %}</button>
+      <a class="btn" id="add-point-form-close" href="javascript:;">{% trans "Отмена" %}</a>
     </div>
     <input type="hidden" value="webclient" name="uid"/>
   </form>
@@ -156,6 +155,9 @@
   var disqus_shortname = 'onbikeby'; // required: replace example with your forum shortname
   var disqus_identifier = '{%if rovar_uid%}{{rovar_uid}}{%else%}home{%endif%}';
   var disqus_title = '{%if obj%}{{obj.title}}{%else%}home{%endif%}';
+  var disqus_config = function () { 
+  this.language = language_code;
+  };
   {% if rovar_uid %}
   var disqus_url = 'http://onbike.by/{{rovar_uid}}/';
   {% endif %}

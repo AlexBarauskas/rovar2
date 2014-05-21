@@ -37,8 +37,8 @@ TIME_ZONE = 'Europe/Minsk'
 LANGUAGE_CODE = 'ru'
 
 LANGUAGES = (
-    ('be', u'Па-беларуску'),
     ('ru', u'Русский'),
+    ('be', u'Па-беларуску'),
     ('en', u'In English'),
 )
 

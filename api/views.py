@@ -7,6 +7,7 @@ More details.
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
+from django.utils import translation
 
 from django.core.validators import validate_email
 from django.core.validators import URLValidator
@@ -74,7 +75,9 @@ GET-запрос может не содержать параметров.\n
     points = Point.objects.filter(**kwargs)
     if page is not None:
         points = points[page * per_page:(page + 1) * per_page]
-    points = [p.to_dict() for p in points]
+        
+    lang_code = translation.get_language()    
+    points = [p.to_dict(lang=lang_code) for p in points]
     return HttpResponse(json.dumps(points),
                         mimetype='text/json')
 

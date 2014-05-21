@@ -136,6 +136,7 @@ var rovar = {
 	    DISQUS.reset({
 			     reload: true,
 			     config: function () {  
+				 this.language = language_code;
 				 this.page.identifier = data.uid;  
 				 this.page.title = data.title;
 				 this.page.url = "http://onbike.by/"+data.uid+"/";
@@ -286,6 +287,7 @@ var rovar = {
 	    DISQUS.reset({
 			     reload: true,
 			     config: function () {  
+				 this.language = language_code;
 				 this.page.identifier = data.uid;  
 				 this.page.title = data.title;
 				 //console.log(this);

@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from django.contrib.auth.models import User
+from django.template.loader import render_to_string
+from django.conf import settings
+
 from blog.models import Post
 import json
 
@@ -123,6 +126,12 @@ def iso_phone(number):
     return res
         
     
+class PointManager(models.Manager):
+    def to_translate_manager(self):
+        return render_to_string('manager/translate_point.txt',
+                         {'points': self.all()}
+                         )
+
 
 ## Phone template +375 (29) 662-73-44
 ## phone_re=re.compile('(\+\d\d\d \(\d\d\) \d\d\d\-\d\d\-\d\d)')
@@ -145,6 +154,8 @@ class Point(models.Model):
     post = models.OneToOneField(Post, null=True)
     uid = models.CharField(max_length=24, null=True)
 
+    objects = PointManager()
+
     def save(self, *args, **kwargs):
         if self.phones:
             self.phones = ', '.join([j for j in [iso_phone(j) for j in self.phones.split(',')] if j])
@@ -157,17 +168,37 @@ class Point(models.Model):
     def __unicode__(self):
         return self.name
 
-    def to_dict(self):
+
+    def initTransList(self):
+        res = []
+        for lan_code, lan_name in settings.LANGUAGES:
+            to = self.get_translation_obj(lang=lan_code)
+            res.append({'language': lan_code,
+                        'name': to.name,
+                        'address': to.address or '',
+                        'description': to.description
+                        })
+        return res
+
+    def get_translation_obj(self, lang=None):
+        if lang is None or lang == settings.LANGUAGE_CODE:
+            return self
+        tr = Translation.objects.get_or_create(point=self, language=lang)
+        return tr[0]
+
+    def to_dict(self, lang=None):
+        translate = self.get_translation_obj(lang=lang)
+        
         point = {'coordinates': json.loads(self.coordinates),
-                 'title': self.name,
-                 'description': self.description,
+                 'title': translate.name or self.name,
+                 'description': translate.description or self.description,
                  'id': self.id,
                  'color': self.type.color,
                  'marker': '/static/images/Parking.png',
                  'marker_active': '/static/images/Parking.png',
                  'status': 'success',
                  'images': [ph.image.url for ph in  self.photo_set.all()],
-                 'address': self.address,
+                 'address': translate.address or self.address,
                  'uid': self.uid,
                  'type_slug': self.type.slug,
                  'type_name': self.type.name,

@@ -1,0 +1,11 @@
+{%for p in points%}
+###-> {{p.id}}{%for tro in p.initTransList%}
+##{{tro.language}}
+#name
+{{tro.name|safe}}
+#description
+{{tro.description|safe}}
+#address
+{{tro.address|safe}}
+{%endfor%}
+{%endfor%}

@@ -432,3 +432,7 @@ def moderation_object(request, message_id):
                                'form': form
                                },                              
                               RequestContext(request))
+
+@staff_member_required
+def get_translate_point(request):
+    return HttpResponse(Point.objects.to_translate_manager(), mimetype="text/plain")

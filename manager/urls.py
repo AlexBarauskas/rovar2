@@ -33,6 +33,9 @@ urlpatterns = patterns(
 
     url(r'^info/$', info_page_edit, name="info_edit"),
 
+
+    url(r'^points.txt$', get_translate_point, name="get_translate_point"),
+
     )
 
 
