@@ -55,5 +55,10 @@ class TransForm(forms.ModelForm):
     class Meta:
         model = Translation
         fields = ('name', 'description', 'address')
-    
+
+class TransFormTrack(forms.ModelForm):
+    class Meta:
+        model = Translation
+        fields = ('name', 'description')
+
     

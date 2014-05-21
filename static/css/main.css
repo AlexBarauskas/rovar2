@@ -51,6 +51,10 @@ html, body {
     font-size:14px;
 }
 
+b {
+    font-weight: bold;
+}
+
 #lang {
     position:absolute;
     z-index: 1001;

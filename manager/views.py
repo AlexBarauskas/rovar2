@@ -11,7 +11,7 @@ from django.conf import settings
 from map.models import Type, Point, Track, Photo, Translation
 from manager.models import EditorImage
 from blog.models import Post
-from forms import TypeForm, TrackForm, PostForm, PointForm, UploadImageForm, MessageForm, BasePointForm, TransForm
+from forms import TypeForm, TrackForm, PostForm, PointForm, UploadImageForm, MessageForm, BasePointForm, TransForm, TransFormTrack
 import json
 import os
 import re
@@ -131,11 +131,27 @@ def track_edit(request, track_id=None):
     else:
         track=None
         title = u'Новый маршрут'
+    trans_forms = []
+    
     if request.method == "POST":
         form = TrackForm(request.POST, request.FILES, instance=track)
-        if form.is_valid():
+        for lang_code, lang_name in settings.LANGUAGES:
+            if lang_code != settings.LANGUAGE_CODE:
+                if track is not None:
+                    trans, c = Translation.objects.get_or_create(track=track, language=lang_code)
+                else:
+                    trans = None
+                trans_forms.append(TransFormTrack(request.POST, instance=trans, prefix=lang_code))
+        if form.is_valid() and all([i.is_valid() for i in trans_forms]):
+            _track = form.save()
+            for i in trans_forms:
+                t = i.save()
+                if not t.language:
+                    t.language = i.prefix
+                if t.track is None:
+                    t.track = _track
+                t.save()
 
-            form.save()
             xml_file = request.FILES.get('xml_coordinates', None)
             created = False
             if track is None:
@@ -159,11 +175,19 @@ def track_edit(request, track_id=None):
 
     else:
         form = TrackForm(instance=track)
+        for lang_code, lang_name in settings.LANGUAGES:
+            if lang_code != settings.LANGUAGE_CODE:
+                if track is not None:
+                    trans, c = Translation.objects.get_or_create(track=track, language=lang_code)
+                else:
+                    trans = None
+                trans_forms.append(TransFormTrack(instance=trans, prefix=lang_code))
     
     return render_to_response('obj_edit.html',
                               {'form': form,
                                'comments_instance': track,
                                'title': title,
+                               'trans_forms': trans_forms,
                                'back_url': reverse('manager_tracks'),
                                'info': {'errors': errors,
                                         'messages': messages}
@@ -268,7 +292,7 @@ def point_edit(request, point_id=None):
         form = PointForm(request.POST, request.FILES,  instance=point)
         for lang_code, lang_name in settings.LANGUAGES:
             if lang_code != settings.LANGUAGE_CODE:
-                if point:
+                if point is not None:
                     trans, c = Translation.objects.get_or_create(point=point, language=lang_code)
                 else:
                     trans = None
@@ -294,7 +318,7 @@ def point_edit(request, point_id=None):
         form = PointForm(instance=point)
         for lang_code, lang_name in settings.LANGUAGES:
             if lang_code != settings.LANGUAGE_CODE:
-                if point:
+                if point is not None:
                     trans, c = Translation.objects.get_or_create(point=point, language=lang_code)
                 else:
                     trans = None
