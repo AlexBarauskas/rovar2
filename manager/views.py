@@ -282,7 +282,6 @@ def point_edit(request, point_id=None):
                 if t.point is None:
                     t.point = _point
                 t.save()
-                print t.name
             for f in request.FILES.getlist('photos',[]):
                 ph = Photo.objects.get_or_create(point=_point, image=f)
             messages.append(u"Изменения успешно сохранены.")
