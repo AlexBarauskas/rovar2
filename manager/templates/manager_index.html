@@ -1,8 +1,20 @@
 {% extends 'base_manager.html' %}
+{% load i18n %}
 
 {% block inner_content %}
 <h1>Index page</h1>
 <div class="section">
+  <div style="margin-bottom:40px">
+    <h2 style="font-size:2em">Редактирование страницы Info.</h2>
+    <ul>
+      {% get_available_languages as LANGUAGES %}
+      {%for c, t in LANGUAGES%}
+      <li><a style="font-size:1.25em" href="{% url info_edit%}?language={{c}}">{{t}}</a></li>
+      {%endfor%}
+    </ul>
+  </div>
+
+
   <h2>Список изображений для редактора html.</h2>
   <div>
     <h3>Последние загруженные изображения</h3>
