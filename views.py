@@ -48,15 +48,15 @@ def info(request):
                               context_instance=RequestContext(request))
     
 
-from django.utils.http import is_safe_url
+#from django.utils.http import is_safe_url
 from django.utils.translation import activate
 
 def set_language(request):
     next = request.REQUEST.get('next')
-    if not is_safe_url(url=next, host=request.get_host()):
-        next = request.META.get('HTTP_REFERER')
-        if not is_safe_url(url=next, host=request.get_host()):
-            next = '/'
+    #if not is_safe_url(url=next, host=request.get_host()):
+    next = request.META.get('HTTP_REFERER')
+    #if not is_safe_url(url=next, host=request.get_host()):
+    #        next = '/'
     response = HttpResponseRedirect(next)
     if request.method == 'GET':
         lang_code = request.GET.get('language', None)
