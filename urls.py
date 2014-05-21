@@ -12,6 +12,7 @@ urlpatterns = patterns(
     url(r'^$', 'onbike.views.home', name='home'),
     
     url(r'^info/$', 'onbike.views.info', name='info'),
+    url(r'^language/$', 'onbike.views.set_language', name='set_language'),
     url(r'^manager/', include('manager.urls')),
     url(r'^map/', include('map.urls')),
     url(r'^blog/', include('blog.urls')),
@@ -34,6 +35,8 @@ urlpatterns = patterns(
     #url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
+    # url(r'^i18n/', include('django.conf.urls.i18n')),
+    
     url(r'^admin/', include(admin.site.urls)),
 
 

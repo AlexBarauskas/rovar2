@@ -47,3 +47,22 @@ def info(request):
                                'show_left_panel': not request.GET.get('blank')},
                               context_instance=RequestContext(request))
     
+
+from django.utils.http import is_safe_url
+from django.utils.translation import activate
+
+def set_language(request):
+    next = request.REQUEST.get('next')
+    if not is_safe_url(url=next, host=request.get_host()):
+        next = request.META.get('HTTP_REFERER')
+        if not is_safe_url(url=next, host=request.get_host()):
+            next = '/'
+    response = HttpResponseRedirect(next)
+    if request.method == 'GET':
+        lang_code = request.GET.get('language', None)
+        if lang_code:
+            if hasattr(request, 'session'):
+                request.session['django_language'] = lang_code
+            else:
+                response.set_cookie(settings.LANGUAGE_COOKIE_NAME, lang_code)
+    return response

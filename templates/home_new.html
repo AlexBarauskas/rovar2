@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load cache %}
+{% load i18n %}
 
 {% block css %}
 <link type="text/css" href="/static/leaflet/leaflet.css" rel="stylesheet"/>
@@ -18,6 +19,8 @@
 {% endblock preload %}
 
 {% block content_left %}
+{% get_current_language as LANGUAGE_CODE %}
+{% get_available_languages as LANGUAGES %}
 <div class="preview">
   <div class="preview-content"></div>
   <div id="disqus_thread" style="display:none"></div>
@@ -41,8 +44,9 @@
     <li><a class="left" href="#">О проекте</a></li>
     <li><a class="left" href="#">Блог</a></li>
     <li><a class="left" href="#">API</a></li>
-    <li><a class="right dotted" href="#">Па-беларуску</a></li>
-    <li><a class="right dotted" href="#">In English</a></li>
+    {%for c, t in LANGUAGES%}
+    {%if LANGUAGE_CODE != c%}<li><a class="right dotted" href="{%url set_language%}?language={{c}}">{{t}}</a></li>{%endif%}
+    {%endfor%}
   </ul>
 </div>
 {% endblock content_left %}
