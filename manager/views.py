@@ -16,6 +16,7 @@ import json
 import os
 import re
 from django.views.decorators.csrf import csrf_exempt
+from django.utils import translation
 
 from tmp.parse_xml import XMLTrack
 
@@ -379,12 +380,17 @@ def photo_img_del(request, point_id, img_id):
 from account.models import Author
 @staff_member_required
 def info_page_edit(request):
+    template_name = 'info/content-%s.html' % request.GET.get('language', settings.LANGUAGE_CODE)
+    if not os.path.exists(os.path.join(settings.TEMPLATE_DIRS[0], template_name)):
+        tf = open(os.path.join(settings.TEMPLATE_DIRS[0], template_name), 'w')
+        tf.write(open(os.path.join(settings.TEMPLATE_DIRS[0], 'info-content.html')).read())
+        tf.close()
     messages = []
     if request.method == "POST":
         content = request.POST.get('content', u'').strip().encode('utf-8')
         author_filed = re.compile(r'(\d+)_(\w+)')
         if content:
-            tf = open(os.path.join(settings.TEMPLATE_DIRS[0], 'info-content.html'), 'w')
+            tf = open(os.path.join(settings.TEMPLATE_DIRS[0], template_name), 'w')
             tf.write(content)
             tf.close()
         authors = {}
@@ -413,7 +419,9 @@ def info_page_edit(request):
     return render_to_response('info_edit.html',
                               {'show_left_panel': True,
                                'messages': messages,
-                               'authors': Author.objects.all()
+                               'authors': Author.objects.all(),
+                               'template_name': template_name,
+                               'LC': request.GET.get('language', settings.LANGUAGE_CODE)
                                },                              
                               RequestContext(request))
 

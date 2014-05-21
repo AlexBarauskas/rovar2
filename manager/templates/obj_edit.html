@@ -32,9 +32,11 @@
   {%for f in trans_forms%}
   <p><label for="id_be-name">Описание<b>({{f.prefix}})</b>:</label>{{f.description}}</p>
   {%endfor%}
-  {%if f.0.address%}
+  {%for f in trans_forms%}
+  {%if f.address.label%}
   <p><label for="id_be-name">Адрес<b>({{f.prefix}})</b>:</label>{{f.address}}</p>
   {%endif%}
+  {%endfor%}
 </div>
 {%endif%}
 {%if mod_notifi%}

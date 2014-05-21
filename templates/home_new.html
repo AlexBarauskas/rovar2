@@ -51,11 +51,11 @@
 {% endblock content_left %}
 
 {% block content_right %}
-{%cache 600 "info_content"%}
+{%cache 600 "info_content" LANGUAGE_CODE%}
 <div class="data-content info-iframe" style="">
   <div id="info-iframe">
     <div style="padding:30px">
-      {%include "info-content.html"%}
+      {%include template_name%}
       <div class="authors">
 	{% for a in authors %}
 	<div class="authors-item">

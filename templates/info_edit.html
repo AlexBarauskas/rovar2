@@ -35,7 +35,7 @@
 </style>
 <div class="data-content" {% if not show_left_panel %}style="margin-left:0px;"{%else%}style="min-height:100%;"{% endif %}>
   <div style="padding:30px">
-  <form method="POST" action="." enctype="multipart/form-data">
+  <form method="POST" action=".?language={{LC}}" enctype="multipart/form-data">
       {%for m in messages%}
       <div class="alert form-alert {{m.class}}">
 	{{ m.text }}
@@ -46,11 +46,11 @@
     {% csrf_token %}
     <div class="editable">
       <div class="display">
-	{%include "info-content.html"%}
+	{%include template_name%}
       </div>
       <div class="editor">
 	<textarea class="textarea-tcm" id="main_content" name="content">
-	    {%include "info-content.html"%}
+	    {%include template_name%}
 	</textarea>
 	<div class="btn close-editor">Завершить редактирование</div>
       </div>

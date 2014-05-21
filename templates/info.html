@@ -14,7 +14,7 @@
 {% block content_right %}
 <div class="data-content" {% if not show_left_panel %}style="margin-left:0px;"{%else%}style="min-height:100%;"{% endif %}>
   <div style="padding:30px">
-    {%include "info-content.html"%}
+    {%include template_name%}
     <div class="authors">
       {% for a in authors %}
       <div class="authors-item">
