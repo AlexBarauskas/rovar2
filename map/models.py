@@ -131,7 +131,39 @@ class PointManager(models.Manager):
         return render_to_string('manager/translate_point.txt',
                          {'points': self.all()}
                          )
-
+    def from_translate_manager(self, input_string):
+        _points = [i.split("##") for i in input_string.split("###->") if i.strip()]
+        points = {}
+        for p in _points:
+            pid = p[0].strip()
+            points[pid] = {}
+            
+            for lang in p[1:]:
+                lang_code = lang[:2]
+                points[pid][lang_code] = {}
+                fields = lang[2:]
+                for f in fields.split('#'):
+                    f = f.strip()
+                    n = f.find('\n')
+                    if n > 0:
+                        f_name = f[:n].strip()
+                        f_value = f[n:].strip()
+                    else:
+                        f_name = f.strip()
+                        f_value = ""
+                    if f_name:
+                        points[pid][lang_code][f_name] = f_value
+        for pid, trans in points.iteritems():
+            try:
+                p = Point.objects.get(id=pid)
+            except Point.DoesNotExist:
+                p = None
+            if p is not None:
+                for lang, fields in trans.iteritems():
+                    t, c = Translation.objects.get_or_create(point=p, language=lang)
+                    Translation.objects.filter(id=t.id).update(**fields)
+        
+                    
 
 ## Phone template +375 (29) 662-73-44
 ## phone_re=re.compile('(\+\d\d\d \(\d\d\) \d\d\d\-\d\d\-\d\d)')
@@ -236,6 +268,6 @@ class Translation(models.Model):
     track = models.ForeignKey(Track, null=True)
     language = models.CharField(max_length=2, null=False)
     
-    name = models.CharField(u'Наименование', max_length=128, null=False)
-    description = models.CharField(u'Краткое описание', max_length=256, null=False)
-    address = models.CharField(u'Адрес', max_length=256, null=True)
+    name = models.CharField(u'Наименование', max_length=128, null=False, blank=True)
+    description = models.CharField(u'Краткое описание', max_length=256, null=False, blank=True)
+    address = models.CharField(u'Адрес', max_length=256, null=True, blank=True)

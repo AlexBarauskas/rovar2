@@ -8,10 +8,10 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.admin.views.decorators import staff_member_required
 from django.conf import settings
 
-from map.models import Type, Point, Track, Photo
+from map.models import Type, Point, Track, Photo, Translation
 from manager.models import EditorImage
 from blog.models import Post
-from forms import TypeForm, TrackForm, PostForm, PointForm, UploadImageForm, MessageForm, BasePointForm
+from forms import TypeForm, TrackForm, PostForm, PointForm, UploadImageForm, MessageForm, BasePointForm, TransForm
 import json
 import os
 import re
@@ -263,36 +263,50 @@ def point_edit(request, point_id=None):
         point = None
         title = u'Новая точка'
     messages = []
+    trans_forms = []
     if request.method == "POST":
         form = PointForm(request.POST, request.FILES,  instance=point)
-        if form.is_valid():
+        for lang_code, lang_name in settings.LANGUAGES:
+            if lang_code != settings.LANGUAGE_CODE:
+                if point:
+                    trans, c = Translation.objects.get_or_create(point=point, language=lang_code)
+                else:
+                    trans = None
+                trans_forms.append(TransForm(request.POST, instance=trans, prefix=lang_code))
+        if form.is_valid() and all([i.is_valid() for i in trans_forms]):
             _point =  form.save()
+            for i in trans_forms:
+                t = i.save()
+                if not t.language:
+                    t.language = i.prefix
+                if t.point is None:
+                    t.point = _point
+                t.save()
+                print t.name
             for f in request.FILES.getlist('photos',[]):
                 ph = Photo.objects.get_or_create(point=_point, image=f)
-                #ph.save()
             messages.append(u"Изменения успешно сохранены.")
-
-            #if start_acl is not None and point.state != start_acl and point.message_set.filter(state='m').count():
-            #    mod_notifi = point.message_set.filter(state='m')[0]
-            #    mod_notifi.message = request.POST.get('mod_notifi') or mod_notifi.message
-            #    mod_notifi.state = 'f'
-            #    mod_notifi.save()
-                
-            
             if request.POST.get('submit', 'to_current_page') == 'to_section':
                 return HttpResponseRedirect(reverse('manager_points'))
             if point is None:
                 return HttpResponseRedirect(reverse('point-edit', 
                                                     args=[form.instance.id]))
-                
     else:
         form = PointForm(instance=point)
+        for lang_code, lang_name in settings.LANGUAGES:
+            if lang_code != settings.LANGUAGE_CODE:
+                if point:
+                    trans, c = Translation.objects.get_or_create(point=point, language=lang_code)
+                else:
+                    trans = None
+                trans_forms.append(TransForm(instance=trans, prefix=lang_code))
     mod_notifi = None
     if point is not None and point.message_set.filter(state='m').count():
         mod_notifi = point.message_set.filter(state='m')[0]
     
     return render_to_response('obj_edit.html',
                               {'form': form,
+                               'trans_forms': trans_forms,
                                'comments_instance': point,
                                'title': title,
                                'back_url': reverse('manager_points'),

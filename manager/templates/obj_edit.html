@@ -22,7 +22,17 @@
 </div>
 {%endfor%}
 {%endif%}
-
+{%if trans_forms%}
+<div>
+  <h1>Переводы</h1>
+  {%for f in trans_forms%}
+  <div>
+    <h2>{{f.prefix}}</h2>
+    {{f.as_p}}
+  </div>
+  {%endfor%}
+</div>
+{%endif%}
 {%if mod_notifi%}
 <h1>Информация для мобильного клиента.</h1>
 <div>

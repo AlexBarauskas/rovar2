@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django import forms
 
-from map.models import Type, Point, Track
+from map.models import Type, Point, Track, Translation
 from api.models import Message
 from manager.models import EditorImage
 from blog.models import Post
@@ -50,4 +50,10 @@ class MessageForm(forms.ModelForm):
     class Meta:
         model = Message
         fields = ('message', 'state')
+
+class TransForm(forms.ModelForm):
+    class Meta:
+        model = Translation
+        fields = ('name', 'description', 'address')
+    
     
