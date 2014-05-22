@@ -561,56 +561,118 @@ b {
     z-index: 999;
     top: 0;
     background-color: white;
-    border: solid 1px #C53900;
-    box-shadow: 0px 0px 1px white;
-
+    border-radius: 4px;
+    box-shadow: 0 1px 10px rgba(0,0,0,.3);
 }
 
 #add-point-dialog form{
-    margin: 0 20px;
+    margin: 0 16px;
 }
 
-
-#add-point-dialog h1{
-    font-size:2em;
-    color: white;
-    background-color:#e95d24;
-    padding:10px;
+#add-point-dialog .form-group {
+    position: relative;
+    opacity: 1;
+    transition: .6s;
 }
 
-#add-point-dialog .input{
-    margin: 10px 0;
+#add-point-dialog .form-group.border {
+    padding-bottom: 14px;
+    border-bottom: 1px solid #cecece;
 }
 
-#add-point-dialog .input label{
-    width:100px;
+#add-point-dialog .form-control {
+    width: 100%;
+    transition: opacity .6s;
+    opacity: 1;
+    border: 0;
+    border-bottom: 1px solid #cecece;
+    border-radius: 0;
+    background: white;
+    font-size: 16px;
+    line-height: 1.467;
+    padding: 4px;
+    height: 32px;
+    -webkit-appearance: none;
 }
 
-#add-point-dialog .input input{
-    width:280px;
+#add-point-dialog input, textarea {
+    transition: all 800ms;
+    resize: none;  /* removes the resize handle */
+    overflow: auto; /* removes default scrolling bars in IE */
+    outline:none; 
+    font-family:inherit; 
+    box-sizing:border-box;
+    width: 100%;
+    padding: 0px 4px;
+    color: #969696;
+    margin-top: 18px;
+}
+
+#add-point-dialog input:focus {
+    border-color: black;
+    color: black;
+}
+
+#add-point-dialog textarea.form-control {
+    height: 80px;
+}
+
+#add-point-dialog textarea.form-control:focus {
+    border-color: black;
+    color: black;
+}
+
+#add-point-dialog label.photo {
+    font-size: 16px;
+    line-height: 1.467;
+    padding: 20px 4px;
+    float: left;
+    color: #969696;
+}
+
+#add-point-dialog input.photo {
+    width: 290px;
+    padding: 0;
+    border: none;
+}
+
+#add-point-dialog select.category {
+    margin: 20px 0 0 20px;
     padding: 5px;
-    border-color: #FFC266;
-}
-
-#add-point-dialog textarea{
-    width:384px;
-    padding: 5px;
-    border-color: #FFC266;
-}
-
-#add-point-dialog select{
-padding: 5px;
-border-color: #ffc266;
-background-color: #FF902A;
-color: white;
+    font-size: 15px;
 }
 
 #add-point-dialog .btn-box{
     padding: 10px 0 10px;
+    height: 40px;
     margin-top: 0px;
     text-align:center;
 }
 
+#add-point-dialog button.btn{
+    float: left;
+}
+
 #add-point-dialog .btn{
-    margin: 0 40px;
+    float: right;
+}
+
+#add-point-dialog textarea:focus, input:focus{
+    outline: 0;
+}
+
+::-webkit-input-placeholder {
+   color: #969696;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   color: #969696;  
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   color: #969696;  
+}
+
+:-ms-input-placeholder {  
+   color: #969696;  
 }
