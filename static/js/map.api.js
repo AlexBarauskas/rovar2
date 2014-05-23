@@ -126,6 +126,14 @@ var rovar = {
 	preview.append(description);
 	if(data.phones)
 	    preview.append($("<p></p>").html(data.phones));
+
+	if(typeof __editPointLink != "undefined" &&  __editPointLink != ""){
+	    var edit_link = __editPointLink.replace("<%id%>", data.id);
+	    $('<p>').append($('<a>').attr('href', edit_link)
+		.attr('target', edit_link)
+		.text('Редактировать'))
+		.appendTo(preview);
+	}
 	preview.parent().show();
 	$("#type").html(data.type_name);
 	$("#header").css('background-color', data.color);
