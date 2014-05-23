@@ -6,13 +6,13 @@ from map.models import *
 from django.template import RequestContext
 from django.utils import translation
 import os
-
+import re
 from account.models import Author
 
 from django.contrib.auth.decorators import login_required
 
 #@login_required
-def home(request, uid=None):
+def home(request, uid=None, slug=None):
     request.session['human'] = True;
     acl = '0'
     if request.user.is_authenticated():
@@ -22,14 +22,26 @@ def home(request, uid=None):
     obj = None
     uid = uid or request.GET.get('uid')
     if uid:
-        id, t = uid.split('-')
-        if t == 't':
-            M = Track
+        if re.match('^\d+\-[pt]$', uid):
+            id, t = uid.split('-')
+            if t == 't':
+                M = Track
+            else:
+                M = Point
+            qs = M.objects.filter(id=id)
+            if qs.count() != 0:
+                obj = qs[0]
         else:
-            M = Point
-        qs = M.objects.filter(uid=uid)
-        if qs.count() != 0:
-            obj = qs[0]
+            qs = Track.objects.filter(uid=uid)
+            if qs.count() != 0:
+                obj = qs[0]
+            else:
+                qs = Point.objects.filter(uid=uid)
+                if qs.count() != 0:
+                    obj = qs[0]
+                else:
+                    return HttpResponseRedirect('/')
+            
     types = Type.objects.all()
     for t in types:
         t.acl = acl
@@ -39,9 +51,9 @@ def home(request, uid=None):
         template_name = 'info-content.html'
         
     return render_to_response('home_new.html',
-                              {'tracks': Track.objects.filter(state__lte=acl),
+                              {#'tracks': Track.objects.filter(state__lte=acl),
                                'types': types,
-                               'rovar_uid': uid,
+                               #'rovar_uid': uid,
                                'obj': obj,
                                'authors': Author.objects.all(),
                                'template_name': template_name

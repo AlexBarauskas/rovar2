@@ -31,7 +31,7 @@ class PostForm(forms.ModelForm):
 class BasePointForm(forms.ModelForm):
     class Meta:
         model = Point
-        exclude = ('created', 'post', 'uid')
+        exclude = ('created', 'post')
 
 
 class PointForm(BasePointForm):

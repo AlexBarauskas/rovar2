@@ -171,13 +171,13 @@ $('input[name="phones"]').inputmask("mask", {"mask": _phoneMask,
 <script type="text/javascript">
   /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
   var disqus_shortname = 'onbikeby'; // required: replace example with your forum shortname
-  var disqus_identifier = '{%if rovar_uid%}{{rovar_uid}}{%else%}home{%endif%}';
+  var disqus_identifier = '{%if obj.uid%}{{obj.uid}}{%else%}home{%endif%}';
   var disqus_title = '{%if obj%}{{obj.title}}{%else%}home{%endif%}';
   var disqus_config = function () { 
   this.language = language_code;
   };
-  {% if rovar_uid %}
-  var disqus_url = 'http://onbike.by/{{rovar_uid}}/';
+  {% if obj.uid %}
+  var disqus_url = 'http://onbike.by/{{obj.type.slug}}/{{obj.uid}}';
   {% endif %}
   
   /* * * DON'T EDIT BELOW THIS LINE * * */

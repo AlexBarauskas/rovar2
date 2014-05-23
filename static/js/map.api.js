@@ -138,7 +138,7 @@ var rovar = {
 	$("#type").html(data.type_name);
 	$("#header").css('background-color', data.color);
 	var stateObj = { foo: "bar" };
-	history.pushState(stateObj, "page", '/'+ data.uid +'/');	  
+	history.pushState(stateObj, "page", '/'+data.type_slug+"/"+data.uid);	  
 
 	if(typeof DISQUS != 'undefined'){
 	    DISQUS.reset({
@@ -147,7 +147,7 @@ var rovar = {
 				 this.language = language_code;
 				 this.page.identifier = data.uid;  
 				 this.page.title = data.title;
-				 this.page.url = "http://onbike.by/"+data.uid+"/";
+				 this.page.url = "http://onbike.by/"+data.type_slug+"/"+data.uid;
 			     }
 			 });
 	    $('#disqus_thread').show();
@@ -289,7 +289,7 @@ var rovar = {
 
 
 	var stateObj = { foo: "bar" };
-	history.pushState(stateObj, "page", '/'+ data.uid +'/');	  
+	history.pushState(stateObj, "page", '/'+data.type_slug+"/"+data.uid);	  
 
 	if(typeof DISQUS != 'undefined'){
 	    DISQUS.reset({
@@ -299,7 +299,7 @@ var rovar = {
 				 this.page.identifier = data.uid;  
 				 this.page.title = data.title;
 				 //console.log(this);
-				 this.page.url = "http://onbike.by/"+data.uid+"/";
+				 this.page.url = "http://onbike.by/"+data.type_slug+"/"+data.uid;
 			     }
 			 });
 	    $('#disqus_thread').show();
