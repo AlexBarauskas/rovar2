@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-21 14:20+0300\n"
+"POT-Creation-Date: 2014-05-23 13:02+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,78 +17,82 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: templates/home_new.html:29
-msgid "Показывать на карте:"
-msgstr ""
-
-#: templates/home_new.html:43
+#: templates/base.html:76
 msgid "О проекте"
 msgstr ""
 
-#: templates/home_new.html:44
+#: templates/base.html:77
 msgid "Блог"
 msgstr ""
 
-#: templates/home_new.html:84
+#: templates/home_new.html:31
+msgid "Показывать на карте:"
+msgstr ""
+
+#: templates/home_new.html:77
 msgid "+ Добавить точку"
 msgstr ""
 
-#: templates/home_new.html:96
-msgid "Название"
+#: templates/home_new.html:89
+msgid "Название *"
 msgstr ""
 
-#: templates/home_new.html:100
+#: templates/home_new.html:94
 msgid "Категория"
 msgstr ""
 
-#: templates/home_new.html:103
-msgid "Магазины"
+#: templates/home_new.html:97
+msgid "Магазин"
 msgstr ""
 
-#: templates/home_new.html:104
-msgid "Прокаты"
+#: templates/home_new.html:98
+msgid "Прокат"
 msgstr ""
 
-#: templates/home_new.html:105
+#: templates/home_new.html:99
 msgid "Развлечения"
 msgstr ""
 
-#: templates/home_new.html:106
-msgid "Велопарковки"
+#: templates/home_new.html:100
+msgid "Велопарковка"
+msgstr ""
+
+#: templates/home_new.html:101
+msgid "Сервис"
 msgstr ""
 
 #: templates/home_new.html:107
-msgid "Сервисы"
+msgid "Описание (время работы, ориентиры и т.д.)"
 msgstr ""
 
 #: templates/home_new.html:111
-msgid "Описание"
+msgid "Адрес *"
 msgstr ""
 
 #: templates/home_new.html:115
-msgid "Адрес"
+msgid "Телефон"
 msgstr ""
 
 #: templates/home_new.html:119
-msgid "Телефоны"
-msgstr ""
-
-#: templates/home_new.html:123
 msgid "Сайт"
 msgstr ""
 
+#: templates/home_new.html:123
+msgid "Ваш Email (мы не будем спамить, честно) *"
+msgstr ""
+
 #: templates/home_new.html:127
-msgid "Фото"
+msgid "Фото *"
 msgstr ""
 
-#: templates/home_new.html:131
-msgid "Email"
-msgstr ""
-
-#: templates/home_new.html:137
+#: templates/home_new.html:134
 msgid "Добавить точку"
 msgstr ""
 
-#: templates/home_new.html:138
+#: templates/home_new.html:135
 msgid "Отмена"
+msgstr ""
+
+#: templates/home_new.html:161
+msgid "Добавить телефон"
 msgstr ""
