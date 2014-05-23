@@ -162,9 +162,27 @@ $('input[name="phones"]').last().after('<input type="text" class="form-control" 
 $('input[name="phones"]').last().addClass("other-phones").inputmask("mask", {"mask": _phoneMask,"oncomplete": phoneCompleted,"oncleared": function(){$(this).remove()}});
 }
 
+function clearRootPhone(){
+var op = $(".other-phones");
+var set = false;
+for(var i=0; i<=op.length; i++){
+			   if($(op[i]).val()){
+			   if(!set){
+			   $(this).val($(op[i]).val());
+			   $(op[i]).remove();
+			   }
+			   set = true;
+			   }
+			   else{
+			   $(op[i]).remove();
+			   }
+			   
+			   }
+}1
+
 $('input[name="phones"]').inputmask("mask", {"mask": _phoneMask,
-  "oncomplete": phoneCompleted});
-   
+  "oncomplete": phoneCompleted,
+   "oncleared":clearRootPhone});
 });
 </script>
 
