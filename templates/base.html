@@ -56,6 +56,7 @@
 </div>
 
 <div id="main-panel">
+  <div id="main-panel-wrapper">
     <div id="header"  style="background-color:{{T.color}}">
         <div id="hmenu">
             <a id="info" href="javascript:;"><img src="/static/icons/info.png"/></a>
@@ -66,9 +67,20 @@
         </h1>
         <div id="type" class="type"></div>
     </div>
-
     {% block content_left %}
     {% endblock content_left %}
+  <div id="main-panel-blank"></div>
+  </div>
+    <div class="footer">
+      <ul>
+	<li><a class="left" href="/info/">{% trans "О проекте" %}</a></li>
+	<!--li><a class="left" href="#">{% trans "Блог" %}</a></li-->
+	<!--li><a class="left" href="#">API</a></li-->
+	{%for c, t in LANGUAGES%}
+	{%if LANGUAGE_CODE != c%}<li><a class="right dotted" href="{%url set_language%}?language={{c}}">{{t}}</a></li>{%endif%}
+	{%endfor%}
+      </ul>
+    </div>
 
 </div>
     

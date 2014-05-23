@@ -20,6 +20,8 @@
 
 {% block content_left %}
 {% get_available_languages as LANGUAGES %}
+<div id="main-panel-blank"></div>
+
 <div class="preview">
   <div class="preview-content"></div>
   <div id="disqus_thread" style="display:none"></div>
@@ -38,16 +40,7 @@
     {%endfor%}
   </ul>
 </div>
-<div class="footer">
-  <ul>
-    <li><a class="left" href="#">{% trans "О проекте" %}</a></li>
-    <li><a class="left" href="#">{% trans "Блог" %}</a></li>
-    <li><a class="left" href="#">API</a></li>
-    {%for c, t in LANGUAGES%}
-    {%if LANGUAGE_CODE != c%}<li><a class="right dotted" href="{%url set_language%}?language={{c}}">{{t}}</a></li>{%endif%}
-    {%endfor%}
-  </ul>
-</div>
+
 {% endblock content_left %}
 
 {% block content_right %}
