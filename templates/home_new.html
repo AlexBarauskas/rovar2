@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+\{% extends 'base.html' %}
 {% load cache %}
 {% load i18n %}
 
@@ -150,9 +150,25 @@
 
 
 {% block js %}
+
+<script type="text/javascript" src="/static/js/jquery.inputmask.js"></script>
+<script type="text/javascript" src="/static/js/jquery.inputmask.extensions.js"></script>
+<script type="text/javascript" src="/static/js/jquery.tagsinput.js"></script>
+
 <script type="text/javascript" src="/static/leaflet/leaflet-src.js"></script>
 <script type="text/javascript" src="/static/leaflet/leaflet.js"></script>
 <script type="text/javascript" src="/static/js/map.api.js"></script>
+
+<script>
+var _phoneMask = "+999 (99) 999-99-99";
+var _phoneMaskList = [_phoneMask];
+
+$(document).ready(function(){
+   function phoneCompleted(){_phoneMaskList.push(_phoneMask),$(this).inputmask("mask", {"mask": _phoneMaskList.join(', '),  "oncomplete":phoneCompleted, onKeyValidation: function (result) {console.log(result);}})}
+
+   $('input[name="phones"]').inputmask("mask", {"mask": _phoneMaskList.join(', '),  "oncomplete":phoneCompleted, onUnMask: function(maskedValue, unmaskedValue) {console.log(maskedValue, unmaskedValue);} });
+});
+</script>
 
 <script type="text/javascript">
   /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */

@@ -165,7 +165,7 @@ image - фотография точки.\n
                             mimetype='text/json')
 
     # check required fields
-    required_fields = ['title', 'type', 'description', 'address']
+    required_fields = ['title', 'type', 'address']
     values = [request.POST.get(field) for field in required_fields]
     values.append(request.POST.get('coordinates[]') or request.POST.get('coordinates'))
     try:
@@ -175,9 +175,9 @@ image - фотография точки.\n
     if all(values):
         kwargs = {'name': values[0],
                   'type': values[1],
-                  'description': values[2],
-                  'address': values[3],
-                  'coordinates': values[4]}
+                  'description': request.POST.get('description', ''),
+                  'address': values[2],
+                  'coordinates': values[3]}
     else:
         return HttpResponse(json.dumps({'success': False,
                                         'error_code': 3,
