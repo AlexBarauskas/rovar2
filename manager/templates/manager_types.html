@@ -3,28 +3,30 @@
 {% block inner_content %}
 <h1>Редактирование типов маршрутов и точек</h1>
 <form action="." method="POST" enctype="multipart/form-data">
-{% csrf_token %}
-{% for f in forms %}
-<div class="form-item{%if f.errors%} open{%endif%}">
-  {% if f.instance.id %}
-  <div id="{{f.instance.id}}" class="close delete">x</div>
-  {% endif %}
-  <div class="form-header">
-    <span class="form-name">
-    {% if f.instance.name %}
-    {{f.instance.obj_name}}
-    {% else %}
-    Добавить новый тип
-    {% endif %}
-    </span>
+  {% csrf_token %}
+  {% for f in forms %}
+  <div>
+    <div class="form-item{%if f.errors%} open{%endif%}">
+      {% if f.instance.id %}
+      <div id="{{f.instance.id}}" class="close delete">x</div>
+      {% endif %}
+      <div class="form-header">
+	<span class="form-name">
+	  {% if f.instance.name %}
+	  {{f.instance.obj_name}}
+	  {% else %}
+	  Добавить новый тип
+	  {% endif %}
+	</span>
+      </div>
+      <div class="form-fields">
+	{{f.as_p}}
+      </div>
+    </div>
   </div>
-  <div class="form-fields">
-    {{f.as_p}}
+  {% endfor %}
+  <div class="btn-box">
+    <button class="btn success">Сохранить</button>
   </div>
-</div>
-{% endfor %}
-<div class="btn-box">
-  <button class="btn success">Сохранить</button>
-</div>
 </form>
 {% endblock inner_content %}

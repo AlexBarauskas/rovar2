@@ -1,3 +1,20 @@
+function delete_obj(oid, node){
+    $.ajax({method: 'POST',
+	    url: oid+'/delete/',
+	    success: function(data){
+		if(data.success){
+		    node.parent().remove();
+		}
+		else{
+		    for(var i=data.errors.length-1;i>=0;i--)
+			node.find('.form-fields').prepend('<p class="error">'+data.errors[i]+'</p>');
+		    node.addClass('open');
+		}
+	    }
+	   });
+}
+
+
 $(function(){
       $('.form-name').click(function(ev){
 				var box= $(this).parent().parent();
@@ -11,20 +28,12 @@ $(function(){
       $('.delete').click(function(ev){
 			     var box=$(this).parent();
 			     if(!!this.id){
-				 $.ajax({method: 'POST',
-					 url: this.id+'/delete/',
-					 success: function(data){
-					     if(data.success){
-						 box.parent().remove();
-					     }
-					     else{
-						 for(var i=data.errors.length-1;i>=0;i--)
-						     box.find('.form-fields').prepend('<p class="error">'+data.errors[i]+'</p>');
-						 console.log(box);
-						 box.addClass('open');
-					     }
-					 }
-					});
+				 
+				 if (confirm('Удалить "'+(box.parent().find('td').first().text().replace(/^\s+|\s+$/g, '') || box.parent().find('.form-name').text().replace(/^\s+|\s+$/g, ''))+'"?')) {
+				     delete_obj(this.id, box);
+				 } else {
+				 }				 
+
 			     }
 			 });
 });
