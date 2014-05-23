@@ -661,6 +661,10 @@ b {
     outline: 0;
 }
 
+#add-point-dialog .other-phones{
+margin: 5px 0px 0 20px;
+width: 388px;}
+
 ::-webkit-input-placeholder {
    color: #969696;
 }
@@ -676,3 +680,5 @@ b {
 :-ms-input-placeholder {  
    color: #969696;  
 }
+
+

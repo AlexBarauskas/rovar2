@@ -142,7 +142,6 @@ image - фотография точки.\n
     except:
         print "Error POST"
     uid = request.POST.get('uid', '')
-    print request.session.get('human')
     if Application.objects.filter(uid=uid).count() == 0 or (uid == 'webclient' and not request.session.get('human')):
         return HttpResponse(json.dumps({'success': False,
                                         'error_code': 2,
@@ -201,7 +200,12 @@ image - фотография точки.\n
                                         }),
                             mimetype='text/json')
     # get not required fileds
-    kwargs['phones'] = request.POST.get('phones')
+    #print request.POST.get('phones')
+    #print request.POST.getlist('phones')
+    phones = request.POST.getlist('phones')
+    if phones is not None:
+        phones = ','.join(phones)
+    kwargs['phones'] = phones
     kwargs['website'] = request.POST.get('website')
     if kwargs['website']:
         try:
