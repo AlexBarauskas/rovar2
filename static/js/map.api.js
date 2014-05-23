@@ -524,6 +524,7 @@ var rovar = {
 	$("#ajax-errors").html("");
 	$("#add-point-dialog .for-clear").val('');
 	var d=$("#add-point-dialog").show();
+	$("#add-point-dialog input[name=\"title\"]").focus();
 	$('#add-point-dialog').animate({'opacity':1}, 500);
 	d.css('left', ($(document).innerWidth() - d.innerWidth())/2);
 	if(($(document).innerHeight() - d.innerHeight())/2 >= 0)
