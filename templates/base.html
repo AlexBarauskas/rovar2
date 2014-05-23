@@ -76,9 +76,11 @@
 	<li><a class="left" href="/info/">{% trans "О проекте" %}</a></li>
 	<!--li><a class="left" href="#">{% trans "Блог" %}</a></li-->
 	<!--li><a class="left" href="#">API</a></li-->
+	{% comment %}
 	{%for c, t in LANGUAGES%}
 	{%if LANGUAGE_CODE != c%}<li><a class="right dotted" href="{%url set_language%}?language={{c}}">{{t}}</a></li>{%endif%}
 	{%endfor%}
+	{% endcomment %}
       </ul>
     </div>
 
