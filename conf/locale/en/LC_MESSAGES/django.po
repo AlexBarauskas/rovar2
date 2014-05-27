@@ -96,3 +96,18 @@ msgstr ""
 #: templates/home_new.html:161
 msgid "Добавить телефон"
 msgstr ""
+
+msgid "Магазины"
+msgstr ""
+
+msgid "Прокаты"
+msgstr ""
+
+msgid "Развлечение"
+msgstr ""
+
+msgid "Велопарковки"
+msgstr ""
+
+msgid "Сервисы"
+msgstr ""
