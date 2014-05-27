@@ -359,6 +359,7 @@ def point_delete(request, point_id):
                         content_type="text/json")
 
 @staff_member_required
+@csrf_exempt
 def photo_img_del(request, point_id, img_id):
     try:
         img = Photo.objects.get(id=img_id)
