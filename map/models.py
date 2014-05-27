@@ -35,8 +35,8 @@ class Type(models.Model):
     active = models.BooleanField(default=False, blank=False)
     name = models.CharField(u'Наименование', max_length=64, null=False)
     color = models.CharField(u'Цвет', max_length=7, default="#0000FF")
-    image = models.ImageField(upload_to="icons/", null=True, blank=True)
-    image2 = models.ImageField(upload_to="icons/", null=True, blank=True)
+    image = models.ImageField(u'Small pin', upload_to="icons/", null=True, blank=True)
+    image2 = models.ImageField(u'Pin', upload_to="icons/", null=True, blank=True)
     slug = models.CharField(u'Text ID', max_length=24, default="other")
     # ALTER TABLE map_type ADD  "slug" varchar(24) NOT NULL default 'other';
 

@@ -8,6 +8,22 @@ var rovar = {
     _kLeft: 0.317,
     _numberPoint: 0,
     _numberLoadPoint: 0,
+    messages : {
+	'edit' : 'Редатрировать',
+	'travel time' : 'Время в пути',
+	'add point' : '+ Добавить точку',
+	'set coordinates' : 'Выберите место на карте (Esc для отмены)',
+	'unknown error' : 'Неизвестная ошибка.',
+	'success message' : 'Ваше предложение будет рассмотрено модератором.',
+	'error request method' : "Неверный тип запроса.",
+	'not init client' : "Ваш клиент не инициализирован.",
+	'required fields' : "Поля 'Название', 'Категория', 'Описание', 'Адрес' являются обязательными.",
+	'unknown url' : "Указанный тип точки не существует.",
+	'required image' : "Вы не выбрали изображение или оно не верного формата.",
+	'invalide url' : "Не верный URL для поля 'Cайт'.",
+	'feedback email' : "Введите email для обратной связи."
+    },
+
 
     _visible_pins : function(){
     },

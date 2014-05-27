@@ -10,8 +10,12 @@
 <div style="position:absolute; top:-5000px">
   {%for T in types%}
   {%if T.count_items%}
+  {%if T.image%}
   <img src="{{T.image.url}}"/>
+  {%endif%}
+  {%if T.image2%}
   <img src="{{T.image2.url}}"/>
+  {%endif%}
   {%endif%}
   {%endfor%}
   <img src="/static/icons/pin-add.png"/>
