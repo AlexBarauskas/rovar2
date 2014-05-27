@@ -29,6 +29,23 @@ var rovar = {
     },
 
     init : function(){
+	if(typeof rovar_transplate != 'undefined' & typeof language_code != 'undefined'){
+	    if(typeof rovar_transplate[language_code] != 'undefined'){
+		this.messages = rovar_transplate[language_code];
+		}
+	}
+
+	this.__errors = {
+	    1 : this.messages['error request method'],
+	    2 : this.messages['not init client'],
+	    3 : this.messages['required fields'],
+	    4 : this.messages['unknown url'],
+	    5 : this.messages['required image'],
+	    6 : this.messages['invalide url'],
+	    100 : this.messages['feedback email']
+	};
+
+
 	var map = new L.Map('map');
 	var self = this;
 	map.on('zoomend', function(ev){
@@ -147,7 +164,7 @@ var rovar = {
 	    var edit_link = __editPointLink.replace("<%id%>", data.id);
 	    $('<p>').append($('<a>').attr('href', edit_link)
 		.attr('target', edit_link)
-		.text('Редактировать'))
+		.text(this.messages['edit']))
 		.appendTo(preview);
 	}
 	preview.parent().show();
@@ -282,7 +299,7 @@ var rovar = {
 	var preview = $('.preview-content').html('')
 	    .append($("<h1>"+data.title+"</h1>").css('color', data.color));
 	if(data.duration)
-	    preview.append($("<p></p>").html('Время в пути: '+data.duration).addClass('description-address'));
+	    preview.append($("<p></p>").html(this.messages['travel time']+': '+data.duration).addClass('description-address'));
 	if(data.video!=''){
 	    var video = $(data.video);
 	    preview.append(video);
@@ -493,7 +510,7 @@ var rovar = {
     },
 
     closeAddPoint : function(){	
-	$("#add-point-btn").html("+ Добавить точку");
+	$("#add-point-btn").html(this.messages['add point']);
 	$("#add-point-dialog").hide();
 	$("#ajax-errors").html("");
 
@@ -512,7 +529,7 @@ var rovar = {
 	if(!this._runAddPoint){
 	    
 	this._runAddPoint = true;
-	$("#add-point-btn").html("Выберите место на карте (Esc для отмены)");
+	$("#add-point-btn").html(this.messages['set coordinates']);
 	var self = this;
 	$(this.map._container).css('cursor', "url('/static/icons/pin-add.png') "+(this._iconSize*this._kLeft).toString() + ' ' + (this._iconSize-1).toString() +",crosshair");
 	$('.leaflet-clickable').css('cursor', "url('/static/icons/pin-add.png') "+(this._iconSize*this._kLeft).toString() + ' ' + (this._iconSize-1).toString() +",crosshair");
@@ -548,25 +565,14 @@ var rovar = {
     },
 
 
-    __errors : {
-	1 : "Неверный тип запроса.",
-	2 : "Ваш клиент не инициализирован.",
-	3 : "Поля 'Название', 'Категория', 'Описание', 'Адрес' являются обязательными.",
-	4 : "Указанный тип точки не существует.",
-	5 : "Вы не выбрали изображение или оно не верного формата.",
-	6 : "Не верный URL для поля 'Cайт'.",
-	100 : "Введите email для обратной связи."
-	
-    },
-
     callbackAddPoint: function(data){
 	//console.log(data);
 	if(!data.success){
-	    $("#ajax-errors").html($("<p class=\"error alert\">").text(this.__errors[data.error_code] || "Неизвестная ошибка."));
+	    $("#ajax-errors").html($("<p class=\"error alert\">").text(this.__errors[data.error_code] || this.messages['unknown error']));
 	}else{
 	    this._runAddPoint = false;
-	    $("#add-point-btn").html("+ Добавить точку");
-	    $("#ajax-errors").html($("<p class=\"success alert\">").text("Ваше предложение будет рассмотрено модератором."));
+	    $("#add-point-btn").html(this.messages['add point']);
+	    $("#ajax-errors").html($("<p class=\"success alert\">").text(this.messages['success message']));
 	    setTimeout("$('#add-point-dialog').animate({'opacity':0.25}, 500, 'swing', function(){$('#add-point-dialog').hide()})", 2000);
 	}
     }
