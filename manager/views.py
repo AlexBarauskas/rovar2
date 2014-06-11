@@ -203,10 +203,10 @@ def track_delete(request, track_id):
     try:
         obj = Track.objects.get(id=track_id)
     except ObjectDoesNotExist:
-        errors.append['Object does not exist']
+        errors.append('Object does not exist')
     try:
         obj.delete()
-    except e:
+    except Exception, e:
         errors.append(str(e))
     res = {
         'success': not errors,
