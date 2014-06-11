@@ -346,7 +346,7 @@ def point_delete(request, point_id):
     try:
         obj = Point.objects.get(id=point_id)
     except ObjectDoesNotExist:
-        errors.append['Object does not exist']
+        errors.append('Object does not exist')
     try:
         obj.delete()
     except e:
