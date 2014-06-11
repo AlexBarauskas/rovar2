@@ -349,7 +349,7 @@ def point_delete(request, point_id):
         errors.append('Object does not exist')
     try:
         obj.delete()
-    except e:
+    except Exception, e:
         errors.append(str(e))
     res = {
         'success': not errors,
