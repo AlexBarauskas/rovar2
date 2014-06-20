@@ -6,6 +6,8 @@ from django.conf import settings
 
 from blog.models import Post
 import json
+import re
+from math import sqrt
 
 OBJ_CHOICES = (('t', u'Маршрут'),
                ('p', u'Точка'),
@@ -58,6 +60,16 @@ class Type(models.Model):
         return self.name
 
 
+class Location(models.Model):
+    name = models.CharField(max_length=16, unique=True)
+    center_lat = models.FloatField()
+    center_lng = models.FloatField()
+    radius = models.FloatField()
+
+    def __unicode__(self):
+        return self.name
+
+
 class Track(models.Model):
     name = models.CharField(u'Наименование', max_length=128, null=False)
     state = models.CharField(u'Доступ',
@@ -74,6 +86,7 @@ class Track(models.Model):
     duration = models.PositiveIntegerField(u'Длительность',null=True, blank=True)
     uid = models.CharField(max_length=16, null=True)
     color = models.CharField(u'Цвет', max_length=7, default="#0000FF")
+    location = models.ForeignKey(Location, null=True)
 
     def save(self, *args, **kwargs):
         res = super(Track, self).save(*args, **kwargs)
@@ -105,9 +118,25 @@ class Track(models.Model):
             track['marker_b'] = self.type.image2.url
         return track
 
-
     def __unicode__(self):
         return self.name
+
+    def define_location(self):
+        it = re.finditer('[\d\.]+', self.coordinates)
+        a = []
+        for i in range(2):
+            try:
+                a.append(it.next().group())
+            except:
+                return None
+        a = [float(i) for i in a]
+        for l in Location.objects.all():
+            c = [l.center_lat, l.center_lng]
+            r = sqrt((a[0]-c[0])**2 + (a[1]-c[1])**2)
+            if r < l.radius:
+                self.location = l
+                self.save()
+                return None
 
 
 def iso_phone(number):
@@ -187,6 +216,7 @@ class Point(models.Model):
     uid = models.CharField(max_length=24, null=True)
 
     objects = PointManager()
+    location = models.ForeignKey(Location, null=True)
 
     def save(self, *args, **kwargs):
         if self.phones:
@@ -248,6 +278,16 @@ class Point(models.Model):
         point['type'] = [self.type.obj, '%s' % self.type.id]
         return point
 
+    def define_location(self):
+        a = [float(i) for i in re.findall('[\d\.]+', self.coordinates)]
+        for l in Location.objects.all():
+            c = [l.center_lat, l.center_lng]
+            r = sqrt((a[0]-c[0])**2 + (a[1]-c[1])**2)
+            if r < l.radius:
+                self.location = l
+                self.save()
+                return None
+            
 
 class Photo(models.Model):
     point = models.ForeignKey(Point, null=True)
@@ -271,3 +311,4 @@ class Translation(models.Model):
     name = models.CharField(u'Наименование', max_length=128, null=False, blank=True)
     description = models.CharField(u'Краткое описание', max_length=256, null=False, blank=True)
     address = models.CharField(u'Адрес', max_length=256, null=True, blank=True)
+

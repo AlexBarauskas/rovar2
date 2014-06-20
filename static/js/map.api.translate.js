@@ -1,6 +1,6 @@
 var rovar_transplate = {
     ru : {
-	'edit' : 'Редатрировать',
+	'edit' : 'Редакрировать',
 	'travel time' : 'Время в пути',
 	'add point' : '+ Добавить точку',
 	'set coordinates' : 'Выберите место на карте (Esc для отмены)',

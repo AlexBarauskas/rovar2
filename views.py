@@ -43,20 +43,22 @@ def home(request, uid=None, slug=None):
                     return HttpResponseRedirect('/')
             
     types = Type.objects.all()
-    for t in types:
-        t.acl = acl
+    #for t in types:
+    #    t.acl = acl
         
     template_name = 'info/content-%s.html' % translation.get_language()
     if not os.path.exists(os.path.join(settings.TEMPLATE_DIRS[0], template_name)):
         template_name = 'info-content.html'
-        
+    l_name = request.session.get('location', 'Minsk')
+    l_name = 'Grodno'
     return render_to_response('home_new.html',
                               {#'tracks': Track.objects.filter(state__lte=acl),
-                               'types': types,
-                               #'rovar_uid': uid,
-                               'obj': obj,
-                               'authors': Author.objects.all(),
-                               'template_name': template_name
+                                  'types': types,
+                                  #'rovar_uid': uid,
+                                  'obj': obj,
+                                  'authors': Author.objects.all(),
+                                  'template_name': template_name,
+                                  'location': l_name,
                                },
                               context_instance=RequestContext(request))
 

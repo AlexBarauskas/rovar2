@@ -35,12 +35,10 @@
   <h1>{% trans "Показывать на карте:" %}</h1>
   <ul id="type-btns" class="control">
     {%for T in types%}
-    {%if T.count_items%}
-    <li id="{{T.slug}}" class="type-all">
+    <li id="{{T.slug}}" class="type-all" style="display:none;">
       <span style="background-color:{{T.color}}">{% trans T.name %}</span>
-      <span style="color:{{T.color}}" class="number">{{T.count_items}}</span>
+      <span style="color:{{T.color}}" class="number">0</span>
     </li>
-    {%endif%}
     {%endfor%}
   </ul>
 </div>

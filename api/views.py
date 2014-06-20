@@ -15,6 +15,7 @@ from django.core.validators import URLValidator
 import json
 
 from api.models import Application, Message, Track, Point, Type, Photo, Offer
+from map.models import Location
 #http://blogs.cs.st-andrews.ac.uk/jfdm/2013/04/04/documenting-python-using-doxygen/
 
 
@@ -45,6 +46,26 @@ def initialize_app(request):
     return HttpResponse(json.dumps(res), mimetype='text/json')
 
 
+def location(request):
+    '''@brief Получение информации о локации.
+    
+    '''
+    location_name = request.GET.get('name', 'Minsk')
+    try:
+        location = Location.objects.get(name = location_name)
+    except Location.DoesNotExist:
+        location = Location.objects.get(name = 'Minsk')
+    res = {'name': location.name,
+           'center': [location.center_lat, location.center_lng],
+           'bounds': [[location.center_lat - location.radius*0.7071067811865475, location.center_lng - 2*location.radius*0.7071067811865475],
+                      [location.center_lat + location.radius*0.7071067811865475, location.center_lng + 2*location.radius*0.7071067811865475]
+                      ],
+           'id': location.id
+           }
+    return HttpResponse(json.dumps(res),
+                        mimetype='text/json')
+
+
 def points(request):
     '''@brief Получение информации о доступных точках.
     GET: http://onbike.by/api/points?page=P&per_page=N
@@ -72,6 +93,12 @@ GET-запрос может не содержать параметров.\n
         except:
             per_page = 10
     kwargs = {'state__lte': acl}
+    if 'location' in request.GET:
+        location = request.GET['location']
+        if location.isdigit():
+            kwargs['location_id'] = location
+        else:
+            kwargs['location__name'] = location
     points = Point.objects.filter(**kwargs)
     if page is not None:
         points = points[page * per_page:(page + 1) * per_page]
@@ -342,6 +369,12 @@ GET-запрос может не содержать параметров.\n
         except:
             per_page = 10
     kwargs = {'state__lte': acl}
+    if 'location' in request.GET:
+        location = request.GET['location']
+        if location.isdigit():
+            kwargs['location_id'] = location
+        else:
+            kwargs['location__name'] = location
     tracks = Track.objects.filter(**kwargs)
     if page is not None:
         tracks = tracks[page * per_page:(page + 1) * per_page]

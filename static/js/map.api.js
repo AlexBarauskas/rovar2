@@ -9,7 +9,7 @@ var rovar = {
     _numberPoint: 0,
     _numberLoadPoint: 0,
     messages : {
-	'edit' : 'Редатрировать',
+	'edit' : 'Редакрировать',
 	'travel time' : 'Время в пути',
 	'add point' : '+ Добавить точку',
 	'set coordinates' : 'Выберите место на карте (Esc для отмены)',
@@ -51,16 +51,35 @@ var rovar = {
 	map.on('zoomend', function(ev){
 		   self._visible_pins();
 	       });
-	
-	var minsk = new L.LatLng(53.9, 27.566667);
 	this.copyright = '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors';
-	this.map = map.setView(minsk, 12);
-	L.tileLayer('http://onbike.by/map/tile/{z}/{x}/{y}.png',
-		    {attribution: this.copyright,
-		     key: 'BC9A493B41014CAABB98F0471D759707',
-		     minZoom: 12
-		    }).addTo(this.map);
-	this.map.setMaxBounds([[53.775, 27.31304168701172], [54, 27.820472717285156]]);
+	
+	var l_name;
+	if(typeof rovar_location != 'undefined')
+	    l_name = rovar_location;
+	else
+	    l_name = 'Minsk';
+
+	$.ajax({url: '/api/location',
+		method: 'GET',
+		data: {name: l_name},
+		success: function(data){
+		    self.location = data;
+		    var minsk = new L.LatLng(self.location.center[0], self.location.center[1]);
+		    self.map = map.setView(minsk, 12);
+		    L.tileLayer('http://onbike.by/map/tile/{z}/{x}/{y}.png',
+				{attribution: self.copyright,
+				 key: 'BC9A493B41014CAABB98F0471D759707',
+				 minZoom: 12
+				}).addTo(self.map);
+		    //self.map.setMaxBounds([[53.775, 27.31304168701172], [54, 27.820472717285156]]);
+		    self.map.setMaxBounds(self.location.bounds);
+		    self.loadPoints();
+		    self.loadTracks();
+		}
+	       });	
+
+	
+
     },
 
     backToHome : function(){
@@ -230,15 +249,29 @@ var rovar = {
 	var self = this;
 	$.ajax({url: '/api/points',
 		method: 'GET',
-		data: {uid: 'webclient'},
+		data: {uid: 'webclient',
+		       location: this.location.id},
 		success: function(data){
 		    for(var i=data.length-1; i>=0; i--){
 			self._addPointToMap(data[i]);
 		    }
+		    var n;
 		    for(var key in self.elements.points){
+			//n = $('img.'+key).length;
+			n = 0;
+			for(var tkey in self.elements.points[key])
+			    n++;
+
+			if(n){
+			    $('#'+key+' .number').text(n);
+			    $('#'+key).show();
+			}
+			else{
+			    $('#'+key).hide();
+			}
 			self._pointGroup(key);
 		    }
-
+		    
 		    
 
 		    self.map.on('moveend', function(ev){
@@ -384,10 +417,24 @@ var rovar = {
 	var self = this;
 	$.ajax({url: '/api/tracks',
 		method: 'GET',
-		data: {uid: 'webclient'},
+		data: {uid: 'webclient',
+		       location: this.location.id},
 		success: function(data){
 		    for(var i=data.length-1; i>=0; i--){
 			self._addTrackToMap(data[i]);
+		    }
+		    var n;
+		    for(var key in self.elements.tracks){
+			n = 0;
+			for(var tkey in self.elements.tracks[key])
+			    n++;
+			if(n){
+			    $('#'+key+' .number').text(n);
+			    $('#'+key).show();
+			}
+			else{
+			    $('#'+key).hide();
+			}
 		    }
 		}
 	       });	
@@ -582,8 +629,6 @@ var rovar = {
 
 $(function(){
       rovar.init();
-      rovar.loadPoints();
-      rovar.loadTracks();
       $("#add-point-btn").click(function(){rovar.addPoint();});
       $("#back-to-banner").click(function(){rovar.backToHome();});
       $("#add-point-form-close").click(function(){rovar.closeAddPoint();});
