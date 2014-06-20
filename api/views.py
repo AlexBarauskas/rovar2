@@ -60,7 +60,8 @@ def location(request):
            'bounds': [[location.center_lat - location.radius*0.7071067811865475, location.center_lng - 2*location.radius*0.7071067811865475],
                       [location.center_lat + location.radius*0.7071067811865475, location.center_lng + 2*location.radius*0.7071067811865475]
                       ],
-           'id': location.id
+           'id': location.id,
+           'radius': location.radius,
            }
     return HttpResponse(json.dumps(res),
                         mimetype='text/json')

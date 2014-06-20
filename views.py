@@ -91,3 +91,11 @@ def set_language(request):
             else:
                 response.set_cookie(settings.LANGUAGE_COOKIE_NAME, lang_code)
     return response
+
+def set_location(request):
+    next = request.REQUEST.get('next')
+    next = request.META.get('HTTP_REFERER', '/')
+    response = HttpResponseRedirect(next)
+    request.session['location'] = request.GET.get('name', 'Minsk')
+    return response
+    
