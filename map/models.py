@@ -90,6 +90,8 @@ class Track(models.Model):
 
     def save(self, *args, **kwargs):
         res = super(Track, self).save(*args, **kwargs)
+        if self.location is None:
+            self.define_location()
         if not self.uid:
             self.uid = "%s-%s" % (self.id, self.type.obj)
             self.save()
@@ -222,6 +224,8 @@ class Point(models.Model):
         if self.phones:
             self.phones = ', '.join([j for j in [iso_phone(j) for j in self.phones.split(',')] if j])
         res = super(Point, self).save(*args, **kwargs)
+        if self.location is None:
+            self.define_location()
         if not self.uid:
             self.uid = "%s-%s" % (self.id, self.type.obj)
             self.save()
