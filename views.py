@@ -49,7 +49,11 @@ def home(request, uid=None, slug=None):
     template_name = 'info/content-%s.html' % translation.get_language()
     if not os.path.exists(os.path.join(settings.TEMPLATE_DIRS[0], template_name)):
         template_name = 'info-content.html'
-    l_name = request.session.get('location', 'Minsk')
+    if obj is not None and obj.location:
+        l_name = obj.location.name
+    else:
+        l_name = request.session.get('location', 'Minsk')
+    
     return render_to_response('home_new.html',
                               {#'tracks': Track.objects.filter(state__lte=acl),
                                   'types': types,
