@@ -437,7 +437,7 @@ def moderation_objects(request):
             del q['state']
     if 'type' in request.GET:
         q['point__type__slug'] = request.GET['type']
-    messages = Message.objects.filter(**q)
+    messages = Message.objects.filter(**q).order_by('-created')
     return render_to_response('manager_moderation.html',
                               {'objects': messages,
                                'types': Type.objects.filter(obj='p'),
