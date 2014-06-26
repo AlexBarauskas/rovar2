@@ -49,10 +49,10 @@
       <td>{{obj.get_state_display}}</td>
       <td>{%if obj.email %}web{%else%}mobile{%endif%}</td>
       {%if obj.point%}
-      <td>{{obj.point.created}}</td>
+      <td>{{obj.created}}</td>
       <td>{{obj.point.type}}</td>
       {%else%}
-      <td>{{obj.track.created}}</td>
+      <td>{{obj.created}}</td>
       <td>{{obj.track.type}}</td>
       {%endif%}
     </tr>
