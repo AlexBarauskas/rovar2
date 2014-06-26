@@ -267,9 +267,9 @@ def js_image_list(request):
 @staff_member_required
 def points(request, type_id=None):
     if type_id is None:
-        points = Point.objects.all().order_by('id')
+        points = Point.objects.all().order_by('-created')
     else:
-        points = Point.objects.filter(type__id=type_id).order_by('id')
+        points = Point.objects.filter(type__id=type_id).order_by('-created')
     types = Type.objects.filter(obj='p')
     return render_to_response('manager_points.html',
                               {'points': points,
