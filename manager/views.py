@@ -265,7 +265,7 @@ def js_image_list(request):
     
 
 @staff_member_required
-def points(request, type_id=None):
+def points(request):
     q = {}
     if 'current_pointfilter' in request.session:
         q = request.session['current_pointfilter']
