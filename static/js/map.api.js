@@ -586,7 +586,26 @@ var rovar = {
 	}
     },
 
+    _set_address: function(data){
+	console.log(data);
+	var address = (data.address.road || '') + ' ' + (data.address.house_number || '');
+	//console.log(address);
+	if(address != ' ')
+	    $('#add-point-form input[name="address"]').val(address);
+	else
+	    $('#add-point-form input[name="address"]').val('');
+    },
+
     _setCoordinates: function(e){
+	var nosm = document.createElement('script');
+	nosm.type = 'text/javascript';
+	nosm.async = true;
+	nosm.src = 'http://nominatim.openstreetmap.org/reverse?format=json&lat=' + e.latlng.lat.toString() + '&lon=' + e.latlng.lng.toString() + '&zoom=18&addressdetails=1&json_callback=rovar._set_address';
+	var s = document.getElementsByTagName('script')[0];
+	s.parentNode.insertBefore(nosm, s);
+
+
+	
 	var addicon = new L.icon({
 					  iconUrl: "/static/icons/pin-add.png",
 					  iconSize: [this._iconSize, this._iconSize],

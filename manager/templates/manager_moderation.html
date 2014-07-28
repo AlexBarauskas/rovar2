@@ -1,28 +1,79 @@
 {% extends 'base_manager.html' %}
 
 {% block inner_content %}
+<style>
+  .filter-input{float:left;width:200px;}
+</style>
 <h1>Объекты для модерирования</h1>
-<p>
-  <div>
-    <label><input type="radio"{%if cur_state == 'm'%} checked="checked"{%endif%} name="state" value="m"/>На рассмотрении модератором</label>
+<form id="modfilter-form">
+  <div class="filter-input">
+    <h2>Состояние объекта:</h2>
+    <div>
+      <label><input type="radio"{%if cur_state == 'm'%} checked="checked"{%endif%} name="state" value="m"/>На рассмотрении модератором</label>
+    </div>
+    <div>
+      <label><input type="radio"{%if cur_state == 'f'%} checked="checked"{%endif%} name="state" value="f"/>Для отправки</label>
+    </div>
+    <div>
+      <label><input type="radio"{%if cur_state == 's'%} checked="checked"{%endif%} name="state" value="s"/>Отправлено</label>
+    </div>
+    <div>
+      <label><input type="radio"{%if cur_state == 'r'%} checked="checked"{%endif%} name="state" value="r"/>Прочитано</label>
+    </div>
   </div>
-  <div>
-    <label><input type="radio"{%if cur_state == 'f'%} checked="checked"{%endif%} name="state" value="f"/>Для отправки</label>
+
+  <div class="filter-input">
+    <h2>Тип объекта:</h2>
+    <div>
+      <label>
+	<input type="radio"{%if cur_type == 'all'%} checked="checked"{%endif%} name="type" value="all"/>
+	All
+      </label>
+    </div>
+    {%for t in types%}
+    <div>
+      <label>
+	<input type="radio"{%if cur_type == t.slug%} checked="checked"{%endif%} name="type" value="{{t.slug}}"/>
+	{{t.name}}
+      </label>
+    </div>
+    {%endfor%}
   </div>
-  <div>
-    <label><input type="radio"{%if cur_state == 's'%} checked="checked"{%endif%} name="state" value="s"/>Отправлено</label>
+
+
+  <div class="filter-input">
+    <h2>Локаль:</h2>
+    <div>
+      <label>
+	<input type="radio"{%if cur_location == 'all'%} checked="checked"{%endif%} name="location" value="all"/>
+	All
+      </label>
+    </div>
+    {%for l in locations%}
+    <div>
+      <label>
+	<input type="radio"{%if cur_location == l.name%} checked="checked"{%endif%} name="location" value="{{l.name}}"/>
+	{{l.name}}
+      </label>
+    </div>
+    {%endfor%}
   </div>
-  <div>
-    <label><input type="radio"{%if cur_state == 'r'%} checked="checked"{%endif%} name="state" value="r"/>Прочитано</label>
-  </div>
-</p>
-<ul class="filter-links">
-  <li style="width:100px;padding:10px;float:left;text-align:center;"><a  style="cursor:pointer;text-decoration:none;color:#333;font-weight:bold;{%if cur_type == "all"%}color:orange;{%endif%}" href="{%url moderation_objects%}?state={{cur_state}}">All</a></li>
-  {%for t in types%}
-  <li style="width:100px;padding:10px;float:left;text-align:center;border-left:solid 1px"><a style="cursor:pointer;text-decoration:none;color:#333;font-weight:bold;{%if cur_type == t.slug%}color:orange;{%endif%}" href="{%url moderation_objects %}?type={{t.slug}}&state={{cur_state}}">{{t.name}}</a></li>
-  {%endfor%}
-  <li class="clear"></li>
-</ul>
+
+
+  {%comment%}
+  <ul class="filter-links">
+    <li style="width:100px;padding:10px;float:left;text-align:center;"><a  style="cursor:pointer;text-decoration:none;color:#333;font-weight:bold;{%if cur_type == "all"%}color:orange;{%endif%}" href="{%url moderation_objects%}?state={{cur_state}}">All</a></li>
+    {%for t in types%}
+    <li style="width:100px;padding:10px;float:left;text-align:center;border-left:solid 1px"><a style="cursor:pointer;text-decoration:none;color:#333;font-weight:bold;{%if cur_type == t.slug%}color:orange;{%endif%}" href="{%url moderation_objects %}?type={{t.slug}}&state={{cur_state}}">{{t.name}}</a></li>
+    {%endfor%}
+    <li class="clear"></li>
+  </ul>
+  {%endcomment%}
+  <div class="clear"></div>
+  <!--div>
+    <button>Выбрать</button>
+  </div-->
+</form>
 
 <table>
   <thead>
@@ -64,23 +115,16 @@
 {% block js %}
 <script type="text/javascript" src="/static/js/manager.js"></script>
 
-  <script>
-    $(function(){
-    $('input[name="state"]').change(function(ev){
-    if(document.location.href.indexOf('?')>0){
-    if(document.location.href.indexOf('state=')>0)
-    document.location.href = document.location.href.replace(/(state=\w)/gi, 'state='+this.value);
-    else
-    document.location.href = document.location.href + '&state='+this.value;
-    }
-    else{
-    document.location.href = document.location.href + '?state='+this.value;
-    }
-    //var links = $('.filter-links a');
-    //for(var i=links.length-1;i>=0;i--){
-    //links[i].href = links[i].href.replace(/(state=\w)/gi, 'state='+this.value);
-    //}
-    });
-    });
-  </script>
+<script>
+  $(function(){
+  $('#modfilter-form input').change(function(ev){
+  if(document.location.href.indexOf('?')>0){
+  document.location.href = document.location.href.substr(0,document.location.href.indexOf('?')) + '?' + this.name + '='+this.value;
+  }
+  else{
+  document.location.href = document.location.href + '?' + this.name + '='+this.value;
+  }
+  });
+  });
+</script>
 {% endblock js %}

@@ -8,7 +8,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.admin.views.decorators import staff_member_required
 from django.conf import settings
 
-from map.models import Type, Point, Track, Photo, Translation
+from map.models import Type, Point, Track, Photo, Translation, Location
 from manager.models import EditorImage
 from blog.models import Post
 from forms import TypeForm, TrackForm, PostForm, PointForm, UploadImageForm, MessageForm, BasePointForm, TransForm, TransFormTrack
@@ -266,14 +266,27 @@ def js_image_list(request):
 
 @staff_member_required
 def points(request, type_id=None):
-    if type_id is None:
-        points = Point.objects.all().order_by('-created')
-    else:
-        points = Point.objects.filter(type__id=type_id).order_by('-created')
+    q = {}
+    if 'current_pointfilter' in request.session:
+        q = request.session['current_pointfilter']
+    if 'type' in request.GET:
+        q['type__slug'] = request.GET['type']
+        if q['type__slug'] == 'all':
+            del q['type__slug']
+    if 'location' in request.GET:
+        q['location__name'] = request.GET['location']
+        if q['location__name'] == 'all':
+            del q['location__name']
+    points = Point.objects.filter(**q).order_by('-created')
+    request.session['current_pointfilter'] = q
     types = Type.objects.filter(obj='p')
     return render_to_response('manager_points.html',
                               {'points': points,
-                               'types': types},
+                               'types': types,
+                               'cur_type': q.get('type__slug', 'all'),
+                               'cur_location': q.get('location__name', 'all'),
+                               'locations': Location.objects.all(),
+                               },
                               RequestContext(request))
 
 
@@ -430,19 +443,31 @@ def info_page_edit(request):
 
 @staff_member_required
 def moderation_objects(request):
-    q = {'state': 'm'}
+    if 'current_modfilter' in request.session:
+        q = request.session['current_modfilter']
+    else:
+        q = {'state': 'm'}
     if 'state' in request.GET:
         q['state'] = request.GET['state']
         if q['state'] == 'all':
             del q['state']
     if 'type' in request.GET:
         q['point__type__slug'] = request.GET['type']
+        if q['point__type__slug'] == 'all':
+            del q['point__type__slug']
+    if 'location' in request.GET:
+        q['point__location__name'] = request.GET['location']
+        if q['point__location__name'] == 'all':
+            del q['point__location__name']
+    request.session['current_modfilter'] = q
     messages = Message.objects.filter(**q).order_by('-created')
     return render_to_response('manager_moderation.html',
                               {'objects': messages,
                                'types': Type.objects.filter(obj='p'),
-                               'cur_type': request.GET.get('type', 'all'),
-                               'cur_state': request.GET.get('state', 'm'),
+                               'cur_type': q.get('point__type__slug', 'all'),
+                               'cur_state': q.get('state', 'm'),
+                               'cur_location': q.get('point__location__name', 'all'),
+                               'locations': Location.objects.all(),
                                },                              
                               RequestContext(request))
     
