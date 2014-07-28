@@ -587,9 +587,7 @@ var rovar = {
     },
 
     _set_address: function(data){
-	console.log(data);
 	var address = (data.address.road || '') + ' ' + (data.address.house_number || '');
-	//console.log(address);
 	if(address != ' ')
 	    $('#add-point-form input[name="address"]').val(address);
 	else
