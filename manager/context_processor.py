@@ -9,8 +9,10 @@ def manager_menu_item(request):
 
 
 from api.models import Message
+from map.models import Location
 def moderation_count(request):
     if request.user.is_authenticated and request.user.is_staff:
-        return {'number_moderation': Message.objects.filter(state='m').count()}
+        return {'number_moderation': Message.objects.filter(state='m',
+                                                            point__location__id__in=[i[0] for i in Location.objects.filter(admins=request.user).values_list('id')]).count()}
     else:
         return {'number_moderation': 0}
