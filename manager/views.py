@@ -277,6 +277,14 @@ def points(request):
         q['location__name'] = request.GET['location']
         if q['location__name'] == 'all':
             del q['location__name']
+    if 'location__name' in q and Location.objects.filter(admins=request.user, name=q['location__name']):
+        if 'location__id__in' in q:
+            del q['location__id__in']
+    else:
+        if 'location__name' in q:
+            del q['location__name']
+        q['location__id__in'] = [i[0] for i in Location.objects.filter(admins=request.user).values_list('id')]
+            
     points = Point.objects.filter(**q).order_by('-created')
     request.session['current_pointfilter'] = q
     types = Type.objects.filter(obj='p')
@@ -285,7 +293,7 @@ def points(request):
                                'types': types,
                                'cur_type': q.get('type__slug', 'all'),
                                'cur_location': q.get('location__name', 'all'),
-                               'locations': Location.objects.all(),
+                               'locations': Location.objects.filter(admins=request.user),
                                },
                               RequestContext(request))
 
@@ -300,6 +308,9 @@ def point_edit(request, point_id=None):
     else:
         point = None
         title = u'Новая точка'
+    if point is not None and not point.location.admins.filter(id=request.user.id).count():
+        return HttpResponseNotFound()
+
     messages = []
     trans_forms = []
     if request.method == "POST":
@@ -360,6 +371,12 @@ def point_delete(request, point_id):
         obj = Point.objects.get(id=point_id)
     except ObjectDoesNotExist:
         errors.append('Object does not exist')
+    if not obj.location.admins.filter(id=request.user.id).count():
+        HttpResponse(json.dumps({'success': False,
+                                 'errors': [u'Access denied!'],
+                                 }
+                                ),
+                     content_type="text/json")
     try:
         obj.delete()
     except Exception, e:
@@ -459,6 +476,14 @@ def moderation_objects(request):
         q['point__location__name'] = request.GET['location']
         if q['point__location__name'] == 'all':
             del q['point__location__name']
+            
+    if 'point__location__name' in q and Location.objects.filter(admins=request.user, name=q['point__location__name']):
+        if 'point__location__id__in' in q:
+            del q['point__location__id__in']
+    else:
+        if 'point__location__name' in q:
+            del q['point__location__name']        
+        q['point__location__id__in'] = [i[0] for i in Location.objects.filter(admins=request.user).values_list('id')]
     request.session['current_modfilter'] = q
     messages = Message.objects.filter(**q).order_by('-created')
     return render_to_response('manager_moderation.html',
@@ -467,7 +492,7 @@ def moderation_objects(request):
                                'cur_type': q.get('point__type__slug', 'all'),
                                'cur_state': q.get('state', 'm'),
                                'cur_location': q.get('point__location__name', 'all'),
-                               'locations': Location.objects.all(),
+                               'locations': Location.objects.filter(admins=request.user),
                                },                              
                               RequestContext(request))
     

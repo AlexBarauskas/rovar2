@@ -65,9 +65,13 @@ class Location(models.Model):
     center_lat = models.FloatField()
     center_lng = models.FloatField()
     radius = models.FloatField()
+    admins = models.ManyToManyField(User)
 
     def __unicode__(self):
         return self.name
+
+
+#class LocationAdmins(models.Model)
 
 
 class Track(models.Model):
