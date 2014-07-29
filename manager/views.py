@@ -500,6 +500,8 @@ def moderation_objects(request):
 def moderation_object(request, message_id):
     messages = []
     message = get_object_or_404(Message, id=message_id, point__isnull=False)
+    if not message.point.location.admins.filter(id=request.user.id).count():
+        return HttpResponseNotFound()
     form = None
     if request.method == "POST":
         if message.app.uid != 'webclient':
