@@ -210,7 +210,7 @@ class Point(models.Model):
                            default='2')
     type = models.ForeignKey(Type,
                              limit_choices_to={'obj': 'p'})
-    description = models.CharField(u'Краткое описание', max_length=256, null=False)
+    description = models.CharField(u'Краткое описание', max_length=256, null=False, default="", blank=True)
     coordinates = models.TextField(u'Координаты', default='[]')
     address = models.CharField(u'Адрес', max_length=256, null=False)
 
