@@ -56,6 +56,14 @@ class TransForm(forms.ModelForm):
         model = Translation
         fields = ('name', 'description', 'address')
 
+    def __init__(self, *args, **kwargs):
+        res = super(TransForm, self).__init__(*args, **kwargs)
+        if self.instance.point is not None:
+            self.initial['name'] = self.instance.name or self.instance.point.name
+            self.initial['description'] = self.instance.description or self.instance.point.description
+            self.initial['address'] = self.instance.address or self.instance.point.address            
+        return res
+
 class TransFormTrack(forms.ModelForm):
     class Meta:
         model = Translation
