@@ -61,7 +61,7 @@
 
 <div id="main-panel">
   <div id="main-panel-wrapper">
-    <div id="header"  style="background-color:{{T.color}}">
+    <div id="header"{%if obj%} style="background-color:{{obj.type.color}}"{%endif%}>
         <div id="hmenu">
             <a id="info" href="javascript:;"><img src="/static/icons/info.png"/></a>
         </div>
