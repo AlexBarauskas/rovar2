@@ -37,7 +37,12 @@ class BasePointForm(forms.ModelForm):
 class PointForm(BasePointForm):
     photos = forms.FileField(label=u'Фотографии', required=False,
                              widget=forms.ClearableFileInput(attrs={'multiple':'true'}))
-
+    description = forms.CharField(label=u'Краткое описание',
+                                  required=False,
+                                  max_length=256,
+                                  widget=forms.Textarea(attrs={'style':'width:400px;'})
+                                  )
+    coordinates = forms.CharField(label=u'Координаты')
 
 
 
@@ -52,6 +57,11 @@ class MessageForm(forms.ModelForm):
         fields = ('message', 'state')
 
 class TransForm(forms.ModelForm):
+    description = forms.CharField(label=u'Краткое описание',
+                                  required=False,
+                                  max_length=256,
+                                  widget=forms.Textarea(attrs={'style':'width:400px;'}))
+
     class Meta:
         model = Translation
         fields = ('name', 'description', 'address')
