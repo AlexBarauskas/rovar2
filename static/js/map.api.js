@@ -1,3 +1,23 @@
+o.extend(this, {
+
+	     XHR: o.XMLHttpRequest,
+
+	     DOM: jQuery('body'),
+
+	     runtimeOptions: {
+		 container: "qunit-fixture",
+		 swf_url: "Moxie.swf",
+		 xap_url: "Moxie.xap"
+	     },
+
+	     runtimeOrder: "html5"
+	     //,flash,silverlight,html4
+	 });
+
+o.Image.MAX_RESIZE_HEIGHT = 10000;
+o.Image.MAX_RESIZE_WIDTH = 10000;
+
+
 var __addClick;
 
 
@@ -78,7 +98,27 @@ var rovar = {
 		}
 	       });	
 
-	
+	this.uploader = new CustomUpload($("#inputfile"));
+	$('#upload-imgs').click(
+	    function(){
+		var p = $('[name="phones"]');
+		var phones = [];
+		for(var i=p.length; i>=0; i--)
+		    phones.push($(p[i]).val());
+		self.uploader.uploadFiles(function(response, finish){
+					      //console.log(response, finish);
+					      self.callbackAddPoint(response);
+					  },
+					  {'website': $('[name="website"]').val(),
+					   'description': $('[name="description"]').val(),
+					   'title': $('[name="title"]').val(),
+					   'phones': phones,
+					   'coordinates': $('[name="coordinates"]').val(),
+					   'address': $('[name="address"]').val(),
+					   'type': $('[name="type"]').val(),
+					   'email': $('[name="email"]').val(),
+					   'uid': 'webclient'});
+	    });
 
     },
 
@@ -668,4 +708,6 @@ $(function(){
       $(document).keyup(function(e) {
 			    if (e.keyCode == 27 & rovar._runAddPoint){rovar.closeAddPoint();}
 			});
+      
+
   });

@@ -165,10 +165,15 @@ image - фотография точки.\n
                                         }),
                             mimetype='text/json')
     # check app uid
+    
     try:
+        #print request.raw_post_data
+        #print request.FILES['fileUpload'].size
+        print request.FILES
         print request.POST
-    except:
+    except Exception, e:
         print "Error POST"
+        print e
     uid = request.POST.get('uid', '')
     if Application.objects.filter(uid=uid).count() == 0 or (uid == 'webclient' and not request.session.get('human')):
         return HttpResponse(json.dumps({'success': False,

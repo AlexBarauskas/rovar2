@@ -86,6 +86,7 @@
       <th>Тип</th>
       <th></th>
       <th></th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -106,6 +107,7 @@
       <td>{{obj.created}}</td>
       <td>{{obj.track.type}}</td>
       {%endif%}
+      <td><img title="Удалить объект" id="{{obj.id}}" class="delete icon-btn" src="/static/icons/delete.png"/></td>
     </tr>
     {% endfor %}
   </tbody>

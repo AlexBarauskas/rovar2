@@ -663,7 +663,7 @@ b {
     text-align:center;
 }
 
-#add-point-dialog button.btn{
+#add-point-dialog button.btn, #add-point-dialog #upload-imgs.btn{
     float: left;
 }
 
@@ -697,3 +697,15 @@ b {
 }
 
 
+#progressbar{
+    z-index: 101;
+    position: relative;
+    width: 100%;
+}
+
+.upload-progress{
+    height: 2px;
+    margin-bottom: 1px;
+    width: 1px;
+    background-color: #f0624a;
+}

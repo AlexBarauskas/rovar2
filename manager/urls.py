@@ -30,6 +30,7 @@ urlpatterns = patterns(
 
     url(r'^moderation/$', moderation_objects, name="moderation_objects"),
     url(r'^moderation/(?P<message_id>\d+)/$', moderation_object, name="moderation_object"),
+    url(r'^moderation/(?P<message_id>\d+)/delete/$', moderation_object_delete, name="moderation_object_delete"),
 
     url(r'^info/$', info_page_edit, name="info_edit"),
 

@@ -54,7 +54,7 @@ def editor_img_del(request, img_id):
     except:
         res = {'success': False,
                'error': [u'Ошибка при удалении изображения. Повторите попытку.']}
-    #
+    
     if img is not None:
         img.delete()
         res = {'success': True}
@@ -534,3 +534,28 @@ def moderation_object(request, message_id):
 @staff_member_required
 def get_translate_point(request):
     return HttpResponse(Point.objects.to_translate_manager(), mimetype="text/plain")
+
+
+@staff_member_required
+@csrf_exempt
+def moderation_object_delete(request, message_id):
+    errors = []
+    try:
+        obj = Message.objects.get(id=message_id)
+    except ObjectDoesNotExist:
+        errors.append('Object does not exist')
+    if not obj.point.location.admins.filter(id=request.user.id).count():
+        errors.append('Object does not exist')
+    else:
+        try:
+            obj.point.delete()
+            obj.delete()
+        except Exception, e:
+            errors.append(str(e))
+        res = {
+            'success': not errors,
+            'errors': errors,
+            }
+    return HttpResponse(json.dumps(res),
+                        content_type="text/json")
+
