@@ -218,16 +218,16 @@ image - фотография точки.\n
                             mimetype='text/json')
     if len(kwargs['description'])>256:
         return HttpResponse(json.dumps({'success': False,
-                                        'error_code': 4,
-                                        'message': 'Not valid "type".'
+                                        'error_code': 7,
+                                        'message': 'The "description" should not exceed 256 characters.'
                                         }),
                             mimetype='text/json')
     # check point type
     kwargs['type'] = __string_type_to_object(kwargs['type'])
     if kwargs['type'] is None:
         return HttpResponse(json.dumps({'success': False,
-                                        'error_code': 7,
-                                        'message': 'The "description" should not exceed 256 characters.'
+                                        'error_code': 4,
+                                        'message': 'Not valid "type".'
                                         }),
                             mimetype='text/json')
     # check image
