@@ -110,7 +110,7 @@ var rovar = {
 					      self.callbackAddPoint(response);
 					  },
 					  {'website': $('[name="website"]').val(),
-					   'description': $('[name="description"]').val(),
+					   'description': $('textarea[name="description"]').val(),
 					   'title': $('[name="title"]').val(),
 					   'phones': phones,
 					   'coordinates': $('[name="coordinates"]').val(),
