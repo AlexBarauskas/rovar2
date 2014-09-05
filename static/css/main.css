@@ -569,8 +569,11 @@ b {
 /*ADD POINT DIALOG*/
 #add-point-dialog{
     position: fixed;
+    
     width: 440px;
-    height: auto;
+    max-height: 90%;
+    overflow-y: auto;
+
     margin: 0;
     //padding: 10px;
     z-index: 999;
