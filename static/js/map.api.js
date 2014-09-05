@@ -41,7 +41,8 @@ var rovar = {
 	'unknown url' : "Указанный тип точки не существует.",
 	'required image' : "Вы не выбрали изображение или оно не верного формата.",
 	'invalide url' : "Не верный URL для поля 'Cайт'.",
-	'feedback email' : "Введите email для обратной связи."
+	'feedback email' : "Введите email для обратной связи.",
+	'description length' : "\"Описание\" не должна превышать 256 символов."
     },
 
 
@@ -62,6 +63,7 @@ var rovar = {
 	    4 : this.messages['unknown url'],
 	    5 : this.messages['required image'],
 	    6 : this.messages['invalide url'],
+	    7 : this.messages['description length'],
 	    100 : this.messages['feedback email']
 	};
 
