@@ -115,9 +115,9 @@ b {
 }
 
 #main-panel{
-    left: 440px;
-    margin-left: -440px;
-    width: 440px;
+    left: 320px;
+    margin-left: -320px;
+    width: 320px;
     height:100%; 
     float:left;
     box-shadow: 0 0 10px rgba(0,0,0,.1);
@@ -128,13 +128,13 @@ b {
 
 #main-panel-wrapper{
     min-height: 100%;
-    margin-bottom: -45px;
+    margin-bottom: -142px;
     position:relative;
     top:0;
 }
 
 #main-panel-blank{
-    height:45px;
+    height:142px;
 }
 
 #map{
@@ -149,7 +149,7 @@ b {
     padding: 0 16px;
     height: 48px;
     line-height: 48px;
-    width: 408px;
+    width: 288px;
     position: fixed;
     z-index: 100;
     top:0;
@@ -178,7 +178,7 @@ b {
 
 #header .type {
     display: none;
-    width: 440px;
+    width: 320px;
     height: 48px;
     font-size: 16px;
     line-height: 48px;
@@ -315,7 +315,7 @@ b {
 
 .data-content {
     //width:100%;
-    margin-left:440px;
+    margin-left:320px;
     //padding: 30px;
     padding:0;
     min-height:100%;
@@ -712,4 +712,26 @@ b {
     margin-bottom: 1px;
     width: 1px;
     background-color: #f0624a;
+}
+
+#app-links{
+    padding: 16px 16px 16px 16px;
+    z-index:10;
+    position:relative;
+}
+#app-links img{
+    margin-right: 16px;
+}
+#app-links h1{
+    font-size:15px;
+    font-weight:bold;
+    margin-bottom:5px;
+}
+#app-links>div{
+    padding:15px
+}
+#app-links>div.clear{
+    padding:0;
+    height:0;
+    border:none;
 }
