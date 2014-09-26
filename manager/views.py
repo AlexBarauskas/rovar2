@@ -548,8 +548,9 @@ def moderation_object_delete(request, message_id):
         errors.append('Object does not exist')
     else:
         try:
-            obj.point.delete()
-            obj.delete()
+            if obj.method == 'a':
+                obj.point.delete()
+                obj.delete()
         except Exception, e:
             errors.append(str(e))
         res = {
