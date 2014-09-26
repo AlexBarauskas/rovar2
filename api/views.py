@@ -310,7 +310,8 @@ def point_offer(request):
 ---
 id - ID точки(получен клиентом вместе с информацией о точке)\n
 uid - ключ для обратной связи(идентификатор клиента).\n
-description - что хотим предложить.
+description - что хотим предложить.\n
+image - фотография точки.
 '''
     if request.method != "POST":
         HttpResponse(json.dumps({'success': False,
@@ -347,7 +348,16 @@ description - что хотим предложить.
     offer, c = Offer.objects.get_or_create(point=point,
                                            description=description)
     if c:
-        app.add_message(point=point, method="u", description=description)
+        msg = app.add_message(point=point, method="u", description=description)
+    else:
+        msg = Message.object.get(point=point, method="u", description=description)
+        
+    photos = request.FILES.getlist('image')
+    for photo in photos:
+        p = Photo.objects.create(offer=offer,
+                                 image=photo
+                                 )
+        msg.photos.add(p)
     
     return HttpResponse(json.dumps(res),
                         mimetype='text/json')

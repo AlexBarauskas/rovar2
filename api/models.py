@@ -16,7 +16,7 @@ class Application(models.Model):
     created = models.DateTimeField(auto_now_add=True)
 
     def add_message(self, point=None, track=None, method='a', email=None, description=None):
-        Message.objects.create(point=point, track=track, app=self, method=method,
+        return Message.objects.create(point=point, track=track, app=self, method=method,
                                email=email, description=description)
         
 
@@ -45,3 +45,5 @@ class Message(models.Model):
     message = models.TextField(default=u'Ваше предложение принято.')
     email = models.EmailField(null=True)
     description = models.TextField(u'Описание', default='', null=True)
+
+    photos = models.ManyToManyField(Photo)

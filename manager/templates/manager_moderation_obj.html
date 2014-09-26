@@ -34,6 +34,20 @@
       <span>{{p.image.name}}</span>
     </div>
     {%endfor%}
+
+    {%if mform.instance.photos.count%}
+    <div class="clear"></div>
+    <h1>Предложенные изображения</h1>
+    {%for p in mform.instance.photos.all%}
+    <div class="image-item">
+      <div>
+	<a id="{{p.id}}" class="close delete" href="javascript:;">X</a>
+	<img src="{{p.image.url}}"/>
+	<span class="form-name">{{p.image.name}}</span>
+      </div>
+    </div>
+    {%endfor%}
+    {%endif%}
   </div>
   {%endif%}
   <div>

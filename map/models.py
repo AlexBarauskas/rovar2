@@ -295,7 +295,14 @@ class Point(models.Model):
                 self.location = l
                 self.save()
                 return None
+
             
+class Offer(models.Model):
+    created = models.DateTimeField(auto_now_add=True)
+    point = models.ForeignKey(Point, null=True)
+    track = models.ForeignKey(Track, null=True)
+    description = models.TextField(u'Описание', default='', null=True)
+
 
 class Photo(models.Model):
     point = models.ForeignKey(Point, null=True)
@@ -303,13 +310,8 @@ class Photo(models.Model):
     image = models.ImageField(upload_to="photos/")
     description = models.TextField(u'Описание', default='', null=True)
 
-
-class Offer(models.Model):
-    created = models.DateTimeField(auto_now_add=True)
-    point = models.ForeignKey(Point, null=True)
-    track = models.ForeignKey(Track, null=True)
-    description = models.TextField(u'Описание', default='', null=True)
-    
+    offer = models.ForeignKey(Offer, null=True)
+    #ALTER TABLE map_photo ADD "offer_id" integer REFERENCES "map_offer" ("id") DEFERRABLE INITIALLY DEFERRED
 
 class Translation(models.Model):
     point = models.ForeignKey(Point, null=True)
