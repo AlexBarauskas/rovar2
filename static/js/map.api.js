@@ -73,7 +73,7 @@ var rovar = {
 	map.on('zoomend', function(ev){
 		   self._visible_pins();
 	       });
-	this.copyright = '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors';
+	this.copyright = '&copy; <a href="//osm.org/copyright">OpenStreetMap</a> contributors';
 	
 	var l_name;
 	if(typeof rovar_location != 'undefined')
@@ -88,7 +88,7 @@ var rovar = {
 		    self.location = data;
 		    var minsk = new L.LatLng(self.location.center[0], self.location.center[1]);
 		    self.map = map.setView(minsk, 12);
-		    L.tileLayer('http://onbike.by/map/tile/{z}/{x}/{y}.png',
+		    L.tileLayer('//onbike.by/map/tile/{z}/{x}/{y}.png',
 				{attribution: self.copyright,
 				 key: 'BC9A493B41014CAABB98F0471D759707',
 				 minZoom: 12
@@ -241,7 +241,7 @@ var rovar = {
 				 this.language = language_code;
 				 this.page.identifier = data.uid;  
 				 this.page.title = data.title;
-				 this.page.url = "http://onbike.by/"+data.type_slug+"/"+data.uid;
+				 this.page.url = "//onbike.by/"+data.type_slug+"/"+data.uid;
 			     }
 			 });
 	    $('#disqus_thread').show();
@@ -407,7 +407,7 @@ var rovar = {
 				 this.page.identifier = data.uid;  
 				 this.page.title = data.title;
 				 //console.log(this);
-				 this.page.url = "http://onbike.by/"+data.type_slug+"/"+data.uid;
+				 this.page.url = "//onbike.by/"+data.type_slug+"/"+data.uid;
 			     }
 			 });
 	    $('#disqus_thread').show();
@@ -640,7 +640,7 @@ var rovar = {
 	var nosm = document.createElement('script');
 	nosm.type = 'text/javascript';
 	nosm.async = true;
-	nosm.src = 'http://nominatim.openstreetmap.org/reverse?format=json&lat=' + e.latlng.lat.toString() + '&lon=' + e.latlng.lng.toString() + '&zoom=18&addressdetails=1&json_callback=rovar._set_address';
+	nosm.src = '//nominatim.openstreetmap.org/reverse?format=json&lat=' + e.latlng.lat.toString() + '&lon=' + e.latlng.lng.toString() + '&zoom=18&addressdetails=1&json_callback=rovar._set_address';
 	var s = document.getElementsByTagName('script')[0];
 	s.parentNode.insertBefore(nosm, s);
 
