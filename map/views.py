@@ -143,7 +143,7 @@ def tile(request, z, x, y):
     #http://b.tile.osm.org/12/2362/1317.png
     url = "//b.tile.osm.org/%s/%s/%s.png" % (z, x, y)
     tile_name = "%s_%s_%s.png" % (z, x, y)
-    rurl = 'http://%s%stiles/%s' % (settings.MAIN_HOST, settings.MEDIA_URL, tile_name)
+    rurl = '//%s%stiles/%s' % (settings.MAIN_HOST, settings.MEDIA_URL, tile_name)
     path = os.path.join(settings.MAP_TILES, tile_name)
     if not os.path.isfile(path):
         f = open(path, 'w')
