@@ -134,11 +134,16 @@ var rovar = {
     
     hide : function(type_name){
 	if(this.currentPoint)
-	    if(this.currentPoint._data.type_slug == type_name)
+	    if(this.currentPoint._data.type_slug == type_name){
 		this._hidePointInfo(this.currentPoint);
+		this.currentPoint=null;
+	    }
 	if(this.currentTrack)
-	    if(this.currentTrack._data.type_slug == type_name)
+	    if(this.currentTrack._data.type_slug == type_name){
 		this._hideTrackInfo(this.currentTrack);
+		this.currentTrack = null;
+	    }
+		
 
 	$("img."+type_name + ', div.' + type_name).hide();
 	for(key in this.elements.tracks){
