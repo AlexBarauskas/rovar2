@@ -73,7 +73,18 @@
 </div>
 {%endcache%}
 
-<div id="map" class="data-content" style="padding:0;"></div>
+
+<div id="map" class="data-content" style="padding:0;">
+  <div id="locations" class="dropdown">
+    <div>{{location}}</div>
+    <ul>
+      {%for l in locations%}
+      {%if l != location %}<li><a href="{% url set_location %}?name={{l}}">{{l}}</a></li>{%endif%}
+      {%endfor%}
+    </ul>
+  </div>
+
+</div>
 <div id="lang">
   <a id="add-point-btn"  href="javascript:;">
     {% trans "+ Добавить точку" %}

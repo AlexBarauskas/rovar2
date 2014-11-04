@@ -2,12 +2,13 @@
 from django.shortcuts import render_to_response
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
-from map.models import *
 from django.template import RequestContext
 from django.utils import translation
 import os
 import re
+
 from account.models import Author
+from map.models import *
 
 from django.contrib.auth.decorators import login_required
 
@@ -62,6 +63,7 @@ def home(request, uid=None, slug=None):
                                   'authors': Author.objects.all(),
                                   'template_name': template_name,
                                   'location': l_name,
+                                  'locations': Location.objects.all().values_list("name", flat=True)
                                },
                               context_instance=RequestContext(request))
 
