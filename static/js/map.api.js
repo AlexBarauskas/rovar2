@@ -182,6 +182,7 @@ var rovar = {
 	$('#type').hide();
 	$('#banner').show();
 	$("#header").css('background-color', "#e95d24");
+	$("#locations>div").css('background-color', "#e95d24");
     },
 
     _showPointInfo : function(point){
@@ -236,6 +237,7 @@ var rovar = {
 	preview.parent().show();
 	$("#type").html(data.type_name);
 	$("#header").css('background-color', data.color);
+	$("#locations>div").css('background-color', data.color);
 	var stateObj = { foo: "bar" };
 	history.pushState(stateObj, "page", '/'+data.type_slug+"/"+data.uid);	  
 
@@ -354,6 +356,7 @@ var rovar = {
 	$('#type').hide();
 	$('#banner').show();
 	$("#header").css('background-color', "#e95d24");
+	$("#locations>div").css('background-color', "#e95d24");
 
     },
 
@@ -399,6 +402,8 @@ var rovar = {
 	
 	$("#type").html(data.type_name);
 	$("#header").css('background-color', data.color);
+	$("#locations>div").css('background-color', data.color);
+
 
 
 	var stateObj = { foo: "bar" };

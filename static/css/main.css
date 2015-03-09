@@ -355,8 +355,17 @@ b {
 
 #login-badge p{height:20px;text-align:center;font-size:16px;font-weight:bold; margin:0px; padding:10px;}
 
-.dropdown{display:inline-block;list-style:none;margin:0;padding:0;font-size:14px;font-weight:bold;padding-left:5px;}
+.dropdown{
+    display:block;
+    list-style:none;
+    margin:0;
+    padding:0;
+    font-size:14px;
+    font-weight:bold;
+}
+
 .dropdown:hover li{display:block;}
+
 .dropdown li{
     display:none;
     cursor:pointer;
@@ -737,8 +746,61 @@ b {
 }
 
 #locations.dropdown {
-z-index: 10;
+/*z-index: 10;
 position: relative;
 margin: 10px 60px;
 font-size: 16px;
+*/
 }
+
+#locations.dropdown>div, #locations.dropdown ul, #locations.dropdown li{
+    margin:0;
+    padding:10px 0;
+    width:100%;
+    text-align:center;
+    font-size:16px;
+}
+#locations.dropdown>div{
+    background-color: #e95d24;
+    color:white;
+    padding:5px 0;
+    text-transform: uppercase;
+}
+
+#locations.dropdown ul{
+    padding:0;
+    position:absolute;
+    z-index:10000;
+}
+#locations.dropdown li{
+    background-color: #fefefe;
+    opacity: 0.75;
+    border-bottom:solid 1px #ccc;
+    border-radius:0;
+}
+#locations.dropdown>div>p{
+    margin: 0;
+    padding: 0;
+    //height: 24px;
+    vertical-align: top;
+    line-height: 10px;
+}
+#locations.dropdown>div span{
+display:inline-block;
+-webkit-transform: rotate(90deg);
+-moz-transform: rotate(90deg);
+-ms-transform: rotate(90deg);
+-o-transform: rotate(90deg);
+filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+width: 5px;
+font-size:25px;
+}
+/*
+#locations.dropdown>div:hover span{
+display:inline-block;
+-webkit-transform: rotate(-90deg);
+-moz-transform: rotate(-90deg);
+-ms-transform: rotate(-90deg);
+-o-transform: rotate(-90deg);
+filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+}*/
