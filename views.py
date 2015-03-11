@@ -53,7 +53,7 @@ def home(request, uid=None, slug=None):
     if obj is not None and obj.location:
         l_name = obj.location.name
     else:
-        l_name = request.session.get('location', 'Minsk')
+        l_name = request.session.get('location', u'Минск')
     
     return render_to_response('home_new.html',
                               {#'tracks': Track.objects.filter(state__lte=acl),
