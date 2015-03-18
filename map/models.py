@@ -8,6 +8,7 @@ from blog.models import Post
 import json
 import re
 from math import sqrt
+from datetime import datetime
 
 OBJ_CHOICES = (('t', u'Маршрут'),
                ('p', u'Точка'),
@@ -218,6 +219,9 @@ class Point(models.Model):
     website = models.URLField(u'Сайт', blank=True, null=True)
 
     created = models.DateTimeField(auto_now_add=True)
+    last_update = models.DateTimeField(auto_now_add=True)
+    # ALTER TABLE map_point ADD "last_update" timestamp with time zone;
+    
     post = models.OneToOneField(Post, null=True)
     uid = models.CharField(max_length=24, null=True)
 
@@ -227,6 +231,7 @@ class Point(models.Model):
     def save(self, *args, **kwargs):
         if self.phones:
             self.phones = ', '.join([j for j in [iso_phone(j) for j in self.phones.split(',')] if j])
+        self.last_update = datetime.now()
         res = super(Point, self).save(*args, **kwargs)
         if self.location is None:
             self.define_location()

@@ -13,6 +13,7 @@ from django.core.validators import validate_email
 from django.core.validators import URLValidator
 
 import json
+from datetime import datetime
 
 from api.models import Application, Message, Track, Point, Type, Photo, Offer
 from map.models import Location
@@ -30,7 +31,7 @@ def initialize_app(request):
 Запрос на инициализацию клиента.\n
 Возвращаемый json:
 ---
-    {'success': True,\n'uid': 'peronas_key_for_feedback'}\n
+    {'success': True,\n'uid': 'personal_key_for_feedback'}\n
 Параметр "uid" клиент должен сохранить на своей стороне и использовать его для получения состояний.
     '''
     if request.method != "POST":
@@ -46,15 +47,21 @@ def initialize_app(request):
     return HttpResponse(json.dumps(res), mimetype='text/json')
 
 
+def locations(request):
+    return HttpResponse(json.dumps({'locations': list(Location.objects.all().values_list('name', flat=True)),
+                                    'success': True}),
+                        mimetype='text/json')
+    
+
 def location(request):
     '''@brief Получение информации о локации.
     
     '''
-    location_name = request.GET.get('name', 'Minsk')
+    location_name = request.GET.get('name', u'Минск')
     try:
         location = Location.objects.get(name = location_name)
     except Location.DoesNotExist:
-        location = Location.objects.get(name = 'Minsk')
+        location = Location.objects.get(name = u'Минск')
     res = {'name': location.name,
            'center': [location.center_lat, location.center_lng],
            'bounds': [[location.center_lat - location.radius*0.7071067811865475, location.center_lng - 2*location.radius*0.7071067811865475],
@@ -62,6 +69,7 @@ def location(request):
                       ],
            'id': location.id,
            'radius': location.radius,
+           'success': True
            }
     return HttpResponse(json.dumps(res),
                         mimetype='text/json')
@@ -79,6 +87,7 @@ GET-запрос может не содержать параметров.\n
         acl = '1'
         if request.user.is_staff:
             acl = '2'
+    
     page = None
     per_page = None
     if 'page' in request.GET:
@@ -100,6 +109,16 @@ GET-запрос может не содержать параметров.\n
             kwargs['location_id'] = location
         else:
             kwargs['location__name'] = location
+
+    if 'date' in request.GET:
+        try:
+            print request.GET['date']
+            t0 = datetime.strptime(request.GET['date'], '%y.%m.%d-%H:%M:%S')
+            print t0
+            kwargs['last_update__gte'] = t0
+        except:
+            pass
+    
     points = Point.objects.filter(**kwargs)
     if page is not None:
         points = points[page * per_page:(page + 1) * per_page]

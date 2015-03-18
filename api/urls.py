@@ -6,6 +6,7 @@ urlpatterns = patterns(
     'api.views',
     url(r'^clients$', initialize_app, name="api_initialize_app"),
 
+    url(r'^locations$', locations, name="api_locations"),
     url(r'^location$', location, name="api_location"),
     
     url(r'^points$', points, name="api_get_points"),
