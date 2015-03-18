@@ -10,6 +10,8 @@ import re
 from math import sqrt
 from datetime import datetime
 
+from map.translit import transliterate
+
 OBJ_CHOICES = (('t', u'Маршрут'),
                ('p', u'Точка'),
                ('o', u'Другое'),
@@ -223,7 +225,7 @@ class Point(models.Model):
     # ALTER TABLE map_point ADD "last_update" timestamp with time zone;
     
     post = models.OneToOneField(Post, null=True)
-    uid = models.CharField(max_length=24, null=True)
+    uid = models.CharField(max_length=24, null=True, blank=True)
 
     objects = PointManager()
     location = models.ForeignKey(Location, null=True)
@@ -235,8 +237,9 @@ class Point(models.Model):
         res = super(Point, self).save(*args, **kwargs)
         if self.location is None:
             self.define_location()
-        if not self.uid:
-            self.uid = "%s-%s" % (self.id, self.type.obj)
+        if not self.uid or re.match('\d+\-\p', self.uid):
+            self.uid = transliterate(self.name)[:24]
+            #self.uid = "%s-%s" % (self.id, self.type.obj)
             self.save()
         return res
 
