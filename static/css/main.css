@@ -786,6 +786,13 @@ font-size: 16px;
     padding:0;
     height:0px;
 }
+
+#locations.dropdown li>a{
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+
 #locations.dropdown>div>p{
     margin: 0;
     padding: 0;
