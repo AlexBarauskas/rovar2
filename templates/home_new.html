@@ -24,19 +24,8 @@
 
 {% block content_left %}
 {% get_available_languages as LANGUAGES %}
-<div style="height:45px;"></div>
+<div style="height:75px;"></div>
 
-<div id="locations" class="dropdown">
-  <div>
-    {{location}}
-    <p><span>&#9002;</span></p>
-  </div>
-  <ul>
-    {%for l in locations%}
-    {%if l != location %}<li><a href="{% url set_location %}?name={{l}}">{{l}}</a></li>{%endif%}
-    {%endfor%}
-  </ul>
-</div>
 
 <div class="preview">
   <div class="preview-content"></div>
@@ -184,6 +173,8 @@
 
 
 {% block js %}
+
+<script type="text/javascript" src="/static/js/j.js"></script>
 
 <script type="text/javascript" src="/static/js/jquery.inputmask.js"></script>
 <script type="text/javascript" src="/static/js/jquery.inputmask.extensions.js"></script>
