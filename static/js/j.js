@@ -4,7 +4,7 @@ $(function(){
 				var el = $(this);
 				if(el.attr('class').indexOf('visible')<0){
 				    el.addClass('visible'); 
-				    el.find('ul>li').animate({'height': '50px'});
+				    el.find('ul>li').animate({'height': '45px'});
 				    
 				}
 				else{
