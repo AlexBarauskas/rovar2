@@ -469,14 +469,13 @@ var rovar = {
 				      'opacity': 1,
 				      'smoothFactor': 2,
 				      style: function (feature) {
-					  if(maxele - minele)
+					  if(feature.properties.elevation > 0)
 					      return {
 						  color : self._rgba_to_hex(rgbacolor.map(function(x){return (x + (255 - x) * (feature.properties.elevation - minele)/(maxele - minele));}))
-						  //"opacity": 0.2 + 0.6*(feature.properties.elevation - minele)/(maxele - minele)
 					      };
 					  else
 					      return {
-						 //"opacity": 1
+						 "color": data.color
 					      };
 				      }
 				  });
