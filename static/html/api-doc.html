@@ -184,8 +184,14 @@
 	</div>
 	<div class="method">
 	  <h1>Изменение статуса сообщения на прочитанное. </h1>
-	  <pre class="fragment">POST: http://obike.by/api/messages/read?uid=&lt;app_uid&gt;&amp;id=&lt;message_id&gt;
-	  </pre><p> Параметр "id" есть идентификатор собщения в списке полученных сообщений(см. "http://obike.by/api/messages?uid="&lt;app_uid&gt;). </p>
+	  <pre class="fragment">POST: http://obike.by/api/messages/read
+	  </pre>
+	  <h2>Параметры:</h2>
+	  <p>
+	    id - ID точки(получен клиентом вместе с информацией о точке)<br/>
+	    uid - ключ для обратной связи(идентификатор клиента).<br/>
+	    Параметр "id" есть идентификатор собщения в списке полученных сообщений(см. "http://obike.by/api/messages?uid="&lt;app_uid&gt;).
+	  </p>
 	</div>
       </div>
     </div>

@@ -306,7 +306,11 @@ def messages(request):
 @csrf_exempt
 def message_read(request):
     '''@brief Изменение статуса сообщения на прочитанное.
-    POST: http://obike.by/api/messages/read?uid=<app_uid>&id=<message_id>
+    POST: http://obike.by/api/messages/read
+    Параметры:
+---
+id - ID точки(получен клиентом вместе с информацией о точке)\n
+uid - ключ для обратной связи(идентификатор клиента).\n
 Параметр "id" есть идентификатор собщения в списке полученных сообщений(см. "http://obike.by/api/messages?uid="<app_uid>).
     '''
     if request.method != "POST":
@@ -316,7 +320,7 @@ def message_read(request):
     if not Message.objects.filter(app__uid=request.POST.get('uid'),
                                   id=request.POST.get('id')).update(state='r'):
         res = {'success': False,
-               'error': 'Message with id=%s not exists.' % message_id}
+               'error': 'Message with id=%s not exists.' % request.POST.get('id')}
     return HttpResponse(json.dumps(res),
                         mimetype='text/json')
 
