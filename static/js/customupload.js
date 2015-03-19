@@ -26,7 +26,7 @@ function MYRESIZE(file, cb){
     ;
 
     img.onload = function() {
-	this.downsize(425, 425, false, false);
+	this.downsize(1080, 1080, false, false);
     };
 
     img.onresize = function(e){

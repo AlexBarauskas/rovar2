@@ -505,7 +505,7 @@ var rovar = {
 
 	minX = rovar.map.getBounds()._southWest.lat;
 	maxX = rovar.map.getBounds()._northEast.lat;
-	var dt = (maxX-minX)/($(this.map._container).width()/(this._iconSize*1.5));
+	var dt = (maxX-minX)/($(this.map._container).width()/(this._iconSize*2.0));
 	//var dt = this.location.radius/($(this.map._container).width()/(this._iconSize*1.5));
 
 	var pins = this.elements.points[type_name];
@@ -562,7 +562,8 @@ var rovar = {
 			p = local_pins[k]._data.coordinates;
 			X += p[0];
 			Y += p[1];
-			$(local_pins[k]._icon).css('visibility', 'hidden');
+			if(local_pins[k] != this.currentPoint)
+			    $(local_pins[k]._icon).css('visibility', 'hidden');
 		    }
 		    
 		    var groupIcon = new L.divIcon({className: type_name + ' pingrop pingrop-' + type_name,

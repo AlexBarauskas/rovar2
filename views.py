@@ -51,14 +51,16 @@ def home(request, uid=None, slug=None):
     if not os.path.exists(os.path.join(settings.TEMPLATE_DIRS[0], template_name)):
         template_name = 'info-content.html'
     if obj is not None and obj.location:
+        if request.session.get('change_location', False):
+            del request.session['change_location']
+            if obj.location.name != request.session.get('location', u'Минск'):
+                return HttpResponseRedirect('/')
         l_name = obj.location.name
     else:
         l_name = request.session.get('location', u'Минск')
     
     return render_to_response('home_new.html',
-                              {#'tracks': Track.objects.filter(state__lte=acl),
-                                  'types': types,
-                                  #'rovar_uid': uid,
+                              {   'types': types,
                                   'obj': obj,
                                   'authors': Author.objects.all(),
                                   'template_name': template_name,
@@ -102,6 +104,7 @@ def set_location(request):
     next = request.REQUEST.get('next')
     next = request.META.get('HTTP_REFERER', '/')
     response = HttpResponseRedirect(next)
-    request.session['location'] = request.GET.get('name', 'Minsk')
+    request.session['location'] = request.GET.get('name', 'Минск')
+    request.session['change_location'] = True
     return response
     
