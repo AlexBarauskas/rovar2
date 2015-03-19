@@ -149,7 +149,7 @@ var rovar = {
 	for(key in this.elements.tracks){
 	    if(key == type_name)
 		for(id in this.elements.tracks[key])
-		    $(this.elements.tracks[key][id]._container).hide();
+		    this.elements.tracks[key][id].eachLayer(function(l){$(l._container).hide();});
 	}
     },
 
@@ -158,7 +158,7 @@ var rovar = {
 	for(key in this.elements.tracks){
 	    if(key == type_name)
 		for(id in this.elements.tracks[key])
-		    $(this.elements.tracks[key][id]._container).show();
+		    this.elements.tracks[key][id].eachLayer(function(l){$(l._container).show();});
 	}
 
     },
@@ -343,8 +343,6 @@ var rovar = {
 	var self = this;
 	$(track._data.pointA._icon).hide();
 	$(track._data.pointB._icon).hide();
-	track._container.onclick = function(){self._showTrackInfo(track);};
-	track.setStyle({'opacity':0.5});
 
 	$('.preview-content').html('');
 	$('.preview').hide();
@@ -362,32 +360,30 @@ var rovar = {
 
     _showTrackInfo : function(track){
 	if(!this._runAddPoint){
-	var self = this;
-	if(this.currentPoint)
-	    this._hidePointInfo(this.currentPoint);
-	if(this.currentTrack)
-	    this._hideTrackInfo(this.currentTrack);
-	this.currentTrack = track;
-
-	$(track._data.pointA._icon).show();
-	$(track._data.pointB._icon).show();
-	track._container.onclick = function(){self._hideTrackInfo(track);};
-	track.setStyle({'opacity':1});
-
-	$('#banner').hide();
-	$('#back-to-banner').show();
-        $('#type').show();
-	var data = track._data;
-	
-	var preview = $('.preview-content').html('')
-	    .append($("<h1>"+data.title+"</h1>").css('color', data.color));
-	if(data.duration)
-	    preview.append($("<p></p>").html(this.messages['travel time']+': '+data.duration).addClass('description-address'));
-	if(data.video!=''){
-	    var video = $(data.video);
-	    preview.append(video);
-	    //if(preview.width()<preview.find('iframe').width())	    
-	}
+	    var self = this;
+	    if(this.currentPoint)
+		this._hidePointInfo(this.currentPoint);
+	    if(this.currentTrack)
+		this._hideTrackInfo(this.currentTrack);
+	    this.currentTrack = track;
+	    
+	    $(track._data.pointA._icon).show();
+	    $(track._data.pointB._icon).show();
+	    
+	    $('#banner').hide();
+	    $('#back-to-banner').show();
+            $('#type').show();
+	    var data = track._data;
+	    
+	    var preview = $('.preview-content').html('')
+		.append($("<h1>"+data.title+"</h1>").css('color', data.color));
+	    if(data.duration)
+		preview.append($("<p></p>").html(this.messages['travel time']+': '+data.duration).addClass('description-address'));
+	    if(data.video!=''){
+		var video = $(data.video);
+		preview.append(video);
+		//if(preview.width()<preview.find('iframe').width())	    
+	    }
 	var description;
 	if(data.post_url)
 	    description = "<p><a href=\""+data.post_url+"\">"+data.description+"</a></p>";
@@ -425,15 +421,69 @@ var rovar = {
 }
     },
 
+    _hex_to_rgba : function(h){
+	var c;
+	if(h.startsWith('#'))
+	    c = h.substr(1);
+	else
+	    c = h;
+	if(c.length == 3){
+	    c = c[0]+c[0]+c[1]+c[1]+c[2]+c[2];
+	    }
+	var i = parseInt(c, 16);
+	return [parseInt(i/256/256), parseInt(i/256)%256, i%256];
+    },
+
+    _rgba_to_hex : function(c){
+	return '#'+c.map(function(d){return (0xFFFFFFFF + parseInt(d) + 1).toString(16).toUpperCase().substr(7);}).join('');
+    },
+
     _addTrackToMap : function(data){
 	var self = this;
 	var type = data.type_slug;
 	var eid = data.id;
 
-	var polyline = L.polyline(data.route, {color: data.color});
+	var rgbacolor = self._hex_to_rgba(data.color);
+	//var polyline = L.polyline(data.route, {color: data.color});
+	
+	var yourGeoJSON = [];
+	var t, t1;
+	var maxele = 305, minele = 212;
+	for(var ii=0; ii<data.route.length - 2;){
+	    t = data.route[ii];
+	    ii += 1;
+	    t1 = data.route[ii+1];
+	    while(Math.sqrt( (t[1]-t1[1])*(t[1]-t1[1]) + (t[0]-t1[0])*(t[0]-t1[0]) ) < 0.0003 & ii < data.route.length-1){
+		ii += 1;
+		t1 = data.route[ii];
+	    }
+	    //if((t[3]|0)<minele)minele = t[3]|0;
+	    //if((t[3]|0)>maxele)maxele = t[3]|0;
+	    //t1 = [t[0] + (t1[0]-t[0])*0.9 , t[1] + (t1[1]-t[1])*0.9 ];
+	    yourGeoJSON.push({ "type": "Feature", "properties": { "id": ii, "elevation": t[3] | 0 }, "geometry": { "type": "LineString", "coordinates": [ [t[1], t[0]],[t1[1], t1[0]] ]}});   
+	}
+	//var self = this;
+	 var polyline = L.geoJson(yourGeoJSON, {
+				      color: data.color,
+				      'weight': 4,
+				      'opacity': 1,
+				      'smoothFactor': 2,
+				      style: function (feature) {
+					  if(maxele - minele)
+					      return {
+						  color : self._rgba_to_hex(rgbacolor.map(function(x){return (x + (255 - x) * (feature.properties.elevation - minele)/(maxele - minele));}))
+						  //"opacity": 0.2 + 0.6*(feature.properties.elevation - minele)/(maxele - minele)
+					      };
+					  else
+					      return {
+						 //"opacity": 1
+					      };
+				      }
+				  });
+	
 	polyline.addTo(this.map);
 	polyline._data = data;
-	polyline._container.onclick = function(){self._showTrackInfo(polyline);};
+	polyline.on('click',function(){self._showTrackInfo(polyline);});
 	var pointA =new L.Icon({
 				   iconUrl: data.marker_a,
 				   iconSize: [this._iconSize, this._iconSize],

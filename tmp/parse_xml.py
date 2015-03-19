@@ -1,5 +1,5 @@
 from xml.dom.minidom import parseString
-
+import time
 
 class XMLTrack(object):
     name = ''
@@ -23,8 +23,20 @@ class XMLTrack(object):
         track_points = track_node.getElementsByTagName('trkpt')
         self.track['rout'] = []
         for p in track_points:
+            try:
+                ele = float(p.getElementsByTagName('ele')[0].childNodes[0].data)
+            except:
+                ele = 0
+            try:
+                t = p.getElementsByTagName('time')[0].childNodes[0].data
+                t = time.mktime(time.strptime(t, '%Y-%m-%dT%H:%M:%SZ'))
+            except:
+                t = 0
+
             self.track['rout'].append((float(p.getAttribute(self.lat)),
-                                         float(p.getAttribute(self.lon))))
+                                       float(p.getAttribute(self.lon)),
+                                       t, ele
+                                       ))
         return self.track
 
     def get_track_kml(self):

@@ -240,6 +240,8 @@ class Point(models.Model):
         if not self.uid or re.match('\d+\-\p', self.uid):
             self.uid = transliterate(self.name)[:24]
             #self.uid = "%s-%s" % (self.id, self.type.obj)
+            if self.__class__.objects.filter(uid=self.uid).count() != 0:
+                self.uid = self.uid[:19] + '-' + str(self.id)
             self.save()
         return res
 
