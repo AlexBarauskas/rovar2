@@ -29,7 +29,7 @@ var rovar = {
     _numberPoint: 0,
     _numberLoadPoint: 0,
     messages : {
-	'edit' : 'Редакрировать',
+	'edit' : 'Редактировать',
 	'travel time' : 'Время в пути',
 	'add point' : '+ Добавить точку',
 	'set coordinates' : 'Выберите место на карте (Esc для отмены)',

@@ -34,7 +34,7 @@ var rovar_transplate = {
     },
 
     en : {
-	'edit' : 'Редатрировать',
+	'edit' : 'Редактировать',
 	'travel time' : 'Время в пути',
 	'add point' : '+ Добавить точку',
 	'set coordinates' : 'Выберите место на карте (Esc для отмены)',
