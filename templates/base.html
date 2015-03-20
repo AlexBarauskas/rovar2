@@ -72,6 +72,7 @@
           </h1>
           <div id="type" class="type"></div>
 
+	  {% if location %}
 	  <div id="locations" class="dropdown">
 	    <div>
 	      {{location.display_name}}
@@ -82,8 +83,11 @@
 	      {%if l.name != location.name %}<li><a href="{% url set_location %}?name={{l.name}}">{{l}}</a></li>{%endif%}
 	      {%endfor%}
 	    </ul>
-	    
 	  </div>
+	  {% else %}
+	  <div class="clear" style="height:20px"></div>
+	  {% endif %}
+	  
 	</div>
 	{% block content_left %}
 	{% endblock content_left %}
