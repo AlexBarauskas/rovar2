@@ -423,7 +423,7 @@ var rovar = {
 
     _hex_to_rgba : function(h){
 	var c;
-	if(h.startsWith('#'))
+	if(h[0] == '#')
 	    c = h.substr(1);
 	else
 	    c = h;
