@@ -74,16 +74,16 @@
 
 	  <div id="locations" class="dropdown">
 	    <div>
-	      {{location}}
+	      {{location.display_name}}
 	      <p><span>&#9002;</span></p>
 	    </div>
 	    <ul>
 	      {%for l in locations%}
-	      {%if l != location %}<li><a href="{% url set_location %}?name={{l}}">{{l}}</a></li>{%endif%}
+	      {%if l.name != location.name %}<li><a href="{% url set_location %}?name={{l.name}}">{{l.display_name}}</a></li>{%endif%}
 	      {%endfor%}
 	    </ul>
+	    
 	  </div>
-
 	</div>
 	{% block content_left %}
 	{% endblock content_left %}

@@ -79,7 +79,7 @@ var rovar = {
 	if(typeof rovar_location != 'undefined')
 	    l_name = rovar_location;
 	else
-	    l_name = 'Минск';
+	    l_name = 'Minsk';
 
 	$.ajax({url: '/api/location',
 		method: 'GET',

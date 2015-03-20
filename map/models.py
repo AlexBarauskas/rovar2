@@ -65,12 +65,15 @@ class Type(models.Model):
 
 class Location(models.Model):
     name = models.CharField(max_length=16, unique=True)
+    display_name = models.CharField(max_length=24, null=True)
+    #ALTER TABLE map_location ADD "display_name" varchar(24);
     center_lat = models.FloatField()
     center_lng = models.FloatField()
     radius = models.FloatField()
     admins = models.ManyToManyField(User)
     default = models.BooleanField(default=False)
     #ALTER  TABLE map_location ADD "default" boolean NOT NULL default false;
+    
 
     def __unicode__(self):
         return self.name

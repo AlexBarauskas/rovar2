@@ -67,12 +67,13 @@ def location(request):
     '''@brief Получение информации о локации.
     
     '''
-    location_name = request.GET.get('name', u'Минск')
+    location_name = request.GET.get('name', u'Minsk')
     try:
         location = Location.objects.get(name = location_name)
     except Location.DoesNotExist:
         location = Location.objects.filter(default=True)[0]
     res = {'name': location.name,
+           'display_name': location.display_name,
            'center': [location.center_lat, location.center_lng],
            'bounds': [[location.center_lat - location.radius*0.7071067811865475, location.center_lng - 2*location.radius*0.7071067811865475],
                       [location.center_lat + location.radius*0.7071067811865475, location.center_lng + 2*location.radius*0.7071067811865475]

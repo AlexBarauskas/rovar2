@@ -53,19 +53,26 @@ def home(request, uid=None, slug=None):
     if obj is not None and obj.location:
         if request.session.get('change_location', False):
             del request.session['change_location']
-            if obj.location.name != request.session.get('location', u'Минск'):
+            if obj.location.name != request.session.get('location', u'Minsk'):
                 return HttpResponseRedirect('/')
         l_name = obj.location.name
     else:
-        l_name = request.session.get('location', u'Минск')
+        l_name = request.session.get('location', u'Minsk')
+    try:
+        location = Location.objects.get(name=l_name)
+    except Location.DoesNotExist:
+        try:
+            location = Location.objects.filter(default=True)[0]
+        except:
+            location = Location.objects.all()[0]
     
     return render_to_response('home_new.html',
                               {   'types': types,
                                   'obj': obj,
                                   'authors': Author.objects.all(),
                                   'template_name': template_name,
-                                  'location': l_name,
-                                  'locations': Location.objects.all().values_list("name", flat=True)
+                                  'location': location,
+                                  'locations': Location.objects.all().values("name", "display_name")
                                },
                               context_instance=RequestContext(request))
 
@@ -109,7 +116,7 @@ def set_location(request):
     return response
     
 
-
+@login_required
 def widget(request):
     return render_to_response('widget.html',
                               {'show_left_panel': True},
