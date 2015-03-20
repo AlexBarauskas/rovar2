@@ -42,7 +42,7 @@ var rovar = {
 	'required image' : "Вы не выбрали изображение или оно не верного формата.",
 	'invalide url' : "Не верный URL для поля 'Cайт'.",
 	'feedback email' : "Введите email для обратной связи.",
-	'description length' : "\"Описание\" не должна превышать 256 символов."
+	'description length' : "\"Описание\" не должно превышать 256 символов."
     },
 
 
@@ -79,7 +79,7 @@ var rovar = {
 	if(typeof rovar_location != 'undefined')
 	    l_name = rovar_location;
 	else
-	    l_name = 'Minsk';
+	    l_name = 'Минск';
 
 	$.ajax({url: '/api/location',
 		method: 'GET',

@@ -31,9 +31,11 @@ def transliterate(string):
                        u'Ы': u'Y',
                        u'Ь': u'',
                        u'Э': u'E',
+                       
                        u' ': u'-',
                        u'"': u'',
                        u'\'': u'',
+                       u',': u''
                        }
  
     capital_letters_transliterated_to_multiple_letters = {u'Ж': u'Zh',

@@ -1,94 +1,94 @@
 {% load login i18n%}
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="utf-8">
-<title>onbike.by{% block subtitle %}{% endblock subtitle %}</title>
-<link type="image/png" rel="icon" href="/static/images/favicon.png"/>
-<link type="text/css" href="/static/css/main.css" rel="stylesheet"/>
-<link type="text/css" href="/static/account/css/login.css" rel="stylesheet"/>
-<link  href="//cdnjs.cloudflare.com/ajax/libs/fotorama/4.5.1/fotorama.css" rel="stylesheet"> <!-- 3 KB -->
-{%if obj%}
-<meta property="og:title" content="ONBIKE.BY | {{obj.name}}" />
-<meta property="og:url" content="//onbike.by/{{obj.uid}}/" />
-{%if obj.photo_set.all.0.image.url%}
-<meta property="og:image" content="//onbike.by{{obj.photo_set.all.0.image.url}}" />
-{%else%}
-<meta property="og:image" content="//onbike.by/static/images/onbike-og.png" />
-{%endif%}
-<meta name="description" content="{{obj.description}}"/>
-<meta property="og:description" content="{{obj.description}}"/>
-{%else%}
-<meta property="og:title" content="ONBIKE.BY" />
-<meta property="og:url" content="http://onbike.by/" />
-<meta property="og:image" content="//onbike.by/static/images/onbike-og.png" />
-<meta property="og:description" content="Велосипедная карта Минска: маршруты, полезные объекты, с видео- и фотоподсказками. Велосипед — друг человека. Onbike.by — друг велосипедиста!"/>
-<meta name="description" content="Велосипедная карта Минска: маршруты, полезные объекты, с видео- и фотоподсказками. Велосипед — друг человека. Onbike.by — друг велосипедиста!"/>
-{%endif%}
+  <head>
+    <meta charset="utf-8">
+    <title>onbike.by{% block subtitle %}{% endblock subtitle %}</title>
+    <link type="image/png" rel="icon" href="/static/images/favicon.png"/>
+    <link type="text/css" href="/static/css/main.css" rel="stylesheet"/>
+    <link type="text/css" href="/static/account/css/login.css" rel="stylesheet"/>
+    <link  href="//cdnjs.cloudflare.com/ajax/libs/fotorama/4.5.1/fotorama.css" rel="stylesheet"> <!-- 3 KB -->
+    {%if obj%}
+    <meta property="og:title" content="ONBIKE.BY | {{obj.name}}" />
+    <meta property="og:url" content="//onbike.by/{{obj.uid}}/" />
+    {%if obj.photo_set.all.0.image.url%}
+    <meta property="og:image" content="//onbike.by{{obj.photo_set.all.0.image.url}}" />
+    {%else%}
+    <meta property="og:image" content="//onbike.by/static/images/onbike-og.png" />
+    {%endif%}
+    <meta name="description" content="{{obj.description}}"/>
+    <meta property="og:description" content="{{obj.description}}"/>
+    {%else%}
+    <meta property="og:title" content="ONBIKE.BY" />
+    <meta property="og:url" content="http://onbike.by/" />
+    <meta property="og:image" content="//onbike.by/static/images/onbike-og.png" />
+    <meta property="og:description" content="Велосипедная карта Минска: маршруты, полезные объекты, с видео- и фотоподсказками. Велосипед — друг человека. Onbike.by — друг велосипедиста!"/>
+    <meta name="description" content="Велосипедная карта Минска: маршруты, полезные объекты, с видео- и фотоподсказками. Велосипед — друг человека. Onbike.by — друг велосипедиста!"/>
+    {%endif%}
 
 
-{% block css %}
-{% endblock css %}
+    {% block css %}
+    {% endblock css %}
 
-</head>
-<body>
-<script>
-  var rovar_uid='{{obj.uid}}';
-  var rovar_location='{{location}}';
-  var language_code='{{LANGUAGE_CODE}}';
-  {%if user.is_staff%}
-  var __editPointLink = "/manager/points/<%id%>/edit/";
-  {%endif%}
-</script>
+  </head>
+  <body>
+    <script>
+      var rovar_uid='{{obj.uid}}';
+      var rovar_location='{{location}}';
+      var language_code='{{LANGUAGE_CODE}}';
+      {%if user.is_staff%}
+      var __editPointLink = "/manager/points/<%id%>/edit/";
+      {%endif%}
+    </script>
 
-{% block preload %}
-{% endblock preload %}
+    {% block preload %}
+    {% endblock preload %}
 
-{% block content %}
+    {% block content %}
 
-{% block menu %}
+    {% block menu %}
 
-<div id="social-networks">
-  <a href="https://www.facebook.com/onbike.by">
-      <img src="/static/images/facebook.png"/>
-  </a>
-  <a href=" https://vk.com/onbike_by">
-      <img src="/static/images/vk.png"/>
-  </a>
-  <a href="https://twitter.com/onbike_by">
-      <img src="/static/images/twitter.png"/>
-  </a>
-</div>
+    <div id="social-networks">
+      <a href="https://www.facebook.com/onbike.by">
+	<img src="/static/images/facebook.png"/>
+      </a>
+      <a href=" https://vk.com/onbike_by">
+	<img src="/static/images/vk.png"/>
+      </a>
+      <a href="https://twitter.com/onbike_by">
+	<img src="/static/images/twitter.png"/>
+      </a>
+    </div>
 
-<div id="main-panel">
-  <div id="main-panel-wrapper">
-    <div id="header"{%if obj%} style="background-color:{{obj.type.color}}"{%endif%}>
-        <div id="hmenu">
+    <div id="main-panel">
+      <div id="main-panel-wrapper">
+	<div id="header"{%if obj%} style="background-color:{{obj.type.color}}"{%endif%}>
+          <div id="hmenu">
             <a id="info" href="javascript:;"><img src="/static/icons/info.png"/></a>
-        </div>
-        <h1>
+          </div>
+          <h1>
             <a href="/" id="banner" class="logo">ONBIKE.BY</a>
             <a href="javascript:;" id="back-to-banner" style="display:none" class="back">&lt;</a>
-        </h1>
-        <div id="type" class="type"></div>
+          </h1>
+          <div id="type" class="type"></div>
 
-	<div id="locations" class="dropdown">
-	  <div>
-	    {{location}}
-	    <p><span>&#9002;</span></p>
+	  <div id="locations" class="dropdown">
+	    <div>
+	      {{location}}
+	      <p><span>&#9002;</span></p>
+	    </div>
+	    <ul>
+	      {%for l in locations%}
+	      {%if l != location %}<li><a href="{% url set_location %}?name={{l}}">{{l}}</a></li>{%endif%}
+	      {%endfor%}
+	    </ul>
 	  </div>
-	  <ul>
-	    {%for l in locations%}
-	    {%if l != location %}<li><a href="{% url set_location %}?name={{l}}">{{l}}</a></li>{%endif%}
-	    {%endfor%}
-	  </ul>
-	</div>
 
-    </div>
-    {% block content_left %}
-    {% endblock content_left %}
-  <div id="main-panel-blank"></div>
-  </div>
+	</div>
+	{% block content_left %}
+	{% endblock content_left %}
+	<div id="main-panel-blank"></div>
+      </div>
       <div id="app-links">
 	<img style="float:left" src="/static/images/sidebar_app_icon_ios.png"/>
 	<div>
@@ -97,84 +97,84 @@
 	</div>
 	<div class="clear"></div>
       </div>
-    <div class="footer">
-      <ul>
-	<li><a class="left" href="/info/">{% trans "О проекте" %}</a></li>
-	<!--li><a class="left" href="#">{% trans "Блог" %}</a></li-->
-	<!--li><a class="left" href="#">API</a></li-->
-	{% comment %}
-	{%for c, t in LANGUAGES%}
-	{%if LANGUAGE_CODE != c%}<li><a class="right dotted" href="{%url set_language%}?language={{c}}">{{t}}</a></li>{%endif%}
-	{%endfor%}
-	{% endcomment %}
-      </ul>
+      <div class="footer">
+	<ul>
+	  <li><a class="left" href="/info/">{% trans "О проекте" %}</a></li>
+	  <!--li><a class="left" href="#">{% trans "Блог" %}</a></li-->
+	  <!--li><a class="left" href="#">API</a></li-->
+	  {% comment %}
+	  {%for c, t in LANGUAGES%}
+	  {%if LANGUAGE_CODE != c%}<li><a class="right dotted" href="{%url set_language%}?language={{c}}">{{t}}</a></li>{%endif%}
+	  {%endfor%}
+	  {% endcomment %}
+	</ul>
+      </div>
+
+    </div>
+    
+    {% endblock menu %}
+
+    <div id="contentWrapper"> 
+      {% block content_right %}
+      {% endblock content_right %}
     </div>
 
-</div>
-    
-{% endblock menu %}
+    {% endblock content %}
 
-<div id="contentWrapper"> 
-  {% block content_right %}
-  {% endblock content_right %}
-</div>
+    <script type="text/javascript" src="/static/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.form.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/fotorama/4.5.1/fotorama.js"></script>
 
-{% endblock content %}
+    {% block js %}
+    {% endblock js %}
 
-<script type="text/javascript" src="/static/js/jquery.min.js"></script>
-<script type="text/javascript" src="/static/js/jquery.form.js"></script>
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/fotorama/4.5.1/fotorama.js"></script>
+    <script type="text/javascript">
+      $('#info').click(function(ev){
+      var data_box = $('#map');
+      var infoIF  = $('#info-iframe');
+      if(infoIF.length!=0){
+      if((infoIF.attr('class') || '').indexOf('show')){
+      var h = data_box.innerHeight();
+      if(h<670)h=670;
+	     //	 h='100%';
+	     infoIF.animate({height:h},{complete:function(){infoIF.addClass('show');}});
+	     }
+	     else{
+	     infoIF.animate({height: 0},{complete:function(){infoIF.removeClass('show');}});
+	     }
+	     }
+	     /*
+	     var infoF  = $('#info-iframe');
+	     if(infoF.length==0){
+	     var data_box = $('.data-content');
+	     //var info = $('<iframe id="info-iframe" src="/info/?blank=1"/>').css({position: 'absolute', 
+	     var info = $('#info-iframe');
+	     width: data_box.innerWidth()-5,
+	     height: data_box.innerHeight()-5,
+	     'min-height': '700px',
+	     top: -data_box.innerHeight(),
+	     'z-index': 1000,
+	     left: $('#main-panel').width(),
+	     });
+	     info.load(function(ev){$(this).animate({top:0});});
+	     //info.appendTo('body');
+	     }
+	     else{
+	     infoF.animate({top: 1.5*infoF.height()},{complete:function(){infoF.css({height:0, top:0});}})
+	     }
+	     */
 
-{% block js %}
-{% endblock js %}
-
-<script type="text/javascript">
-  $('#info').click(function(ev){
-  var data_box = $('#map');
-  var infoIF  = $('#info-iframe');
-  if(infoIF.length!=0){
-  if((infoIF.attr('class') || '').indexOf('show')){
-    var h = data_box.innerHeight();
-    if(h<670)h=670;
-//	 h='100%';
-    infoIF.animate({height:h},{complete:function(){infoIF.addClass('show');}});
-  }
-  else{
-    infoIF.animate({height: 0},{complete:function(){infoIF.removeClass('show');}});
-  }
-  }
-  /*
-  var infoF  = $('#info-iframe');
-  if(infoF.length==0){
-  var data_box = $('.data-content');
-  //var info = $('<iframe id="info-iframe" src="/info/?blank=1"/>').css({position: 'absolute', 
-  var info = $('#info-iframe');
-  width: data_box.innerWidth()-5,
-  height: data_box.innerHeight()-5,
-  'min-height': '700px',
-  top: -data_box.innerHeight(),
-  'z-index': 1000,
-  left: $('#main-panel').width(),
-  });
-  info.load(function(ev){$(this).animate({top:0});});
-  //info.appendTo('body');
-  }
-  else{
-  infoF.animate({top: 1.5*infoF.height()},{complete:function(){infoF.css({height:0, top:0});}})
-  }
-  */
-
-  });
-</script>
+	     });
+	     </script>
 
 
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-  ga('create', 'UA-49580926-1', 'onbike.by');
-  ga('send', 'pageview');
-</script>
-</body>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-49580926-1', 'onbike.by');
+      ga('send', 'pageview');
+    </script>
+  </body>
 </html>

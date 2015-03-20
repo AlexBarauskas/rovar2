@@ -12,6 +12,7 @@ urlpatterns = patterns(
     url(r'^$', 'onbike.views.home', name='home'),
     
     url(r'^info/$', 'onbike.views.info', name='info'),
+    url(r'^widget/$', 'onbike.views.widget', name='widget_examle'),
     url(r'^language/$', 'onbike.views.set_language', name='set_language'),
     url(r'^location$', 'onbike.views.set_location', name='set_location'),
     url(r'^manager/', include('manager.urls')),

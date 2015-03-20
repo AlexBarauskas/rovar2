@@ -69,6 +69,8 @@ class Location(models.Model):
     center_lng = models.FloatField()
     radius = models.FloatField()
     admins = models.ManyToManyField(User)
+    default = models.BooleanField(default=False)
+    #ALTER  TABLE map_location ADD "default" boolean NOT NULL default false;
 
     def __unicode__(self):
         return self.name

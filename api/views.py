@@ -24,6 +24,17 @@ from map.models import Location
 
 validate_url = URLValidator(verify_exists=False)
 
+def _generate_response(request, data):
+    f = request.GET.get('rtype') or request.POST.get('rtype', 'json')
+    c = request.GET.get('callback') or request.POST.get('callback', '(function(){})')
+    if f == 'js' and c:
+        res = '%s(%s);' % (c, json.dumps(data))
+        mt = 'text/javascript'
+    else:
+        res = json.dumps(data)
+        mt = 'text/json'
+    return HttpResponse(res, mt)
+
 @csrf_exempt
 def initialize_app(request):
     '''@brief Иничиализация клиента.
@@ -35,8 +46,7 @@ def initialize_app(request):
 Параметр "uid" клиент должен сохранить на своей стороне и использовать его для получения состояний.
     '''
     if request.method != "POST":
-        HttpResponse(json.dumps({'success': False,
-                                 'error': "Incorrect method."}), mimetype='text/json')
+        return _generate_response(request, {'success': False, 'error': "Incorrect method."})
     try:
         app = Application.objects.create()
         res = {'success': True,
@@ -44,13 +54,13 @@ def initialize_app(request):
     except Exception, e:
         res = {'success': False,
                'errors': '%s' % e}
-    return HttpResponse(json.dumps(res), mimetype='text/json')
+    return _generate_response(request, res)
 
 
 def locations(request):
-    return HttpResponse(json.dumps({'locations': list(Location.objects.all().values_list('name', flat=True)),
-                                    'success': True}),
-                        mimetype='text/json')
+    return _generate_response(request,
+                              {'locations': list(Location.objects.all().values_list('name', flat=True)),
+                               'success': True})
     
 
 def location(request):
@@ -61,7 +71,7 @@ def location(request):
     try:
         location = Location.objects.get(name = location_name)
     except Location.DoesNotExist:
-        location = Location.objects.get(name = u'Минск')
+        location = Location.objects.filter(default=True)[0]
     res = {'name': location.name,
            'center': [location.center_lat, location.center_lng],
            'bounds': [[location.center_lat - location.radius*0.7071067811865475, location.center_lng - 2*location.radius*0.7071067811865475],
@@ -71,8 +81,7 @@ def location(request):
            'radius': location.radius,
            'success': True
            }
-    return HttpResponse(json.dumps(res),
-                        mimetype='text/json')
+    return _generate_response(request, res)
 
 
 def points(request):
@@ -125,30 +134,14 @@ GET-запрос может не содержать параметров.\n
         
     lang_code = translation.get_language()    
     points = [p.to_dict(lang=lang_code) for p in points]
-    return HttpResponse(json.dumps(points),
-                        mimetype='text/json')
+    return _generate_response(request, points)
 
 
-
-
-TYPEIDS = {"entertainment": 7,
-           "bikerental": 6,
-           "shop": 5,
-           "service": 2,
-           "parking": 3,
-           }
 def __string_type_to_object(stype):
     try:
         return Type.objects.get(slug=stype)
     except:
         return None
-
-#    if settings.DEBUG:
-#        return Type.objects.filter(obj='p')[0]
-#    try:
-#        return Type.objects.get(id=TYPEIDS.get(stype))
-#    except:
-#        None
 
 
 @csrf_exempt
@@ -178,16 +171,11 @@ image - фотография точки.\n
 '''
     # check request type
     if request.method != 'POST':
-        return HttpResponse(json.dumps({'success': False,
-                                        'error_code': 1,
-                                        'message': 'Incorrect method.'
-                                        }),
-                            mimetype='text/json')
-    # check app uid
-    
+        return _generate_response(request,
+                                  {'success': False,
+                                   'error_code': 1,
+                                   'message': 'Incorrect method.'})
     try:
-        #print request.raw_post_data
-        #print request.FILES['fileUpload'].size
         print request.FILES
         print request.POST
     except Exception, e:
@@ -195,11 +183,9 @@ image - фотография точки.\n
         print e
     uid = request.POST.get('uid', '')
     if Application.objects.filter(uid=uid).count() == 0 or (uid == 'webclient' and not request.session.get('human')):
-        return HttpResponse(json.dumps({'success': False,
+        return _generate_response(request, {'success': False,
                                         'error_code': 2,
-                                        'message': 'Your client is not authorized.'
-                                        }),
-                            mimetype='text/json')
+                                        'message': 'Your client is not authorized.'})
 
     email = request.POST.get('email', '').strip()
     if email != '':
@@ -209,11 +195,9 @@ image - фотография точки.\n
             email = ''
 
     if uid == 'webclient' and email == '':
-        return HttpResponse(json.dumps({'success': False,
+        return _generate_response(request, {'success': False,
                                         'error_code': 100,
-                                        'message': 'Email is required.'
-                                        }),
-                            mimetype='text/json')
+                                        'message': 'Email is required.'})
 
     # check required fields
     required_fields = ['title', 'type', 'address']
@@ -230,36 +214,29 @@ image - фотография точки.\n
                   'address': values[2],
                   'coordinates': values[3]}
     else:
-        return HttpResponse(json.dumps({'success': False,
+        return _generate_response(request, {'success': False,
                                         'error_code': 3,
-                                        'message': 'Not all required fields.'
-                                        }),
-                            mimetype='text/json')
+                                        'message': 'Not all required fields.'})
     if len(kwargs['description'])>256:
-        return HttpResponse(json.dumps({'success': False,
+        return _generate_response(request, {'success': False,
                                         'error_code': 7,
                                         'message': 'The "description" should not exceed 256 characters.'
-                                        }),
-                            mimetype='text/json')
+                                        })
     # check point type
     kwargs['type'] = __string_type_to_object(kwargs['type'])
     if kwargs['type'] is None:
-        return HttpResponse(json.dumps({'success': False,
+        return _generate_response(request, {'success': False,
                                         'error_code': 4,
                                         'message': 'Not valid "type".'
-                                        }),
-                            mimetype='text/json')
+                                        })
     # check image
     photos = request.FILES.getlist('image')
     if len(photos) == 0:
-        return HttpResponse(json.dumps({'success': False,
+        return _generate_response(request, {'success': False,
                                         'error_code': 5,
                                         'message': '"image" is required field.'
-                                        }),
-                            mimetype='text/json')
+                                        })
     # get not required fileds
-    #print request.POST.get('phones')
-    #print request.POST.getlist('phones')
     phones = request.POST.getlist('phones')
     if phones is not None:
         phones = ','.join(phones)
@@ -269,11 +246,10 @@ image - фотография точки.\n
         try:
             validate_url(kwargs['website'])
         except:
-            return HttpResponse(json.dumps({'success': False,
+            return _generate_response(request, {'success': False,
                                             'error_code': 6,
                                             'message': 'Enter a valid website.'
-                                            }),
-                                mimetype='text/json')
+                                            })
     if request.user.is_authenticated and request.user.is_superuser:
         kwargs['state'] = '0'
     # create poin
@@ -288,8 +264,7 @@ image - фотография точки.\n
     if not (request.user.is_authenticated and request.user.is_superuser):
         app = Application.objects.get(uid=uid)
         app.add_message(point=p, email=email)
-    return HttpResponse(json.dumps({'success': True}),
-                        mimetype='text/json')
+    return _generate_response(request, {'success': True})
 
 
 def messages(request):
@@ -298,9 +273,8 @@ def messages(request):
 В случае успеха возвращает {'success': True, 'messages': [{'id': <message_id>, 'message': <message_text>}]}
     '''
     messages = Message.objects.filter(app__uid=request.GET.get('uid'), state="f").values('message', 'id')
-    return HttpResponse(json.dumps({'success': True,
-                                    'messages': list(messages)}),
-                        mimetype='text/json')
+    return _generate_response(request, {'success': True,
+                               'messages': list(messages)})
 
 
 @csrf_exempt
@@ -314,15 +288,14 @@ uid - ключ для обратной связи(идентификатор к�
 Параметр "id" есть идентификатор собщения в списке полученных сообщений(см. "http://obike.by/api/messages?uid="<app_uid>).
     '''
     if request.method != "POST":
-        HttpResponse(json.dumps({'success': False,
-                                 'error': "Incorrect method."}), mimetype='text/json')
+        return _generate_response(request, {'success': False,
+                                 'error': "Incorrect method."})
     res = {'success': True}
     if not Message.objects.filter(app__uid=request.POST.get('uid'),
                                   id=request.POST.get('id')).update(state='r'):
         res = {'success': False,
                'error': 'Message with id=%s not exists.' % request.POST.get('id')}
-    return HttpResponse(json.dumps(res),
-                        mimetype='text/json')
+    return _generate_response(request, res)
 
     
 @csrf_exempt
@@ -337,34 +310,27 @@ description - что хотим предложить.\n
 image - фотография точки.
 '''
     if request.method != "POST":
-        HttpResponse(json.dumps({'success': False,
-                                 'error': "Incorrect method."
-                                 }),
-                     mimetype='text/json')
+        return _generate_response(request, {'success': False,
+                                 'error': "Incorrect method."})
+
     # check description
     description = request.POST.get('description', "").strip()
     if not description:
-        HttpResponse(json.dumps({'success': False,
-                                 'error': "Description is required."
-                                 }),
-                     mimetype='text/json')
+        return _generate_response(request, {'success': False,
+                                 'error': "Description is required."})
     # check app uid
     uid = request.POST.get('uid', '')
     #if Application.objects.filter(uid=uid).count() == 0 :
     if Application.objects.filter(uid=uid).count() == 0 or (uid == 'webclient' and not request.session.get('human')):
-        return HttpResponse(json.dumps({'success': False,
-                                        'message': "Your client is not authorized."
-                                        }),
-                            mimetype='text/json')
+        return _generate_response(request, {'success': False,
+                                   'message': "Your client is not authorized."})
     # check point
     pid = request.POST.get('id', '')
     try:
         point = Point.objects.get(id=pid)
     except:
-        return HttpResponse(json.dumps({'success': False,
-                                        'message': "Object not found."
-                                        }),
-                            mimetype='text/json')
+        return _generate_response(request, {'success': False,
+                                   'message': "Object not found."})
     
     res = {'success': True}
     app = Application.objects.get(uid=uid)
@@ -381,10 +347,7 @@ image - фотография точки.
                                  image=photo
                                  )
         msg.photos.add(p)
-    
-    return HttpResponse(json.dumps(res),
-                        mimetype='text/json')
-
+    return _generate_response(request, res)
 
 
 def tracks(request):
@@ -424,5 +387,4 @@ GET-запрос может не содержать параметров.\n
     if page is not None:
         tracks = tracks[page * per_page:(page + 1) * per_page]
     tracks = [p.to_dict() for p in tracks]
-    return HttpResponse(json.dumps(tracks),
-                        mimetype='text/json')
+    return _generate_response(request, tracks)
