@@ -76,7 +76,7 @@ class Location(models.Model):
     
 
     def __unicode__(self):
-        return self.name
+        return self.display_name or self.name
 
 
 #class LocationAdmins(models.Model)
