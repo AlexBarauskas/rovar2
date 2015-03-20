@@ -72,7 +72,7 @@ def home(request, uid=None, slug=None):
                                   'authors': Author.objects.all(),
                                   'template_name': template_name,
                                   'location': location,
-                                  'locations': Location.objects.all().values("name", "display_name")
+                                  'locations': Location.objects.all()#.values("name", "display_name")
                                },
                               context_instance=RequestContext(request))
 
