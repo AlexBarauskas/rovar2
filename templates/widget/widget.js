@@ -60,7 +60,6 @@ OnbikeWidget = Class.extend(
      },
 
      add_point_to_map: function(data){
-	 console.log(data);
 	 var Icon = new L.icon(
 	     {iconUrl: data.marker,
 	      iconSize: [this._iconSize, this._iconSize],
@@ -87,7 +86,6 @@ OnbikeWidget = Class.extend(
      },
      
      set_current: function(el){
-	 console.log(el, this.currentTarget);
 	 this._info_container.find('.' + this._prefix + 'point-info').removeClass('currentr');
 	 $(el.currentTarget).addClass('current');
 	 var pid = parseInt($(el.currentTarget).attr('data'));
