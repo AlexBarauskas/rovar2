@@ -6,9 +6,12 @@ OnbikeWidget = Class.extend(
      points: [],
 
 
-     init: function(container_id, options){
+     init: function(container_id, options, host){
 	 this._prefix = 'onbikewidget';
-	 this.host = 'http://localhost:8000';
+	 if(typeof host != 'undefined')
+	     this.host = host;
+	 else
+	     this.host = 'http://onbike.by';
 	 this.api_url = '/api/';
 	 if(typeof options != 'undefined')
 	     this.options = options;
@@ -134,5 +137,17 @@ OnbikeWidget = Class.extend(
 );
 
 /* EXAMPLES*/
-var ow = new OnbikeWidget("widget-example");
+var options = {
+		 location : {
+		     "name": "Минск",
+		     "bounds": [[53.73909273331522,27.24485246663044],[54.06090726668478,27.888481533369557]],
+		     "center": [53.9, 27.566667],
+		     "zoom": 12
+		 },
+		 "points": [120, 69, 190],
+		 "default_point": 69,
+		 "extra_info": true
+	     };
+
+var ow = new OnbikeWidget("widget-example", options, 'http://onbike.by');
 ow._request('locations', {}, function(data){console.log(data);});
