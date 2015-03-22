@@ -141,7 +141,7 @@ def point(request, point_id=None):
 
 def tile(request, z, x, y):
     #http://b.tile.osm.org/12/2362/1317.png
-    url = "http//c.tile.osm.org/%s/%s/%s.png" % (z, x, y)
+    url = "http://c.tile.osm.org/%s/%s/%s.png" % (z, x, y)
     tile_name = "%s_%s_%s.png" % (z, x, y)
     rurl = '//%s%stiles/%s' % (settings.MAIN_HOST, settings.MEDIA_URL, tile_name)
     path = os.path.join(settings.MAP_TILES, tile_name)
