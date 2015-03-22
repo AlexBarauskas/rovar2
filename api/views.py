@@ -87,7 +87,7 @@ def location(request):
 
 def points(request):
     '''@brief Получение информации о доступных точках.
-    GET: http://onbike.by/api/points?page=P&per_page=N
+    GET: http://onbike.by/api/points?page=P&per_page=N&location=name&id=point_id
 GET-запрос может не содержать параметров.\n
 В случае отсутствия параметра page или не верного преобразования в целочисленное значение, будет возвращен список всех доступных точек.\n
 В случае отсутствия или неврно указанного параметра per_page значение по умолчанию принимается 10.\n
@@ -128,7 +128,9 @@ GET-запрос может не содержать параметров.\n
             kwargs['last_update__gte'] = t0
         except:
             pass
-    
+    if 'id' in request.GET:
+        kwargs['id__in'] = request.GET.getlist('id')
+
     points = Point.objects.filter(**kwargs)
     if page is not None:
         points = points[page * per_page:(page + 1) * per_page]
