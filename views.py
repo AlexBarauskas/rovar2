@@ -111,7 +111,7 @@ def set_location(request):
     next = request.REQUEST.get('next')
     next = request.META.get('HTTP_REFERER', '/')
     response = HttpResponseRedirect(next)
-    request.session['location'] = request.GET.get('name', 'Минск')
+    request.session['location'] = request.GET.get('name', 'Minsk')
     request.session['change_location'] = True
     return response
     
