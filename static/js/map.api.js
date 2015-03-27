@@ -79,7 +79,7 @@ var rovar = {
 	if(typeof rovar_location != 'undefined')
 	    l_name = rovar_location;
 	else
-	    l_name = 'Минск';
+	    l_name = 'Minsk';
 
 	$.ajax({url: '/api/location',
 		method: 'GET',
@@ -93,10 +93,8 @@ var rovar = {
 				 key: 'BC9A493B41014CAABB98F0471D759707',
 				 minZoom: 12
 				}).addTo(self.map);
-		    //self.map.setMaxBounds([[53.775, 27.31304168701172], [54, 27.820472717285156]]);
 		    self.map.setMaxBounds(self.location.bounds);
-		    self.loadPoints();
-		    self.loadTracks();
+		    self.loadTypes();
 		}
 	       });	
 
@@ -108,7 +106,6 @@ var rovar = {
 		for(var i=p.length; i>=0; i--)
 		    phones.push($(p[i]).val());
 		self.uploader.uploadFiles(function(response, finish){
-					      //console.log(response, finish);
 					      self.callbackAddPoint(response);
 					  },
 					  {'website': $('[name="website"]').val(),
@@ -262,12 +259,12 @@ var rovar = {
 	var type = data.type_slug;
 	var eid = data.id;
 	data.unactiveIcon = new L.icon({
-					   iconUrl: data.marker,
+					   iconUrl: data.marker_a,
 					   iconSize: [this._iconSize, this._iconSize],
 					   iconAnchor: [this._iconSize*this._kLeft, this._iconSize/2]
 				       });
 	data.activeIcon = new L.icon({
-					 iconUrl: data.marker_active,
+					 iconUrl: data.marker_b,
 					 iconSize: [this._iconSize, this._iconSize],
 					 iconAnchor: [this._iconSize*this._kLeft, this._iconSize]
 				     });
@@ -294,35 +291,15 @@ var rovar = {
 
     },
     
-    loadPoints : function(){
+    loadTypes : function(){
 	var self = this;
-	$.ajax({url: '/api/points',
+	$.ajax({url: '/api/types',
 		method: 'GET',
-		data: {uid: 'webclient',
-		       location: this.location.id},
+		data: {uid: 'webclient'},
 		success: function(data){
-		    for(var i=data.length-1; i>=0; i--){
-			self._addPointToMap(data[i]);
-		    }
-		    var n;
-		    for(var key in self.elements.points){
-			//n = $('img.'+key).length;
-			n = 0;
-			for(var tkey in self.elements.points[key])
-			    n++;
-
-			if(n){
-			    $('#'+key+' .number').text(n);
-			    $('#'+key).show();
-			}
-			else{
-			    $('#'+key).hide();
-			}
-			self._pointGroup(key);
-		    }
+		    for(var i=data.length-1; i>=0; i--)
+			self.loadObject(data[i].object, data[i].text_id, data[i]);
 		    
-		    
-
 		    self.map.on('moveend', function(ev){
 				    for(var key in self.elements.points){
 					self._pointGroup(key);
@@ -334,10 +311,47 @@ var rovar = {
 					self._pointGroup(key);
 				    }
 				});
+
+		}
+	});
+    },
+
+    loadObject : function(object_name, type_id, type_params){
+	var self = this;
+	$.ajax({url: '/api/' + object_name + 's',
+		method: 'GET',
+		data: {uid: 'webclient',
+		       location: this.location.id,
+		       type: type_id},
+		success: function(data){
+		    var arg;
+		    for(var i=data.length-1; i>=0; i--){
+			arg = data[i];
+			arg.color = type_params.color;
+			arg.marker_a = type_params.marker_a;
+			arg.marker_b = type_params.marker_b;
+			arg.type_name = type_params.name;
+			if(object_name == 'point'){
+			    self._addPointToMap(arg);
+			}
+			else{
+			    self._addTrackToMap(arg);
+			}
+			    
+		    }
+		    var n = data.length;
+		    if(n){
+			$('#'+type_id+' .number').text(n);
+			$('#'+type_id).show();
+		    }
+		    else{
+			$('#'+type_id).hide();
+		    }
+		    if(object_name == 'point')
+			self._pointGroup(type_id);		    
 		}
 	       });	
     },
-
 
     _hideTrackInfo : function(track){
 	var self = this;
@@ -412,7 +426,6 @@ var rovar = {
 				 this.language = language_code;
 				 this.page.identifier = data.uid;  
 				 this.page.title = data.title;
-				 //console.log(this);
 				 this.page.url = "//onbike.by/"+data.type_slug+"/"+data.uid;
 			     }
 			 });
@@ -423,7 +436,7 @@ var rovar = {
 
     _hex_to_rgba : function(h){
 	var c;
-	if(h.startsWith('#'))
+	if(h[0] == '#')
 	    c = h.substr(1);
 	else
 	    c = h;
@@ -513,34 +526,6 @@ var rovar = {
 	    this._showTrackInfo(polyline);
 
     },
-
-    loadTracks : function(){
-	var self = this;
-	$.ajax({url: '/api/tracks',
-		method: 'GET',
-		data: {uid: 'webclient',
-		       location: this.location.id},
-		success: function(data){
-		    for(var i=data.length-1; i>=0; i--){
-			self._addTrackToMap(data[i]);
-		    }
-		    var n;
-		    for(var key in self.elements.tracks){
-			n = 0;
-			for(var tkey in self.elements.tracks[key])
-			    n++;
-			if(n){
-			    $('#'+key+' .number').text(n);
-			    $('#'+key).show();
-			}
-			else{
-			    $('#'+key).hide();
-			}
-		    }
-		}
-	       });	
-    },
-    
 
 
     _pointGroup : function(type_name){
@@ -733,7 +718,6 @@ var rovar = {
 
 
     callbackAddPoint: function(data){
-	//console.log(data);
 	if(!data.success){
 	    $("#ajax-errors").html($("<p class=\"error alert\">").text(this.__errors[data.error_code] || this.messages['unknown error']));
 	}else{

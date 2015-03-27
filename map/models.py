@@ -63,7 +63,7 @@ class Type(models.Model):
         if self.image:
             return self.image.url
         else:
-            return ''
+            return u'/static/images/Parking.png'
             
     def marker_b(self):
         if self.image2:
@@ -77,15 +77,18 @@ class Type(models.Model):
 
 class Location(models.Model):
     name = models.CharField(max_length=16, unique=True)
+    display_name = models.CharField(max_length=24, null=True)
+    #ALTER TABLE map_location ADD "display_name" varchar(24);
     center_lat = models.FloatField()
     center_lng = models.FloatField()
     radius = models.FloatField()
     admins = models.ManyToManyField(User)
     default = models.BooleanField(default=False)
     #ALTER  TABLE map_location ADD "default" boolean NOT NULL default false;
+    
 
     def __unicode__(self):
-        return self.name
+        return self.display_name or self.name
 
 
 #class LocationAdmins(models.Model)
@@ -287,27 +290,31 @@ class Point(models.Model):
                  'title': translate.name or self.name,
                  'description': translate.description or self.description,
                  'id': self.id,
-                 'color': self.type.color,
-                 'marker': '/static/images/Parking.png',
-                 'marker_active': '/static/images/Parking.png',
                  'status': 'success',
                  'images': [ph.image.url for ph in  self.photo_set.all()],
                  'address': translate.address or self.address,
                  'uid': self.uid,
                  'type_slug': self.type.slug,
+                 'website': self.website,
+                 ##DEPRECATE
+                 'color': self.type.color,
+                 'marker': '/static/images/Parking.png',
+                 'marker_active': '/static/images/Parking.png',
                  'type_name': self.type.name,
-                 'website': self.website
+                 ####
                  }
         if self.phones:
             point['phones'] = self.phones
         else:
             point['phones'] = ''
+        ##DEPRECATE
         if self.type.image:
             point['marker'] = self.type.image.url
             point['marker_active'] = self.type.image.url
         if self.type.image2:
             point['marker_active'] = self.type.image2.url
         point['type'] = [self.type.obj, '%s' % self.type.id]
+        ####
         return point
 
     def define_location(self):

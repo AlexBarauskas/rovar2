@@ -34,7 +34,7 @@
   <body>
     <script>
       var rovar_uid='{{obj.uid}}';
-      var rovar_location='{{location}}';
+      var rovar_location='{{location.name}}';
       var language_code='{{LANGUAGE_CODE}}';
       {%if user.is_staff%}
       var __editPointLink = "/manager/points/<%id%>/edit/";
@@ -72,18 +72,22 @@
           </h1>
           <div id="type" class="type"></div>
 
+	  {% if location %}
 	  <div id="locations" class="dropdown">
 	    <div>
-	      {{location}}
+	      {{location.display_name}}
 	      <p><span>&#9002;</span></p>
 	    </div>
 	    <ul>
 	      {%for l in locations%}
-	      {%if l != location %}<li><a href="{% url set_location %}?name={{l}}">{{l}}</a></li>{%endif%}
+	      {%if l.name != location.name %}<li><a href="{% url set_location %}?name={{l.name}}">{{l}}</a></li>{%endif%}
 	      {%endfor%}
 	    </ul>
 	  </div>
-
+	  {% else %}
+	  <div style="height:20px"></div>
+	  {% endif %}
+	  
 	</div>
 	{% block content_left %}
 	{% endblock content_left %}

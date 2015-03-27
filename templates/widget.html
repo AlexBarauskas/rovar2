@@ -2,6 +2,34 @@
 
 {% block css %}
 <link type="text/css" href="/static/leaflet73/leaflet.css" rel="stylesheet"/>
+<style>
+#widget-example{position:relative;}
+#onbikewidget-map{
+position:absolute;
+width: 400px;
+height: 400px;
+right:0;
+top:40px;
+}
+#onbikewidget-info{
+margin-right:400px;
+padding-top:30px;
+}
+
+.onbikewidgetpoint-info{
+border: solid 1px #ccc;
+margin:30px;
+}
+.onbikewidgetpoint-info h1{
+font-size: 20px;
+}
+.onbikewidgetpoint-info p{
+font-size: 14px;
+margin:0;
+padding:0;
+}
+</style>
+
 {% endblock css %}
 
 
@@ -13,7 +41,10 @@
 
 {% block content_right %}
 <div class="data-content" {% if not show_left_panel %}style="margin-left:0px;"{%else%}style="min-height:100%;"{% endif %}>
-  <div id="widget-example" style="padding:50px; height:400px; width:400px"></div>
+  <div id="widget-example">
+    <div id="onbikewidget-info"></div>
+    <div id="onbikewidget-map"></div>
+  </div>
   
 </div>
 {% endblock content_right %}
