@@ -59,6 +59,18 @@ class Type(models.Model):
     def get_slug(self):
         return IDSTYPE.get(self.id, 'other')
 
+    def marker_a(self):
+        if self.image:
+            return self.image.url
+        else:
+            return ''
+            
+    def marker_b(self):
+        if self.image2:
+            return self.image2.url
+        else:
+            return self.marker_a()
+
     def __unicode__(self):
         return self.name
 

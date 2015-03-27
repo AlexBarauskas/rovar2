@@ -8,6 +8,8 @@ urlpatterns = patterns(
 
     url(r'^locations$', locations, name="api_locations"),
     url(r'^location$', location, name="api_location"),
+
+    url(r'^types$', get_types, name="api_types"),
     
     url(r'^points$', points, name="api_get_points"),
     url(r'^point/add$', add_point, name="api_add_point"),
