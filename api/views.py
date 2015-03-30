@@ -35,15 +35,17 @@ def _generate_response(request, data):
         mt = 'text/json'
     return HttpResponse(res, mt)
 
+
 @csrf_exempt
 def initialize_app(request):
-    '''@brief Иничиализация клиента.
+    '''-Инициализация клиента.
     POST: http://onbike.by/api/clients
-Запрос на инициализацию клиента.\n
-Возвращаемый json:
----
-    {'success': True,\n'uid': 'personal_key_for_feedback'}\n
-Параметр "uid" клиент должен сохранить на своей стороне и использовать его для получения состояний.
+    Запрос на инициализацию клиента.
+    --Возвращаемый json:
+    {'success': true,
+    'uid': 'personal_key_for_feedback'
+    }
+    Параметр "uid" клиент должен сохранить на своей стороне и использовать его для получения состояний.
     '''
     if request.method != "POST":
         return _generate_response(request, {'success': False, 'error': "Incorrect method."})
@@ -58,14 +60,32 @@ def initialize_app(request):
 
 
 def locations(request):
+    '''-Получение списка доступных локаций.
+    GET: http://onbike.by/api/locations
+    Получение списка доступных локаций.
+    --Возвращаемый json:
+    {'locations': ["locale_name_1", "locale_name_2", ...],
+    'success': true
+    }
+    '''
     return _generate_response(request,
                               {'locations': list(Location.objects.all().values_list('name', flat=True)),
                                'success': True})
     
 
 def location(request):
-    '''@brief Получение информации о локации.
-    
+    '''-Получение информации о локации.
+    GET: http://onbike.by/api/location?name=<LocationName>;
+    Получение информации о локации.
+    --Возвращаемый json:
+    {'name': "Test",
+    'center': [53.9, 27.566667], <b>//- координаты центра</b>
+    'bounds': [[53.73909273331522, 27.24485246663044], [54.06090726668478, 27.888481533369557]], <b>//- прямоугольная область, ограничивающая локацию</b>
+    'radius': 0.22, <b>//- на основании этого параметра строится bounds. Можно использовать если накладываются специфичные ограничения на отображение нарты.</b>
+    'id': 1,
+    'success': true
+    }
+    В случае если по заданному name не была найдена локация, будет возвращена локация по умолчанию(на данный момент Минск).
     '''
     location_name = request.GET.get('name', u'Minsk')
     try:
@@ -85,12 +105,55 @@ def location(request):
     return _generate_response(request, res)
 
 
+def get_types(request):
+    '''-Получение информации о всех доступных типах объектов.
+    GET: http://onbike.by/api/types
+    
+    --Возвращаемый json:
+    {'object': "point|track", // - <b>Тип объекта</b>
+     'name': "type_name",
+     'color': "#ffffff",
+     'marker_a': "<url_to_img>", // - <b>Для точек картинка неактивного состояния, для маршрутов - начало маршрута</b>
+     'marker_b': "<url_to_img>", // - <b>Для точек картинка активного состояния, для маршрутов - конец маршрута</b>
+     'text_id': "type_example", // - <b>Уникальный текстовый идентификатор</b>
+    }
+    '''
+    types = [{u'object': [u'point', u'track'][t.obj == 't'],
+              u'name': t.name,
+              u'color': t.color,
+              u'marker_a': t.marker_a(), # - Для точек картинка неактивного состояния, для маршрутов - начало маршрута
+              u'marker_b': t.marker_b(), # - Для точек картинка активного состояния, для маршрутов - конец маршрута
+              u'text_id': t.slug, # - Уникальный текстовый идентификатор
+              } for t in Type.objects.filter(active=True, obj__in=['t', 'p'])]
+    return _generate_response(request, types)
+
 def points(request):
-    '''@brief Получение информации о доступных точках.
-    GET: http://onbike.by/api/points?page=P&per_page=N&location=name&id=point_id
-GET-запрос может не содержать параметров.\n
-В случае отсутствия параметра page или не верного преобразования в целочисленное значение, будет возвращен список всех доступных точек.\n
-В случае отсутствия или неврно указанного параметра per_page значение по умолчанию принимается 10.\n
+    '''-Получение информации о доступных точках.
+    GET: http://onbike.by/api/points?page=P&per_page=N&location=<id|name>&date=<time>&type=<type_text_id>&id=point_id
+Запрос может не содержать параметров.
+В случае отсутствия параметра page или не верного преобразования в целочисленное значение, будет возвращен список всех доступных точек.
+В случае отсутствия или неврно указанного параметра per_page значение по умолчанию принимается 10.
+Если указан параметр date, будут выгружены точки, которые обновлялись после указанной даты. Это не обязательно новые точки, среди них могут быть точки, у которых обновилось какое-либо поле. Формат даты: <b>'%y.%m.%d-%H:%M:%S'</b>. Неверные даты и неверный формат ингнорируется, считается что параметра нет.
+Параметр location указывается если нужно выбрать точки определенной локации. Указывается либо наименование локации либо id.
+Параметр type указывает какого типа точки нужно вытащить.
+
+    --Возвращаемый json:
+    [{
+    'coordinates': [lat, lon], <b>// - Или наоборот</b>
+    'title': "ГУМ",
+    'description': "Велопарковка около ГУМа",
+    'id': 33,
+    'status': 'success',
+    'images': ["/link/to/img1", "/link/to/img2", ... ],
+    'address': "пр.Независимости 21",
+    'uid': "GUM", <b>// - Идентификатор для ссылки</b>
+    'type_slug': "parking", <b>// - Уникальный текстовый идентификатор типа к которому принадлежит точка.</b>
+    'website': null,
+    'color': "#cffcdf", <b>// - Цвет Маркера. В скором будущем будет удалено.</b>
+    'marker': "/url/to/marker", <b>// - Маркер неактивного состояния. В скором будущем будет удалено.</b>
+    'marker_active': "/url/to/marker_active", <b>// - Марке активного состояния. В скором будущем будет удалено.</b>
+    'type_name': "Парковка", <b>// - Наименование типа. В скором будущем будет удалено.</b>
+    }, ... ]
     '''
     acl = '0'
     if request.user.is_authenticated():
@@ -128,8 +191,12 @@ GET-запрос может не содержать параметров.\n
             kwargs['last_update__gte'] = t0
         except:
             pass
+        
     if 'id' in request.GET:
         kwargs['id__in'] = request.GET.getlist('id')
+        
+    if 'type' in request.GET:
+        kwargs['type__slug'] = request.GET['type']
 
     points = Point.objects.filter(**kwargs)
     if page is not None:
@@ -149,28 +216,34 @@ def __string_type_to_object(stype):
 
 @csrf_exempt
 def add_point(request):
-    '''@brief Добавление точки через приложение.
+    '''-Добавление точки через приложение.
     POST: http://onbike.by/api/point/add
-Параметры:
----
-uid - ключ для обратной связи. Если на стороне клиента отсутствует данный идентификатор, то необходимо вызвать метод http://onbike.by/api/init для его получения.\n
-title - заголовок для точки (max_length 128)\n
-type - тип точки. Допустимые значения: shop, bikerental, entertainment, parking, service\n
-description - описание точки (max_legth 256).\n
-coordinates - координаты точки. Example: "[53.88988, 27.591129]"\n
-address - адрес точки (max_length 256). Example: "ул. Станиславского 11а"\n
-phones - телефоны (max_length 128). Могут быть перечислены через запятую. Поле не обязательное. Позже будет указон шаблон для номера\n
-website - Не обязательно поле. Мало вероятно что будет использовано при добавлении через клиент.\n
-image - фотография точки.\n
-Коды ошибок:
----
-1 - Неверный тип запроса.\n
-2 - Клиент с указанным uid не инициализирован.\n
-3 - Одно из полей 'title', 'type', 'description', 'coordinates', 'address' не указано или пустое.\n
-4 - Указанный тип точки не существует.\n
-5 - Отсутсвует изображение.\n
-6 - Введен не валидный URL для поля website.\n
->=100 - Ошибки вебклиента. Для мобильных клиентов возвращаться не должны.\n
+--Параметры:
+uid - ключ для обратной связи. Если на стороне клиента отсутствует данный идентификатор, то необходимо вызвать метод http://onbike.by/api/init для его получения.
+title - заголовок для точки (max_length 128)
+type - тип точки. Допустимые значения: shop, bikerental, entertainment, parking, service
+description - описание точки (max_legth 256).
+coordinates - координаты точки. Example: "[53.88988, 27.591129]"
+address - адрес точки (max_length 256). Example: "ул. Станиславского 11а"
+phones - телефоны (max_length 128). Могут быть перечислены через запятую. Поле не обязательное. Позже будет указон шаблон для номера
+website - Не обязательно поле. Мало вероятно что будет использовано при добавлении через клиент.
+image - фотография точки.
+--Коды ошибок:
+1 - Неверный тип запроса.
+2 - Клиент с указанным uid не инициализирован.
+3 - Одно из полей 'title', 'type', 'description', 'coordinates', 'address' не указано или пустое.
+4 - Указанный тип точки не существует.
+5 - Отсутсвует изображение.
+6 - Введен не валидный URL для поля website. URL не является обязательным параметром, но должен быть введен корректно.
+>=100 - Ошибки вебклиента. Для мобильных клиентов возвращаться не должны.
+
+--Возвращаемый json:
+{'success': false,
+'error_code': 1,
+'message': "Error message."
+}
+В случае успеха:
+{'success': true}
 '''
     # check request type
     if request.method != 'POST':
@@ -271,9 +344,12 @@ image - фотография точки.\n
 
 
 def messages(request):
-    '''@brief Получение списка сообщений о состояниий заявленных точек.
-    GET: http://obike.by/api/messages?uid=<app_uid>
-В случае успеха возвращает {'success': True, 'messages': [{'id': <message_id>, 'message': <message_text>}]}
+    '''-Получение списка сообщений о состояниий заявленных точек.
+    GET: http://onbike.by/api/messages?uid=<app_uid>
+    --Возвращаемый json:
+    {'success': true,
+    'messages': [{'id': <message_id>, 'message': <message_text>}]
+    }
     '''
     messages = Message.objects.filter(app__uid=request.GET.get('uid'), state="f").values('message', 'id')
     return _generate_response(request, {'success': True,
@@ -282,58 +358,90 @@ def messages(request):
 
 @csrf_exempt
 def message_read(request):
-    '''@brief Изменение статуса сообщения на прочитанное.
-    POST: http://obike.by/api/messages/read
-    Параметры:
----
-id - ID точки(получен клиентом вместе с информацией о точке)\n
-uid - ключ для обратной связи(идентификатор клиента).\n
-Параметр "id" есть идентификатор собщения в списке полученных сообщений(см. "http://obike.by/api/messages?uid="<app_uid>).
+    '''-Изменение статуса сообщения на прочитанное.
+    POST: http://onbike.by/api/messages/read
+    --Параметры:
+    id - ID точки(получен клиентом вместе с информацией о точке)
+    uid - ключ для обратной связи(идентификатор клиента).
+    Параметр "id" есть идентификатор собщения в списке полученных сообщений(см. "http://obike.by/api/messages?uid="<app_uid>).
+    --Коды ошибок:
+    1 - Неверный тип запроса.
+    2 - Сообщение с указанным id не найдено.
+
+    --Возвращаемый json:
+    {'success': false,
+    'error_code': 1,
+    'message': "Incorrect method."
+    }
+    В случае успеха:
+    {'success': true}
     '''
+    
     if request.method != "POST":
         return _generate_response(request, {'success': False,
-                                 'error': "Incorrect method."})
+                                            'error_code': 1,
+                                            'message': "Incorrect method."
+                                            })
     res = {'success': True}
     if not Message.objects.filter(app__uid=request.POST.get('uid'),
                                   id=request.POST.get('id')).update(state='r'):
         res = {'success': False,
-               'error': 'Message with id=%s not exists.' % request.POST.get('id')}
+               'error_code': 2,
+               'message': 'Message with id=%s not exists.' % request.POST.get('id')}
     return _generate_response(request, res)
 
     
 @csrf_exempt
 def point_offer(request):
-    '''@brief Предложение по изменению информации о точке.
-    POST: http://obike.by/api/points/offer
-Параметры:
----
-id - ID точки(получен клиентом вместе с информацией о точке)\n
-uid - ключ для обратной связи(идентификатор клиента).\n
-description - что хотим предложить.\n
-image - фотография точки.
-'''
+    '''-Предложение по изменению информации о точке.
+    POST: http://onbike.by/api/points/offer
+    --Параметры:
+    id - ID точки(получен клиентом вместе с информацией о точке)
+    uid - ключ для обратной связи(идентификатор клиента).
+    description - что хотим предложить.
+    image - фотография точки.
+
+    --Коды ошибок:
+    1 - Неверный тип запроса.
+    2 - Клиент с указанным uid не инициализирован.
+    3 - Полу 'description' является обязательным.
+    4 - Указанная точка не найдена.
+
+    --Возвращаемый json:
+    {'success': false,
+    'error_code': 1,
+    'message': "Incorrect method."
+    }
+    В случае успеха:
+    {'success': true}
+    '''
     if request.method != "POST":
         return _generate_response(request, {'success': False,
-                                 'error': "Incorrect method."})
+                                            'error_code': 1,
+                                            'message': "Incorrect method."
+                                            })
 
     # check description
     description = request.POST.get('description', "").strip()
     if not description:
         return _generate_response(request, {'success': False,
-                                 'error': "Description is required."})
+                                            'error_code': 3,
+                                            'message': "Description is required."})
     # check app uid
     uid = request.POST.get('uid', '')
     #if Application.objects.filter(uid=uid).count() == 0 :
     if Application.objects.filter(uid=uid).count() == 0 or (uid == 'webclient' and not request.session.get('human')):
         return _generate_response(request, {'success': False,
-                                   'message': "Your client is not authorized."})
+                                            'error_code': 2,
+                                            'message': "Your client is not authorized."})
     # check point
     pid = request.POST.get('id', '')
     try:
         point = Point.objects.get(id=pid)
     except:
         return _generate_response(request, {'success': False,
-                                   'message': "Object not found."})
+                                            'error_code': 4,
+                                            'message': "Object not found."})
     
     res = {'success': True}
     app = Application.objects.get(uid=uid)
@@ -354,11 +462,27 @@ image - фотография точки.
 
 
 def tracks(request):
-    '''@brief Получение информации о доступных маршрутах.
-    GET: http://onbike.by/api/tracks?page=P&per_page=N
-GET-запрос может не содержать параметров.\n
-В случае отсутствия параметра page или не верного преобразования в целочисленное значение, будет возвращен список всех доступных точек.\n
-В случае отсутствия или неврно указанного параметра per_page значение по умолчанию принимается 10.\n
+    '''-Получение информации о доступных маршрутах.
+    GET: http://onbike.by/api/tracks?page=P&per_page=N&location=<id|name>&type=<type_text_id>&id=track_id
+    Запрос может не содержать параметров.\n
+    В случае отсутствия параметра page или не верного преобразования в целочисленное значение, будет возвращен список всех доступных точек.\n
+    В случае отсутствия или неврно указанного параметра per_page значение по умолчанию принимается 10.\n
+    --Возвращаемый json:
+    [{
+    "description": "Маршрут от ст.м. Каменная Горка до проспекта Независимости (в районе пересечения с ул.Городской Вал)",
+    "color": "#e67e22", <b>// - Цвет линии</b>
+    "type_slug": "track", <b>// - Идентификатор типа</b>
+    "video": "&lt;iframe width="560" height="315" src="http://www.youtube.com/embed/olq6cljXcRU" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;;", <b>// - Код для вставки видео</b>
+    "duration": "29 мин", <b>// - Длительность маршрута</b>
+    "id": 13, <br/>
+    "uid": "13-t", <b>// - Идентификатор для ссылки</b>
+    "marker_b": "/media/icons/pin-route-b.png", <b>// - Маркер начала</b>
+    "marker_a": "/media/icons/pin-route-a.png", <b>// - Маркер окончания</b>
+    "title": "Кунцевщина - Центр", <b>// - Наименование</b>
+    "route": [[1,2], ... ], <b>// - Список координат</b>
+    "type_name": "Маршруты", <b>// - Наимениванеи типа маршрута</b>
+    "type": ["t", "1"], <b>// - Код типа.</b>
+    }, ... ]
     '''
     acl = '0'
     if request.user.is_authenticated():
@@ -386,6 +510,12 @@ GET-запрос может не содержать параметров.\n
             kwargs['location_id'] = location
         else:
             kwargs['location__name'] = location
+    if 'id' in request.GET:
+        kwargs['id__in'] = request.GET.getlist('id')
+        
+    if 'type' in request.GET:
+        kwargs['type__slug'] = request.GET['type']
+
     tracks = Track.objects.filter(**kwargs)
     if page is not None:
         tracks = tracks[page * per_page:(page + 1) * per_page]

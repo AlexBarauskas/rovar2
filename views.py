@@ -9,6 +9,7 @@ import re
 
 from account.models import Author
 from map.models import *
+from api.utils import make_api_doc
 
 from django.contrib.auth.decorators import login_required
 
@@ -86,7 +87,11 @@ def info(request):
                                'show_left_panel': not request.GET.get('blank'),
                                'template_name': template_name},
                               context_instance=RequestContext(request))
-    
+
+def api_doc(request):
+    return render_to_response('api-doc.html',
+                              {'methods': make_api_doc()},
+                              context_instance=RequestContext(request))
 
 #from django.utils.http import is_safe_url
 from django.utils.translation import activate

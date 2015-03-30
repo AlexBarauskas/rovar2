@@ -18,6 +18,7 @@ urlpatterns = patterns(
     url(r'^manager/', include('manager.urls')),
     url(r'^map/', include('map.urls')),
     url(r'^blog/', include('blog.urls')),
+    url(r'^api/doc.html$', 'onbike.views.api_doc', name="api_doc"),
     url(r'^api/', include('api.urls')),
 
     url(r'^account/logout/$', 'django.contrib.auth.views.logout',

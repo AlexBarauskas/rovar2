@@ -59,6 +59,18 @@ class Type(models.Model):
     def get_slug(self):
         return IDSTYPE.get(self.id, 'other')
 
+    def marker_a(self):
+        if self.image:
+            return self.image.url
+        else:
+            return u'/static/images/Parking.png'
+            
+    def marker_b(self):
+        if self.image2:
+            return self.image2.url
+        else:
+            return self.marker_a()
+
     def __unicode__(self):
         return self.name
 
@@ -278,27 +290,31 @@ class Point(models.Model):
                  'title': translate.name or self.name,
                  'description': translate.description or self.description,
                  'id': self.id,
-                 'color': self.type.color,
-                 'marker': '/static/images/Parking.png',
-                 'marker_active': '/static/images/Parking.png',
                  'status': 'success',
                  'images': [ph.image.url for ph in  self.photo_set.all()],
                  'address': translate.address or self.address,
                  'uid': self.uid,
                  'type_slug': self.type.slug,
+                 'website': self.website,
+                 ##DEPRECATE
+                 'color': self.type.color,
+                 'marker': '/static/images/Parking.png',
+                 'marker_active': '/static/images/Parking.png',
                  'type_name': self.type.name,
-                 'website': self.website
+                 ####
                  }
         if self.phones:
             point['phones'] = self.phones
         else:
             point['phones'] = ''
+        ##DEPRECATE
         if self.type.image:
             point['marker'] = self.type.image.url
             point['marker_active'] = self.type.image.url
         if self.type.image2:
             point['marker_active'] = self.type.image2.url
         point['type'] = [self.type.obj, '%s' % self.type.id]
+        ####
         return point
 
     def define_location(self):
