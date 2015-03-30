@@ -28,8 +28,6 @@ OnbikeWidget = Class.extend(
 		 "extra_info": true,
 		 "popup": false
 	     };
-	 if(container_id[0] != '#')
-	     container_id = '#' + container_id;
 	 this._container = $(container_id);
 	 this._init_map();
 	 this._load_points();
@@ -84,7 +82,13 @@ OnbikeWidget = Class.extend(
 
 	 $('<h1>').text(data.title).appendTo(info_div);
 	 if(data.images && data.images.length){
-	     $('<img>').attr('src', this.host + data.images[0]).css({'float':'left','height':'100px','width':'auto'}).appendTo(info_div);
+	     var img = $('<img>').attr('src', this.host + data.images[0]).appendTo(info_div);
+	     if(this.options.popup){
+		 img.css({'width': '100%', 'height': 'auto;'});
+	     }
+	     else{
+		 img.css({'max-width': '95%', 'height': 'auto;'});
+	     }
 	 }
 	 $('<p>').text(data.description).appendTo(info_div).addClass(this._prefix + '-description');
 	 $('<p>').text(data.address).appendTo(info_div).addClass(this._prefix + '-address');
@@ -162,6 +166,7 @@ OnbikeWidget = Class.extend(
 );
 
 /* EXAMPLES*/
+/*
 var popup_base_css = "#onbikewidget-map{position:absolute;width:100%;height:100%;top:0;left:0;}.onbikewidget-point-info h1{font-size: 20px;}.onbikewidget-point-info p{font-size: 14px;margin:0;padding:0;}.onbikewidget-point-info img{margin:10px;}";
 var top_popup_base_css = ".onbikewidget-point-info{display:none;}.onbikewidget-point-info.current{display: block;}#onbikewidget-info{left:0;top:0;z-index: 10;position: absolute;background-color: rgba(255,255,255,0.5);width: 70%;margin-left:40px;padding:5px;max-width:400px;}#onbikewidget-map{position:absolute;width:100%;height:100%;top:0;left:0;}.onbikewidget-point-info img{margin:10px;}";
 var embed_css = ".onbikewidget-point-info img{margin:10px;}.onbikewidget-point-info{margin:10px; padding:10px;border:solid 1px #999;}.onbikewidget-point-info.current{background-color:#fdfdfd;}";
@@ -185,3 +190,4 @@ var options = {location : {
 
 var ow = new OnbikeWidget("widget-example", options, 'http://onbike.by');
 ow._request('locations', {}, function(data){console.log(data);});
+*/

@@ -162,6 +162,7 @@ INSTALLED_APPS = (
     'account',
     'blog',
     'api',
+    'developers',
 )
 
 # A sample logging configuration. The only tangible logging

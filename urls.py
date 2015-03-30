@@ -12,7 +12,6 @@ urlpatterns = patterns(
     url(r'^$', 'onbike.views.home', name='home'),
     
     url(r'^info/$', 'onbike.views.info', name='info'),
-    url(r'^widget/$', 'onbike.views.widget', name='widget_examle'),
     url(r'^language/$', 'onbike.views.set_language', name='set_language'),
     url(r'^location$', 'onbike.views.set_location', name='set_location'),
     url(r'^manager/', include('manager.urls')),
@@ -20,6 +19,7 @@ urlpatterns = patterns(
     url(r'^blog/', include('blog.urls')),
     url(r'^api/doc.html$', 'onbike.views.api_doc', name="api_doc"),
     url(r'^api/', include('api.urls')),
+    url(r'^dev/', include('developers.urls')),
 
     url(r'^account/logout/$', 'django.contrib.auth.views.logout',
         { 'next_page' : '/' }, name="logout"),

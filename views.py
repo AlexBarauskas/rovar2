@@ -120,9 +120,3 @@ def set_location(request):
     request.session['change_location'] = True
     return response
     
-
-@login_required
-def widget(request):
-    return render_to_response('widget.html',
-                              {'show_left_panel': True},
-                              context_instance=RequestContext(request))
