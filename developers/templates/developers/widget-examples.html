@@ -1,24 +1,11 @@
-{% extends 'base.html' %}
+{% extends 'developers/base.html' %}
 
-{% block css %}
-<style>
-</style>
-
-{% endblock css %}
-
-
-{% block menu %}
-{% if show_left_panel %}
-{{block.super}}
-{% endif %}
-{% endblock menu %}
-
-{%if type == 'map-embed'%}
 {% block content_left %}
-<div style="height:75px;"></div>
+{{block.super}}
+{%if type == 'embed' or type == 'embed-one'%}
 <div id="onbikewidget-info"></div>
-{% endblock content_left %}
 {%endif%}
+{% endblock content_left %}
 
 {% block content_right %}
 <div class="data-content" {% if not show_left_panel %}style="margin-left:0px;"{%else%}style="height:100%;"{% endif %}>
@@ -33,5 +20,6 @@
 {% endblock content_right %}
 
 {% block js %}
+{{block.super}}
 <script type="text/javascript" src="/dev/widget/onbike.js?data={{data}}"></script>
 {% endblock js %}

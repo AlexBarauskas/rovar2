@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block content_left %}
+<style>
+#dev-menu {font-size: 24px;}
+#dev-menu ul{margin-left:10px;margin-top:10px;font-size:0.8em;}
+#dev-menu ul li {margin-bottom:10px;}
+#dev-menu ul li a{text-decoration:none; display:inline-block;width:100%;height:100%;color:#666;}
+#dev-menu ul li a:hover{color:#e95d24}
+#dev-menu li.hide ul{display:none;}
+
+
+#onbikewidget-info h1 {padding: 20px 16px 0px 16px;font-size: 20px;font-weight: normal;color:#e95d24;}
+
+#onbikewidget-info .onbikewidget-address {color: #a7a7a7;margin: 8px 16px 20px 16px;}
+
+#onbikewidget-info .onbikewidget-description, #onbikewidget-info .onbikewidget-phones {margin: 20px 16px 30px 16px;}
+
+.data-content #onbikewidget-info p {margin: 0;font-size:16px;padding:10px 10px 0;}
+
+</style>
+<div style="height:75px;"></div>
+<div id="dev-menu">
+  <ul>
+    <li>
+      <a href="#">Что это такое?</a>
+    </li>
+    <li class="hide">
+      <a href="javascript:;">Как это выглядит.</a>
+      <ul>
+	<li><a href="{% url widget_examle %}">Встплывающий блок на карте</a></li>
+	<li><a href="{% url widget_examle %}?type=map-embed">Статический блок на карте</a></li>
+	<li><a href="{% url widget_examle %}?type=embed">Полный список точек</a></li>
+	<li><a href="{% url widget_examle %}?type=embed-one">Информация по активной точке</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#">
+	Настроить виджет
+      </a>
+    </li>
+    <li>
+      <a href="#">
+	Обратная связь
+      </a>
+    </li>
+  </ul>
+</div>
+
+{% endblock content_left %}
+
+{% block js %}
+<script>
+  $(function(){
+  $("#dev-menu a[href=\"javascript:;\"]").click(function(){
+  if($(this).parent().attr('class') == 'hide'){$(this).parent().removeClass('hide');}else{$(this).parent().addClass('hide');}
+  })
+});
+</script>
+{% endblock js %}

@@ -8,10 +8,10 @@ OnbikeWidget = Class.extend(
 
      init: function(container_id, options, host){
 	 this._prefix = 'onbikewidget';
-	 if(typeof host != 'undefined')
-	     this.host = host;
-	 else
-	     this.host = 'http://onbike.by';
+	 //if(typeof host != 'undefined')
+	 //    this.host = host;
+	 //else
+	 this.host = 'http://onbike.by';
 	 this.api_url = '/api/';
 	 if(typeof options != 'undefined')
 	     this.options = options;
@@ -81,19 +81,20 @@ OnbikeWidget = Class.extend(
 	 var info_div = $('<div>').attr('id', this._prefix + '-point-' + data.id.toString()).attr('data', data.id).addClass(this._prefix + '-point-info').css('cursor', 'pointer');
 
 	 $('<h1>').text(data.title).appendTo(info_div);
+	 $('<p>').text(data.address).appendTo(info_div).addClass(this._prefix + '-address');
 	 if(data.images && data.images.length){
 	     var img = $('<img>').attr('src', this.host + data.images[0]).appendTo(info_div);
 	     if(this.options.popup){
 		 img.css({'width': '100%', 'height': 'auto;'});
 	     }
 	     else{
-		 img.css({'max-width': '95%', 'height': 'auto;'});
+		 img.css({'max-width': '100%', 'height': 'auto;'});
 	     }
 	 }
-	 $('<p>').text(data.description).appendTo(info_div).addClass(this._prefix + '-description');
-	 $('<p>').text(data.address).appendTo(info_div).addClass(this._prefix + '-address');
-	 
-	 $('<p>').text(data.phones).appendTo(info_div).addClass(this._prefix + '-phones');
+	 if(data.description)
+	     $('<p>').text(data.description).appendTo(info_div).addClass(this._prefix + '-description');
+	 if(data.phones)
+	     $('<p>').text(data.phones).appendTo(info_div).addClass(this._prefix + '-phones');
 	 $('<div>').css({'clear': 'both','height': '10px'}).appendTo(info_div);
 	 
 

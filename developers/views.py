@@ -26,10 +26,10 @@ def widget(request):
     widget_type = request.GET.get('type', 'popup')
     if widget_type == 'map-embed':
         data["popup"] = False
-        data["css"] = ".onbikewidget-point-info{display:none;}.onbikewidget-point-info.current{display: block;}#onbikewidget-info{left:0;top:0;z-index: 10;position: absolute;background-color: rgba(255,255,255,0.5);width: 70%;margin-left:40px;padding:5px;max-width:400px;}#onbikewidget-map{position:absolute;width:100%;height:100%;top:0;left:0;}.onbikewidget-point-info img{margin:10px;}"
+        data["css"] = ".onbikewidget-point-info{display:none;}.onbikewidget-point-info.current{display: block;}#onbikewidget-info{left:0;top:0;z-index: 10;position: absolute;background-color: rgba(255,255,255,0.7);width: 70%;margin-left:40px;padding:5px;max-width:300px;}#onbikewidget-map{position:absolute;width:100%;height:100%;top:0;left:0;}"
     elif widget_type == 'embed':
         data["popup"] = False
-        data["css"] = ".onbikewidget-point-info{border:solid 1px #999;}.onbikewidget-point-info.current{background-color:#ccc;}"
+        data["css"] = ".onbikewidget-point-info{border:solid 1px #ddd;}.onbikewidget-point-info.current{background-color:#eee;}"
         root = "body"
     elif widget_type == 'embed-one':
         data["popup"] = False
