@@ -8,14 +8,13 @@
 {% endblock content_left %}
 
 {% block content_right %}
-<div class="data-content" {% if not show_left_panel %}style="margin-left:0px;"{%else%}style="height:100%;"{% endif %}>
+<div class="data-content" style="height:100%;">
   <div id="widget-example" style="height:100%;">
     {%if type == 'map-embed'%}
     <div id="onbikewidget-info"></div>
     {%endif%}
     <div id="onbikewidget-map" style="width:100%; height:100%"></div>
   </div>
-  
 </div>
 {% endblock content_right %}
 

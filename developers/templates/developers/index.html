@@ -1,0 +1,80 @@
+{% extends 'developers/base.html' %}
+
+{% block content_right %}
+<style>
+  .data-content ol{list-style: decimal inside none;}
+  .data-content ul{list-style: disc inside none;}
+  .data-content ul, .data-content ol{margin-left:1em;font-size:0.8em;line-height:1.5em;}
+  #integration-types{list-style:none; margin:0; padding:0;}
+  #integration-types li{float:left;margin:0;padding:0;display:block;width:50%; min-width:40em;cursor:pointer;}
+  #integration-types li>a{display: block;background-color: #eee;border-radius: 0.25em 0.25em 0.25em 0.25em;margin: 1em;padding: 1em;text-decoration:none;color:#333;}
+  #integration-types li img{width:8em; height:auto;float:left;padding:1em;}
+  #integration-types li p{text-align:justify;font-size:1em;}
+</style>
+<div class="data-content" style="min-height:100%;">
+  <div style="padding:30px;">
+    <h1>Виджет <b>onbike</b> на Вашем сайте.</h1>
+    <p>
+      Мы создаём велосипедную карту города, с помощью которой можно будет легко понять, по какому маршруту лучше добраться до работы, съездить в гости или провести велосипедную экскурсию для иностранных гостей.
+    </p>
+    <p>
+      Неотъемлемой частью этой карты являются такие важные объекты как:
+      <ul>
+	<li><b>Вело-магазины</b> - каждый велосипедист должен знать хороший вело-магазин!</li>
+	<li><b>Вело-прокаты</b> - человек хочет составить вам компанию на велопрогулке, но у него нет велосипеда... Ничего можно найти временный вариант!</li>
+	<li><b>Сервисы</b> - Ваш конь Вас подвел? Ничего страшного исправим, главное найти хорошего и ответственного мастера</li>
+      </ul>
+    </p>
+    <p>
+      Мы хотим, чтобы наш сервис приносил пользу не только для велосипедистов, но и для тех, кто предоставляет нам возможность пользоваться этим великолепным изобретением. Поэтому, мы предоставляем для владельцев магазинов, прокатов и сервисов удобную интеграцию с нашей картой.
+    </p>
+    <p>
+      Что используете на странице контактов своего сайта? GoogleMaps? Карты Yandex? Просто скриншот? ... Мы можем вам предложить альтернативу! Что для этого нужно сделать?
+      <ol>
+	<li>Добавьте информацию о Ваших объектах на нашу карту</li>
+	<li>Настройте виджет для себя</li>
+	<li>Вставьте небольшой html-код на свою страницу</li>
+	<li>Критикуйте или наслаждайтесь!</li>
+      </ol>
+    </p>
+    <h2>Как это может выглядеть?</h2>
+    <p>Мы представляем четыре базовых вида интеграции</p>
+    <ul id="integration-types">
+      <li>
+	<a href="{% url widget_examle %}" target="blank">
+	  <h3>Popup на карте.</h3>
+	  <img src="/static/dev/img/popup.png"/>
+	  <p>При клике на определенный объект на карте, информация о нем отображается в сплывающем окне на карте.</p>
+	  <div class="clear"></div>
+	</a>
+      </li>
+      <li>
+	<a href="{% url widget_examle %}?type=map-embed" target="blank">
+	  <h3>Фиксированный блок на карте.</h3>
+	  <img src="/static/dev/img/map-embed.png"/>
+	  <p>При клике на определенный объект на карте, информация о нем отображается в фиксированном блоке на карте, который по умлочанию расположен в левом верхнем углу карты.</p>
+	  <div class="clear"></div>
+	</a>
+      </li>
+      <li>
+	<a href="{% url widget_examle %}?type=embed-one" target="blank">
+	  <h3>Отображение информации о активном объекте.</h3>
+	  <img src="/static/dev/img/embed-one.png"/>
+	  <p>При клике на определенный объект на карте, информация о нем отображается  в определенном вами месте страницы.</p>
+	  <div class="clear"></div>
+	</a>
+      </li>
+      <li>
+	<a href="{% url widget_examle %}?type=embed" target="blank">
+	  <h3>Отображение информации о всех объектах.</h3>
+	  <img src="/static/dev/img/embed.png"/>
+	  <p>Информация о всех объектах отображается в определенном вами месте страницы. При клике на блок с информацией по объекту карта фокусируется на нужную точку. При клике на объект на карте подсвечивается нужный блок с информацией о точке.</p>
+	  <div class="clear"></div>
+	</a>
+      </li>
+    </ul>
+    <div class="clear"></div>
+    
+  </div>
+</div>
+{% endblock content_right %}
