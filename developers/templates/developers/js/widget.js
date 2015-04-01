@@ -49,7 +49,7 @@ OnbikeWidget = Class.extend(
 	 var location = new L.LatLng(this.options.location.center[0], this.options.location.center[1]);
 	 this.map = new L.Map(this._prefix + '-map');
 	 this.map = this.map.setView(location, this.options.location.zoom);
-	 L.tileLayer('//onbike.by/map/tile/{z}/{x}/{y}.png',
+	 L.tileLayer('http://onbike.by/map/tile/{z}/{x}/{y}.png',
 	     {attribution: self.copyright,
 	      key: 'BC9A493B41014CAABB98F0471D759707',
 	      minZoom: 12
@@ -63,12 +63,12 @@ OnbikeWidget = Class.extend(
 
      add_point_to_map: function(data){
 	 data.unactiveIcon = new L.icon(
-	     {iconUrl: data.marker,
+	     {iconUrl: this.host + data.marker,
 	      iconSize: [this._iconSize, this._iconSize],
 	      iconAnchor: [this._iconSize*this._kLeft, this._iconSize/2]
 	     });
 	 data.activeIcon = new L.icon(
-	     {iconUrl: data.marker_active,
+	     {iconUrl: this.host + data.marker_active,
 	      iconSize: [this._iconSize, this._iconSize],
 	      iconAnchor: [this._iconSize*this._kLeft, this._iconSize]
 	     });

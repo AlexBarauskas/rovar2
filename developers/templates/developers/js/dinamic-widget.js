@@ -16,7 +16,7 @@ function _onbike_init(){
     var l = document.createElement('link');
     l.type = "text/css";
     l.rel = "stylesheet";
-    l.href = "/static/leaflet73/leaflet.css";
+    l.href = host+"/static/leaflet73/leaflet.css";
     var h=document.getElementsByTagName('head')[0].childNodes[0];
     h.parentNode.insertBefore(l,h);
     
