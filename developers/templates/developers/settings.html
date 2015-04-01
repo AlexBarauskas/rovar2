@@ -1,52 +1,81 @@
 {% extends 'developers/base.html' %}
+
+{% block css %}
+<link type="text/css" href="/static/leaflet73/leaflet.css" rel="stylesheet"/>
+<style>
+.top-allert{
+  position: absolute;
+  font-size: 1.4em;
+  top: 2em;
+  left: 10%;
+  width: 80%;
+  padding: 1em 0em;
+  background-color: rgba(128,255,128,0.8);
+  z-index: 100;
+  text-align: center;
+  border-radius: 5px;
+}
+</style>
+{% endblock css %}
+
 {% block content_right %}
 <div class="data-content" style="height:100%;">
-    <div style="padding:30px;">
-      <h1>Настройка виджета</h1>
-      <p>На данной странице Вы можете сгенерировать html-код для вставки виджета на страницу Вашего сайта.</p>
-      <form method="post" action=".">
-	<div class="form-field">
-	  <label for="id_location">Город:</label>
-	  <select id="id_location" name="location">
-	    {%for l in locations%}<option value="{{l.name}}"{%if l.default%} selected{%endif%}>{{l}}</option>{%endfor%}
-	  </select>
+  <div style="padding:30px;">
+    <h1>Настройка виджета</h1>
+    <p>На данной странице Вы можете сгенерировать html-код для вставки виджета на страницу Вашего сайта.</p>
+    <form method="post" action=".">
+      <div class="form-field">
+	<label for="id_location">Город:</label>
+	<select id="id_location" name="location">
+	  {%for l in locations%}<option value="{{l.name}}"{%if l.default%} selected{%endif%}>{{l}}</option>{%endfor%}
+	</select>
+      </div>
+      <div class="form-field">
+	<label>Список точек:</label>
+	<div class="list-values" style="display:inline;">
+	  <input type="text" name="ids" value=""/>
 	</div>
-	<div class="form-field">
-	  <label>Список точек:</label>
-	  <div class="list-values" style="display:inline;">
-	    <input type="text" name="ids" value=""/>
-	  </div>
-	  <a class="btn" href="javascript:;" id="add-url">Добавить с помощью URL.</a>
-	  <a class="btn" href="javascript:;" id="add-from-map">Добавить с карты.</a>
-	</div>
-	<div class="form-field">
-	  <label for="id_type">Тип интеграции:</label>
-	  <select id="id_type" name="type">
-	    <option value="popup">Popup на карте.</option>
-	    <option value="map-embed">Фиксированный блок на карте.</option>
-	    <option value="embed-one">Отображение информации о активном объекте.</option>
-	    <option value="embed">Отображение информации о всех объектах.</option>
-	  </select>
-	</div>
-	<input type="hidden" name="default-point" value=""/>
-	{% csrf_token %}
-	<div class="btn-box">
-	  <button class="btn">Сгенерировать код.</button>
-	</div>
-      </form>
-      <div id="popup-add-from-url" style="position:fixed;display:none;width:400px;height:auto;top: 0;left: 0;z-index: 10;background-color:#f9f9f9;padding:2em;border-radius:4px;">
-	<h1>Добавить точку</h1>
-	<div class="form-field">
-	  <lable>URL</lable>
-	  <input type="text" value="" name="from-url" style="width:270px;"></input>
-	  <a class="btn" hrep="javascript:;">Ok</a>
-	<div class="form-field">
+	<a class="btn" href="javascript:;" id="add-url">Добавить с помощью URL.</a>
+	<a class="btn" href="javascript:;" id="add-from-map">Добавить с карты.</a>
+      </div>
+      <div class="form-field">
+	<label for="id_type">Тип интеграции:</label>
+	<select id="id_type" name="type">
+	  <option value="popup">Popup на карте.</option>
+	  <option value="map-embed">Фиксированный блок на карте.</option>
+	  <option value="embed-one">Отображение информации о активном объекте.</option>
+	  <option value="embed">Отображение информации о всех объектах.</option>
+	</select>
+      </div>
+      <input type="hidden" name="default-point" value=""/>
+      {% csrf_token %}
+      <div class="btn-box">
+	<button class="btn">Сгенерировать код.</button>
+      </div>
+    </form>
+
+    <div id="popup-add-from-url" style="position:fixed;display:none;height:auto;top: 0;left: 0;z-index: 10;background-color:#f9f9f9;padding:2em;border-radius:4px;">
+      <h1>Добавить точку</h1>
+      <div class="form-field">
+	<lable>URL</lable>
+	<input type="text" value="" name="from-url" style="width:270px;"></input>
+	<a class="btn add" hrep="javascript:;">Ok</a>
       </div>
     </div>
+  </div>
 </div>
+<div id="popup-add-from-map" style="position:absolute;width:1000px;height:auto;z-index:10;background-color:#f9f9f9;padding:0;border-radius:4px;top:-1000px;">
+  <iframe src="{% url short_home %}" style="width:100%;height:600px;"></iframe>
+  <div style="padding:20px;text-align: center;">
+    <a class="btn add" href="javascript:;">Добавить выбранную точку</a>
+    <a class="btn btn-close" href="javascript:;">Закрыть</a>
+  </div>
+</div>
+<div class="top-allert" style="display:none"></div>
 {% endblock content_right %}
 
 {% block js %}
 {{block.super}}
 <script type="text/javascript" src="/static/js/developer.js"></script>
+
 {% endblock js %}
