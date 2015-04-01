@@ -10,6 +10,7 @@ admin.autodiscover()
 urlpatterns = patterns(
     '',
     url(r'^$', 'onbike.views.home', name='home'),
+    url(r'^short-home/$', 'onbike.views.short_home', name='short_home'),
     
     url(r'^info/$', 'onbike.views.info', name='info'),
     url(r'^language/$', 'onbike.views.set_language', name='set_language'),

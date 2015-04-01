@@ -84,7 +84,7 @@ def url_to_id(request):
         return HttpResponse(json.dumps({'point': None,
                                         'success': False,
                                         'message': u'Точка не найдена'}),
-                            content_type = "text/html"
+                            content_type = "text/json"
                             )
     ptype, uid = point[0]
     
@@ -97,11 +97,11 @@ def url_to_id(request):
         return HttpResponse(json.dumps({'point': None,
                                         'success': False,
                                         'message': u'Точка не найдена'}),
-                            content_type = "text/html"
+                            content_type = "text/json"
                             )
     return HttpResponse(json.dumps({'point': {'id': point.id, 'title': point.name},
                                     'success': True,
-                                    'message': ''}),
+                                    'message': u'Точка "%s" добавлена в список' % point.name}),
                         content_type = "text/json"
                         )
 

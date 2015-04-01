@@ -13,7 +13,36 @@ from api.utils import make_api_doc
 
 from django.contrib.auth.decorators import login_required
 
-#@login_required
+def short_home(request):
+    acl = '0'
+    if request.user.is_authenticated():
+        acl = '1'
+        if request.user.is_staff:
+            acl = '2'
+    l_name = request.GET.get('location', u'Minsk')
+    try:
+        location = Location.objects.get(name=l_name)
+    except Location.DoesNotExist:
+        try:
+            location = Location.objects.filter(default=True)[0]
+        except:
+            location = Location.objects.all()[0]
+    template_name = 'info/content-%s.html' % translation.get_language()
+    if not os.path.exists(os.path.join(settings.TEMPLATE_DIRS[0], template_name)):
+        template_name = 'info-content.html'
+    types = Type.objects.all()
+    return render_to_response('short-home.html',
+                              {
+                                  'authors': Author.objects.all(),
+                                  'template_name': template_name,
+                                  'types': types,
+                                  'location': location,
+                                  'locations': Location.objects.all()
+                               },
+                              context_instance=RequestContext(request))
+    
+    
+
 def home(request, uid=None, slug=None):
     request.session['human'] = True;
     acl = '0'
@@ -72,8 +101,9 @@ def home(request, uid=None, slug=None):
                                   'obj': obj,
                                   'authors': Author.objects.all(),
                                   'template_name': template_name,
+                                  'locations_dropdown': True,
                                   'location': location,
-                                  'locations': Location.objects.all()#.values("name", "display_name")
+                                  'locations': Location.objects.all()
                                },
                               context_instance=RequestContext(request))
 

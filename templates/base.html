@@ -73,7 +73,7 @@
           </h1>
           <div id="type" class="type"></div>
 
-	  {% if location %}
+	  {% if locations_dropdown%}
 	  <div id="locations" class="dropdown">
 	    <div>
 	      {{location.display_name}}
@@ -94,6 +94,7 @@
 	{% endblock content_left %}
 	<div id="main-panel-blank"></div>
       </div>
+      {% block applinks %}
       <div id="app-links">
 	<img style="float:left" src="/static/images/sidebar_app_icon_ios.png"/>
 	<div>
@@ -102,6 +103,8 @@
 	</div>
 	<div class="clear"></div>
       </div>
+      {% endblock applinks %}
+      {% block footer %}
       <div class="footer">
 	<ul>
 	  <li><a class="left" href="/info/">{% trans "О проекте" %}</a></li>
@@ -114,7 +117,7 @@
 	  {% endcomment %}
 	</ul>
       </div>
-
+      {% endblock footer %}
     </div>
     
 
@@ -134,6 +137,7 @@
 
     <script type="text/javascript">
       $('#info').click(function(ev){
+      console.log(ev);
       var data_box = $('#map');
       var infoIF  = $('#info-iframe');
       if(infoIF.length!=0){

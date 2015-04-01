@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load cache %}
+{% load i18n %}
+
+{% block css %}
+<link type="text/css" href="/static/leaflet73/leaflet.css" rel="stylesheet"/>
+{% endblock css %}
+
+{% block preload %}
+<div style="position:absolute; top:-5000px">
+  {%for T in types%}
+  {%if T.count_items%}
+  {%if T.image%}
+  <img src="{{T.image.url}}"/>
+  {%endif%}
+  {%if T.image2%}
+  <img src="{{T.image2.url}}"/>
+  {%endif%}
+  {%endif%}
+  {%endfor%}
+  <img src="/static/icons/pin-add.png"/>
+</div>
+{% endblock preload %}
+
+{% block menu %}
+{% endblock menu %}
+
+{% block content_left %}
+{% get_available_languages as LANGUAGES %}
+<div style="height:75px;"></div>
+<div class="preview">
+  <div class="preview-content"></div>
+  <div id="disqus_thread" style="display:none"></div>
+</div>
+<div class="section views">
+  <h1>{% trans "Показывать на карте:" %}</h1>
+  <ul id="type-btns" class="control">
+    {%for T in types%}
+    <li id="{{T.slug}}" class="type-all" style="display:none;">
+      <span style="background-color:{{T.color}}">{% trans T.name %}</span>
+      <span style="color:{{T.color}}" class="number">0</span>
+    </li>
+    {%endfor%}
+  </ul>
+</div>
+{% endblock content_left %}
+
+{% block applinks %}
+{% endblock applinks %}
+
+{% block footer %}
+{% endblock footer %}
+
+{% block content_right %}
+{%cache 600 "info_content" LANGUAGE_CODE%}
+<div class="data-content info-iframe" style="">
+  <div id="info-iframe">
+    <div style="padding:30px">
+      {%include template_name%}
+      <div class="authors">
+	{% for a in authors %}
+	<div class="authors-item">
+	  <img src="{{a.image.url}}"/>
+	  <h1>{{a.name}}</h1>
+	  <div>{{a.description|safe}}</div>
+	</div>    
+	{% endfor %}
+      </div>
+      <div id="info-share-btns">
+	<div>
+	  <div class="fb-share-button" data-href="http://onbike.by" data-width="64" data-type="box_count"></div>
+	</div>
+	<div style="top:4px">
+	  <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://onbike.by" data-via="your_screen_name" data-lang="en" data-related="anywhereTheJavascriptAPI" data-count="vertical">Tweet</a>
+	</div>
+      </div>
+    </div>
+  </div>
+</div>
+{%endcache%}
+<div id="map" class="data-content" style="padding:0;"></div>
+{% endblock content_right %}
+
+{% block js %}
+<script type="text/javascript" src="/static/js/jquery.inputmask.js"></script>
+<script type="text/javascript" src="/static/js/jquery.inputmask.extensions.js"></script>
+<script type="text/javascript" src="/static/leaflet73/leaflet-src.js"></script>
+<script type="text/javascript" src="/static/leaflet73/leaflet.js"></script>
+<script type="text/javascript" src="/static/js/moxie/moxie.min.js"></script>
+<script type="text/javascript" src="/static/js/customupload.js"></script>
+<script type="text/javascript" src="/static/js/map.api.translate.js"></script>
+<script type="text/javascript" src="/static/js/map.api.js"></script>
+{% endblock js %}
