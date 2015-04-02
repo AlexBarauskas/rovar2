@@ -6,8 +6,7 @@ settings_local.py
 *#
 
 # Media
-media/photos/*
-media/thubnails/*
+media/*
 
 # DB
 rovar.db
