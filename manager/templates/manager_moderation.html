@@ -62,9 +62,9 @@
 
   {%comment%}
   <ul class="filter-links">
-    <li style="width:100px;padding:10px;float:left;text-align:center;"><a  style="cursor:pointer;text-decoration:none;color:#333;font-weight:bold;{%if cur_type == "all"%}color:orange;{%endif%}" href="{%url moderation_objects%}?state={{cur_state}}">All</a></li>
+    <li style="width:100px;padding:10px;float:left;text-align:center;"><a  style="cursor:pointer;text-decoration:none;color:#333;font-weight:bold;{%if cur_type == "all"%}color:orange;{%endif%}" href="{%url 'moderation_objects'%}?state={{cur_state}}">All</a></li>
     {%for t in types%}
-    <li style="width:100px;padding:10px;float:left;text-align:center;border-left:solid 1px"><a style="cursor:pointer;text-decoration:none;color:#333;font-weight:bold;{%if cur_type == t.slug%}color:orange;{%endif%}" href="{%url moderation_objects %}?type={{t.slug}}&state={{cur_state}}">{{t.name}}</a></li>
+    <li style="width:100px;padding:10px;float:left;text-align:center;border-left:solid 1px"><a style="cursor:pointer;text-decoration:none;color:#333;font-weight:bold;{%if cur_type == t.slug%}color:orange;{%endif%}" href="{%url 'moderation_objects' %}?type={{t.slug}}&state={{cur_state}}">{{t.name}}</a></li>
     {%endfor%}
     <li class="clear"></li>
   </ul>
@@ -93,9 +93,9 @@
     {% for obj in objects%}
     <tr>
       {%if obj.point%}
-      <td><a href="{% url moderation_object obj.id %}">{{obj.point.name}}</a></td>
+      <td><a href="{% url 'moderation_object' obj.id %}">{{obj.point.name}}</a></td>
       {%else%}
-      <td><a href="{% url moderation_object obj.id %}">{{obj.track.name}}</a></td>
+      <td><a href="{% url 'moderation_object' obj.id %}">{{obj.track.name}}</a></td>
       {%endif%}
       <td>{%if obj.method == 'a'%}Добавление{%else%}Изменение{%endif%}</td>
       <td>{{obj.get_state_display}}</td>

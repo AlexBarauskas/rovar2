@@ -44,7 +44,7 @@
 </form>
 <div class="clear" style="height:20px;"></div>
 <div class="button-box">
-  <a  class="btn success" href="{% url point-add %}">Добавить пункт</a>
+  <a  class="btn success" href="{% url 'point-add' %}">Добавить пункт</a>
 </div>
 <table>
   <thead>
@@ -63,15 +63,15 @@
       <td>{{p.name}}</td>
       <td>{{p.created}}</td>
       <td>{{p.type}}</td>
-      <td><a title="Редактировать расширенное описание пункта" class="icon-btn" href="{% url post-edit-point p.id %}"><img src="/static/icons/edit_post.png"/></a></td>
-      <td><a title="Редактировать информацию о пункту" class="icon-btn" href="{% url point-edit p.id %}"><img src="/static/icons/edit.png"/></a></td>
+      <td><a title="Редактировать расширенное описание пункта" class="icon-btn" href="{% url 'post-edit-point' p.id %}"><img src="/static/icons/edit_post.png"/></a></td>
+      <td><a title="Редактировать информацию о пункту" class="icon-btn" href="{% url 'point-edit' p.id %}"><img src="/static/icons/edit.png"/></a></td>
       <td><img title="Удалить пункт" id="{{p.id}}" class="delete icon-btn" src="/static/icons/delete.png"/></td>
     </tr>
     {% endfor %}
   </tbody>
 </table>
 <div class="button-box">
-  <a  class="btn success" href="{% url point-add %}">Добавить пункт</a>
+  <a  class="btn success" href="{% url 'point-add' %}">Добавить пункт</a>
 </div>
 
 

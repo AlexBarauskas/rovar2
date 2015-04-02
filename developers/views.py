@@ -18,7 +18,6 @@ def index(request):
                               context_instance=RequestContext(request))
     
 
-@login_required
 def widget(request):
     data = {"location" : {"name": "Минск",
                           "bounds": [[53.73909273331522,27.24485246663044],[54.06090726668478,27.888481533369557]],

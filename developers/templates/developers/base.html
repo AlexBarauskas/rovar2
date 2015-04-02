@@ -27,19 +27,19 @@
 <div id="dev-menu">
   <ul>
     <li>
-      <a href="{% url dev_index %}"{%if menu_item.0 == 'index'%} class="active"{%endif%}>Что это такое? </a>
+      <a href="{% url 'dev_index' %}"{%if menu_item.0 == 'index'%} class="active"{%endif%}>Что это такое? </a>
     </li>
     <li{%if menu_item.0 != 'examples'%}  class="hide"{%endif%}>
       <a href="javascript:;" class="more{%if menu_item.0 == 'examples'%} active{%endif%}"> Как это выглядит.</a>
       <ul>
-	<li><a href="{% url widget_examle %}"{%if menu_item.1 == 'popup'%} class="active"{%endif%}>Встплывающий блок на карте</a></li>
-	<li><a href="{% url widget_examle %}?type=map-embed"{%if menu_item.1 == 'map-embed'%} class="active"{%endif%}>Статический блок на карте</a></li>
-	<li><a href="{% url widget_examle %}?type=embed"{%if menu_item.1 == 'embed'%} class="active"{%endif%}>Полный список точек</a></li>
-	<li><a href="{% url widget_examle %}?type=embed-one"{%if menu_item.1 == 'embed-one'%} class="active"{%endif%}>Информация по активной точке</a></li>
+	<li><a href="{% url 'widget_examle' %}"{%if menu_item.1 == 'popup'%} class="active"{%endif%}>Встплывающий блок на карте</a></li>
+	<li><a href="{% url 'widget_examle' %}?type=map-embed"{%if menu_item.1 == 'map-embed'%} class="active"{%endif%}>Статический блок на карте</a></li>
+	<li><a href="{% url 'widget_examle' %}?type=embed"{%if menu_item.1 == 'embed'%} class="active"{%endif%}>Полный список точек</a></li>
+	<li><a href="{% url 'widget_examle' %}?type=embed-one"{%if menu_item.1 == 'embed-one'%} class="active"{%endif%}>Информация по активной точке</a></li>
       </ul>
     </li>
     <li>
-      <a href="{% url widget_settings %}"{%if menu_item.0 == 'settings'%} class="active"{%endif%}>
+      <a href="{% url 'widget_settings' %}"{%if menu_item.0 == 'settings'%} class="active"{%endif%}>
 	Настроить виджет
       </a>
     </li>

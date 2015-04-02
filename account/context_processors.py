@@ -4,7 +4,7 @@ from django.core.exceptions import ObjectDoesNotExist
 def get_account(request):
     if request.user and request.user.is_authenticated():
         try:
-            account = request.user.get_profile()
+            account = request.user.account_set.get() #get_profile()
         except ObjectDoesNotExist:
             user = request.user
             account = Account(user=user, name='%s %s' % (user.first_name,

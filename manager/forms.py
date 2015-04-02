@@ -10,6 +10,7 @@ from blog.models import Post
 class TypeForm(forms.ModelForm):
     class Meta:
         model = Type
+        exclude = tuple()
 
 
 class TrackForm(forms.ModelForm):

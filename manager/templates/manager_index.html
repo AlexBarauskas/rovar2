@@ -9,7 +9,7 @@
     <ul>
       {% get_available_languages as LANGUAGES %}
       {%for c, t in LANGUAGES%}
-      <li><a style="font-size:1.25em" href="{% url info_edit%}?language={{c}}">{{t}}</a></li>
+      <li><a style="font-size:1.25em" href="{% url 'info_edit'%}?language={{c}}">{{t}}</a></li>
       {%endfor%}
     </ul>
   </div>

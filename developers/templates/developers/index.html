@@ -41,7 +41,7 @@
     <p>Мы представляем четыре базовых вида интеграции</p>
     <ul id="integration-types">
       <li>
-	<a href="{% url widget_examle %}" target="blank">
+	<a href="{% url 'widget_examle' %}" target="blank">
 	  <h3>Popup на карте.</h3>
 	  <img src="/static/dev/img/popup.png"/>
 	  <p>При клике на определенный объект на карте, информация о нем отображается в сплывающем окне на карте.</p>
@@ -49,7 +49,7 @@
 	</a>
       </li>
       <li>
-	<a href="{% url widget_examle %}?type=map-embed" target="blank">
+	<a href="{% url 'widget_examle' %}?type=map-embed" target="blank">
 	  <h3>Фиксированный блок на карте.</h3>
 	  <img src="/static/dev/img/map-embed.png"/>
 	  <p>При клике на определенный объект на карте, информация о нем отображается в фиксированном блоке на карте, который по умлочанию расположен в левом верхнем углу карты.</p>
@@ -57,7 +57,7 @@
 	</a>
       </li>
       <li>
-	<a href="{% url widget_examle %}?type=embed-one" target="blank">
+	<a href="{% url 'widget_examle' %}?type=embed-one" target="blank">
 	  <h3>Отображение информации о активном объекте.</h3>
 	  <img src="/static/dev/img/embed-one.png"/>
 	  <p>При клике на определенный объект на карте, информация о нем отображается  в определенном вами месте страницы.</p>
@@ -65,7 +65,7 @@
 	</a>
       </li>
       <li>
-	<a href="{% url widget_examle %}?type=embed" target="blank">
+	<a href="{% url 'widget_examle' %}?type=embed" target="blank">
 	  <h3>Отображение информации о всех объектах.</h3>
 	  <img src="/static/dev/img/embed.png"/>
 	  <p>Информация о всех объектах отображается в определенном вами месте страницы. При клике на блок с информацией по объекту карта фокусируется на нужную точку. При клике на объект на карте подсвечивается нужный блок с информацией о точке.</p>

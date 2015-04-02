@@ -8,25 +8,25 @@
 <div class="manager top-menu">
   <ul>
     <li class="last">
-      <a href="{% url logout %}"><span class="small">Выход</span></a>
+      <a href="{% url 'logout' %}"><span class="small">Выход</span></a>
     </li>
   </ul>
   <h1 class="manager">Onbike.by / manager</h1>
   <ul>
     <li class="{% if not menu_item %}active{% endif %}">
-      <a href="{% url manager_index %}">Главная</a>
+      <a href="{% url 'manager_index' %}">Главная</a>
     </li>
     <li class="{% if menu_item == 'types' %}active{% endif %}">
-      <a href="{% url track_point_types %}">Типы</a>
+      <a href="{% url 'track_point_types' %}">Типы</a>
     </li>
     <li class="{% if menu_item == 'tracks' %}active{% endif %}">
-      <a href="{% url manager_tracks %}">Маршруты</a>
+      <a href="{% url 'manager_tracks' %}">Маршруты</a>
     </li>
     <li class="last{% if menu_item == 'points' %} active{% endif %}">
-      <a href="{% url manager_points %}">Места</a>
+      <a href="{% url 'manager_points' %}">Места</a>
     </li>
     <li class="last{% if menu_item == 'moderation' %} active{% endif %}">
-      <a href="{% url moderation_objects %}">Модерация{%if number_moderation%}({{number_moderation}}){%endif%}</a>
+      <a href="{% url 'moderation_objects' %}">Модерация{%if number_moderation%}({{number_moderation}}){%endif%}</a>
     </li>
   </ul>
 <div class="clear"></div>
