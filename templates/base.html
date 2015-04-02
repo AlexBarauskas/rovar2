@@ -76,12 +76,12 @@
 	  {% if locations_dropdown%}
 	  <div id="locations" class="dropdown">
 	    <div>
-	      {{location.display_name}}
+	      {{location}}
 	      <p><span>&#9002;</span></p>
 	    </div>
 	    <ul>
 	      {%for l in locations%}
-	      {%if l.name != location.name %}<li><a href="/location/?name={{l.name}}">{{l}}</a></li>{%endif%}
+	      {%if l.name != location.name %}<li><a href="{% url 'set_location' %}/?name={{l.name}}">{{l}}</a></li>{%endif%}
 	      {%endfor%}
 	    </ul>
 	  </div>
