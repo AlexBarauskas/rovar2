@@ -22,7 +22,7 @@ from map.models import Location
 
 #class API(object):
 
-validate_url = URLValidator(verify_exists=False)
+validate_url = URLValidator()#verify_exists=False)
 
 def _generate_response(request, data):
     f = request.GET.get('rtype') or request.POST.get('rtype', 'json')
