@@ -1,12 +1,28 @@
+# Byte-compiled / optimized / other files
+__pycache__/
 *~
 *.out
-*.pyc
-settings_local.py
-*.db
+*.py[cod]
 *#
+
+# Django stuff:
+*.log
+
+# Translations
+*.mo
+*.pot
 
 # Media
 media/*
 
-# DB
+# Database
+*.db
+*.sqlite3
 rovar.db
+
+# Exclude Pycharm file
+.idea/*
+*.[xi]ml
+
+# Dev settings
+settings_local.py
