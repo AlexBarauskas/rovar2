@@ -163,6 +163,7 @@ def track_edit(request, track_id=None):
                     t = XMLTrack(xml_file.read())                
                     rout = t.get_track()['rout']
                     track.coordinates = json.dumps(rout)
+                    track.full_coordinates = json.dumps(rout)
                     track.save()
                 except:
                     errors.append(u"Ошибка разбора XML.")

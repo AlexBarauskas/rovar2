@@ -11,6 +11,45 @@
 <form action="." method="POST" enctype="multipart/form-data">
 {% csrf_token %}
 {{form.as_p}}
+{% if form.instance.type.obj == 't' %}
+<script src="http://api-maps.yandex.ru/2.0/?load=package.full&lang=ru-RU" type="text/javascript"></script>
+<script type="text/javascript">
+        ymaps.ready(init);
+        function init () {
+            var myMap = new ymaps.Map('map', {
+                    center: [53.904263226577555,27.5539547105276],
+              zoom: 12,
+              behaviors: ['scrollZoom']
+                });
+				var polyline = new ymaps.Polyline({{form.instance.coordinates}}
+, {},         
+{
+					strokeColor: '#ff0000',
+                    strokeWidth: 5 // ширина линии
+                });
+			myMap.geoObjects.add(polyline);
+			polyline.editor.startEditing();	
+			//polyline.editor.startDrawing();	
+        //$('#stopEditPolyline').attr('disabled', false);
+        $('#stopEditPolyline').click(
+                function () {
+         
+                    //$('#stopEditPolyline').attr('disabled', true);
+ 
+                    polyline.editor.stopEditing();
+ 
+	            printGeometry(polyline.geometry.getCoordinates());
+                });	
+        }
+        function printGeometry (coords) {
+	console.log(coords.length)
+            $('#id_coordinates').val(JSON.stringify(coords));
+        }		
+</script>
+<div id="map" style="width:100%; height:600px"></div>
+<a href="javascript:;" class="btn" id="stopEditPolyline">Завершить редактирование<a/>
+{%endif%}
+
 {%if form.instance.pk%}
 {%for p in form.instance.photo_set.all%}
 <div class="image-item">
