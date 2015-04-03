@@ -108,7 +108,7 @@ var track_editor = {
     
     write_to_input : function(){
 	this.$input.val(JSON.stringify(this._track));
-	$('#editor-info').text('Изменения приняты');
+	$('#editor-info').text('Изменения приняты. Нажмите кнопку сохранения(внизу).');
     }
 };
 
