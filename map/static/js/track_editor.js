@@ -112,5 +112,4 @@ var track_editor = {
     }
 };
 
-
 $(function(){track_editor.init('#id_coordinates');});
