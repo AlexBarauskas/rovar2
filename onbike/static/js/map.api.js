@@ -465,7 +465,7 @@ var rovar = {
 	for(var ii=0; ii<data.route.length - 2;){
 	    t = data.route[ii];
 	    ii += 1;
-	    t1 = data.route[ii+1];
+	    t1 = data.route[ii];
 	    while(Math.sqrt( (t[1]-t1[1])*(t[1]-t1[1]) + (t[0]-t1[0])*(t[0]-t1[0]) ) < 0.0003 & ii < data.route.length-1){
 		ii += 1;
 		t1 = data.route[ii];
