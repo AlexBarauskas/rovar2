@@ -10,7 +10,7 @@ var track_editor = {
       var form = $('<form action="xml/" method="POST" enctype="multipart/form-data">');
       form.append('<input type="file" name="track-from-xml">');
       form.append('<input type="submit" class="btn" name="get-track-from-xml" value="Загрузить из файла">');
-      form.ajaxForm(function(data){if(data){self._track = data; self.show();}else{$('#editor-info').text('Произошла ошибка. Попробуйте еще раз.').addClass('error').removeClass('success');};});
+      form.ajaxForm(function(data){if(data){self.load_track(data); self.show();}else{$('#editor-info').text('Произошла ошибка. Попробуйте еще раз.').addClass('error').removeClass('success');};});
       var css = m.find('a:last').offset();
       css['position'] = 'absolute';
       css['left'] += $('#editor a:last').innerWidth() + 50;
@@ -47,8 +47,10 @@ var track_editor = {
 	return Math.sqrt((p1[0] - p2[0]) * (p1[0] - p2[0]) + (p1[1] - p2[1]) * (p1[1] - p2[1]));
     },
     
-    load_track : function(){
-      this._track = JSON.parse(this.$input.val());
+    load_track : function(data){
+	if(typeof data == 'undefined')
+	    data = JSON.parse(this.$input.val());
+	this._track = data;
       this._polyline = null;
       this._old_polyline = null;
       var i, dx,
