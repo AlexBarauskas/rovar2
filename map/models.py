@@ -79,13 +79,11 @@ class Type(models.Model):
 class Location(models.Model):
     name = models.CharField(max_length=16, unique=True)
     display_name = models.CharField(max_length=24, null=True)
-    #ALTER TABLE map_location ADD "display_name" varchar(24);
     center_lat = models.FloatField()
     center_lng = models.FloatField()
     radius = models.FloatField()
     admins = models.ManyToManyField(User)
     default = models.BooleanField(default=False)
-    #ALTER  TABLE map_location ADD "default" boolean NOT NULL default false;
     
 
     def __unicode__(self):
@@ -105,6 +103,7 @@ class Track(models.Model):
                              limit_choices_to={'obj': 't'})
     description = models.CharField(u'Краткое описание', max_length=256, null=False)
     coordinates = models.TextField(u'Координаты', default='[]')
+    full_coordinates = models.TextField(u'Координаты', default='[]')
     video = models.TextField(u'Ссылка на видео', default='', blank=True)
     created = models.DateTimeField(auto_now_add=True)
     post = models.OneToOneField(Post, null=True)
