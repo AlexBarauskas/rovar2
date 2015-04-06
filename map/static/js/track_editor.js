@@ -2,7 +2,7 @@ var track_editor = {
   init : function(selector){
       this.$input = $(selector);
       this.$input.hide();
-
+      this._points = [];
       var self = this;
       var m = $('#editor');
       m.remove();
