@@ -122,6 +122,17 @@ def tracks(request):
                               {'tracks': tracks},
                               RequestContext(request))
 
+
+@csrf_exempt
+def xml_to_coordinates(request):
+    data = None
+    if 'track-from-xml' in request.FILES:
+        t = XMLTrack(request.FILES['track-from-xml'].read())
+        data = t.get_track()['rout']
+    return HttpResponse(json.dumps(data),
+                        content_type="text/json")
+
+
 @staff_member_required
 def track_edit(request, track_id=None):
     errors = []
@@ -560,4 +571,3 @@ def moderation_object_delete(request, message_id):
             }
     return HttpResponse(json.dumps(res),
                         content_type="text/json")
-

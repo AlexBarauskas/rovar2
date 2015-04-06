@@ -13,6 +13,7 @@ urlpatterns = patterns(
     url(r'^tracks/$', tracks, name="manager_tracks"),
     url(r'^tracks/add/$', track_edit, name="track-add"),
     url(r'^tracks/(?P<track_id>\d+)/edit/$', track_edit, name="track-edit"),
+    url(r'^tracks/\d+/edit/xml/$', xml_to_coordinates, name="xml_to_coordinates"),
     url(r'^tracks/(?P<track_id>\d+)/delete/$', track_delete, name="track-delete"),
     url(r'^tracks/(?P<track_id>\d+)/edit-post/$', post_edit, name="post-edit-track"),
 
