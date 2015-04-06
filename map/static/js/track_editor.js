@@ -51,8 +51,7 @@ var track_editor = {
 	if(typeof data == 'undefined')
 	    data = JSON.parse(this.$input.val());
 	this._track = data;
-      this._polyline = null;
-      this._old_polyline = null;
+	this.remove();
       var i, dx,
       t = 0;
       this.max_dx = 0;
