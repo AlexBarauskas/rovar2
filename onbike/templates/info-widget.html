@@ -1,0 +1,30 @@
+{% load cache %}
+
+{% cache 600 "info_content" LANGUAGE_CODE %}
+
+<div class="data-content info-iframe">
+    <div id="info-iframe">
+        <div style="padding:30px">
+            {%include template_name%}
+            <div class="authors">
+                {% for author in authors %}
+                <div class="authors-item">
+                    <img src="{{author.image.url}}" />
+                    <h1>{{author.name}}</h1>
+                    <div>{{author.description|safe}}</div>
+                </div>
+                {% endfor %}
+            </div>
+            <div id="info-share-btns">
+                <div>
+                    <div class="fb-share-button" data-href="http://onbike.by" data-width="64" data-type="box_count"></div>
+                </div>
+                <div style="top:4px">
+                    <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://onbike.by" data-via="your_screen_name" data-lang="en" data-related="anywhereTheJavascriptAPI" data-count="vertical">Tweet</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endcache %}

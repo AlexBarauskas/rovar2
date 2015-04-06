@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load account_widgets %}
+
 {% block css %}
 <!--link type="text/css" href="/static/leaflet/leaflet.css" rel="stylesheet"/-->
 {% endblock css %}
@@ -12,28 +14,6 @@
 {% endblock menu %}
 
 {% block content_right %}
-<div class="data-content" {% if not show_left_panel %}style="margin-left:0px;"{%else%}style="min-height:100%;"{% endif %}>
-  <div style="padding:30px">
-    {%include template_name%}
-    <div class="authors">
-      {% for a in authors %}
-      <div class="authors-item">
-        <img src="{{a.image.url}}"/>
-        <h1>{{a.name}}</h1>
-        <div>{{a.description|safe}}</div>
-      </div>    
-      {% endfor %}
-    </div>
-    <div id="info-share-btns">
-      <div>
-	<div class="fb-share-button" data-href="http://onbike.by" data-width="64" data-type="box_count"></div>
-      </div>
-      <div style="top:4px">
-	<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://onbike.by" data-via="your_screen_name" data-lang="en" data-related="anywhereTheJavascriptAPI" data-count="vertical">Tweet</a>
-      </div>
-    </div>
-  </div>
-</div>
 {% endblock content_right %}
 
 {% block js %}
@@ -47,4 +27,9 @@
   }(document, 'script', 'facebook-jssdk'));
 </script>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<script>
+    $(".data-content.info-iframe").css("min-height", "100%");
+    $("#info").hide();
+</script>
+
 {% endblock js %}
