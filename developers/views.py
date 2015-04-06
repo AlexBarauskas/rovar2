@@ -69,7 +69,7 @@ def settings(request):
 def widget_js(request):
     options = base64.decodestring(request.GET.get('data', '')) or '{}'
     js = render_to_string('developers/js/dinamic-widget.js',
-                          {'host': "localhost:8000",
+                          {'host': "onbike.by",
                            'options': options},
                           context_instance=RequestContext(request))
     return HttpResponse(js,

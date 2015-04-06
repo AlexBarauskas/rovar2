@@ -1,17 +1,30 @@
 var track_editor = {
   init : function(selector){
       this.$input = $(selector);
+      this.$input.hide();
+
+      var self = this;
       var m = $('#editor');
       m.remove();
       this.$input.parent().append(m);
-      this.$input.hide();
+      var form = $('<form action="xml/" method="POST" enctype="multipart/form-data">');
+      form.append('<input type="file" name="track-from-xml">');
+      form.append('<input type="submit" class="btn" name="get-track-from-xml" value="Загрузить из файла">');
+      form.ajaxForm(function(data){if(data){self._track = data; self.show();}else{$('#editor-info').text('Произошла ошибка. Попробуйте еще раз.').addClass('error').removeClass('success');};});
+      var css = m.find('a:last').offset();
+      css['position'] = 'absolute';
+      css['left'] += $('#editor a:last').innerWidth() + 50;
+      form.css(css);
+      
+      $('form').parent().append(form);
+      
       this.load_track();
       var map = new L.Map('map'), l_name;
       if(typeof rovar_location != 'undefined')
 	  l_name = rovar_location;
       else
 	  l_name = 'Minsk';
-      var self = this;
+      
       $.ajax({url: '/api/location',
 	      method: 'GET',
 	      data: {name: l_name},
@@ -108,7 +121,7 @@ var track_editor = {
     
     write_to_input : function(){
 	this.$input.val(JSON.stringify(this._track));
-	$('#editor-info').text('Изменения приняты. Нажмите кнопку сохранения(внизу).');
+	$('#editor-info').text('Изменения приняты. Нажмите кнопку сохранения(внизу).').removeClass('error').addClass('success');
     }
 };
 
