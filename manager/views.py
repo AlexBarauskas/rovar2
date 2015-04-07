@@ -421,19 +421,23 @@ def photo_img_del(request, point_id, img_id):
 
 
 from account.models import Author
+from django.template.loaders import app_directories
+
 @staff_member_required
 def info_page_edit(request):
+    default_template = app_directories.Loader().load_template('info-content.html')[0].origin.name
     template_name = 'info/content-%s.html' % request.GET.get('language', settings.LANGUAGE_CODE)
-    if not os.path.exists(os.path.join(settings.TEMPLATE_DIRS[0], template_name)):
-        tf = open(os.path.join(settings.TEMPLATE_DIRS[0], template_name), 'w')
-        tf.write(open(os.path.join(settings.TEMPLATE_DIRS[0], 'info-content.html')).read())
+    template_path = os.path.join(settings.BASE_DIR, 'templates', template_name)
+    if not os.path.exists(template_path):
+        tf = open(template_path, 'w')
+        tf.write(open(template_path).read())
         tf.close()
     messages = []
     if request.method == "POST":
         content = request.POST.get('content', u'').strip().encode('utf-8')
         author_filed = re.compile(r'(\d+)_(\w+)')
         if content:
-            tf = open(os.path.join(settings.TEMPLATE_DIRS[0], template_name), 'w')
+            tf = open(template_path, 'w')
             tf.write(content)
             tf.close()
         authors = {}

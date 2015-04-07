@@ -53,12 +53,14 @@ INSTALLED_APPS = (
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -70,10 +72,14 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 
 
-TEMPLATE_DIRS = ()
-for root, dirs, files in os.walk(BASE_DIR):
-    if 'templates' in dirs:
-        TEMPLATE_DIRS += (os.path.join(root, 'templates'),)
+TEMPLATE_LOADERS = (
+     'django.template.loaders.filesystem.Loader',
+     'django.template.loaders.app_directories.Loader',
+)
+
+TEMPLATE_DIRS = [
+    os.path.join(BASE_DIR, 'templates')
+    ]
 
 ROOT_URLCONF = 'onbike.urls'
 

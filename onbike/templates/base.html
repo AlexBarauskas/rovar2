@@ -1,4 +1,7 @@
+{% load cache %}
 {% load login i18n%}
+{% get_available_languages as LANGUAGES %}
+{% get_current_language as LANGUAGE_CODE %}
 <!DOCTYPE html>
 <html>
   <head>
@@ -110,10 +113,10 @@
 	  <li><a class="left" href="/info/">{% trans "О проекте" %}</a></li>
 	  <!--li><a class="left" href="#">{% trans "Блог" %}</a></li-->
 	  <!--li><a class="left" href="#">API</a></li-->
-	  {% comment %}
 	  {%for c, t in LANGUAGES%}
-	  {%if LANGUAGE_CODE != c%}<li><a class="right dotted" href="{%url set_language%}?language={{c}}">{{t}}</a></li>{%endif%}
+	  {%if LANGUAGE_CODE != c%}<li><a class="right dotted" href="{%url 'set_language'%}?language={{c}}">{{t}}</a></li>{%endif%}
 	  {%endfor%}
+	  {% comment %}
 	  {% endcomment %}
 	</ul>
       </div>
@@ -121,8 +124,12 @@
     </div>
     
     <div id="contentWrapper">
+
+      {% cache 600 "info_content" LANGUAGE_CODE %}
       {% load account_widgets %} {# depend info_widget @TODO вынести наверх #}
       {% info_widget %}
+      {% endcache %}
+
       {% block content_right %}
       {% endblock content_right %}
     </div>
