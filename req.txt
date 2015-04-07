@@ -1,4 +1,7 @@
 flup
+python-memcached
+pillow
+psycopg2
 oauth==1.0.1
 django==1.7
 psycopg2

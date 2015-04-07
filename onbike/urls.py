@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, include, url
 from django.conf import settings
 from django.views.generic.base import RedirectView
-
+from django.views.generic import TemplateView
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -12,7 +12,7 @@ urlpatterns = patterns(
     url(r'^$', 'onbike.views.home', name='home'),
     url(r'^short-home/$', 'onbike.views.short_home', name='short_home'),
     
-    url(r'^info/$', 'onbike.views.info', name='info'),
+    url(r'^info/$', TemplateView.as_view(template_name="info.html"), name='info'),
     url(r'^language/$', 'onbike.views.set_language', name='set_language'),
     url(r'^location/$', 'onbike.views.set_location', name='set_location'),
     url(r'^manager/', include('manager.urls')),

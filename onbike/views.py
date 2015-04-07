@@ -76,10 +76,7 @@ def home(request, uid=None, slug=None):
     types = Type.objects.all()
     #for t in types:
     #    t.acl = acl
-        
-    template_name = 'info/content-%s.html' % translation.get_language()
-    if not os.path.exists(os.path.join(settings.TEMPLATE_DIRS[0], template_name)):
-        template_name = 'info-content.html'
+
     if obj is not None and obj.location:
         if request.session.get('change_location', False):
             del request.session['change_location']
@@ -99,24 +96,12 @@ def home(request, uid=None, slug=None):
     return render_to_response('home_new.html',
                               {   'types': types,
                                   'obj': obj,
-                                  'authors': Author.objects.all(),
-                                  'template_name': template_name,
                                   'locations_dropdown': True,
                                   'location': location,
                                   'locations': Location.objects.all()
                                },
                               context_instance=RequestContext(request))
 
-#@login_required
-def info(request):
-    template_name = 'info/content-%s.html' % translation.get_language()
-    if not os.path.exists(os.path.join(settings.TEMPLATE_DIRS[0], template_name)):
-        template_name = 'info-content.html'
-    return render_to_response('info.html',
-                              {'authors': Author.objects.all(),
-                               'show_left_panel': not request.GET.get('blank'),
-                               'template_name': template_name},
-                              context_instance=RequestContext(request))
 
 def api_doc(request):
     return render_to_response('api-doc.html',
@@ -149,4 +134,3 @@ def set_location(request):
     request.session['location'] = request.GET.get('name', 'Minsk')
     request.session['change_location'] = True
     return response
-    

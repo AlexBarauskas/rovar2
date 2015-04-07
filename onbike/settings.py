@@ -70,9 +70,10 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 
 
-TEMPLATE_DIRS = (
-    os.path.join(PROJECT_ROOT, 'templates'),
-)
+TEMPLATE_DIRS = ()
+for root, dirs, files in os.walk(BASE_DIR):
+    if 'templates' in dirs:
+        TEMPLATE_DIRS += (os.path.join(root, 'templates'),)
 
 ROOT_URLCONF = 'onbike.urls'
 

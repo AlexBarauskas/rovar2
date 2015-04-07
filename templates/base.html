@@ -81,7 +81,7 @@
 	    </div>
 	    <ul>
 	      {%for l in locations%}
-	      {%if l.name != location.name %}<li><a href="{% url 'set_location' %}/?name={{l.name}}">{{l}}</a></li>{%endif%}
+	      {%if l.name != location.name %}<li><a href="{% url 'set_location' %}?name={{l.name}}">{{l}}</a></li>{%endif%}
 	      {%endfor%}
 	    </ul>
 	  </div>
@@ -120,8 +120,9 @@
       {% endblock footer %}
     </div>
     
-
-    <div id="contentWrapper"> 
+    <div id="contentWrapper">
+      {% load account_widgets %} {# depend info_widget @TODO вынести наверх #}
+      {% info_widget %}
       {% block content_right %}
       {% endblock content_right %}
     </div>
@@ -136,45 +137,64 @@
     {% endblock js %}
 
     <script type="text/javascript">
-      $('#info').click(function(ev){
-      console.log(ev);
-      var data_box = $('#map');
-      var infoIF  = $('#info-iframe');
-      if(infoIF.length!=0){
-      if((infoIF.attr('class') || '').indexOf('show')){
-      var h = data_box.innerHeight();
-      if(h<670)h=670;
-	     //	 h='100%';
-	     infoIF.animate({height:h},{complete:function(){infoIF.addClass('show');}});
-	     }
-	     else{
-	     infoIF.animate({height: 0},{complete:function(){infoIF.removeClass('show');}});
-	     }
-	     }
-	     /*
-	     var infoF  = $('#info-iframe');
-	     if(infoF.length==0){
-	     var data_box = $('.data-content');
-	     //var info = $('<iframe id="info-iframe" src="/info/?blank=1"/>').css({position: 'absolute', 
-	     var info = $('#info-iframe');
-	     width: data_box.innerWidth()-5,
-	     height: data_box.innerHeight()-5,
-	     'min-height': '700px',
-	     top: -data_box.innerHeight(),
-	     'z-index': 1000,
-	     left: $('#main-panel').width(),
-	     });
-	     info.load(function(ev){$(this).animate({top:0});});
-	     //info.appendTo('body');
-	     }
-	     else{
-	     infoF.animate({top: 1.5*infoF.height()},{complete:function(){infoF.css({height:0, top:0});}})
-	     }
-	     */
+          $('#info').click(function(ev) {
+                  console.log(ev);
+                  var data_box = $('#map');
+                  var infoIF = $('#info-iframe');
+                  if (infoIF.length != 0) {
+                      if ((infoIF.attr('class') || '').indexOf('show')) {
+                          var h = data_box.innerHeight();
+                          if (h < 670) h = 670;
+                          //  h='100%';
+                          infoIF.animate({
+                              height: h
+                          }, {
+                              complete: function() {
+                                  infoIF.addClass('show');
+                              }
+                          });
+                      } else {
+                          infoIF.animate({
+                              height: 0
+                          }, {
+                              complete: function() {
+                                  infoIF.removeClass('show');
+                              }
+                          });
+                      }
+                  }
+            });
 
-	     });
-	     </script>
-
+          //         var infoF = $('#info-iframe');
+          //         if (infoF.length == 0) {
+          //             var data_box = $('.data-content');
+          //             //var info = $('<iframe id="info-iframe" src="/info/?blank=1"/>').css({position: 'absolute',
+          //             var info = $('#info-iframe');
+          //             width: data_box.innerWidth() - 5,
+          //                 height: data_box.innerHeight() - 5,
+          //                 'min-height': '700px',
+          //                 top: -data_box.innerHeight(),
+          //                 'z-index': 1000,
+          //                 left: $('#main-panel').width(),
+          //         }); info.load(function(ev) {
+          //         $(this).animate({
+          //             top: 0
+          //         });
+          //     });
+          //     //info.appendTo('body');
+          // } else {
+          //     infoF.animate({
+          //         top: 1.5 * infoF.height()
+          //     }, {
+          //         complete: function() {
+          //             infoF.css({
+          //                 height: 0,
+          //                 top: 0
+          //             });
+          //         }
+          //     })
+          // }
+    </script>
 
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
