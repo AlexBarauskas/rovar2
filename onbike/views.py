@@ -110,20 +110,8 @@ def api_doc(request):
 
 
 from django.utils.translation import activate
-## def set_language(request):
-##     next = request.REQUEST.get('next') or request.META.get('HTTP_REFERER', '/')
-##     response = HttpResponseRedirect(next)
-##     lang_code = request.GET.get('language', None)
-##     if lang_code:
-##         activate(lang_code)
-##     return response
-
 def set_language(request):
-    next = request.REQUEST.get('next')
-    #if not is_safe_url(url=next, host=request.get_host()):
     next = request.META.get('HTTP_REFERER', '/')
-    #if not is_safe_url(url=next, host=request.get_host()):
-    #        next = '/'
     response = HttpResponseRedirect(next)
     if request.method == 'GET':
         lang_code = request.GET.get('language', None)
