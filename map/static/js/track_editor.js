@@ -3,6 +3,11 @@ var track_editor = {
       this.$input = $(selector);
       this.$input.hide();
       this._points = [];
+
+      this._state = '';
+      this._current_point = null;
+      this._edit_line = null;
+
       var self = this;
       var m = $('#editor');
       m.remove();
@@ -39,9 +44,33 @@ var track_editor = {
 			      }).addTo(self.map);
 		  self.map.setMaxBounds(self.location.bounds);
 		  self.show();
+
+		  self.map.on('mousemove', function(ev){if(self._state == 'move'){self.show_move_point(self._current_point._index, ev.latlng);}});
+		  self.map.on('mouseup', function(ev){if(self._state == 'move'){self._current_point = null;self._state=''; self.show();}});
 	      }
 	     });
+
+      
   },
+
+    show_move_point : function(i, c){
+	if(this._edit_line!=null){
+	    this.map.removeLayer(this._edit_line);
+	}
+	this._track[i][0] = c.lat;
+	this._track[i][1] = c.lng;
+	if(0<i<this._track.length-1){
+	    
+	    var l = [this._track[i-1], this._track[i] , this._track[i+1]];
+	    this._edit_line = L.polyline(l, {color: "#0000ff"});
+	    this._edit_line.addTo(this.map);
+	}	    
+    },
+
+    remove_point : function(i){
+	this._track.splice(this._points[i]._index, 1);
+	this.show();
+    },
 
     _distance : function(p1,p2){
 	return Math.sqrt((p1[0] - p2[0]) * (p1[0] - p2[0]) + (p1[1] - p2[1]) * (p1[1] - p2[1]));
@@ -100,23 +129,28 @@ var track_editor = {
 	this._polyline = L.polyline(this._track, {color: "#ff0000"});
 	this._polyline.addTo(this.map);
 	
-	var point, lpoint;
-	this._points = [];
+	var point, lpoint, self=this;
+	this._points = {};
 	for(var i = this._track.length - 1; i >= 0; i--){
-	    point = new L.LayerGroup();
-	    L.circle(this._track[i], 2, {color: "#00ff00"}).addTo(point);
-	    this.map.addLayer(point);
-	    this._points.push(point);
+	    lpoint = new L.LayerGroup();
+	    point = L.circle(this._track[i], 2, {color: "#00ff00"}).addTo(this.map);
+	    point.on('mousedown', function(ev){if(self._state == 'delete'){self.remove_point(ev.target._leaflet_id);}else{self._current_point = self._points[ev.target._leaflet_id];self._state='move';}});
+	    point._index = i;
+	    this._points[point._leaflet_id] = point;
 	}
     },
     
     remove: function(){
-	for(var i = this._points.length - 1; i >= 0; i--){
+	for(var i in this._points){
 	    this.map.removeLayer(this._points[i]);
 	}    
 	if(this._polyline != null){
 	    this.map.removeLayer(this._polyline);
 	}
+	if(this._edit_line!=null){
+	    this.map.removeLayer(this._edit_line);
+	}
+
 	this._polyline = null;
     },
     
