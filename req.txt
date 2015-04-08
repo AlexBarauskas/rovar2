@@ -7,3 +7,4 @@ django==1.7
 psycopg2
 pillow
 python-memcached
+python-social-auth

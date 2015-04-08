@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 
@@ -11,16 +12,14 @@ ACCOUNT_BACKENDS = ((u'vk', u'ВКонтакте'),
 
 class UserManager(BaseUserManager):
     def create_user(self, email, username, password=None, **kwargs):
-        if not email:
-            raise ValueError('Users must have an email address')
         if not username:
             raise ValueError('User must have a valid username.')
         user = self.model(
-            email=UserManager.normalize_email(email),
             username=username,
             **kwargs
         )
-        user.set_password(password)
+        if password:
+            user.set_password(password)
         user.save()
         return user
 
@@ -35,13 +34,20 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser):
+    first_name = models.CharField(verbose_name='Имя', max_length=255, blank=True)
+    last_name = models.CharField(verbose_name='Фамилия', max_length=255, blank=True)
     username = models.CharField(verbose_name='Псевдоним', max_length=255, unique=True)
     email = models.EmailField(
         verbose_name='Емайл',
         max_length=255,
-        unique=True,)
+        # unique=True,
+        blank=True,
+        null=True
+    )
     img_url = models.URLField(null=True)
+    gender = models.CharField(verbose_name='Пол', max_length=10, blank=True, null=True)
     phone = models.CharField(verbose_name='Телефон', max_length=255, unique=True, blank=True, null=True)
+    address = models.CharField(verbose_name='Адрес', max_length=255, blank=True)
     bike = models.CharField(verbose_name='Байк', max_length=255, blank=True)
 
     backend = models.CharField(max_length=16, choices=ACCOUNT_BACKENDS, null=True)
@@ -65,6 +71,9 @@ class User(AbstractBaseUser):
     def get_full_name(self):
         return self.username
 
+    def get_short_name(self):
+        return self.username
+
     def __unicode__(self):
         return self.get_full_name()
 
@@ -75,8 +84,8 @@ class User(AbstractBaseUser):
     def save(self, *args, **kwargs):
         super(User, self).save(*args, **kwargs)
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username']
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['email']
 
     class Meta:
         verbose_name = "Пользователь"
