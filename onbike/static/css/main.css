@@ -469,14 +469,6 @@ b {
     margin-right: 320px;
 }
 
-.data-content.info-iframe{
-    position:relative;
-    padding:0;
-    height:0;
-    min-height:0;
-    top:0;
-}
-
 .footer {
     padding: 16px 16px 28px 16px;
     border-top: 1px solid #cecece;
