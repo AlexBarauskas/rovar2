@@ -113,7 +113,7 @@ var track_editor = {
 		k = this._track.length;
 	    }
 	}
-	this._track.splice(k, 0, p);
+	this._track.splice(k, 0, [p[0], p[1], this._track[k][2], this._track[k][3]]);
 	this._push_history();
 	this.show();
     },
@@ -123,7 +123,7 @@ var track_editor = {
 	    this.map.removeLayer(this._edit_line);
 	}
 	this._track = this._track.slice();
-	this._track[i] = [c.lat, c.lng];
+	this._track[i] = [c.lat, c.lng, this._track[i][2], this._track[i][3]];
 	if(0<i<this._track.length-1){	    
 	    var l = [this._track[i-1], this._track[i] , this._track[i+1]];
 	    this._edit_line = L.polyline(l, {color: "#0000ff"});
