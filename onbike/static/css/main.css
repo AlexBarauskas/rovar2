@@ -457,14 +457,16 @@ b {
 #info-iframe{
     top:0;
     height:0;
-    position:absolute;
-    left: 0;
+    position:fixed;
+    left: 320px;
     z-index:1001;
     width:100%;
     border: none;
     overflow:auto;
-    height: 100%;
     background-color: #e9e6de;
+}
+#info-iframe>div{
+    margin-right: 320px;
 }
 
 .data-content.info-iframe{
