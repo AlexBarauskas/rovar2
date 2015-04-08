@@ -1,9 +1,11 @@
 var track_editor = {
+    MAXD : 0.0004,
   init : function(selector){
       this.$input = $(selector);
       this.$input.hide();
       this._points = [];
       this._track_history = [];
+      
 
       this._state = '';
       this._current_point = null;
@@ -172,7 +174,7 @@ var track_editor = {
 		v2 = [t[0] - t0[0], t[1] - t0[1]];
 		cos = (v1[0] * v2[0] + v1[1] * v2[1]) / (this._distance(v1, [0,0]) * this._distance(v2, [0,0]));
 	    };
-	    while((this._distance(t1, t) * Math.sqrt(1.0 - cos * cos) < dx ) && i>0){
+	    while((this._distance(t1, t) * Math.sqrt(1.0 - cos * cos) < dx && this._distance(t1, t) < this.MAXD ) && i>0){
 		i += -1;
 		t1 = this._track[i];
 		if(t != null && t1 != null && t0 != null){
