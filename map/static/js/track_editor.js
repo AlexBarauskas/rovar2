@@ -1,8 +1,11 @@
 var track_editor = {
+    MAXD : 0.0004,
   init : function(selector){
       this.$input = $(selector);
       this.$input.hide();
       this._points = [];
+      this._track_history = [];
+      
 
       this._state = '';
       this._current_point = null;
@@ -12,6 +15,8 @@ var track_editor = {
       var m = $('#editor');
       m.remove();
       this.$input.parent().append(m);
+      m.css('position','relative');
+
       var form = $('<form action="xml/" method="POST" enctype="multipart/form-data">');
       form.append('<input type="file" name="track-from-xml">');
       form.append('<input type="submit" class="btn" name="get-track-from-xml" value="Загрузить из файла">');
@@ -20,7 +25,6 @@ var track_editor = {
       css['position'] = 'absolute';
       css['left'] += $('#editor a:last').innerWidth() + 50;
       form.css(css);
-      
       $('form').parent().append(form);
       
       this.load_track();
@@ -29,7 +33,13 @@ var track_editor = {
 	  l_name = rovar_location;
       else
 	  l_name = 'Minsk';
-      
+      $('#map').css('cursor', 'crosshair');
+
+      this.$mode = $('<div>').css({'position': 'absolute','left':'50px','top':'20px'}).appendTo(m);
+      $('<a href="javascript:;" class="btn">Удаление точек</a>').prependTo(this.$mode).css('margin','5px').click(function(ev){if($(this).attr('class').indexOf('success') >=0){$(this).removeClass('success');self._state='';}else{$(this).addClass('success');self._state='delete';}});
+      $('<a href="javascript:;" class="btn">Отменить поледнее действие</a>').prependTo(this.$mode).css('margin','5px').click(function(ev){self._undo_last_action();});
+
+
       $.ajax({url: '/api/location',
 	      method: 'GET',
 	      data: {name: l_name},
@@ -46,21 +56,77 @@ var track_editor = {
 		  self.show();
 
 		  self.map.on('mousemove', function(ev){if(self._state == 'move'){self.show_move_point(self._current_point._index, ev.latlng);}});
-		  self.map.on('mouseup', function(ev){if(self._state == 'move'){self._current_point = null;self._state=''; self.show();}});
+		  self.map.on('mouseup', function(ev){if(self._state == 'move'){self._current_point = null;self._state=''; self._push_history();self.show();}});
+		  self.map.on('click', function(ev){self.insert_point(ev.latlng);});
 	      }
 	     });
 
       
   },
 
+    _push_history : function(){
+	if(this._track_history.length > 100){
+	    this._track_history.splice(0, 1);
+	}
+	var t = this._track.slice();
+	this._track_history.push(t);
+    },
+    
+    _undo_last_action : function(){
+	if(this._track_history.length > 1)
+	    this._track_history.pop();
+	if(this._track_history.length > 0){
+	    var t = this._track_history[this._track_history.length-1];
+	    this._track = t.slice();
+	    this.show();
+	}
+    },
+
+    insert_point : function(data){
+	var p = [data.lat, data.lng];
+	var minh = 1000, h, d, k = -1, t1,t2, v1,v2,v3,cosa, cosb;
+	for(var i=this._track.length - 1; i > 0; i--){
+	    t1 = this._track[i];
+	    t2 = this._track[i-1];
+	    if(this._distance(t1, t2) > 0){
+		v1 = [-t1[0] + p[0], -t1[1] + p[1]];
+		v2 = [t2[0] - t1[0], t2[1] - t1[1]];
+		v3 = [t2[0] - p[0], t2[1] - p[1]];
+		cosa = (v1[0] * v2[0] + v1[1] * v2[1]) / this._distance(p, t1) / this._distance(t1, t2);
+		cosb = (v2[0] * v3[0] + v2[1] * v3[1]) / this._distance(t1, t2) / this._distance(p, t2);
+		h = this._distance(p, t1) * Math.sqrt(1 - cosa * cosa);
+		d = this._distance(p,t1);
+		if(h<minh && cosa * cosb > 0 || d<minh){
+		    if(cosa * cosb > 0)
+			minh = h;
+		    else
+			minh = d;
+		    k = i;
+		}
+	    }
+	}
+	if(k == -1){
+	    t1 = this._track[0];
+	    t2 = this._track[this._track.length - 1];
+	    if(this._distance(t1,p) < this._distance(t2,p)){
+		k = 0;
+		}
+	    else{
+		k = this._track.length;
+	    }
+	}
+	this._track.splice(k, 0, [p[0], p[1], this._track[k][2], this._track[k][3]]);
+	this._push_history();
+	this.show();
+    },
+
     show_move_point : function(i, c){
 	if(this._edit_line!=null){
 	    this.map.removeLayer(this._edit_line);
 	}
-	this._track[i][0] = c.lat;
-	this._track[i][1] = c.lng;
-	if(0<i<this._track.length-1){
-	    
+	this._track = this._track.slice();
+	this._track[i] = [c.lat, c.lng, this._track[i][2], this._track[i][3]];
+	if(0<i<this._track.length-1){	    
 	    var l = [this._track[i-1], this._track[i] , this._track[i+1]];
 	    this._edit_line = L.polyline(l, {color: "#0000ff"});
 	    this._edit_line.addTo(this.map);
@@ -69,6 +135,7 @@ var track_editor = {
 
     remove_point : function(i){
 	this._track.splice(this._points[i]._index, 1);
+	this._push_history();
 	this.show();
     },
 
@@ -92,6 +159,7 @@ var track_editor = {
 	  }
       }
       this.middle_dx = t / (this._track.length-1);
+      this._push_history();
     },
 
     normalize : function(dx){
@@ -106,7 +174,7 @@ var track_editor = {
 		v2 = [t[0] - t0[0], t[1] - t0[1]];
 		cos = (v1[0] * v2[0] + v1[1] * v2[1]) / (this._distance(v1, [0,0]) * this._distance(v2, [0,0]));
 	    };
-	    while((this._distance(t1, t) * Math.sqrt(1.0 - cos * cos) < dx ) && i>0){
+	    while((this._distance(t1, t) * Math.sqrt(1.0 - cos * cos) < dx && this._distance(t1, t) < this.MAXD ) && i>0){
 		i += -1;
 		t1 = this._track[i];
 		if(t != null && t1 != null && t0 != null){
@@ -120,6 +188,7 @@ var track_editor = {
 	    res.push(t);
 	}
 	this._track = res.reverse();
+	this._push_history();
 	this.show();
     },
 

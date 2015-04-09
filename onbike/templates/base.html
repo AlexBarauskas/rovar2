@@ -113,10 +113,10 @@
 	  <li><a class="left" href="/info/">{% trans "О проекте" %}</a></li>
 	  <!--li><a class="left" href="#">{% trans "Блог" %}</a></li-->
 	  <!--li><a class="left" href="#">API</a></li-->
+	  {% comment %}
 	  {%for c, t in LANGUAGES%}
 	  {%if LANGUAGE_CODE != c%}<li><a class="right dotted" href="{%url 'set_language'%}?language={{c}}">{{t}}</a></li>{%endif%}
 	  {%endfor%}
-	  {% comment %}
 	  {% endcomment %}
 	</ul>
       </div>
@@ -124,15 +124,15 @@
     </div>
     
     <div id="contentWrapper">
+      {% block content_right %}
+      {% endblock content_right %}
+    </div>
 
       {% cache 600 "info_content" LANGUAGE_CODE %}
       {% load account_widgets %} {# depend info_widget @TODO вынести наверх #}
       {% info_widget %}
       {% endcache %}
 
-      {% block content_right %}
-      {% endblock content_right %}
-    </div>
 
     {% endblock content %}
 
@@ -145,16 +145,11 @@
 
     <script type="text/javascript">
           $('#info').click(function(ev) {
-                  console.log(ev);
-                  var data_box = $('#map');
                   var infoIF = $('#info-iframe');
                   if (infoIF.length != 0) {
                       if ((infoIF.attr('class') || '').indexOf('show')) {
-                          var h = data_box.innerHeight();
-                          if (h < 670) h = 670;
-                          //  h='100%';
                           infoIF.animate({
-                              height: h
+                              height: '100%'
                           }, {
                               complete: function() {
                                   infoIF.addClass('show');
