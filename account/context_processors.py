@@ -1,15 +1,16 @@
-# from account.models import Account
+# -*- coding: utf-8 -*-
+# @TODO удалить файл
+
+# from account.models import User
 # from django.core.exceptions import ObjectDoesNotExist
 #
-def get_account(request):
-    return {}
+#
+# def get_user(request):
 #     if request.user and request.user.is_authenticated():
 #         try:
-#             account = request.user.account_set.get() #get_profile()
+#             account = request.user
 #         except ObjectDoesNotExist:
-#             user = request.user
-#             account = Account(user=user, name='%s %s' % (user.first_name,
-#                                                          user.last_name))
-#             account.save()
-#         return {'account' : account}
-#     return {'account' : None}
+#             account = None
+#         return {'user': account}
+#     return {'user': None}
+#
