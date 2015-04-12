@@ -47,7 +47,7 @@ INSTALLED_APPS = (
     'manager',
     'map',
     'account',
-    'blog',
+    # 'blog',
     'api',
     'developers',
 )
