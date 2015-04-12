@@ -55,6 +55,25 @@ b {
     font-weight: bold;
 }
 
+
+.clearfix:after {
+    content: ".";
+    display: block;
+    clear: both;
+    visibility: hidden;
+    line-height: 0;
+    height: 0;
+}
+.clearfix {
+    display: inline-block;
+}
+html[xmlns] .clearfix {
+    display: block;
+}
+* html .clearfix {
+    height: 1%;
+}
+
 #lang {
     position:absolute;
     z-index: 1001;
@@ -93,6 +112,34 @@ b {
     bottom: 20px;
 }
 
+#social-networks.sidebar {
+    position: relative;
+    padding: 10px 32px;
+    width: 228px;
+    height: 32px;
+    right: auto;
+    bottom: auto;
+    z-index: 1000;
+    line-height: 40px;
+-webkit-box-shadow: 0px 0px 16px 0px rgba(50, 50, 50, 0.45);
+-moz-box-shadow:    0px 0px 16px 0px rgba(50, 50, 50, 0.45);
+box-shadow:         0px 0px 16px 0px rgba(50, 50, 50, 0.45);
+}
+
+#social-networks.sidebar a{
+    margin-left: 10px;
+    margin-top: -5px;
+    overflow: visible !important;
+}
+
+#social-networks.sidebar span{
+    color: #333;
+    margin-top: -2px;
+    height: 31px;
+    display: block;
+    float: left;
+}
+
 #social-networks a {
     text-decoration:none;
     float: right;
@@ -107,6 +154,135 @@ b {
 #social-networks a:hover {
     opacity: 1;
 }
+
+.info_user_wrapper{
+    position: relative;
+    float: left;
+}
+
+.info_user_header{
+    position: relative;
+}
+
+.info_user_body{
+    display: none;
+    position: absolute;
+    top: 45px;
+    right: -33px;
+    padding: 0px;
+    background: rgba(255, 255, 255, 0.9);
+-webkit-border-radius: 3px;
+-moz-border-radius: 3px;
+border-radius: 3px;
+}
+
+.info_user_wrapper.open .info_user_body{
+    display: block;
+}
+
+#hmenu .info_user_wrapper.open .info_user_body a{
+    display: block;
+    float: left;
+    color: #333;
+    overflow: hidden;
+}
+
+#hmenu .disabled{
+    opacity: 0.6 !important;
+    cursor: default;
+}
+
+#hmenu .disabled img{
+/* Пока я не могу протестить вконтактик, поэтому пока дисаблеб */
+  -webkit-filter: grayscale(100%);
+  -moz-filter: grayscale(100%);
+  -ms-filter: grayscale(100%);
+  -o-filter: grayscale(100%);
+  filter: grayscale(100%);
+  filter: url(grayscale.svg); /* Firefox 4+ */
+  filter: gray; /* IE 6-9 */
+}
+
+#social-panel{
+    position: relative;
+    padding: 12px;
+    width: 228px;
+    line-height: 20px;
+    right: auto;
+    bottom: auto;
+    z-index: 1000;
+-webkit-box-shadow: 0px 0px 16px 0px rgba(50, 50, 50, 0.45);
+-moz-box-shadow:    0px 0px 16px 0px rgba(50, 50, 50, 0.45);
+box-shadow:         0px 0px 16px 0px rgba(50, 50, 50, 0.45);
+}
+
+.w150_text{
+    width: 130px;
+    margin-right: 10px;
+    max-width: 130px;
+    text-overflow: ellipsis;
+    word-wrap: normal;
+}
+
+#account_edit_form_wrapper{
+    position: relative;
+}
+
+#account_edit_form_wrapper .close{
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    right: 20px;
+    top: 10px;
+    font-size: 20px;
+    color: #333;
+    background-color: #fff;
+}
+#account_edit_form_wrapper label{
+    width: 90px;
+    margin-right: 5px;
+}
+
+#account_edit_form_wrapper textarea, 
+#account_edit_form_wrapper input[type="text"], 
+#account_edit_form_wrapper input[type="password"],
+#account_edit_form_wrapper input[type="email"]{
+    padding: 10px;
+    border: solid 1px #999;
+    width: 150px;
+    min-width: 50%;
+}
+
+#account_edit_form_wrapper input[type="submit"]{
+    padding: 10px;
+    border: solid 1px #999;
+    width: 150px;
+    min-width: 50%;
+    margin: 0 auto;
+    display: block;
+    cursor: pointer;
+}
+
+#account_edit_form_wrapper input[type="submit"]:hover{
+    opacity: 0.7;
+}   
+
+#account_edit_form_errors{
+    padding: 0 10px;
+}
+
+#account_edit_form_errors i{
+    margin-left: 10px;
+    font-style: italic;
+    color: rgb(250, 77, 77);
+}
+
+#account_edit_form_errors ul,
+#account_edit_form_errors li{
+    list-style: square;
+    margin-left: 10px;
+}
+
 
 #contentWrapper { 
     width: 100%;
