@@ -50,7 +50,7 @@ def ajax_auth(request, backend):
     user = request.backend.do_auth(token, ajax=True)
     login(request, user)
     data = {'id': user.id, 'username': user.username}
-    return HttpResponse(json.dumps(data), mimetype='application/json')
+    return HttpResponse(json.dumps(data), content_type='application/json')
 
 
 @login_required(login_url='/')
