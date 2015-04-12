@@ -1,5 +1,6 @@
 {% load cache %}
 {% load login i18n%}
+{% load account_widgets %}
 {% get_available_languages as LANGUAGES %}
 {% get_current_language as LANGUAGE_CODE %}
 <!DOCTYPE html>
@@ -67,7 +68,8 @@
     <div id="main-panel">
       <div id="main-panel-wrapper">
 	<div id="header"{%if obj%} style="background-color:{{obj.type.color}}"{%endif%}>
-          <div id="hmenu">
+          <div id="hmenu" class="clearfix">
+            {% info_user_widget %}
             <a id="info" href="javascript:;"><img src="/static/icons/info.png"/></a>
           </div>
           <h1>

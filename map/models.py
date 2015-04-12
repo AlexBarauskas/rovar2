@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-from django.contrib.auth.models import User
+from account.models import User
 from django.template.loader import render_to_string
 from django.conf import settings
 from django.core.urlresolvers import reverse
 
-from blog.models import Post
+# from blog.models import Post
 import json
 import re
 from math import sqrt
@@ -106,7 +106,7 @@ class Track(models.Model):
     full_coordinates = models.TextField(u'Координаты', default='[]')
     video = models.TextField(u'Ссылка на видео', default='', blank=True)
     created = models.DateTimeField(auto_now_add=True)
-    post = models.OneToOneField(Post, null=True)
+    # post = models.OneToOneField(Post, null=True, related_name="track")
     duration = models.PositiveIntegerField(u'Длительность',null=True, blank=True)
     uid = models.CharField(max_length=16, null=True)
     color = models.CharField(u'Цвет', max_length=7, default="#0000FF")
@@ -241,7 +241,7 @@ class Point(models.Model):
     last_update = models.DateTimeField(auto_now_add=True)
     # ALTER TABLE map_point ADD "last_update" timestamp with time zone;
     
-    post = models.OneToOneField(Post, null=True)
+    # post = models.OneToOneField(Post, null=True, related_name="point")
     uid = models.CharField(max_length=24, null=True, blank=True)
 
     objects = PointManager()
