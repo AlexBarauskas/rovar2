@@ -736,7 +736,13 @@ var rovar = {
 
 $(function(){
       rovar.init();
-      $("#add-point-btn").click(function(){rovar.addPoint();});
+      $("#add-point-btn").click(function(){
+          if (rovar._runAddPoint){
+              rovar.closeAddPoint();
+          }else{
+              rovar.addPoint();
+          }
+      });
       $("#back-to-banner").click(function(){rovar.backToHome();});
       $("#add-point-form-close").click(function(){rovar.closeAddPoint();});
       $("#add-point-form").ajaxForm(function(data){rovar.callbackAddPoint(data);});
