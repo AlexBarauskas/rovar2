@@ -273,7 +273,7 @@ def js_image_list(request):
                               {'images': images
                                },
                               RequestContext(request),
-                              content_type='text/javascript')
+                              mimetype='text/javascript')
     
 
 @staff_member_required
@@ -549,7 +549,7 @@ def moderation_object(request, message_id):
 
 @staff_member_required
 def get_translate_point(request):
-    return HttpResponse(Point.objects.to_translate_manager(), content_type="text/plain")
+    return HttpResponse(Point.objects.to_translate_manager(), mimetype="text/plain")
 
 
 @staff_member_required

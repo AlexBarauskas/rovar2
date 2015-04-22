@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-# @TODO удалить файл
-
 from django.contrib.auth.models import User
 
 
