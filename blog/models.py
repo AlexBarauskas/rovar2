@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-from django.contrib.auth.models import User
+from account.models import User
 
 
 class PostManager(models.Manager):
@@ -38,4 +38,3 @@ class Comment(models.Model):
     parent = models.ForeignKey('self', null=True)
     created = models.DateTimeField(auto_now_add=True)
     text = models.TextField(u'Комментарий', default='')
-    

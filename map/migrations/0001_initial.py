@@ -9,7 +9,6 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('blog', '__first__'),
     ]
 
     operations = [
@@ -67,7 +66,7 @@ class Migration(migrations.Migration):
                 ('last_update', models.DateTimeField(auto_now_add=True)),
                 ('uid', models.CharField(max_length=24, null=True, blank=True)),
                 ('location', models.ForeignKey(to='map.Location', null=True)),
-                ('post', models.OneToOneField(null=True, to='blog.Post')),
+                # ('post', models.OneToOneField(null=True, to='blog.Post')),
             ],
             options={
             },
@@ -87,7 +86,6 @@ class Migration(migrations.Migration):
                 ('uid', models.CharField(max_length=16, null=True)),
                 ('color', models.CharField(default=b'#0000FF', max_length=7, verbose_name='\u0426\u0432\u0435\u0442')),
                 ('location', models.ForeignKey(to='map.Location', null=True)),
-                ('post', models.OneToOneField(null=True, to='blog.Post')),
             ],
             options={
             },

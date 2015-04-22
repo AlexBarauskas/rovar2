@@ -185,12 +185,69 @@ for(var i=0; i<=op.length; i++){
 			   }
 			   
 			   }
-}1
+}
 
 $('input[name="phones"]').inputmask("mask", {"mask": _phoneMask,
   "oncomplete": phoneCompleted,
-   "oncleared":clearRootPhone});
+   "oncleared":clearRootPhone
 });
+
+
+  // info-user.html
+  $(function () {
+    $("#get_info_user").on('click', function (e) {
+      e.preventDefault();
+      $(this).closest('.info_user_wrapper').toggleClass("open");
+      e.stopPropagation();
+    });
+
+    $("body").on('click', function (e) {
+      $('.info_user_wrapper.open').removeClass("open");
+    });
+
+	$("#url_accout_edit span").click(function (e) {
+		e.preventDefault();
+		$.get("/account/edit/", function( data ) {
+		    $(".preview-content").html(data).parent().slideDown(200);
+		});
+	});
+
+    $(document).on('click', "#account_edit_form_wrapper .close", function(e){
+        e.preventDefault();
+        $("#account_edit_form_wrapper").remove();
+    });
+
+    $(document).on('click', '#account_edit_submit', function(e){
+        $(this).closest('form').submit(function(e){
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: "/account/edit/",
+            dataType: "json",
+            data: $(this).serialize(),
+            success: function(data) {
+                $("#account_edit_form_wrapper").remove();
+                window.location.reload();
+            },
+            error: function(data) {
+                console.log(data);
+                $("#account_edit_form_errors").html('<ul></ul>');
+                $.each(data.responseJSON, function( index, value ) {
+                  var label = value[0];
+                  var error = '';
+                  $.each(value[1], function(index_error, value_error) {
+                      error = error + value_error + "</br>";
+                  });
+
+                  $("#account_edit_form_errors ul")
+                          .append("<li><b>"+label+"</b><i>"+error+"</i></li>");
+                });
+            }
+        });
+      });
+    });
+  });
+ });
 </script>
 
 <script type="text/javascript">
