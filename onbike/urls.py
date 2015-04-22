@@ -7,8 +7,24 @@ from django.views.generic import TemplateView
 from django.contrib import admin
 admin.autodiscover()
 
+
+from django.contrib.sitemaps import Sitemap
+from django.core.urlresolvers import reverse
+
+class StaticViewSitemap(Sitemap):
+    priority = 0.5
+    changefreq = 'daily'
+
+    def items(self):
+        return ['home', 'info']
+
+    def location(self, item):
+        return reverse(item)
+
 urlpatterns = patterns(
     '',
+    url(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': {'/': StaticViewSitemap()}}),
+
     url(r'^$', 'onbike.views.home', name='home'),
     url(r'^short-home/$', 'onbike.views.short_home', name='short_home'),
     
@@ -46,6 +62,7 @@ urlpatterns = patterns(
 
     url(r'^(?P<slug>\w+)/(?P<uid>[\-_\w]+)$', 'onbike.views.home', name='home_uid'),
     url(r'^(?P<uid>\d+\-\w)/$', 'onbike.views.home', name='home_uid'),
+
 
 )
 

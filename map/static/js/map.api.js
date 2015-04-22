@@ -461,15 +461,15 @@ var rovar = {
 	
 	var yourGeoJSON = [];
 	var t, t1;
-	var maxele = 305, minele = 212;
-	for(var ii=0; ii<data.route.length - 2;){
+	var maxele = 305, minele = 212, v1, v2, cos = 0;
+	for(var ii=0; ii<data.route.length - 2; ii++){
 	    t = data.route[ii];
-	    ii += 1;
-	    t1 = data.route[ii];
-	    while(Math.sqrt( (t[1]-t1[1])*(t[1]-t1[1]) + (t[0]-t1[0])*(t[0]-t1[0]) ) < 0.0003 & ii < data.route.length-1){
+	    t1 = data.route[ii+1];
+	    
+	    /*while(Math.sqrt( (t[1]-t1[1])*(t[1]-t1[1]) + (t[0]-t1[0])*(t[0]-t1[0]) ) < 0.0003 & ii < data.route.length-1){
 		ii += 1;
 		t1 = data.route[ii];
-	    }
+	    }*/
 	    //if((t[3]|0)<minele)minele = t[3]|0;
 	    //if((t[3]|0)>maxele)maxele = t[3]|0;
 	    //t1 = [t[0] + (t1[0]-t[0])*0.9 , t[1] + (t1[1]-t[1])*0.9 ];
