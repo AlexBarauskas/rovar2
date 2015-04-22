@@ -1,9 +1,0 @@
-<div id="account_edit_form_wrapper">
-    <div class="close">x</div>
-    <div class="form-header">Данные пользователя</div>
-    <div id="account_edit_form_errors"></div>
-    <form action="{% url 'account_edit' %}" method="POST">{% csrf_token %}
-        {{ form.as_p }}
-        <input id="account_edit_submit" type="submit" value="Обновить"/>
-    </form>
-</div>

@@ -218,10 +218,7 @@ var rovar = {
 		$('<img/>').attr({'src': data.images[imgiter]})
 		    .appendTo(imgs_preview);
 	    }
-	    $('.fotorama').fotorama({
-	    	'nav':false, 
-	    	allowfullscreen:true,
-	    });
+	    $('.fotorama').fotorama({'nav':false});
 	}
 	preview.append(description);
 	if(data.phones)
