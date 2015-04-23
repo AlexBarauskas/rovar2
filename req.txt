@@ -1,10 +1,7 @@
 flup
 python-memcached
-pillow
-psycopg2
 oauth==1.0.1
-django==1.7
+django==1.7.1
 psycopg2
 pillow
-python-memcached
 python-social-auth
