@@ -55,6 +55,7 @@ class Message(models.Model):
         if self.track is not None:
             return self.track.uid
 
+    @property
     def type_slug(self):
         if self.point is not None:
             return self.point.type.slug
