@@ -13,7 +13,7 @@ from django.core.urlresolvers import reverse
 
 class StaticViewSitemap(Sitemap):
     priority = 0.5
-    changefreq = 'daily'
+    changefreq = 'monthly'
 
     def items(self):
         return ['home', 'info']
