@@ -27,7 +27,7 @@ def get_available_tracks(request):
     #tracks = Track.objects.filter(state__lte=acl)
     tracks = [t.id for t in Track.objects.filter(**query)]
     return HttpResponse(json.dumps({'ids': tracks}),
-                        content_type='application/json')
+                        mimetype='text/json')
 
 def track(request, track_id=None):
     acl = '0'
@@ -64,7 +64,7 @@ def track(request, track_id=None):
         track = {'route': [[0,0],[0,0]]}
 
     return HttpResponse(json.dumps(track),
-                        content_type='application/json')
+                        mimetype='text/json')
 
 def get_available_points(request):
     acl = '0'
@@ -81,7 +81,7 @@ def get_available_points(request):
     print query
     points = [p.id for p in Point.objects.filter(**query)]
     return HttpResponse(json.dumps({'ids': points}),
-                        content_type='application/json')
+                        mimetype='text/json')
 
 def all_points(request):
     acl = '0'
@@ -92,7 +92,7 @@ def all_points(request):
     kwargs = {'state__lte': acl}
     points = [p.to_dict() for p in Point.objects.filter(**kwargs)]
     return HttpResponse(json.dumps(points),
-                        content_type='application/json')
+                        mimetype='text/json')
 
 
 
@@ -136,7 +136,7 @@ def point(request, point_id=None):
     except:
         point = {'status': 'error',}
     return HttpResponse(json.dumps(point),
-                        content_type='application/json')
+                        mimetype='text/json')
 
 
 def tile(request, z, x, y):

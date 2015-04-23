@@ -43,12 +43,11 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.sitemaps',
 
-    'social.apps.django_app.default',
     'onbike',
     'manager',
     'map',
     'account',
-    # 'blog',
+    'blog',
     'api',
     'developers',
 )
@@ -67,17 +66,10 @@ MIDDLEWARE_CLASSES = (
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     "django.contrib.auth.context_processors.auth",
-    "django.core.context_processors.debug",
     "django.core.context_processors.i18n",
-    "django.core.context_processors.media",
-    "django.core.context_processors.static",
-    "django.core.context_processors.tz",
-    'django.core.context_processors.request',
-    "django.contrib.messages.context_processors.messages",
     "manager.context_processor.manager_menu_item",
     "manager.context_processor.moderation_count",
-    'social.apps.django_app.context_processors.backends',
-    'social.apps.django_app.context_processors.login_redirect',
+    "account.context_processors.get_account",
 )
 
 
@@ -152,38 +144,17 @@ LOGGING = {
 }
 
 AUTHENTICATION_BACKENDS = (
-    'social.backends.open_id.OpenIdAuth',
-    'social.backends.twitter.TwitterOAuth',
-    'social.backends.facebook.FacebookOAuth2',
-    'social.backends.vk.VKAppOAuth2',
     'django.contrib.auth.backends.ModelBackend',
+    'account.auth_backends.SocialLoginBackend',
 )
 
-AUTH_USER_MODEL = "account.User"
-SOCIAL_AUTH_STRATEGY = 'social.strategies.django_strategy.DjangoStrategy'
-SOCIAL_AUTH_STORAGE = 'social.apps.django_app.default.models.DjangoStorage'
-SOCIAL_AUTH_URL_NAMESPACE = 'social'
-LOGIN_URL = '/login/'
-LOGIN_REDIRECT_URL = '/'
-# SOCIAL_AUTH_ADMIN_USER_SEARCH_FIELDS = ['username', 'first_name', 'email']
-
-SOCIAL_AUTH_PIPELINE = (
-    'social.pipeline.social_auth.social_details',
-    'social.pipeline.social_auth.social_uid',
-    'social.pipeline.social_auth.auth_allowed',
-    'social.pipeline.social_auth.social_user',
-    'social.pipeline.user.get_username',
-    'social.pipeline.user.create_user',
-    'account.pipeline.save_profile',
-    # 'account.pipeline.require_email',
-    # 'social.pipeline.mail.mail_validation',
-    'social.pipeline.social_auth.associate_user',
-    'social.pipeline.social_auth.load_extra_data',
-    'social.pipeline.user.user_details',
-    'social.pipeline.debug.debug'
-)
+AUTH_PROFILE_MODULE = "account.Account"
 
 MAP_TILES = os.path.join(MEDIA_ROOT, 'tiles')
+
+LOGIN_URL = '/account/login/'
+LOGIN_REDIRECT_URL = '/'
+
 
 CACHES = {
     'default': {

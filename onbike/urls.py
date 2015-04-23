@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from django.conf.urls import patterns, include, url
 from django.conf import settings
 from django.views.generic.base import RedirectView
@@ -34,7 +33,7 @@ urlpatterns = patterns(
     url(r'^location/$', 'onbike.views.set_location', name='set_location'),
     url(r'^manager/', include('manager.urls')),
     url(r'^map/', include('map.urls')),
-    # url(r'^blog/', include('blog.urls')),
+    url(r'^blog/', include('blog.urls')),
     url(r'^api/doc.html$', 'onbike.views.api_doc', name="api_doc"),
     url(r'^api/', include('api.urls')),
     url(r'^dev/', include('developers.urls')),
@@ -44,15 +43,10 @@ urlpatterns = patterns(
     #url(r'^account/login/$', 'django.contrib.auth.views.login',
     #    {'template_name': 'login.html'},
     #    name="account_login"),
-    # url(r'^account/login/$', RedirectView.as_view(url='/', permanent=False)),
+    url(r'^account/login/$', RedirectView.as_view(url='/', permanent=False)),
 
-    url('', include('social.apps.django_app.urls', namespace='social')),
-    url(r'^logout/$', 'account.views.logout'),
-    # Нам нужно твоё мыло:) если некоторое из провайдеров не вернули его
-    url(r'^email/$', 'account.views.require_email', name='require_email'),
-
-    url(r'^account/', include('account.urls')),
-
+    #url(r'^account/', include('account.urls')),
+                       
 #    url(r'^login/$','django.contrib.auth.views.login',{ 'template_name' : 'login.html'},name="login"),
 
     # url(r'^rovar2/', include('rovar2.foo.urls')),
