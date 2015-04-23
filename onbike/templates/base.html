@@ -10,23 +10,31 @@
     <link type="image/png" rel="icon" href="/static/images/favicon.png"/>
     <link type="text/css" href="/static/css/main.css" rel="stylesheet"/>
     <link type="text/css" href="/static/account/css/login.css" rel="stylesheet"/>
-    <link  href="//cdnjs.cloudflare.com/ajax/libs/fotorama/4.5.1/fotorama.css" rel="stylesheet"> <!-- 3 KB -->
+    <link  href="//cdnjs.cloudflare.com/ajax/libs/fotorama/4.5.1/fotorama.css" rel="stylesheet">
+
     {%if obj%}
     <meta property="og:title" content="ONBIKE.BY | {{obj.name}}" />
-    <meta property="og:url" content="//onbike.by/{{obj.uid}}/" />
-    {%if obj.photo_set.all.0.image.url%}
-    <meta property="og:image" content="//onbike.by{{obj.photo_set.all.0.image.url}}" />
-    {%else%}
-    <meta property="og:image" content="//onbike.by/static/images/onbike-og.png" />
-    {%endif%}
+    <meta name="title" content="ONBIKE.BY | {{obj.name}}" />
     <meta name="description" content="{{obj.description}}"/>
     <meta property="og:description" content="{{obj.description}}"/>
+    <meta property="og:url" content="//onbike.by/{% url 'home_uid' obj.type.slug obj.uid %}/" />
+
+    {%if obj.photo_set.all.0.image.url%}
+    <meta property="og:image" content="//onbike.by{{obj.photo_set.all.0.image.url}}" />
+    <link rel="image_src" href="//onbike.by{{obj.photo_set.all.0.image.url}}" />
+    {%else%}
+    <meta property="og:image" content="//onbike.by/static/images/onbike-og.png" />
+    <link rel="image_src" href="//onbike.by/static/images/onbike-og.png"/>
+    {%endif%}
+
     {%else%}
     <meta property="og:title" content="ONBIKE.BY" />
-    <meta property="og:url" content="http://onbike.by/" />
-    <meta property="og:image" content="//onbike.by/static/images/onbike-og.png" />
+    <meta name="title" content="ONBIKE.BY" />
     <meta property="og:description" content="Велосипедная карта Минска: маршруты, полезные объекты, с видео- и фотоподсказками. Велосипед — друг человека. Onbike.by — друг велосипедиста!"/>
     <meta name="description" content="Велосипедная карта Минска: маршруты, полезные объекты, с видео- и фотоподсказками. Велосипед — друг человека. Onbike.by — друг велосипедиста!"/>
+    <meta property="og:image" content="//onbike.by/static/images/onbike-og.png" />
+    <link rel="image_src" href="//onbike.by/static/images/onbike-og.png"/>
+    <meta property="og:url" content="http://onbike.by/" />
     {%endif%}
 
 
