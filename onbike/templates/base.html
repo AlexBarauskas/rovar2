@@ -17,7 +17,7 @@
     <meta name="title" content="ONBIKE.BY | {{obj.name}}" />
     <meta name="description" content="{{obj.description}}"/>
     <meta property="og:description" content="{{obj.description}}"/>
-    <meta property="og:url" content="//onbike.by/{% url 'home_uid' obj.type.slug obj.uid %}/" />
+    <meta property="og:url" content="//onbike.by{% url 'home_uid' obj.type.slug obj.uid %}/" />
 
     {%if obj.photo_set.all.0.image.url%}
     <meta property="og:image" content="//onbike.by{{obj.photo_set.all.0.image.url}}" />
