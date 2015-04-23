@@ -164,6 +164,10 @@ class Track(models.Model):
                 self.save()
                 return None
 
+    @property
+    def type_slug(self):
+        return self.type.slug
+
 
 def iso_phone(number):
     res = tuple([i for i in number if i>='0' and i<='9'])
@@ -327,6 +331,9 @@ class Point(models.Model):
                 self.save()
                 return None
 
+    @property
+    def type_slug(self):
+        return self.type.slug
             
 class Offer(models.Model):
     created = models.DateTimeField(auto_now_add=True)

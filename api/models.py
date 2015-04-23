@@ -47,3 +47,17 @@ class Message(models.Model):
     description = models.TextField(u'Описание', default='', null=True)
 
     photos = models.ManyToManyField(Photo)
+
+    @property
+    def uid(self):
+        if self.point is not None:
+            return self.point.uid
+        if self.track is not None:
+            return self.track.uid
+
+    def type_slug(self):
+        if self.point is not None:
+            return self.point.type.slug
+        if self.track is not None:
+            return self.track.type.slug
+        
