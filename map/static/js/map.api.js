@@ -165,7 +165,9 @@ var rovar = {
 	var self = this;
 	point.setIcon(point._data.unactiveIcon);
 	$(point._icon).css('z-index', $(point._icon).css('z-index')-5000);
-	$(point._icon).click(function(){self._showPointInfo(point);});
+	$(point._icon)
+        .unbind("click")
+        .click(function(e){self._showPointInfo(point);});
 	$(point._icon).addClass(point._data.type_slug);
 	$(point._icon).attr('id', 'iconp-'+point._data.id.toString());
 
@@ -184,15 +186,19 @@ var rovar = {
 
     _showPointInfo : function(point){
 	if(!this._runAddPoint){
-	if(this.currentPoint)
-	    this._hidePointInfo(this.currentPoint);
-	if(this.currentTrack)
-	    this._hideTrackInfo(this.currentTrack);
+        if(this.currentPoint){
+            this._hidePointInfo(this.currentPoint);
+        }
+        if(this.currentTrack){
+            this._hideTrackInfo(this.currentTrack);
+        }
 
 	var self = this;
 	point.setIcon(point._data.activeIcon);
 	$(point._icon).css('z-index', $(point._icon).css('z-index')+5000);
-	$(point._icon).click(function(){self._hidePointInfo(point);});
+	$(point._icon)
+        .unbind("click")
+        .click(function(){self._hidePointInfo(point);});
 	this.currentPoint = point;
 
 
