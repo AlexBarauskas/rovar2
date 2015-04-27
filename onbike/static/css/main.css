@@ -721,14 +721,22 @@ b {
     z-index:10;
     position:relative;
 }
+
+#app-links a{
+    color: transparent;
+    text-decoration: none;
+}
+
 #app-links img{
-    margin-right: 16px;
+    margin-right: 3px;
 }
+
 #app-links h1{
-    font-size:15px;
-    font-weight:bold;
-    margin-bottom:5px;
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: 5px;
 }
+
 #app-links>div{
     padding:15px
 }
