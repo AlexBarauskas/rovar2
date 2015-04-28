@@ -297,11 +297,11 @@ class Point(models.Model):
             self.save()
         return res
 
-#for p in pp:
-#    p.uid = urllib.quote_plus(transliterate(p.name).encode('utf-8'))[:24]
-#    if p.__class__.objects.filter(uid=p.uid).count() != 0:
-#        p.uid = p.uid[:19] + '-' + str(p.id)
-#    p.save()
+## for p in pp:
+##     p.uid = urllib.quote_plus(transliterate(p.name).encode('utf-8'))[:24]
+##     if p.__class__.objects.filter(uid=p.uid).count() != 0:
+##         p.uid = p.uid[:19] + '-' + str(p.id)
+##     p.save()
 
 
     def __unicode__(self):
