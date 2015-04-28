@@ -8,6 +8,7 @@
     <meta charset="utf-8">
     <title>onbike.by{% block subtitle %}{% endblock subtitle %}</title>
     <link type="image/png" rel="icon" href="/static/images/favicon.png"/>
+    <link type="text/css" href="/static/css/introjs.css" rel="stylesheet"/>
     <link type="text/css" href="/static/css/main.css" rel="stylesheet"/>
     <link type="text/css" href="/static/account/css/login.css" rel="stylesheet"/>
     <link  href="//cdnjs.cloudflare.com/ajax/libs/fotorama/4.5.1/fotorama.css" rel="stylesheet">
@@ -99,6 +100,9 @@
           <img src="/static/images/google-play-download.png" width="130" alt="appstore-download">
         </a>
       </div>
+      <div id="gid-link">
+        <p><a href="#" onclick="startIntro();">Посмотреть</a> гид по сайту</h2></p>
+      </div>
       {% endblock applinks %}
       {% block footer %}
       <div class="footer">
@@ -135,6 +139,50 @@
 
     {% block js %}
     {% endblock js %}
+
+    <script type="text/javascript" src="/static/js/intro.js"></script>
+    <script type="text/javascript">
+
+      function startIntro(){
+          $(window).ready(function(){
+            $("#gid-link").remove();
+          });
+        var intro = introJs();
+          intro.setOptions({
+            steps: [
+              {
+                intro: "Привет! onbike — это велосипедная карта, которая помогает осознанно строить свои маршруты. </br></br> Нажмите <b>Next →</b>, чтобы продолжить."
+              },
+              {
+                element: '#locations',
+                intro: "Для начала, вы можете выбрать <b>свой город</b>."
+              },
+              {
+                element: '.section.views',
+                intro: "Если считаете нужным скрыть какой-то из слоёв с объектами, это легко сделать <b>вот здесь</b>.",
+                position: 'right'
+              },
+              {
+                element: '#map',
+                intro: 'Обратите внимание, нажав на маршрут или точку на карте можно получить подробную информацию. </br></br> В дополнение, с многими маршрутами связано видео — с их помощью вам будет проще ориентироваться на незнакомой местности.',
+                position: 'left'
+              },
+              {
+                element: '#lang',
+                intro: "Вы можете <b>добавить новую точку</b> здесь",
+                position: 'left'
+              },
+              {
+                element: '#app-links',
+                intro: 'Или скачайте мобильное приложение — с ним добавление новых объектов ещё проще!',
+                position: 'top'
+              }
+            ]
+          });
+
+          intro.start();
+      }
+    </script>
 
     <script type="text/javascript">
           $('#info').click(function(ev) {

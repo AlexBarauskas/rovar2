@@ -717,7 +717,7 @@ b {
 }
 
 #app-links{
-    padding: 16px 16px 16px 16px;
+    padding: 16px 16px 8px 16px;
     z-index:10;
     position:relative;
 }
@@ -825,4 +825,31 @@ display:inline-block;
 -ms-transform: rotate(-90deg);
 -o-transform: rotate(-90deg);
 filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+}
+
+#gid-link{
+    padding: 0 16px 8px 16px;
+    position: relative;
+    z-index: 11;
+    color: #333;
+}
+#gid-link a{
+    color: #333;
+    text-decoration: none;
+    border-bottom: 1px dotted #333;
+}
+
+#gid-link a:hover{
+    color: #e95d24;
+    border-color: #e95d24;
+}
+
+.introjs-helperNumberLayer{
+    display: none;
+}
+.introjs-tooltipReferenceLayer{
+    z-index: 9999998;
+}
+#locations.introjs-showElement.dropdown>div{
+    color: rgb(116, 108, 108);
 }
