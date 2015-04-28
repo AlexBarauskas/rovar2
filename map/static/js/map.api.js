@@ -254,7 +254,7 @@ var rovar = {
 				 this.language = language_code;
 				 this.page.identifier = data.uid;  
 				 this.page.title = data.title;
-				 this.page.url = "//onbike.by"+data.url;
+				 this.page.url = "http://onbike.by"+data.url;
 			     }
 			 });
 	    $('#disqus_thread').show();
@@ -435,7 +435,7 @@ var rovar = {
 				 this.language = language_code;
 				 this.page.identifier = data.uid;  
 				 this.page.title = data.title;
-				 this.page.url = "//onbike.by"+data.url;
+				 this.page.url = "http://onbike.by"+data.url;
 			     }
 			 });
 	    $('#disqus_thread').show();

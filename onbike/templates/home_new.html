@@ -220,7 +220,7 @@ $('input[name="phones"]').inputmask("mask", {"mask": _phoneMask,
   this.language = language_code;
   };
   {% if obj.uid %}
-  var disqus_url = '//onbike.by{% url 'show_object' obj.location.name obj.type_slug obj.uid %}';
+  var disqus_url = 'http://onbike.by{% url 'show_object' obj.location.name obj.type_slug obj.uid %}';
   {% endif %}
   
   /* * * DON'T EDIT BELOW THIS LINE * * */
