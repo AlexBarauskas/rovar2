@@ -175,7 +175,7 @@ var rovar = {
 	$('.preview').hide();
 
 	var stateObj = { foo: "bar" };
-	history.pushState(stateObj, "page", '/');	  
+	history.pushState(stateObj, "page", '/' + this.location.name);	  
 
 	$('#back-to-banner').hide();
 	$('#type').hide();
@@ -226,7 +226,7 @@ var rovar = {
 	    }
 	    $('.fotorama').fotorama({
 	    	'nav': false,
-	    	'maxheight': '235px',
+	    	'maxheight': '235px'
 	    });
 	}
 	preview.append(description);
@@ -245,7 +245,7 @@ var rovar = {
 	$("#header").css('background-color', data.color);
 	$("#locations>div").css('background-color', data.color);
 	var stateObj = { foo: "bar" };
-	history.pushState(stateObj, "page", '/'+data.type_slug+"/"+data.uid);	  
+	history.pushState(stateObj, "page", data.url);	  
 
 	if(typeof DISQUS != 'undefined'){
 	    DISQUS.reset({
@@ -254,7 +254,7 @@ var rovar = {
 				 this.language = language_code;
 				 this.page.identifier = data.uid;  
 				 this.page.title = data.title;
-				 this.page.url = "//onbike.by/"+data.type_slug+"/"+data.uid;
+				 this.page.url = "//onbike.by"+data.url;
 			     }
 			 });
 	    $('#disqus_thread').show();
@@ -356,7 +356,7 @@ var rovar = {
 		    else{
 			$('#'+type_id).hide();
 		    }
-		    if(object_name == 'point')
+		    if(object_name == 'point' && data.length > 0)
 			self._pointGroup(type_id);		    
 		}
 	       });	
@@ -371,7 +371,7 @@ var rovar = {
 	$('.preview').hide();
 
 	var stateObj = { foo: "bar" };
-	history.pushState(stateObj, "page", '/');	  
+	history.pushState(stateObj, "page", '/' + this.location.name);	  
 
 	$('#back-to-banner').hide();
 	$('#type').hide();
@@ -426,7 +426,7 @@ var rovar = {
 
 
 	var stateObj = { foo: "bar" };
-	history.pushState(stateObj, "page", '/'+data.type_slug+"/"+data.uid);	  
+	history.pushState(stateObj, "page", data.url);	  
 
 	if(typeof DISQUS != 'undefined'){
 	    DISQUS.reset({
@@ -435,7 +435,7 @@ var rovar = {
 				 this.language = language_code;
 				 this.page.identifier = data.uid;  
 				 this.page.title = data.title;
-				 this.page.url = "//onbike.by/"+data.type_slug+"/"+data.uid;
+				 this.page.url = "//onbike.by"+data.url;
 			     }
 			 });
 	    $('#disqus_thread').show();

@@ -11,33 +11,14 @@
     <link type="text/css" href="/static/css/main.css" rel="stylesheet"/>
     <link type="text/css" href="/static/account/css/login.css" rel="stylesheet"/>
     <link  href="//cdnjs.cloudflare.com/ajax/libs/fotorama/4.5.1/fotorama.css" rel="stylesheet">
-
-    {%if obj%}
-    <meta property="og:title" content="ONBIKE.BY | {{obj.name}}" />
-    <meta name="title" content="ONBIKE.BY | {{obj.name}}" />
-    <meta name="description" content="{{obj.description}}"/>
-    <meta property="og:description" content="{{obj.description}}"/>
-    <meta property="og:url" content="//onbike.by{% url 'home_uid' obj.type_slug obj.uid %}/" />
-
-    {%if obj.photo_set.all.0.image.url%}
-    <meta property="og:image" content="//onbike.by{{obj.photo_set.all.0.image.url}}" />
-    <link rel="image_src" href="//onbike.by{{obj.photo_set.all.0.image.url}}" />
-    {%else%}
-    <meta property="og:image" content="//onbike.by/static/images/onbike-og.png" />
-    <link rel="image_src" href="//onbike.by/static/images/onbike-og.png"/>
-    {%endif%}
-
-    {%else%}
+    {% block meta %}
     <meta property="og:title" content="ONBIKE.BY" />
-    <meta name="title" content="ONBIKE.BY" />
     <meta property="og:description" content="Велосипедная карта Минска: маршруты, полезные объекты, с видео- и фотоподсказками. Велосипед — друг человека. Onbike.by — друг велосипедиста!"/>
     <meta name="description" content="Велосипедная карта Минска: маршруты, полезные объекты, с видео- и фотоподсказками. Велосипед — друг человека. Onbike.by — друг велосипедиста!"/>
     <meta property="og:image" content="//onbike.by/static/images/onbike-og.png" />
     <link rel="image_src" href="//onbike.by/static/images/onbike-og.png"/>
     <meta property="og:url" content="http://onbike.by/" />
-    {%endif%}
-
-
+    {% endblock meta %}
     {% block css %}
     {% endblock css %}
 
@@ -92,7 +73,7 @@
 	    </div>
 	    <ul>
 	      {%for l in locations%}
-	      {%if l.name != location.name %}<li><a href="{% url 'set_location' %}?name={{l.name}}">{{l}}</a></li>{%endif%}
+	      {%if l.name != location.name %}<li><a href="{% url 'show_location' l.name %}">{{l}}</a></li>{%endif%}
 	      {%endfor%}
 	    </ul>
 	  </div>
@@ -110,11 +91,11 @@
         <h1>Мобильное приложение Onbike</h1>
         <a href="https://itunes.apple.com/us/app/onbike-velosipednaa-karta/id885802783" 
            target="_blank">
-          <img src="../static/images/appstore-download.png" width="130" alt="appstore-download">
+          <img src="/static/images/appstore-download.png" width="130" alt="appstore-download">
         </a>
         <a href="https://play.google.com/store/apps/details?id=com.onbike.app&hl=ru" 
            target="_blank">
-          <img src="../static/images/google-play-download.png" width="130" alt="appstore-download">
+          <img src="/static/images/google-play-download.png" width="130" alt="appstore-download">
         </a>
       </div>
       {% endblock applinks %}

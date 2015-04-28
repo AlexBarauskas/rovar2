@@ -10,6 +10,7 @@ import json
 import re
 from math import sqrt
 from datetime import datetime
+import urllib
 
 from map.translit import transliterate
 
@@ -72,10 +73,38 @@ class Type(models.Model):
         else:
             return self.marker_a()
 
+    def get_object(self, uid, location, acl):
+        try:
+            if self.obj == 'p':
+                res = self.point_set.filter(location=location, uid=uid, state__lte=acl)[0]
+            else:
+                res = self.track_set_set.filter(location=location, uid=uid, state__lte=acl)[0]
+        except IndexError:
+            res = None
+        return res
+            
+
     def __unicode__(self):
         return self.name
 
+class LocationManager(models.Manager):
+    def get_location(self, name=None):
+        if name is None:
+            try:
+                location = Location.objects.filter(default=True)[0]
+            except IndexError:
+                location = Location.objects.all()[0]
+        else:
+            try:
+                location = Location.objects.get(name=name)
+            except Location.DoesNotExist:
+                try:
+                    location = Location.objects.filter(default=True)[0]
+                except IndexError:
+                    location = Location.objects.all()[0]
+        return location
 
+    
 class Location(models.Model):
     name = models.CharField(max_length=16, unique=True)
     display_name = models.CharField(max_length=24, null=True)
@@ -84,7 +113,8 @@ class Location(models.Model):
     radius = models.FloatField()
     admins = models.ManyToManyField(User)
     default = models.BooleanField(default=False)
-    
+
+    objects = LocationManager()
 
     def __unicode__(self):
         return self.display_name or self.name
@@ -132,6 +162,7 @@ class Track(models.Model):
                  'uid': self.uid,
                  'type_name': self.type.name,
                  'type_slug': self.type.slug,
+                 'url': reverse('show_object', args=(self.location.name, self.type.slug, self.uid))
                  }
         if self.duration:
             track['duration'] = '%s мин' % self.duration
@@ -259,12 +290,19 @@ class Point(models.Model):
         if self.location is None:
             self.define_location()
         if not self.uid or re.match('\d+\-\p', self.uid):
-            self.uid = transliterate(self.name)[:24]
+            self.uid = urllib.quote_plus(transliterate(self.name).encode('utf-8'))[:24]
             #self.uid = "%s-%s" % (self.id, self.type.obj)
             if self.__class__.objects.filter(uid=self.uid).count() != 0:
                 self.uid = self.uid[:19] + '-' + str(self.id)
             self.save()
         return res
+
+#for p in pp:
+#    p.uid = urllib.quote_plus(transliterate(p.name).encode('utf-8'))[:24]
+#    if p.__class__.objects.filter(uid=p.uid).count() != 0:
+#        p.uid = p.uid[:19] + '-' + str(p.id)
+#    p.save()
+
 
     def __unicode__(self):
         return self.name
@@ -306,6 +344,7 @@ class Point(models.Model):
                  'marker_active': '/static/images/Parking.png',
                  'type_name': self.type.name,
                  ####
+                 'url': reverse('show_object', args=(self.location.name, self.type.slug, self.uid)),
                  }
         if self.phones:
             point['phones'] = self.phones

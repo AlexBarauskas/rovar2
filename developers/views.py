@@ -78,19 +78,19 @@ def widget_js(request):
 
 def url_to_id(request):
     path = request.GET.get('url', '').strip()
-    point = re.findall('/(?P<slug>\w+)/(?P<uid>[\-_\w]+)$', path)
+    point = re.findall('(?P<location_name>\w+)/(?P<slug>[\w\-]+)/(?P<uid>[\-\+\.\%_\w]+)$', path)
     if len(point) == 0:
         return HttpResponse(json.dumps({'point': None,
                                         'success': False,
                                         'message': u'Точка не найдена'}),
                             content_type = "text/json"
                             )
-    ptype, uid = point[0]
+    location, ptype, uid = point[0]
     
     try:
         point = Point.objects.get(uid=uid,
                                   type__slug=ptype,
-                                  location__name=request.GET.get('location'))
+                                  location__name=location)
     except Exception, e:
         print e
         return HttpResponse(json.dumps({'point': None,

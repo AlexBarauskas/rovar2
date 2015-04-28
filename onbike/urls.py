@@ -28,9 +28,10 @@ urlpatterns = patterns(
     url(r'^$', 'onbike.views.home', name='home'),
     url(r'^short-home/$', 'onbike.views.short_home', name='short_home'),
     
+    
     url(r'^info/$', TemplateView.as_view(template_name="info.html"), name='info'),
     url(r'^language/$', 'onbike.views.set_language', name='set_language'),
-    url(r'^location/$', 'onbike.views.set_location', name='set_location'),
+    #url(r'^location/$', 'onbike.views.set_location', name='set_location'),
     url(r'^manager/', include('manager.urls')),
     url(r'^map/', include('map.urls')),
     url(r'^blog/', include('blog.urls')),
@@ -59,9 +60,9 @@ urlpatterns = patterns(
     
     url(r'^admin/', include(admin.site.urls)),
 
-
-    url(r'^(?P<slug>\w+)/(?P<uid>[\-_\w]+)$', 'onbike.views.home', name='home_uid'),
-    url(r'^(?P<uid>\d+\-\w)/$', 'onbike.views.home', name='home_uid'),
+    
+    #url(r'^(?P<slug>\w+)/(?P<uid>[\-_\w]+)$', 'onbike.views.home', name='home_uid'),
+    #url(r'^(?P<uid>\d+\-\w)/$', 'onbike.views.home', name='home_uid'),
 
 
 )
@@ -73,3 +74,11 @@ if settings.DEBUG:
                             url(r'^static/(?P<path>.*)$', 'django.views.static.serve',
                                 { 'document_root' : settings.STATIC_ROOT }),
                             )
+
+
+urlpatterns += patterns(
+    '',
+    url(r'^(?P<location_name>\w+)/$', 'onbike.views.show_location', name='show_location'),
+    url(r'^(?P<location_name>\w+)/(?P<slug>[\w\-]+)/$', 'onbike.views.show_category', name='show_category'),
+    url(r'^(?P<location_name>\w+)/(?P<slug>[\w\-]+)/(?P<uid>[\-\+\.\%_\w]+)$', 'onbike.views.show_object', name='show_object'),
+    )

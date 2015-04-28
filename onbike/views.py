@@ -40,67 +40,125 @@ def short_home(request):
                                   'locations': Location.objects.all()
                                },
                               context_instance=RequestContext(request))
-    
-    
 
-def home(request, uid=None, slug=None):
-    request.session['human'] = True;
+def home(request):
+    l_name = request.session.get('location', None)
+    location = Location.objects.get_location(l_name)
+    return HttpResponseRedirect(reverse('show_location', args=[location.name]))
+
+def show_location(request, location_name):
+    request.session['human'] = True
+    location = Location.objects.get_location(location_name)
+    if location.name != location_name:
+        return HttpResponseRedirect(reverse('show_location', args=[location.name]))
+    request.session['location'] = location.name
+    return render_to_response('home_new.html',
+                              {   'types': Type.objects.all(),
+                                  'locations_dropdown': True,
+                                  'location': location,
+                                  'locations': Location.objects.all()
+                                  },
+                              context_instance=RequestContext(request))
+
+def show_category(request, location_name, slug):
+    location = Location.objects.get_location(location_name)
+    if location.name != location_name:
+        return HttpResponseRedirect(reverse('show_category', args=[location.name, slug]))
+    try:
+        category = Type.objects.get(slug=slug)
+    except Type.DoesNotExist:
+        return HttpResponseRedirect(reverse('show_location', args=[location.name]))
+    return render_to_response('home_new.html',
+                              {   'types': Type.objects.all(),
+                                  'locations_dropdown': True,
+                                  'location': location,
+                                  'locations': Location.objects.all()
+                                  },
+                              context_instance=RequestContext(request))
+    
+def show_object(request, location_name, slug, uid):
+    location = Location.objects.get_location(location_name)
+    if location.name != location_name:
+        return HttpResponseRedirect(reverse('show_category', args=[location.name, slug]))
+    try:
+        category = Type.objects.get(slug=slug)
+    except Type.DoesNotExist:
+        return HttpResponseRedirect(reverse('show_location', args=[location.name]))
     acl = '0'
     if request.user.is_authenticated():
         acl = '1'
         if request.user.is_staff:
             acl = '2'
-    obj = None
-    uid = uid or request.GET.get('uid')
-    if uid:
-        if re.match('^\d+\-[pt]$', uid):
-            id, t = uid.split('-')
-            if t == 't':
-                M = Track
-            else:
-                M = Point
-            qs = M.objects.filter(id=id)
-            if qs.count() != 0:
-                obj = qs[0]
-        else:
-            qs = Track.objects.filter(uid=uid)
-            if qs.count() != 0:
-                obj = qs[0]
-            else:
-                qs = Point.objects.filter(uid=uid)
-                if qs.count() != 0:
-                    obj = qs[0]
-                else:
-                    return HttpResponseRedirect('/')
-            
-    types = Type.objects.all()
-    #for t in types:
-    #    t.acl = acl
-
-    if obj is not None and obj.location:
-        if request.session.get('change_location', False):
-            del request.session['change_location']
-            if obj.location.name != request.session.get('location', u'Minsk'):
-                return HttpResponseRedirect('/')
-        l_name = obj.location.name
-    else:
-        l_name = request.session.get('location', u'Minsk')
-    try:
-        location = Location.objects.get(name=l_name)
-    except Location.DoesNotExist:
-        try:
-            location = Location.objects.filter(default=True)[0]
-        except:
-            location = Location.objects.all()[0]
-    
+    obj = category.get_object(uid, location, acl)
+    if obj is None:
+        return HttpResponseRedirect(reverse('show_location', args=[location.name]))
     return render_to_response('home_new.html',
-                              {   'types': types,
-                                  'obj': obj,
+                              {   'types': Type.objects.all(),
                                   'locations_dropdown': True,
                                   'location': location,
-                                  'locations': Location.objects.all()
-                               },
+                                  'locations': Location.objects.all(),
+                                  'obj': obj
+                                  },
                               context_instance=RequestContext(request))
+
+## def home(request, uid=None, slug=None):
+##     request.session['human'] = True;
+##     acl = '0'
+##     if request.user.is_authenticated():
+##         acl = '1'
+##         if request.user.is_staff:
+##             acl = '2'
+##     obj = None
+##     uid = uid or request.GET.get('uid')
+##     if uid:
+##         if re.match('^\d+\-[pt]$', uid):
+##             id, t = uid.split('-')
+##             if t == 't':
+##                 M = Track
+##             else:
+##                 M = Point
+##             qs = M.objects.filter(id=id)
+##             if qs.count() != 0:
+##                 obj = qs[0]
+##         else:
+##             qs = Track.objects.filter(uid=uid)
+##             if qs.count() != 0:
+##                 obj = qs[0]
+##             else:
+##                 qs = Point.objects.filter(uid=uid)
+##                 if qs.count() != 0:
+##                     obj = qs[0]
+##                 else:
+##                     return HttpResponseRedirect('/')
+            
+##     types = Type.objects.all()
+##     #for t in types:
+##     #    t.acl = acl
+
+##     if obj is not None and obj.location:
+##         if request.session.get('change_location', False):
+##             del request.session['change_location']
+##             if obj.location.name != request.session.get('location', u'Minsk'):
+##                 return HttpResponseRedirect('/')
+##         l_name = obj.location.name
+##     else:
+##         l_name = request.session.get('location', u'Minsk')
+##     try:
+##         location = Location.objects.get(name=l_name)
+##     except Location.DoesNotExist:
+##         try:
+##             location = Location.objects.filter(default=True)[0]
+##         except:
+##             location = Location.objects.all()[0]
+    
+##     return render_to_response('home_new.html',
+##                               {   'types': types,
+##                                   'obj': obj,
+##                                   'locations_dropdown': True,
+##                                   'location': location,
+##                                   'locations': Location.objects.all()
+##                                },
+##                               context_instance=RequestContext(request))
 
 
 def api_doc(request):
@@ -122,10 +180,10 @@ def set_language(request):
                 response.set_cookie(settings.LANGUAGE_COOKIE_NAME, lang_code)
     return response
 
-def set_location(request):
-    next = request.REQUEST.get('next')
-    next = request.META.get('HTTP_REFERER', '/')
-    response = HttpResponseRedirect(next)
-    request.session['location'] = request.GET.get('name', 'Minsk')
-    request.session['change_location'] = True
-    return response
+#def set_location(request):
+#    next = request.REQUEST.get('next')
+#    next = request.META.get('HTTP_REFERER', '/')
+#    response = HttpResponseRedirect(next)
+#    request.session['location'] = request.GET.get('name', 'Minsk')
+#    request.session['change_location'] = True
+#    return response

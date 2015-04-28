@@ -2,6 +2,24 @@
 {% load cache %}
 {% load i18n %}
 
+{% block meta %}
+{%if obj%}
+<meta property="og:title" content="ONBIKE.BY | {{obj.name}}" />
+<meta name="description" content="{{obj.description}}"/>
+<meta property="og:description" content="{{obj.description}}"/>
+<meta property="og:url" content="//onbike.by{% url 'show_object' obj.location.name obj.type_slug obj.uid %}" />
+{%if obj.photo_set.all.0.image.url%}
+<meta property="og:image" content="//onbike.by{{obj.photo_set.all.0.image.url}}" />
+<link rel="image_src" href="//onbike.by{{obj.photo_set.all.0.image.url}}" />
+{%else%}
+<meta property="og:image" content="//onbike.by/static/images/onbike-og.png" />
+<link rel="image_src" href="//onbike.by/static/images/onbike-og.png"/>
+{%endif%}
+{%else%}
+{{block.super}}
+{%endif%}
+{% endblock meta %}
+
 {% block css %}
 <link type="text/css" href="/static/leaflet73/leaflet.css" rel="stylesheet"/>
 {% endblock css %}
@@ -202,7 +220,7 @@ $('input[name="phones"]').inputmask("mask", {"mask": _phoneMask,
   this.language = language_code;
   };
   {% if obj.uid %}
-  var disqus_url = 'http://onbike.by/{{obj.type.slug}}/{{obj.uid}}';
+  var disqus_url = '//onbike.by{% url 'show_object' obj.location.name obj.type_slug obj.uid %}';
   {% endif %}
   
   /* * * DON'T EDIT BELOW THIS LINE * * */
