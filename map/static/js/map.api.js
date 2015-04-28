@@ -757,6 +757,9 @@ $(function(){
 
       $("#type-btns li").click(function(ev){
 				   var type = this.attributes.id.value;
+				   var stateObj = { foo: "bar" };
+				   if(/\/\w+\/[\w\-]+\/$/.test(window.location.href))
+				       history.pushState(stateObj, "page", '..');
 				   if($(this).attr('class').indexOf('disable')>=0){
 				       $(this).removeClass('disable');
 				       rovar.show(type);
