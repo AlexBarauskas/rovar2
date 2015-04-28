@@ -47,8 +47,8 @@ def initialize_app(request):
     }
     Параметр "uid" клиент должен сохранить на своей стороне и использовать его для получения состояний.
     '''
-    if request.method != "POST":
-        return _generate_response(request, {'success': False, 'error': "Incorrect method."})
+    #if request.method != "POST": # iOS отстает временно игнорируем проверку метода запроса
+    #    return _generate_response(request, {'success': False, 'error': "Incorrect method."})
     try:
         app = Application.objects.create()
         res = {'success': True,
