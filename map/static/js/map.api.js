@@ -76,6 +76,10 @@ var rovar = {
 	this.copyright = '&copy; <a href="//osm.org/copyright">OpenStreetMap</a> contributors';
 	
 	var l_name;
+	if(typeof rovar_category != 'undefined')
+	    this._category = rovar_category;
+	else
+	    this._category = '';
 	if(typeof rovar_location != 'undefined')
 	    l_name = rovar_location;
 	else
@@ -355,6 +359,10 @@ var rovar = {
 		    }
 		    else{
 			$('#'+type_id).hide();
+		    }
+		    if(self._category && self._category != type_id){
+			$('#'+type_id).addClass('disable');
+			rovar.hide(type_id);
 		    }
 		    if(object_name == 'point' && data.length > 0)
 			self._pointGroup(type_id);		    

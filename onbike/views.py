@@ -72,7 +72,8 @@ def show_category(request, location_name, slug):
                               {   'types': Type.objects.all(),
                                   'locations_dropdown': True,
                                   'location': location,
-                                  'locations': Location.objects.all()
+                                  'locations': Location.objects.all(),
+                                  'category': category
                                   },
                               context_instance=RequestContext(request))
     
