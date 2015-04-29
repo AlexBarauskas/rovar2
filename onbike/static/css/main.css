@@ -128,13 +128,13 @@ b {
 
 #main-panel-wrapper{
     min-height: 100%;
-    margin-bottom: -142px;
+    margin-bottom: -160px;
     position:relative;
     top:0;
 }
 
 #main-panel-blank{
-    height:142px;
+    height:160px;
 }
 
 #map{
