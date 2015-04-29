@@ -11,19 +11,34 @@ admin.autodiscover()
 from django.contrib.sitemaps import Sitemap
 from django.core.urlresolvers import reverse
 
-class StaticViewSitemap(Sitemap):
+from map.sitemap import LocationSitemap, Location
+
+class StaticSitemap(Sitemap):
     priority = 0.5
     changefreq = 'monthly'
 
     def items(self):
-        return ['home', 'info']
+        return ['info', 'dev_index', 'widget_examle']
 
     def location(self, item):
         return reverse(item)
 
+SITEMAPS = {
+    'static' : StaticSitemap(),
+    }
+for l in Location.objects.all():
+    SITEMAPS[l.name] = LocationSitemap(location=l)
+
+
 urlpatterns = patterns(
     '',
-    url(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': {'/': StaticViewSitemap()}}),
+    #url(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': {'/': StaticViewSitemap()}}),
+    url(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.index', {'sitemaps': SITEMAPS}),
+    url(r'^sitemap-(?P<section>.+)\.xml$', 'django.contrib.sitemaps.views.sitemap', 
+        {'sitemaps': SITEMAPS,
+         #'template_name': 'qartez/rel_alternate_hreflang_sitemap.xml'
+         }),
+
     url(r'^robots.txt$', 'onbike.views.robots', name='home'),
 
 
