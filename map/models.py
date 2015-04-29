@@ -78,7 +78,7 @@ class Type(models.Model):
             if self.obj == 'p':
                 res = self.point_set.filter(location=location, uid=uid, state__lte=acl)[0]
             else:
-                res = self.track_set_set.filter(location=location, uid=uid, state__lte=acl)[0]
+                res = self.track_set.filter(location=location, uid=uid, state__lte=acl)[0]
         except IndexError:
             res = None
         return res

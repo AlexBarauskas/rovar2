@@ -4,11 +4,7 @@ from map.models import Location, Type, Point, Track
 from django.contrib.sitemaps import Sitemap
 
 class LocationSitemap(Sitemap):
-    def __init__(self, *args, **kwargs):
-        if 'location' in kwargs:
-            location = kwargs['location']
-            del kwargs['location']
-        super(LocationSitemap, self).__init__(*args, **kwargs)
+    def __init__(self, location):
         self._location = location
 
     def items(self):
