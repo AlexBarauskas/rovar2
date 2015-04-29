@@ -190,5 +190,5 @@ def set_language(request):
 #    return response
 
 def robots(request):
-    return HttpResponse('User-Agent: *\nDisallow: /api/\nDisallow: /info/\nDisallow: /language/\nDisallow: /map/',
+    return HttpResponse('User-Agent: *\nDisallow: /api/\nDisallow: /language/\nDisallow: /map/',
                         'text/plain')
