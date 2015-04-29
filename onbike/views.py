@@ -188,3 +188,7 @@ def set_language(request):
 #    request.session['location'] = request.GET.get('name', 'Minsk')
 #    request.session['change_location'] = True
 #    return response
+
+def robots(request):
+    return HttpResponse('User-Agent: *\nDisallow: /api/\nDisallow: /info/\nDisallow: /language/\nDisallow: /map/',
+                        'text/plain')

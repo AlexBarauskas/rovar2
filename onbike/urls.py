@@ -24,6 +24,8 @@ class StaticViewSitemap(Sitemap):
 urlpatterns = patterns(
     '',
     url(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': {'/': StaticViewSitemap()}}),
+    url(r'^robots.txt$', 'onbike.views.robots', name='home'),
+
 
     url(r'^$', 'onbike.views.home', name='home'),
     url(r'^short-home/$', 'onbike.views.short_home', name='short_home'),
