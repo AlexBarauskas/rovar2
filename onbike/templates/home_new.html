@@ -161,7 +161,7 @@
 {% block applinks %}
 {{block.super}}
 <div id="gid-link">
-  <a href="javascript:;" onclick="startIntro();">Посмотреть гид по сайту</a>
+  <a href="javascript:;" onclick="startIntro();">Как это работает</a>
 </div>
 {% endblock applinks %}
 
@@ -189,9 +189,13 @@
           //});
         var intro = introJs();
           intro.setOptions({
+            nextLabel: 'Далее &rarr;',
+            prevLabel: '&larr; Назад',
+            skipLabel: "Пропустить",
+            doneLabel: "Отлично!",
             steps: [
               {
-                intro: "Привет! onbike — это велосипедная карта, которая помогает осознанно строить свои маршруты. </br></br> Нажмите <b>Next →</b>, чтобы продолжить."
+                intro: "onbike.by — это велосипедная карта c важными объектами вашего города и маршрутами по нему. </br></br> <span style='font-size:10px;'>Нажмите <b>Далее &rarr;</b>, чтобы продолжить.</span>"
               },
               {
                 element: '#locations',
