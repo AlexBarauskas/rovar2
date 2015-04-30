@@ -29,6 +29,7 @@ ALLOWED_HOSTS = []
 
 ADMINS = (
     ('Barauskas Alex', 'barauskasalex@gmail.com'),
+    ('Denis Balyko', 'denisbalyko@gmail.com'),
 )
 
 
