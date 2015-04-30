@@ -184,9 +184,9 @@
     <script type="text/javascript">
 
       function startIntro(){
-          $(window).ready(function(){
-            $("#gid-link").remove();
-          });
+          //$(window).ready(function(){
+          //  $("#gid-link").remove();
+          //});
         var intro = introJs();
           intro.setOptions({
             steps: [
@@ -218,8 +218,8 @@
                 position: 'top'
               }
             ]
-          });
-
+      });
+           intro.onchange(function(){rovar.backToHome()});
           intro.start();
       }
     </script>
