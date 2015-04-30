@@ -195,7 +195,7 @@ def robots(request):
 
 import qrcode
 def make_qr(request):
-    image = qrcode.make('http://obnbike.by/qr/')
+    image = qrcode.make('http://onbike.by/qr/')
     response = HttpResponse('', "image/png")
     image.save(response, "PNG")
     return response
