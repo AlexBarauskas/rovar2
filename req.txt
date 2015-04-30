@@ -5,3 +5,4 @@ django==1.7.1
 psycopg2
 pillow
 python-social-auth
+qrcode

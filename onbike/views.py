@@ -192,3 +192,19 @@ def set_language(request):
 def robots(request):
     return HttpResponse('User-Agent: *\nDisallow: /api/\nDisallow: /language/\nDisallow: /map/',
                         'text/plain')
+
+import qrcode
+def make_qr(request):
+    image = qrcode.make('http://obnbike.by/qr/')
+    response = HttpResponse('', "image/png")
+    image.save(response, "PNG")
+    return response
+
+def qr_redirect(request):
+    ua = request.META.get('HTTP_USER_AGENT', '').lower()
+    redirecr_url = '/'
+    if 'android' in ua:
+        redirecr_url = 'https://play.google.com/store/apps/details?id=com.onbike.app&hl=ru'
+    if 'ipad' in ua or 'iphone' in ua:
+        redirecr_url = 'https://itunes.apple.com/us/app/onbike-velosipednaa-karta/id885802783'
+    return HttpResponseRedirect(redirecr_url)
