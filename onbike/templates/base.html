@@ -19,6 +19,23 @@
     <meta property="og:image" content="//onbike.by/static/images/onbike-og.png" />
     <link rel="image_src" href="//onbike.by/static/images/onbike-og.png"/>
     <meta property="og:url" content="http://onbike.by/" />
+
+    <meta name="apple-itunes-app" content="app-id=885802783">
+    <meta name="google-play-app" content="app-id=com.onbike.app">
+    {# <meta name="viewport" content="width=device-width, initial-scale=1.0"> #}
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/jquery.smartbanner/1.0.0/jquery.smartbanner.min.css"
+          type="text/css"
+          media="screen">
+    <style type="text/css">
+    #smartbanner .sb-icon{
+        background: #FFF;
+        background-size: cover;
+    }
+    </style>
+
+    <link rel="apple-touch-icon" href="/static/images/favicon.png">
     {% endblock meta %}
     {% block css %}
     {% endblock css %}
@@ -136,6 +153,23 @@
 
     {% block js %}
     {% endblock js %}
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.smartbanner/1.0.0/jquery.smartbanner.min.js"></script>
+    <script type="text/javascript">
+        $(window).ready(function(){
+            $.smartbanner({
+              title: "onbike.by",
+              author: "Велосипедная карта города",
+              price: 'FREE',
+              appStoreLanguage: 'ru',
+              inAppStore: 'On the App Store',
+              inGooglePlay: 'In Google Play',
+              inAmazonAppStore: 'In the Amazon Appstore',
+              button: 'Скачать',
+              scale: 'auto',
+              iOSUniversalApp: true
+            });
+        });
+    </script>
     <script type="text/javascript">
           $('#info').click(function(ev) {
                   var infoIF = $('#info-iframe');
