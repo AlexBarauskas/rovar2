@@ -18,9 +18,14 @@ class XMLTrack(object):
         if self.type == 'kml':
             return self.get_track_kml()
         self.track = {}
-        track_node = self.dom.getElementsByTagName('trk')[0]
+        try:
+            track_node = self.dom.getElementsByTagName('trk')[0]
+            point_name = 'trkpt'
+        except IndexError:
+            track_node = self.dom.getElementsByTagName('rte')[0]
+            point_name = 'rtept'
         self.track["name"] = track_node.getElementsByTagName('name')[0].firstChild.nodeValue
-        track_points = track_node.getElementsByTagName('trkpt')
+        track_points = track_node.getElementsByTagName(point_name)
         self.track['rout'] = []
         for p in track_points:
             try:
