@@ -494,10 +494,11 @@ var rovar = {
 	}
 	//var self = this;
 	 var polyline = L.geoJson(yourGeoJSON, {
-				      color: data.color,
+				      'color': data.color,
 				      'weight': 4,
 				      'opacity': 1,
-				      'smoothFactor': 2,
+				      'smoothFactor': 2
+					  /*
 				      style: function (feature) {
 					  if(feature.properties.elevation > 0)
 					      return {
@@ -507,7 +508,8 @@ var rovar = {
 					      return {
 						 "color": data.color
 					      };
-				      }
+					   
+				      }*/
 				  });
 	
 	polyline.addTo(this.map);
