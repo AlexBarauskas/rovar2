@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load cache %}
 {% load i18n %}
-
+{% load staticfiles %}
 {% block meta %}
 {%if obj%}
 <meta property="og:title" content="ONBIKE.BY | {{obj.name}}" />
@@ -12,8 +12,8 @@
 <meta property="og:image" content="//onbike.by{{obj.photo_set.all.0.image.url}}" />
 <link rel="image_src" href="//onbike.by{{obj.photo_set.all.0.image.url}}" />
 {%else%}
-<meta property="og:image" content="//onbike.by/static/images/onbike-og.png" />
-<link rel="image_src" href="//onbike.by/static/images/onbike-og.png"/>
+<meta property="og:image" content="{% static 'images/onbike-og.png' %}"/>
+<link rel="image_src" href="{% static 'images/onbike-og.png' %}"/>
 {%endif%}
 {%else%}
 {{block.super}}
@@ -21,7 +21,7 @@
 {% endblock meta %}
 
 {% block css %}
-<link type="text/css" href="/static/leaflet73/leaflet.css" rel="stylesheet"/>
+<link type="text/css" href="{% static 'leaflet73/leaflet.css' %}" rel="stylesheet"/>
 {% endblock css %}
 
 {% block preload %}
@@ -36,7 +36,7 @@
   {%endif%}
   {%endif%}
   {%endfor%}
-  <img src="/static/icons/pin-add.png"/>
+  <img src="{% static 'icons/pin-add.png' %}"/>
 </div>
 {% endblock preload %}
 
@@ -82,7 +82,7 @@
     </div-->
     
     <div class="form-group">
-      <input type="text" class="form-control" value="" placeholder="{% trans "Название *" %}" name="title" />
+      <input type="text" class="form-control" value="" placeholder="{% trans 'Название *' %}" name="title" />
     </div>
     
     <div class="form-group border">
@@ -100,23 +100,23 @@
     </div>
     
     <div class="form-group">
-      <textarea type="text" class="form-control" value="" placeholder="{% trans "Описание (время работы, ориентиры и т.д.)" %}" name="description"></textarea>
+      <textarea type="text" class="form-control" value="" placeholder="{% trans 'Описание (время работы, ориентиры и т.д.)' %}" name="description"></textarea>
     </div>
     
     <div class="form-group">
-      <input type="text" class="form-control" value="" placeholder="{% trans "Адрес *" %}" name="address" />
+      <input type="text" class="form-control" value="" placeholder="{% trans 'Адрес *' %}" name="address" />
     </div>
     
     <div class="form-group">
-      <input type="text" class="form-control" value="" placeholder="{% trans "Телефон" %}" name="phones" />
+      <input type="text" class="form-control" value="" placeholder="{% trans 'Телефон' %}" name="phones" />
     </div>
 
     <div class="form-group">
-      <input type="text" class="form-control" value="" placeholder="{% trans "Сайт" %}" name="website" />
+      <input type="text" class="form-control" value="" placeholder="{% trans 'Сайт' %}" name="website" />
     </div>
 
     <div class="form-group">
-      <input type="text" class="form-control" value="{%if user.is_authenticated%}{{user.email}}{%endif%}" placeholder="{% trans "Ваш Email (мы не будем спамить, честно) *" %}" name="email" />
+      <input type="text" class="form-control" value="{%if user.is_authenticated%}{{user.email}}{%endif%}" placeholder="{% trans 'Ваш Email (мы не будем спамить, честно) *' %}" name="email" />
     </div>
     
     <!--div class="form-group">
@@ -167,20 +167,20 @@
 
 {% block js %}
 
-<script type="text/javascript" src="/static/js/locations.js"></script>
+<script type="text/javascript" src="{% static 'js/locations.js' %}"></script>
 
-<script type="text/javascript" src="/static/js/jquery.inputmask.js"></script>
-<script type="text/javascript" src="/static/js/jquery.inputmask.extensions.js"></script>
+<script type="text/javascript" src="{% static 'js/jquery.inputmask.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery.inputmask.extensions.js' %}"></script>
 
-<script type="text/javascript" src="/static/leaflet73/leaflet-src.js"></script>
-<script type="text/javascript" src="/static/leaflet73/leaflet.js"></script>
+<script type="text/javascript" src="{% static 'leaflet73/leaflet-src.js' %}"></script>
+<script type="text/javascript" src="{% static 'leaflet73/leaflet.js' %}"></script>
 
-<script type="text/javascript" src="/static/js/moxie/moxie.min.js"></script>
-<script type="text/javascript" src="/static/js/customupload.js"></script>
-<script type="text/javascript" src="/static/js/map.api.translate.js"></script>
-<script type="text/javascript" src="/static/js/map.api.js"></script>
+<script type="text/javascript" src="{% static 'js/moxie/moxie.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/customupload.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/map.api.translate.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/map.api.js' %}"></script>
 
-<script type="text/javascript" src="/static/js/intro.js"></script>
+<script type="text/javascript" src="{% static 'js/intro.js' %}"></script>
     <script type="text/javascript">
 
       function startIntro(){
@@ -235,7 +235,7 @@ var _phoneMaskList = [_phoneMask];
 $(document).ready(function(){
 
 function phoneCompleted(){
-$('input[name="phones"]').last().after('<input type="text" class="form-control" value="" placeholder="{% trans "Добавить телефон"%}" name="phones">');
+$('input[name="phones"]').last().after('<input type="text" class="form-control" value="" placeholder="{% trans 'Добавить телефон' %}" name="phones">');
 $('input[name="phones"]').last().addClass("other-phones").inputmask("mask", {"mask": _phoneMask,"oncomplete": phoneCompleted,"oncleared": function(){$(this).remove()}});
 }
 
