@@ -1,5 +1,6 @@
 {% load cache %}
 {% load login i18n%}
+{% load staticfiles %}
 {% get_available_languages as LANGUAGES %}
 {% get_current_language as LANGUAGE_CODE %}
 <!DOCTYPE html>
@@ -7,10 +8,10 @@
   <head>
     <meta charset="utf-8">
     <title>onbike.by{% block subtitle %}{% endblock subtitle %}</title>
-    <link type="image/png" rel="icon" href="/static/images/favicon.png"/>
-    <link type="text/css" href="/static/css/introjs.css" rel="stylesheet"/>
-    <link type="text/css" href="/static/css/main.css" rel="stylesheet"/>
-    <link type="text/css" href="/static/account/css/login.css" rel="stylesheet"/>
+    <link type="image/png" rel="icon" href="{% static 'images/favicon.png' %}">
+    <link type="text/css" href="{% static 'css/introjs.css' %}" rel='stylesheet'>
+    <link type="text/css" href="{% static 'css/main.css' %}" rel='stylesheet'>
+    <link type="text/css" href="{% static 'account/css/login.css' %}" rel='stylesheet'>
     <link  href="//cdnjs.cloudflare.com/ajax/libs/fotorama/4.5.1/fotorama.css" rel="stylesheet">
     {% block meta %}
     <meta property="og:title" content="ONBIKE.BY" />
@@ -35,7 +36,7 @@
     }
     </style>
 
-    <link rel="apple-touch-icon" href="/static/images/favicon.png">
+    <link rel="apple-touch-icon" href="{% static 'images/favicon.png' %}">
     {% endblock meta %}
     {% block css %}
     {% endblock css %}
@@ -61,13 +62,13 @@
 
     <div id="social-networks">
       <a href="https://www.facebook.com/onbike.by">
-	<img src="/static/images/facebook.png"/>
+	       <img src="{% static 'images/facebook.png' %}">
       </a>
       <a href=" https://vk.com/onbike_by">
-	<img src="/static/images/vk.png"/>
+	       <img src="{% static 'images/vk.png' %}">
       </a>
       <a href="https://twitter.com/onbike_by">
-	<img src="/static/images/twitter.png"/>
+	       <img src="{% static 'images/twitter.png' %}">
       </a>
     </div>
     {% endblock menu %}
@@ -76,7 +77,7 @@
       <div id="main-panel-wrapper">
 	<div id="header"{%if obj%} style="background-color:{{obj.type.color}}"{%endif%}>
           <div id="hmenu">
-            <a id="info" href="javascript:;"><img src="/static/icons/info.png"/></a>
+            <a id="info" href="javascript:;"><img src="{% static 'icons/info.png' %}"></a>
           </div>
           <h1>
             <a href="/" id="banner" class="logo">ONBIKE.BY</a>
@@ -110,11 +111,11 @@
         <h1>Мобильное приложение Onbike</h1>
         <a href="https://itunes.apple.com/us/app/onbike-velosipednaa-karta/id885802783" 
            target="_blank">
-          <img src="/static/images/appstore-download.png" width="130" alt="appstore-download">
+          <img src="{% static 'images/appstore-download.png' %}" width="130" alt="appstore-download">
         </a>
         <a href="https://play.google.com/store/apps/details?id=com.onbike.app&hl=ru" 
            target="_blank">
-          <img src="/static/images/google-play-download.png" width="130" alt="appstore-download">
+          <img src="{% static 'images/google-play-download.png' %}" width="130" alt="appstore-download">
         </a>
       </div>
       {% endblock applinks %}
@@ -147,8 +148,8 @@
 
     {% endblock content %}
 
-    <script type="text/javascript" src="/static/js/jquery.min.js"></script>
-    <script type="text/javascript" src="/static/js/jquery.form.js"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.form.js' %}"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/fotorama/4.5.1/fotorama.js"></script>
 
     {% block js %}
