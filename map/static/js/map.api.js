@@ -68,7 +68,7 @@ var rovar = {
 	};
 
 
-	var map = new L.Map('map');
+	var map = new L.Map('map', {zoomControl: false});
 	var self = this;
 	map.on('zoomend', function(ev){
 		   self._visible_pins();
