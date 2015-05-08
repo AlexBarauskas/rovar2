@@ -40,39 +40,100 @@
 </div>
 {% endblock preload %}
 
+
+  {% block header %}
+    <div class="header-menu left">
+      <div class="header-menu-item">
+        <a href="/" id="banner" class="logo">ONBIKE.BY</a>
+        <a href="javascript:;" id="back-to-banner" style="display:none" class="back">← <span id="type" class="type"></span></a>
+      </div>
+
+      {% if locations_dropdown %}
+      <div class="header-menu-item">
+        <div id="locations" class="dropdown">
+          <div>
+            <i class="icon locations"></i>
+            {{location}}
+            {# <p><span>&#9002;</span></p> #}
+          </div>
+          <ul>
+            {%for l in locations%}
+            {%if l.name != location.name %}<li><a href="{% url 'show_location' l.name %}">{{l}}</a></li>{%endif%}
+            {%endfor%}
+          </ul>
+        </div>
+      </div>
+      {% endif %}
+
+      {% get_available_languages as LANGUAGES %}
+      <div class="header-menu-item">
+        <div class="section views">
+          <div id="js_toggleTypeBtns"><i class="icon pin"></i> {% trans "Что показать" %}</div>
+          <ul id="type-btns" class="control" style="display: none;">
+            {%for T in types%}
+            <li id="{{T.slug}}" class="type-all" style="display:none;">
+              <span class="Tname" style="background-color:{{T.color}}">{% trans T.name %}</span>
+              <span class="Tnumber number" style="color:{{T.color}}">0</span>
+            </li>
+            {%endfor%}
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="header-menu right">
+      <div class="header-menu-item">
+          <a id="add-point-btn"  href="javascript:;">
+            <i class="icon plus"></i> {% trans "Добавить точку" %}
+          </a>
+      </div>
+      <div class="header-menu-item">
+          <a id="info" href="#">
+            <i class="icon info"></i> {% trans "О проекте" %}
+          </a>
+          {# <div class="footer"> #}
+            {# <ul> #}
+              {# <li> #}
+              {# </li> #}
+              {% comment %}
+              {%for c, t in LANGUAGES%}
+              {%if LANGUAGE_CODE != c%}<li><a class="right dotted" href="{%url 'set_language'%}?language={{c}}">{{t}}</a></li>{%endif%}
+              {%endfor%}
+              {% endcomment %}
+            {# </ul> #}
+          {# </div> #}
+      </div>
+    </div>
+
+  {% endblock header %}
+
 {% block content_left %}
-{% get_available_languages as LANGUAGES %}
-<div style="height:75px;"></div>
 
-
-<div class="preview">
-  <div class="preview-content"></div>
+<div class="preview main-panel-inner">
+  <div class="preview-content clearfix"></div>
   <div id="disqus_thread" style="display:none"></div>
 </div>
 
-
-
-<div class="section views">
-  <h1>{% trans "Показывать на карте:" %}</h1>
-  <ul id="type-btns" class="control">
-    {%for T in types%}
-    <li id="{{T.slug}}" class="type-all" style="display:none;">
-      <span style="background-color:{{T.color}}">{% trans T.name %}</span>
-      <span style="color:{{T.color}}" class="number">0</span>
-    </li>
-    {%endfor%}
-  </ul>
+<div id="app-links" class="main-panel-inner">
+  <h1>Мобильное приложение Onbike</h1>
+  <a href="https://itunes.apple.com/us/app/onbike-velosipednaa-karta/id885802783" 
+     target="_blank">
+    <img src="{% static 'images/appstore-download.png' %}" width="130" alt="appstore-download">
+  </a>
+  <a href="https://play.google.com/store/apps/details?id=com.onbike.app&hl=ru" 
+     target="_blank">
+    <img src="{% static 'images/google-play-download.png' %}" width="130" alt="appstore-download">
+  </a>
+  <div id="gid-link">
+    <a href="javascript:;" onclick="startIntro();">Как это работает</a>
+  </div>
 </div>
 
 {% endblock content_left %}
 
 {% block content_right %}
 <div id="map" class="data-content" style="padding:0;"></div>
-<div id="lang">
-  <a id="add-point-btn"  href="javascript:;">
-    {% trans "+ Добавить точку" %}
-  </a>
-</div>
 <div id="add-point-dialog" style="display:none">
   <form id="add-point-form" method="POST" action="/api/point/add" enctype="multipart/form-data">
     
@@ -157,13 +218,6 @@
 </div>
 
 {% endblock content_right %}
-
-{% block applinks %}
-{{block.super}}
-<div id="gid-link">
-  <a href="javascript:;" onclick="startIntro();">Как это работает</a>
-</div>
-{% endblock applinks %}
 
 {% block js %}
 

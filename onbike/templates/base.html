@@ -58,81 +58,33 @@
 
     {% block content %}
 
-    {% block menu %}
+      {% block menu %}
+        <div id="social-networks">
+          <a href="https://www.facebook.com/onbike.by">
+    	       <img src="{% static 'images/facebook.png' %}">
+          </a>
+          <a href=" https://vk.com/onbike_by">
+    	       <img src="{% static 'images/vk.png' %}">
+          </a>
+          <a href="https://twitter.com/onbike_by">
+    	       <img src="{% static 'images/twitter.png' %}">
+          </a>
+        </div>
+      {% endblock menu %}
 
-    <div id="social-networks">
-      <a href="https://www.facebook.com/onbike.by">
-	       <img src="{% static 'images/facebook.png' %}">
-      </a>
-      <a href=" https://vk.com/onbike_by">
-	       <img src="{% static 'images/vk.png' %}">
-      </a>
-      <a href="https://twitter.com/onbike_by">
-	       <img src="{% static 'images/twitter.png' %}">
-      </a>
+
+    <div id="main-header"{%if obj%} style="background-color:{{obj.type.color}}"{%endif%}>
+      <div id="main-header-wrapper" class="clearfix">
+        {% block header %}
+        {% endblock header %}
+      </div>
     </div>
-    {% endblock menu %}
 
     <div id="main-panel">
       <div id="main-panel-wrapper">
-	<div id="header"{%if obj%} style="background-color:{{obj.type.color}}"{%endif%}>
-          <div id="hmenu">
-            <a id="info" href="javascript:;"><img src="{% static 'icons/info.png' %}"></a>
-          </div>
-          <h1>
-            <a href="/" id="banner" class="logo">ONBIKE.BY</a>
-            <a href="javascript:;" id="back-to-banner" style="display:none" class="back">&lt;</a>
-          </h1>
-          <div id="type" class="type"></div>
-
-	  {% if locations_dropdown%}
-	  <div id="locations" class="dropdown">
-	    <div>
-	      {{location}}
-	      <p><span>&#9002;</span></p>
-	    </div>
-	    <ul>
-	      {%for l in locations%}
-	      {%if l.name != location.name %}<li><a href="{% url 'show_location' l.name %}">{{l}}</a></li>{%endif%}
-	      {%endfor%}
-	    </ul>
-	  </div>
-	  {% else %}
-	  <div style="height:20px"></div>
-	  {% endif %}
-	  
-	</div>
-	{% block content_left %}
-	{% endblock content_left %}
-	<div id="main-panel-blank"></div>
+      	{% block content_left %}
+      	{% endblock content_left %}
       </div>
-      {% block applinks %}
-      <div id="app-links">
-        <h1>Мобильное приложение Onbike</h1>
-        <a href="https://itunes.apple.com/us/app/onbike-velosipednaa-karta/id885802783" 
-           target="_blank">
-          <img src="{% static 'images/appstore-download.png' %}" width="130" alt="appstore-download">
-        </a>
-        <a href="https://play.google.com/store/apps/details?id=com.onbike.app&hl=ru" 
-           target="_blank">
-          <img src="{% static 'images/google-play-download.png' %}" width="130" alt="appstore-download">
-        </a>
-      </div>
-      {% endblock applinks %}
-      {% block footer %}
-      <div class="footer">
-	<ul>
-	  <li><a class="left" href="/info/">{% trans "О проекте" %}</a></li>
-	  <!--li><a class="left" href="#">{% trans "Блог" %}</a></li-->
-	  <!--li><a class="left" href="#">API</a></li-->
-	  {% comment %}
-	  {%for c, t in LANGUAGES%}
-	  {%if LANGUAGE_CODE != c%}<li><a class="right dotted" href="{%url 'set_language'%}?language={{c}}">{{t}}</a></li>{%endif%}
-	  {%endfor%}
-	  {% endcomment %}
-	</ul>
-      </div>
-      {% endblock footer %}
     </div>
     
     <div id="contentWrapper">
@@ -172,7 +124,8 @@
         });
     </script>
     <script type="text/javascript">
-          $('#info').click(function(ev) {
+          $('#info').click(function(e) {
+                  e.preventDefault();
                   var infoIF = $('#info-iframe');
                   if (infoIF.length != 0) {
                       if ((infoIF.attr('class') || '').indexOf('show')) {

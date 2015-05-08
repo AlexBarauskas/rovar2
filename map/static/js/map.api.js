@@ -31,7 +31,7 @@ var rovar = {
     messages : {
 	'edit' : 'Редактировать',
 	'travel time' : 'Время в пути',
-	'add point' : '+ Добавить точку',
+	'add point' : '<i class=\"icon plus\"></i> Добавить точку',
 	'set coordinates' : 'Выберите место на карте (Esc для отмены)',
 	'unknown error' : 'Неизвестная ошибка.',
 	'success message' : 'Ваше предложение будет рассмотрено модератором.',
@@ -184,7 +184,7 @@ var rovar = {
 	$('#back-to-banner').hide();
 	$('#type').hide();
 	$('#banner').show();
-	$("#header").css('background-color', "#e95d24");
+	$("#main-header").css('background-color', "#e95d24");
 	$("#locations>div").css('background-color', "#e95d24");
     },
 
@@ -230,7 +230,8 @@ var rovar = {
 	    }
 	    $('.fotorama').fotorama({
 	    	'nav': false,
-	    	'maxheight': '235px'
+	    	'maxheight': '235px',
+	    	'maxwidth': '320px',
 	    });
 	}
 	preview.append(description);
@@ -246,7 +247,7 @@ var rovar = {
 	}
 	preview.parent().show();
 	$("#type").html(data.type_name);
-	$("#header").css('background-color', data.color);
+	$("#main-header").css('background-color', data.color);
 	$("#locations>div").css('background-color', data.color);
 	var stateObj = { foo: "bar" };
 	history.pushState(stateObj, "page", data.url);	  
@@ -384,7 +385,7 @@ var rovar = {
 	$('#back-to-banner').hide();
 	$('#type').hide();
 	$('#banner').show();
-	$("#header").css('background-color', "#e95d24");
+	$("#main-header").css('background-color', "#e95d24");
 	$("#locations>div").css('background-color', "#e95d24");
 
     },
@@ -428,7 +429,7 @@ var rovar = {
 	}
 	
 	$("#type").html(data.type_name);
-	$("#header").css('background-color', data.color);
+	$("#main-header").css('background-color', data.color);
 	$("#locations>div").css('background-color', data.color);
 
 
@@ -772,6 +773,11 @@ $(function(){
 				   }
 				   
 			       });
+      $("#js_toggleTypeBtns").click(function (e) {
+      	e.preventDefault();
+      	$("#type-btns").slideToggle();
+      	e.stopPropagation();
+      })
 
       $(document).keyup(function(e) {
 			    if (e.keyCode == 27 & rovar._runAddPoint){rovar.closeAddPoint();}
