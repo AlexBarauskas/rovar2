@@ -73,11 +73,11 @@ html[xmlns] .clearfix {
 }
 
 html, body {
-    font-family:'ProximaNovaRegular', Helvetica, Arial, sans-serif;
-    height:100%;
-    font-size:14px;
+    font-family: 'ProximaNovaRegular', Helvetica, Arial, sans-serif;
+    height: 100%;
+    font-size: 14px;
     position: relative;
-    min-width: 600px;
+    min-width: 800px;
 }
 
 b {
@@ -398,7 +398,6 @@ i.icon{
 .data-content {
     padding:0;
     min-height:100%;
-    background-color:#e9e6de;
     position:relative;
     font-size:20px;
 }
@@ -418,8 +417,8 @@ i.icon{
     font-family:'ProximaNovaRegular', Helvetica, Arial, sans-serif;
     margin-top: 0;
     margin-bottom: 0;
-    padding: 1em 0 1em;
-    font-size: 1em;
+    padding: 8px 0 8px;
+    font-size: 14px;
     line-height: 1.25em;
     color: black;
 }
@@ -528,14 +527,14 @@ i.icon{
 }
 
 .authors {
-    margin-top: 30px;
+    margin-top: 0px;
     text-align: center;
 }
 
 .authors-item {
     display:inline-block;
     vertical-align: top;
-    width: 20%;
+    width: 22%;
     padding: 1.5%;
     text-align:center;
     min-width:165px;
@@ -544,7 +543,7 @@ i.icon{
 .authors-item h1{
     font-size: 15px;
     line-height: 19px;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 .authors-item div{
     font-size: 14px;
@@ -552,7 +551,7 @@ i.icon{
 }
 
 .authors-item>div{
-    padding: 20px 0 20px;
+    padding: 10px 0 10px;
 }
 
 .authors-item img{
@@ -565,18 +564,16 @@ i.icon{
 }
 
 #info-iframe{
-    top:0;
-    height:0;
-    position:fixed;
-    left: 320px;
-    z-index:1001;
-    width:100%;
+    display: none;
+    top: 66px;
+    height: 730px;
+    position: fixed;
+    right: 18px;
+    z-index: 1001;
+    width: 50%;
     border: none;
     overflow:auto;
-    background-color: #e9e6de;
-}
-#info-iframe>div{
-    margin-right: 320px;
+    background-color: #fff;
 }
 /*
 .footer {

@@ -126,26 +126,27 @@
     <script type="text/javascript">
           $('#info').click(function(e) {
                   e.preventDefault();
-                  var infoIF = $('#info-iframe');
-                  if (infoIF.length != 0) {
-                      if ((infoIF.attr('class') || '').indexOf('show')) {
-                          infoIF.animate({
-                              height: '100%'
-                          }, {
-                              complete: function() {
-                                  infoIF.addClass('show');
-                              }
-                          });
-                      } else {
-                          infoIF.animate({
-                              height: 0
-                          }, {
-                              complete: function() {
-                                  infoIF.removeClass('show');
-                              }
-                          });
-                      }
-                  }
+                  $('#info-iframe').fadeToggle();
+                  // var infoIF = $('#info-iframe');
+                  // if (infoIF.length != 0) {
+                  //     if ((infoIF.attr('class') || '').indexOf('show')) {
+                  //         infoIF.animate({
+                  //             height: '100%'
+                  //         }, {
+                  //             complete: function() {
+                  //                 infoIF.addClass('show');
+                  //             }
+                  //         });
+                  //     } else {
+                  //         infoIF.animate({
+                  //             height: 0
+                  //         }, {
+                  //             complete: function() {
+                  //                 infoIF.removeClass('show');
+                  //             }
+                  //         });
+                  //     }
+                  // }
             });
 
           //         var infoF = $('#info-iframe');
