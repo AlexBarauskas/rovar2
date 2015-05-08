@@ -566,7 +566,7 @@ i.icon{
 #info-iframe{
     display: none;
     top: 66px;
-    height: 730px;
+    height: 80%;
     position: fixed;
     right: 18px;
     z-index: 1001;

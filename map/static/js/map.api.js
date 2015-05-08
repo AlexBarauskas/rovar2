@@ -69,6 +69,10 @@ var rovar = {
 
 
 	var map = new L.Map('map', {zoomControl: false});
+	map.on('click', function(e) {
+		console.log(e);
+        map.panTo(new L.LatLng(e.latlng.lat, e.latlng.lng));
+    });
 	var self = this;
 	map.on('zoomend', function(ev){
 		   self._visible_pins();
