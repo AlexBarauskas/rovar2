@@ -83,7 +83,7 @@
     </div>
 
     <div class="header-menu right">
-      <div class="header-menu-item">
+      <div class="header-menu-item lang">
           <a id="add-point-btn"  href="javascript:;">
             <i class="icon plus"></i> {% trans "Добавить точку" %}
           </a>
@@ -126,7 +126,7 @@
     <img src="{% static 'images/google-play-download.png' %}" width="130" alt="appstore-download">
   </a>
   <div id="gid-link">
-    <a href="javascript:;" onclick="startIntro();">Как это работает</a>
+    <a id="gid-link_a" href="#">Как это работает</a>
   </div>
 </div>
 
@@ -235,12 +235,17 @@
 <script type="text/javascript" src="{% static 'js/map.api.js' %}"></script>
 
 <script type="text/javascript" src="{% static 'js/intro.js' %}"></script>
-    <script type="text/javascript">
 
-      function startIntro(){
-          //$(window).ready(function(){
-          //  $("#gid-link").remove();
-          //});
+
+<script>
+var _phoneMask = "+999 (99) 999-99-99";
+var _phoneMaskList = [_phoneMask];
+
+$(document).ready(function(){
+
+
+      $("#gid-link_a").click(function(){
+        console.log(123123123);
         var intro = introJs();
           intro.setOptions({
             nextLabel: 'Далее &rarr;',
@@ -253,40 +258,35 @@
               },
               {
                 element: '#locations',
-                intro: "Выберите свой город."
+                intro: "Выберите свой город.",
+                position: 'bottom'
               },
               {
-                element: '.section.views',
+                element: '#js_toggleTypeBtns',
                 intro: "Кликните на название слоя с объектами, если хотите скрыть его с карты.",
-                position: 'right'
+                position: 'bottom'
               },
               {
-                element: '#map',
+                // element: '#map',
                 intro: 'Нажав на маршрут или точку на карте, можно получить подробную информацию. </br></br> К многим маршрутам прикреплено видео — с его помощью вы сможете лучше ориентироваться на незнакомой местности.',
-                position: 'left'
+                // position: 'left'
               },
               {
-                element: '#lang',
+                element: '.header-menu-item.lang',
                 intro: "Добавляйте новые точки на карту!",
-                position: 'left'
+                position: 'bottom'
               },
               {
                 element: '#app-links',
                 intro: 'И скачайте наше мобильное приложение! В нём очень удобно добавлять новые объекты, предлагать изменения и вообще – приближать светлое велосипедное будущее ;)',
-                position: 'top'
+                position: 'right'
               }
             ]
       });
-           intro.onchange(function(){rovar.backToHome()});
+          intro.onchange(function(){rovar.backToHome()});
           intro.start();
-      }
-    </script>
+      });
 
-<script>
-var _phoneMask = "+999 (99) 999-99-99";
-var _phoneMaskList = [_phoneMask];
-
-$(document).ready(function(){
 
 function phoneCompleted(){
 $('input[name="phones"]').last().after('<input type="text" class="form-control" value="" placeholder="{% trans 'Добавить телефон' %}" name="phones">');
