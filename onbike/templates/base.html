@@ -13,6 +13,16 @@
     <link type="text/css" href="{% static 'css/main.css' %}" rel='stylesheet'>
     <link type="text/css" href="{% static 'account/css/login.css' %}" rel='stylesheet'>
     <link  href="//cdnjs.cloudflare.com/ajax/libs/fotorama/4.5.1/fotorama.css" rel="stylesheet">
+    <link type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.smartbanner/1.0.0/jquery.smartbanner.min.css" rel="stylesheet">
+    <!-- fix styles @TODO made favicon for mobile application banner -->
+    <style type="text/css">
+    #smartbanner .sb-icon{
+        background: #FFF;
+        background-size: cover;
+    }
+    </style>
+
+    <link rel="apple-touch-icon" href="{% static 'images/favicon.png' %}">
     {% block meta %}
     <meta property="og:title" content="ONBIKE.BY" />
     <meta property="og:description" content="Велосипедная карта Минска: маршруты, полезные объекты, с видео- и фотоподсказками. Велосипед — друг человека. Onbike.by — друг велосипедиста!"/>
@@ -23,20 +33,7 @@
 
     <meta name="apple-itunes-app" content="app-id=885802783">
     <meta name="google-play-app" content="app-id=com.onbike.app">
-    {# <meta name="viewport" content="width=device-width, initial-scale=1.0"> #}
-
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/jquery.smartbanner/1.0.0/jquery.smartbanner.min.css"
-          type="text/css"
-          media="screen">
-    <style type="text/css">
-    #smartbanner .sb-icon{
-        background: #FFF;
-        background-size: cover;
-    }
-    </style>
-
-    <link rel="apple-touch-icon" href="{% static 'images/favicon.png' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% endblock meta %}
     {% block css %}
     {% endblock css %}
@@ -58,45 +55,41 @@
 
     {% block content %}
 
-      {% block menu %}
-        <div id="social-networks">
-          <a href="https://www.facebook.com/onbike.by">
-    	       <img src="{% static 'images/facebook.png' %}">
-          </a>
-          <a href=" https://vk.com/onbike_by">
-    	       <img src="{% static 'images/vk.png' %}">
-          </a>
-          <a href="https://twitter.com/onbike_by">
-    	       <img src="{% static 'images/twitter.png' %}">
-          </a>
+      <div id="social-networks">
+        <a href="https://www.facebook.com/onbike.by">
+           <img src="{% static 'images/facebook.png' %}">
+        </a>
+        <a href=" https://vk.com/onbike_by">
+           <img src="{% static 'images/vk.png' %}">
+        </a>
+        <a href="https://twitter.com/onbike_by">
+           <img src="{% static 'images/twitter.png' %}">
+        </a>
+      </div>
+
+      <div id="main-header"{%if obj%} style="background-color:{{obj.type.color}}"{%endif%}>
+        <div id="main-header-wrapper" class="clearfix">
+          {% block header %}
+          {% endblock header %}
         </div>
-      {% endblock menu %}
-
-
-    <div id="main-header"{%if obj%} style="background-color:{{obj.type.color}}"{%endif%}>
-      <div id="main-header-wrapper" class="clearfix">
-        {% block header %}
-        {% endblock header %}
       </div>
-    </div>
 
-    <div id="main-panel">
-      <div id="main-panel-wrapper">
-      	{% block content_left %}
-      	{% endblock content_left %}
+      <div id="main-panel">
+        <div id="main-panel-wrapper">
+        	{% block content_left %}
+        	{% endblock content_left %}
+        </div>
       </div>
-    </div>
-    
-    <div id="contentWrapper">
-      {% block content_right %}
-      {% endblock content_right %}
-    </div>
+      
+      <div id="contentWrapper">
+          {% block content_right %}
+          {% endblock content_right %}
+      </div>
 
       {% cache 600 "info_content" LANGUAGE_CODE %}
       {% load account_widgets %} {# depend info_widget @TODO вынести наверх #}
       {% info_widget %}
       {% endcache %}
-
 
     {% endblock content %}
 
@@ -106,7 +99,8 @@
 
     {% block js %}
     {% endblock js %}
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.smartbanner/1.0.0/jquery.smartbanner.min.js"></script>
+
+    <script type="text/javascript" src="{% static 'js/jquery.smartbanner.min.js' %}"></script>
     <script type="text/javascript">
         $(window).ready(function(){
             $.smartbanner({
