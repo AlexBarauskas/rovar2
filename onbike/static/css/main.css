@@ -213,7 +213,7 @@ b {
     height: 48px;
     /*width: 160px;*/
     line-height: 48px;
-    display: block;
+    display: none;
 }
 
 
@@ -264,10 +264,14 @@ b {
 
 .header-menu .header-menu-item{
     height: 48px;
-    padding: 0 10px 0 5px;
+    margin: 0 10px 0 5px;
     position: relative;
     float: left;
     cursor: pointer;
+}
+
+.header-menu .header-menu-item:hover{
+    background: rgba(150, 150, 150, .2); 
 }
 
 .header-menu .header-menu-item a{
@@ -508,6 +512,7 @@ i.icon{
 }
 
 .preview-content{
+    max-width: 350px;
     padding: 15px;
 }
 
@@ -838,8 +843,9 @@ i.icon{
     margin-right: 3px;
 }
 
-#app-links h1{
+#app-links b{
     font-size: 15px;
+    display: inline-block;
     font-weight: bold;
     margin-bottom: 5px;
 }

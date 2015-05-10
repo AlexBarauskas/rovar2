@@ -2,7 +2,7 @@ var rovar_transplate = {
     ru : {
 	'edit' : 'Редактировать',
 	'travel time' : 'Время в пути',
-	'add point' : '+ Добавить точку',
+	'add point' : 'Добавить точку',
 	'set coordinates' : 'Выберите место на карте (Esc для отмены)',
 	'unknown error' : 'Неизвестная ошибка.',
 	'success message' : 'Ваше предложение будет рассмотрено модератором.',
@@ -19,7 +19,7 @@ var rovar_transplate = {
     be : {
 	'edit' : 'Рэдагаваць',
 	'travel time' : 'Час у дарозе',
-	'add point' : '+ Дадаць месца',
+	'add point' : 'Дадаць месца',
 	'set coordinates' : 'Вылучыце месца на мапе (Esc для адмены)',
 	'unknown error' : 'Невядомая памылка.',
 	'success message' : 'Ваша прапанова будзе разгледжана мадэратарам.',
@@ -36,7 +36,7 @@ var rovar_transplate = {
     en : {
 	'edit' : 'Редактировать',
 	'travel time' : 'Время в пути',
-	'add point' : '+ Добавить точку',
+	'add point' : 'Добавить точку',
 	'set coordinates' : 'Выберите место на карте (Esc для отмены)',
 	'unknown error' : 'Неизвестная ошибка.',
 	'success message' : 'Ваше предложение будет рассмотрено модератором.',

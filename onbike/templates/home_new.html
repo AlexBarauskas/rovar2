@@ -47,7 +47,9 @@
     <div class="header-menu left">
       <div class="header-menu-item">
         <a href="/" id="banner" class="logo">ONBIKE.BY</a>
-        <a href="javascript:;" id="back-to-banner" style="display:none" class="back">← <span id="type" class="type"></span></a>
+        <a href="#" id="back-to-banner" class="back">
+          ← <span id="type" class="type"></span>
+        </a>
       </div>
 
       {% if locations_dropdown %}
@@ -89,8 +91,9 @@
     <div class="header-menu right">
 
       <div class="header-menu-item lang">
-          <a id="add-point-btn"  href="javascript:;">
-            <i class="icon plus"></i> {% trans "Добавить точку" %}
+          <i class="icon plus"></i>
+          <a id="add-point-btn"  href="#">
+            {% trans "Добавить точку" %}
           </a>
       </div>
 
@@ -123,7 +126,7 @@
     </div>
 
     <div id="app-links" class="main-panel-inner">
-      <h1>Мобильное приложение Onbike</h1>
+      <b>Мобильное приложение Onbike</b>
       <a href="https://itunes.apple.com/us/app/onbike-velosipednaa-karta/id885802783" 
          target="_blank">
         <img src="{% static 'images/appstore-download.png' %}" width="130" alt="appstore-download">
@@ -209,8 +212,8 @@
         <div id="ajax-errors"></div>
         <div class="btn-box">
           <!--button class="btn success">{% trans "Добавить точку" %}</button-->
-          <a id="upload-imgs" class="btn success" href="javascript:;">{% trans "Добавить точку" %}</a>
-          <a class="btn" id="add-point-form-close" href="javascript:;">{% trans "Отмена" %}</a>
+          <a id="upload-imgs" class="btn success" href="#">{% trans "Добавить точку" %}</a>
+          <a class="btn" id="add-point-form-close" href="#">{% trans "Отмена" %}</a>
         </div>
         <input type="hidden" value="webclient" name="uid"/>
         

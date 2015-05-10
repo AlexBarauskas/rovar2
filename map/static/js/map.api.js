@@ -106,8 +106,8 @@ var rovar = {
 	       });	
 
 	this.uploader = new CustomUpload($("#inputfile"));
-	$('#upload-imgs').click(
-	    function(){
+	$('#upload-imgs').click(function(e){
+		e.preventDefault();
 		var p = $('[name="phones"]');
 		var phones = [];
 		for(var i=p.length; i>=0; i--)
@@ -741,50 +741,62 @@ var rovar = {
 
 
     callbackAddPoint: function(data){
-	if(!data.success){
-	    $("#ajax-errors").html($("<p class=\"error alert\">").text(this.__errors[data.error_code] || this.messages['unknown error']));
-	}else{
-	    this._runAddPoint = false;
-	    $("#add-point-btn").html(this.messages['add point']);
-	    $("#ajax-errors").html($("<p class=\"success alert\">").text(this.messages['success message']));
-	    setTimeout("$('#add-point-dialog').animate({'opacity':0.25}, 500, 'swing', function(){$('#add-point-dialog').hide()})", 2000);
-	}
+		if(!data.success){
+		    $("#ajax-errors").html($("<p class=\"error alert\">").text(this.__errors[data.error_code] || this.messages['unknown error']));
+		}else{
+		    this._runAddPoint = false;
+		    $("#add-point-btn").html(this.messages['add point']);
+		    $("#ajax-errors").html($("<p class=\"success alert\">").text(this.messages['success message']));
+		    setTimeout("$('#add-point-dialog').animate({'opacity':0.25}, 500, 'swing', function(){$('#add-point-dialog').hide()})", 2000);
+		}
     }
 
 };
 
 
 $(function(){
-      rovar.init();
-      $("#add-point-btn").click(function(){rovar.addPoint();});
-      $("#back-to-banner").click(function(){rovar.backToHome();});
-      $("#add-point-form-close").click(function(){rovar.closeAddPoint();});
-      $("#add-point-form").ajaxForm(function(data){rovar.callbackAddPoint(data);});
-
-      $("#type-btns li").click(function(ev){
-				   var type = this.attributes.id.value;
-				   var stateObj = { foo: "bar" };
-				   if(/\/\w+\/[\w\-]+\/$/.test(window.location.href))
-				       history.pushState(stateObj, "page", '..');
-				   if($(this).attr('class').indexOf('disable')>=0){
-				       $(this).removeClass('disable');
-				       rovar.show(type);
-				   }
-				   else{
-				       $(this).addClass('disable');
-				       rovar.hide(type);
-				   }
-				   
-			       });
-      $("#js_toggleTypeBtns").click(function (e) {
-      	e.preventDefault();
-      	$("#type-btns").slideToggle();
-      	e.stopPropagation();
-      })
-
-      $(document).keyup(function(e) {
-			    if (e.keyCode == 27 & rovar._runAddPoint){rovar.closeAddPoint();}
-			});
-      
-
+  rovar.init();
+  $("#add-point-btn").click(function(e){
+  	e.preventDefault();
+  	rovar.addPoint();
   });
+  $("#back-to-banner").click(function(e){
+  	e.preventDefault();
+  	rovar.backToHome();
+  });
+  $("#add-point-form-close").click(function(e){
+  	e.preventDefault();
+  	rovar.closeAddPoint();
+  });
+  $("#add-point-form").ajaxForm(function(data){
+  	rovar.callbackAddPoint(data);
+  });
+
+  $("#type-btns li").click(function(ev){
+	var type = this.attributes.id.value;
+	var stateObj = { foo: "bar" };
+	if(/\/\w+\/[\w\-]+\/$/.test(window.location.href)){
+	   history.pushState(stateObj, "page", '..');
+	}
+	if($(this).attr('class').indexOf('disable')>=0){
+	   $(this).removeClass('disable');
+	   rovar.show(type);
+	}else{
+	   $(this).addClass('disable');
+	   rovar.hide(type);
+	}
+  });
+
+  $("#js_toggleTypeBtns").click(function (e) {
+  	e.preventDefault();
+  	$("#type-btns").slideToggle();
+  	e.stopPropagation();
+  })
+
+  $(document).keyup(function(e) {
+	if (e.keyCode == 27 & rovar._runAddPoint){
+		rovar.closeAddPoint();
+	}
+  });
+
+});
