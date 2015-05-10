@@ -114,11 +114,6 @@ b {
     background-color: rgba(0,0,0,0.7);
 }*/
 
-#type-btns{
-    background: #fff;
-    opacity: 0.9;
-    padding: 10px 0; 
-}
 
 #social-networks {
     width: 110px;
@@ -188,7 +183,7 @@ b {
     margin: 0;
     height: 48px;
     line-height: 48px;
-    z-index: 100 !important;
+    z-index: 100;
     position: relative !important;
 }
 #main-header-wrapper {
@@ -270,9 +265,18 @@ b {
     cursor: pointer;
 }
 
-.header-menu .header-menu-item:hover{
-    background: rgba(150, 150, 150, .2); 
+.header-menu .header-menu-item > div{
+    padding: 0 10px;
 }
+
+.header-menu .header-menu-item:hover{
+    background: rgba(255, 255, 255, .2); 
+}
+
+.header-menu .header-menu-item.logobanner:hover{
+    background: none;
+}
+
 
 .header-menu .header-menu-item a{
     color: #fff;
@@ -326,66 +330,6 @@ i.icon{
 
 .section.preview iframe{
     margin-left: -20px;
-}
-
-.views {
-    font-size: 15px;
-}
-
-.views ul{
-    list-style:none;
-    padding:0;
-}
-
-.views li{
-    height: 36px;
-    margin: 3px 0; 
-    padding: 2px 8px;
-    cursor: pointer;
-}
-
-.views li>span{
-    border-radius: 20px;
-    color: white;
-    height: 32px;
-    display: block;
-    padding: 6px 12px;
-    font-size: 16px;
-    line-height: 24px;
-}
-
-.views li>span.Tname{
-    float: left;
-    margin-right: 20px;
-}
-.views li>span.Tnumber{
-    float: right;
-}
-
-.views .control .disable>span {
-    color: white !important;
-    background: rgba(0,0,0,.2) !important;
-}
-
-.views .control .disable>span.Tnumber {
-    color: #cecece !important;
-    background: white !important;
-}
-
-
-.views h1{
-    font-size:16px;
-    font-weight: normal;
-    color:#666;
-    padding: 0;
-    margin: 0;
-    margin: 10px 0 25px;
-}
-
-.post-links li>span.number, .views li>span.number{
-    float: right;
-    color: #a6a6a6;
-    padding: 6px 6px;
 }
 
 .video>a{
@@ -455,35 +399,6 @@ i.icon{
 #login-badge.unautorized:hover .account-networks, #login-badge p{display:block;}
 
 #login-badge p{height:20px;text-align:center;font-size:16px;font-weight:bold; margin:0px; padding:10px;}
-
-.dropdown{
-    display: block;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    font-size: 14px;
-    line-height: 48px;
-    height: 48px;
-    font-weight: bold;
-}
-
-.dropdown:hover li{display:block;}
-
-.dropdown li{
-    display:none;
-    cursor:pointer;
-    background-color:rgba(255,255,255,0.5);
-    padding:5px;
-    border-radius:5px;
-}
-
-.dropdown li>a{
-    text-decoration:none;
-    color:#666;
-}
-.dropdown li>a:hover{
-    color:black;
-}
 
 .preview {
     font-size:16px;
@@ -851,15 +766,71 @@ i.icon{
 }
 
 
-
-#locations.dropdown {
-/*z-index: 10;
-position: relative;
-margin: 10px 60px;
-font-size: 16px;
-*/
+/* fix @TODO hidden pin */
+#type-btns #velcom,
+#type-btns #parking-velcom{
+    display: none;
 }
 
+.header-menu .header-menu-item.dropdown ul{
+    display: none;
+    position: absolute;
+    top: 48px;
+    left: 0;
+    margin: 0;
+    line-height: 48px;
+    width: 200px;
+    background: rgba(255, 255, 255, .85);
+    list-style: none;
+}
+
+.header-menu .header-menu-item.dropdown:hover ul{
+    display: block;
+    list-style: none;
+}
+
+.header-menu .header-menu-item.dropdown ul li{
+    color: #000;
+}
+
+.header-menu .header-menu-item.dropdown ul li a{
+    color: #000;
+    padding: 0 12px;
+    display: block;
+}
+.header-menu .header-menu-item.dropdown ul li a:hover{
+    background: rgba(150, 150, 150, .4);
+}
+
+.header-menu .header-menu-item.dropdown ul li span{
+    border-radius: 20px;
+    border: 1px transparent solid;
+    padding: 4px 10px;
+    line-height: 22px;
+    margin: 5px 10px;
+    display: inline-block;
+}
+
+.header-menu .header-menu-item.dropdown li > span.Tname{
+    float: left;
+    margin-right: 20px;
+}
+.header-menu .header-menu-item.dropdown li > span.Tnumber{
+    float: right;
+}
+
+.header-menu .header-menu-item.dropdown .disable > span {
+    color: white !important;
+    background: rgba(0,0,0,.2) !important;
+}
+
+.header-menu .header-menu-item.dropdown .disable > span.Tnumber {
+    color: #cecece !important;
+    background: white !important;
+}
+
+
+/*
 #locations.dropdown>div, #locations.dropdown ul, #locations.dropdown li{
     margin:0;
     padding:0 10px;
@@ -909,7 +880,7 @@ font-size: 16px;
 #locations.dropdown li, #locations.dropdown:hover li{display:block;}
 #locations.dropdown.visible li{
     border-bottom:solid 1px #ccc;
-}
+}*/
 
 
 /*#locations.dropdown>div span{
@@ -955,6 +926,12 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 .introjs-tooltipReferenceLayer{
     z-index: 9999998;
 }
-#locations.introjs-showElement.dropdown>div{
-    color: rgb(116, 108, 108);
+.header-menu-item .introjs-showElement{
+    color: #FFF;
+    background-color: #e95d24;
+}
+
+#main-header.introjs-fixParent{
+    width: 100%;
+    z-index: 99 !important;
 }

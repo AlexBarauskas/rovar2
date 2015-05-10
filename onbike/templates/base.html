@@ -118,9 +118,23 @@
         });
     </script>
     <script type="text/javascript">
-          $('#info').click(function(e) {
-                  e.preventDefault();
-                  $('#info-iframe').fadeToggle();
+        $('#locations, #typefilter').click(function(e){
+          e.preventDefault();
+        });
+
+        // $('dropdown').hover(
+        //   function(){
+        //     $(this).addClass("opened");
+        //   },
+        //   function(){
+        //     $(this).removeClass("opened");
+        //   }
+        // );
+
+        
+        $('#info').click(function(e) {
+          e.preventDefault();
+          $('#info-iframe').fadeToggle();
                   // var infoIF = $('#info-iframe');
                   // if (infoIF.length != 0) {
                   //     if ((infoIF.attr('class') || '').indexOf('show')) {
@@ -141,7 +155,7 @@
                   //         });
                   //     }
                   // }
-            });
+        });
 
           //         var infoF = $('#info-iframe');
           //         if (infoF.length == 0) {

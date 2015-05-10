@@ -45,7 +45,7 @@
 
   {% block header %}
     <div class="header-menu left">
-      <div class="header-menu-item">
+      <div class="header-menu-item logobanner">
         <a href="/" id="banner" class="logo">ONBIKE.BY</a>
         <a href="#" id="back-to-banner" class="back">
           ← <span id="type" class="type"></span>
@@ -53,37 +53,32 @@
       </div>
 
       {% if locations_dropdown %}
-        <div class="header-menu-item">
-          <div id="locations" class="dropdown">
-            <div>
-              <i class="icon locations"></i> {{location}}
-              {# <p><span>&#9002;</span></p> #}
-            </div>
-            <ul>
-              {% for l in locations %}
-                {% if l.name != location.name %}
-                  <li><a href="{% url 'show_location' l.name %}">{{ l }}</a></li>
-                {% endif %}
-              {% endfor %}
-            </ul>
+        <div class="header-menu-item dropdown">
+          <div id="locations">
+            <i class="icon locations"></i> {{location}}
           </div>
+          <ul>
+            {% for l in locations %}
+              {% if l.name != location.name %}
+                <li><a href="{% url 'show_location' l.name %}">{{ l }}</a></li>
+              {% endif %}
+            {% endfor %}
+          </ul>
         </div>
       {% endif %}
 
-      <div class="header-menu-item">
-        <div class="section views">
-          <div id="js_toggleTypeBtns">
+      <div class="header-menu-item dropdown">
+          <div id="typefilter">
             <i class="icon pin"></i> {% trans "Что показать" %}
           </div>
-          <ul id="type-btns" class="control" style="display: none;">
-            {%for T in types%}
-              <li id="{{T.slug}}" class="type-all" style="display:none;">
+          <ul id="type-btns">
+            {% for T in types %}
+              <li id="{{T.slug}}">
                 <span class="Tname" style="background-color:{{T.color}}">{% trans T.name %}</span>
-                <span class="Tnumber number" style="color:{{T.color}}">0</span>
+                <span class="Tnumber number" style="color:{{T.color}}"></span>
               </li>
-            {%endfor%}
+            {% endfor %}
           </ul>
-        </div>
       </div>
 
     </div>
@@ -224,7 +219,7 @@
 
   {% block js %}
 
-    <script type="text/javascript" src="{% static 'js/locations.js' %}"></script>
+    {# <script type="text/javascript" src="{% static 'js/locations.js' %}"></script> #}
 
     <script type="text/javascript" src="{% static 'js/jquery.inputmask.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/jquery.inputmask.extensions.js' %}"></script>
@@ -262,7 +257,7 @@
                 position: 'bottom'
               },
               {
-                element: '#js_toggleTypeBtns',
+                element: '#typefilter',
                 intro: "Кликните на название слоя с объектами, если хотите скрыть его с карты.",
                 position: 'bottom'
               },

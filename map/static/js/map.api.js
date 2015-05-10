@@ -103,7 +103,7 @@ var rovar = {
 		    self.map.setMaxBounds(self.location.bounds);
 		    self.loadTypes();
 		}
-	       });	
+	});	
 
 	this.uploader = new CustomUpload($("#inputfile"));
 	$('#upload-imgs').click(function(e){
@@ -188,7 +188,6 @@ var rovar = {
 	$('#type').hide();
 	$('#banner').show();
 	$("#main-header").css('background-color', "#e95d24");
-	$("#locations>div").css('background-color', "#e95d24");
     },
 
     _showPointInfo : function(point){
@@ -251,7 +250,6 @@ var rovar = {
 	preview.parent().show();
 	$("#type").html(data.type_name);
 	$("#main-header").css('background-color', data.color);
-	$("#locations>div").css('background-color', data.color);
 	var stateObj = { foo: "bar" };
 	history.pushState(stateObj, "page", data.url);	  
 
@@ -334,44 +332,44 @@ var rovar = {
     },
 
     loadObject : function(object_name, type_id, type_params){
-	var self = this;
-	$.ajax({url: '/api/' + object_name + 's',
-		method: 'GET',
-		data: {uid: 'webclient',
-		       location: this.location.id,
-		       type: type_id},
-		success: function(data){
-		    var arg;
-		    for(var i=data.length-1; i>=0; i--){
-			arg = data[i];
-			arg.color = type_params.color;
-			arg.marker_a = type_params.marker_a;
-			arg.marker_b = type_params.marker_b;
-			arg.type_name = type_params.name;
-			if(object_name == 'point'){
-			    self._addPointToMap(arg);
+		var self = this;
+		$.ajax({url: '/api/' + object_name + 's',
+			method: 'GET',
+			data: {uid: 'webclient',
+			       location: this.location.id,
+			       type: type_id},
+			success: function(data){
+			    var arg;
+			    for(var i=data.length-1; i>=0; i--){
+					arg = data[i];
+					arg.color = type_params.color;
+					arg.marker_a = type_params.marker_a;
+					arg.marker_b = type_params.marker_b;
+					arg.type_name = type_params.name;
+					if(object_name == 'point'){
+					    self._addPointToMap(arg);
+					}else{
+					    self._addTrackToMap(arg);
+					}
+			    }
+			    var n = data.length;
+			    if(n){
+					$('#'+type_id+' .Tnumber').text(n);
+					$('#'+type_id).show();
+			    }else{
+					$('#'+type_id).hide();
+			    }
+
+			    if(self._category && self._category != type_id){
+					$('#'+type_id).addClass('disable');
+					rovar.hide(type_id);
+			    }
+
+			    if(object_name == 'point' && data.length > 0){
+					self._pointGroup(type_id);		    
+			    }
 			}
-			else{
-			    self._addTrackToMap(arg);
-			}
-			    
-		    }
-		    var n = data.length;
-		    if(n){
-			$('#'+type_id+' .number').text(n);
-			$('#'+type_id).show();
-		    }
-		    else{
-			$('#'+type_id).hide();
-		    }
-		    if(self._category && self._category != type_id){
-			$('#'+type_id).addClass('disable');
-			rovar.hide(type_id);
-		    }
-		    if(object_name == 'point' && data.length > 0)
-			self._pointGroup(type_id);		    
-		}
-	       });	
+	    });	
     },
 
     _hideTrackInfo : function(track){
@@ -389,7 +387,6 @@ var rovar = {
 	$('#type').hide();
 	$('#banner').show();
 	$("#main-header").css('background-color', "#e95d24");
-	$("#locations>div").css('background-color', "#e95d24");
 
     },
 
@@ -433,9 +430,6 @@ var rovar = {
 	
 	$("#type").html(data.type_name);
 	$("#main-header").css('background-color', data.color);
-	$("#locations>div").css('background-color', data.color);
-
-
 
 	var stateObj = { foo: "bar" };
 	history.pushState(stateObj, "page", data.url);	  
@@ -662,9 +656,10 @@ var rovar = {
 		}
 	    }
 	}
-	if($('#type-btns #'+type_name).attr('class').indexOf('disable')>=0)
-	    $("img."+type_name + ', div.' + type_name).hide();
-	return true;
+		if($('#type-btns #'+type_name).hasClass('disable')){
+		    $("img."+type_name + ', div.' + type_name).hide();
+	    }
+		return true;
     },
 
     closeAddPoint : function(){	
@@ -778,7 +773,8 @@ $(function(){
 	if(/\/\w+\/[\w\-]+\/$/.test(window.location.href)){
 	   history.pushState(stateObj, "page", '..');
 	}
-	if($(this).attr('class').indexOf('disable')>=0){
+	console.log(type);
+	if($(this).hasClass('disable')){
 	   $(this).removeClass('disable');
 	   rovar.show(type);
 	}else{
@@ -786,12 +782,6 @@ $(function(){
 	   rovar.hide(type);
 	}
   });
-
-  $("#js_toggleTypeBtns").click(function (e) {
-  	e.preventDefault();
-  	$("#type-btns").slideToggle();
-  	e.stopPropagation();
-  })
 
   $(document).keyup(function(e) {
 	if (e.keyCode == 27 & rovar._runAddPoint){
