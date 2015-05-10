@@ -663,7 +663,8 @@ var rovar = {
     },
 
     closeAddPoint : function(){	
-	$("#add-point-btn").html(this.messages['add point']);
+	$("#add-point-btn-text").html(this.messages['add point']);
+	$("#add-point-btn").parent().removeClass("hover");
 	$("#add-point-dialog").hide();
 	$("#ajax-errors").html("");
 
@@ -682,7 +683,9 @@ var rovar = {
 	if(!this._runAddPoint){
 	    
 	this._runAddPoint = true;
-	$("#add-point-btn").html(this.messages['set coordinates']);
+	$("#add-point-btn-text").html(this.messages['set coordinates']);
+	$("#add-point-btn").parent().addClass("hover");
+
 	var self = this;
 	$(this.map._container).css('cursor', "url('/static/icons/pin-add.png') "+(this._iconSize*this._kLeft).toString() + ' ' + (this._iconSize-1).toString() +",crosshair");
 	$('.leaflet-clickable').css('cursor', "url('/static/icons/pin-add.png') "+(this._iconSize*this._kLeft).toString() + ' ' + (this._iconSize-1).toString() +",crosshair");
@@ -740,7 +743,8 @@ var rovar = {
 		    $("#ajax-errors").html($("<p class=\"error alert\">").text(this.__errors[data.error_code] || this.messages['unknown error']));
 		}else{
 		    this._runAddPoint = false;
-		    $("#add-point-btn").html(this.messages['add point']);
+		    $("#add-point-btn-text").html(this.messages['add point']);
+			$("#add-point-btn").parent().removeClass("hover");
 		    $("#ajax-errors").html($("<p class=\"success alert\">").text(this.messages['success message']));
 		    setTimeout("$('#add-point-dialog').animate({'opacity':0.25}, 500, 'swing', function(){$('#add-point-dialog').hide()})", 2000);
 		}

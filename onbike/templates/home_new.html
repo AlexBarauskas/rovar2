@@ -86,16 +86,18 @@
     <div class="header-menu right">
 
       <div class="header-menu-item lang">
+        <div id="add-point-btn">
           <i class="icon plus"></i>
-          <a id="add-point-btn"  href="#">
-            {% trans "Добавить точку" %}
-          </a>
+          <span id="add-point-btn-text">
+              {% trans "Добавить точку" %}
+          </span>
+        </div>
       </div>
 
       <div class="header-menu-item">
-          <a id="info" href="#">
+          <div id="info">
             <i class="icon info"></i> {% trans "О проекте" %}
-          </a>
+          </div>
           {# <div class="footer"> #}
             {# <ul> #}
               {# <li> #}

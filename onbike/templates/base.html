@@ -134,6 +134,7 @@
         
         $('#info').click(function(e) {
           e.preventDefault();
+          $(this).parent().toggleClass("hover");
           $('#info-iframe').fadeToggle();
                   // var infoIF = $('#info-iframe');
                   // if (infoIF.length != 0) {
