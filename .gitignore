@@ -25,4 +25,5 @@ rovar.db
 *.[xi]ml
 
 # Dev settings
+node_modules/*
 settings_local.py
