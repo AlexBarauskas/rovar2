@@ -26,6 +26,10 @@ $(function() {
       $('#info-iframe').fadeToggle();
     });
 
+    $("#info-iframe .button_close").click(function(){
+      $("#info").click();
+    });
+
     $("#gid-link_a").click(function(){
       var intro = introJs();
         intro.setOptions({

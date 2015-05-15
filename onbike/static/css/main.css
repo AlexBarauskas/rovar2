@@ -165,7 +165,7 @@ b {
 }
 
 .header-menu .header-menu-item > div{
-    padding: 0 10px;
+    padding: 0 15px 0 10px;
 }
 
 .header-menu .header-menu-item.hover,
@@ -253,12 +253,14 @@ i.icon{
 .data-content h1, .data-content h2, .data-content h3{
     margin-top: 0;
     margin-bottom: 0;
+    padding: 0;
     color: #e95d24;
+    font-weight: 100;
     font-size: 1.5em;
     font-family:'ProximaNovaExtrabold', Helvetica, Arial, sans-serif;
 }
-.data-content h1{font-size: 1.5em;}
-.data-content h2{font-size: 1.25em;}
+.data-content h1{font-size: 1.3em;}
+.data-content h2{font-size: 1.2em;}
 .data-content h3{font-size: 1.1em;}
 
 .data-content p{
@@ -680,7 +682,7 @@ i.icon{
     margin: 0;
     line-height: 48px;
     width: 220px;
-    background: rgba(255, 255, 255, .85);
+    background: rgba(255, 255, 255, .95);
     list-style: none;
 }
 
@@ -840,4 +842,14 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 #smartbanner .sb-icon{
     background: #FFF;
     background-size: cover;
+}
+
+.button_close{
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    height: 13px;
+    width: 13px;
+    background: url(../icons/icon_close.png) no-repeat;
+    cursor: pointer;
 }
