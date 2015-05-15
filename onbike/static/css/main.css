@@ -92,13 +92,13 @@ b {
 }
 
 #main-header .logo {
-    width: 97px;
-    height: 31px;
+    width: 75px;
+    height: 24px;
     display: block;
     text-indent: -9999px;
-    background: url(../images/logo.png);
-    background-size: 97px 31px;
-    margin-top: 8px;
+    background: url(../images/logo_small.png);
+    /*background-size: 97px 31px;*/
+    margin-top: 12px;
 }
 
 #main-header .back {
@@ -158,7 +158,7 @@ b {
 
 .header-menu .header-menu-item{
     height: 48px;
-    margin: 0 10px 0 5px;
+    margin: 0;
     position: relative;
     float: left;
     cursor: pointer;
@@ -168,9 +168,21 @@ b {
     padding: 0 15px 0 10px;
 }
 
+/*.header-menu .header-menu-item > div > span{
+    border-bottom: 1px dotted transparent;
+}
+
+.header-menu .header-menu-item > div:hover > span{
+    border-color: #fff;
+}*/
+
 .header-menu .header-menu-item.hover,
 .header-menu .header-menu-item:hover{
     background: rgba(255, 255, 255, .2); 
+}
+
+.header-menu .header-menu-item.logobanner{
+    margin-right: 12px;
 }
 
 .header-menu .header-menu-item.logobanner:hover{
@@ -191,7 +203,7 @@ i.icon{
     line-height: 48px;
     height: 48px;
     margin-right: 6px;
-    margin-top: -3px;
+    margin-top: -1px;
 }
 
 .icon{
@@ -212,6 +224,10 @@ i.icon{
 
 .icon.plus{
     background-image: url(../icons/icon-plus.png);
+}
+
+.icon.eye{
+    background-image: url(../icons/icon-eye.png);
 }
 
 .icon.info{
@@ -311,6 +327,7 @@ i.icon{
 .preview h1{
     font-size: 22px;
     font-weight:normal;
+    margin-right: 20px;
 }
 
 .preview img{
@@ -646,7 +663,7 @@ i.icon{
 }
 
 #app-links{
-    padding: 16px 16px 8px 16px;
+    padding: 15px;
     z-index: 10;
     position:relative;
 }
@@ -657,14 +674,14 @@ i.icon{
 }
 
 #app-links img{
-    margin-right: 3px;
+    margin-right: 5px;
 }
 
 #app-links b{
     font-size: 15px;
     display: inline-block;
     font-weight: bold;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
 }
 
 
@@ -672,6 +689,29 @@ i.icon{
 #type-btns #velcom,
 #type-btns #parking-velcom{
     display: none;
+}
+
+.header-menu .header-menu-item.dropdown{
+    padding-right: 12px;
+}
+
+.header-menu .header-menu-item.dropdown:after{
+    content: "";
+    display: block;
+    width: 10px;
+    height: 48px;
+    position: absolute;
+    right: 10px;
+    top: 0;
+    background: url(../icons/icon-select-arrow.png) top center no-repeat;
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
+
+.header-menu .header-menu-item.dropdown:hover:after{
+    background: url(../icons/icon-select-arrow.png) bottom center no-repeat;
 }
 
 .header-menu .header-menu-item.dropdown ul{
@@ -806,20 +846,8 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 }
 */
 #gid-link{
-    padding: 8px 0;
     position: relative;
     z-index: 11;
-    color: #000;
-}
-#gid-link a{
-    color: #000;
-    text-decoration: none;
-    border-bottom: 1px dotted #000;
-}
-
-#gid-link a:hover{
-    color: #e95d24;
-    border-color: #e95d24;
 }
 
 .introjs-helperNumberLayer{
@@ -852,4 +880,7 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
     width: 13px;
     background: url(../icons/icon_close.png) no-repeat;
     cursor: pointer;
+-webkit-box-shadow: 0px 0px 12px 0px rgba(255, 255, 255, 1);
+-moz-box-shadow:    0px 0px 12px 0px rgba(255, 255, 255, 1);
+box-shadow:         0px 0px 12px 0px rgba(255, 255, 255, 1);
 }
