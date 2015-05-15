@@ -184,9 +184,9 @@ var rovar = {
 	var stateObj = { foo: "bar" };
 	history.pushState(stateObj, "page", '/' + this.location.name);	  
 
-	$('#back-to-banner').hide();
-	$('#type').hide();
-	$('#banner').show();
+	// $('#back-to-banner').hide();
+	// $('#type').hide();
+	// $('#banner').show();
 	$("#main-header").css('background-color', "#e95d24");
     },
 
@@ -208,9 +208,9 @@ var rovar = {
 	this.currentPoint = point;
 
 
-	$('#banner').hide();
-	$('#back-to-banner').show();
-	$('#type').show();
+	// $('#banner').hide();
+	// $('#back-to-banner').show();
+	// $('#type').show();
 
 	var description,
 	data = point._data;
@@ -256,7 +256,7 @@ var rovar = {
 		.appendTo(preview);
 	}
 	preview.parent().show();
-	$("#type").html(data.type_name);
+	// $("#type").html(data.type_name);
 	$("#main-header").css('background-color', data.color);
 	var stateObj = { foo: "bar" };
 	history.pushState(stateObj, "page", data.url);	  
@@ -391,9 +391,9 @@ var rovar = {
 	var stateObj = { foo: "bar" };
 	history.pushState(stateObj, "page", '/' + this.location.name);	  
 
-	$('#back-to-banner').hide();
-	$('#type').hide();
-	$('#banner').show();
+	// $('#back-to-banner').hide();
+	// $('#type').hide();
+	// $('#banner').show();
 	$("#main-header").css('background-color', "#e95d24");
 
     },
@@ -410,9 +410,9 @@ var rovar = {
 	    $(track._data.pointA._icon).show();
 	    $(track._data.pointB._icon).show();
 	    
-	    $('#banner').hide();
-	    $('#back-to-banner').show();
-            $('#type').show();
+	    // $('#banner').hide();
+	    // $('#back-to-banner').show();
+        // $('#type').show();
 	    var data = track._data;
 	    
 	    var preview = $('.preview-content').html('')
@@ -444,7 +444,7 @@ var rovar = {
 	    video.width(preview.width());
 	}
 	
-	$("#type").html(data.type_name);
+	// $("#type").html(data.type_name);
 	$("#main-header").css('background-color', data.color);
 
 	var stateObj = { foo: "bar" };
@@ -775,10 +775,10 @@ $(function(){
   	e.preventDefault();
   	rovar.addPoint();
   });
-  $("#back-to-banner").click(function(e){
-  	e.preventDefault();
-  	rovar.backToHome();
-  });
+  // $("#back-to-banner").click(function(e){
+  // 	e.preventDefault();
+  // 	rovar.backToHome();
+  // });
   $("#add-point-form-close").click(function(e){
   	e.preventDefault();
   	rovar.closeAddPoint();
