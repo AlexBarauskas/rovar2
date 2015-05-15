@@ -846,8 +846,8 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 
 .button_close{
     position: absolute;
-    right: 20px;
-    top: 20px;
+    right: 15px;
+    top: 15px;
     height: 13px;
     width: 13px;
     background: url(../icons/icon_close.png) no-repeat;

@@ -222,8 +222,16 @@ var rovar = {
 	else
 	    description = "<p>"+data.description+"</p>";
 	var preview = $('.preview-content').html('')
+		.append("<div class='button_close'></div>")
 	    .append($("<h1>"+title+"</h1>").css('color', data.color))
 	    .append($("<p></p>").html(data.address).addClass('description-address'));
+
+	$('.preview-content .button_close')
+		.unbind("click")
+		.click(function(){
+			self._hidePointInfo(point);
+		});
+
 	if(data.images && data.images.length){
 	    var imgs_preview = $('<div>').addClass('fotorama').appendTo(preview);
 	    for(var imgiter = data.images.length-1; imgiter>=0; imgiter--){
@@ -408,6 +416,7 @@ var rovar = {
 	    var data = track._data;
 	    
 	    var preview = $('.preview-content').html('')
+	    .append("<div class='button_close'></div>")
 		.append($("<h1>"+data.title+"</h1>").css('color', data.color));
 	    if(data.duration)
 		preview.append($("<p></p>").html(this.messages['travel time']+': '+data.duration).addClass('description-address'));
@@ -416,6 +425,13 @@ var rovar = {
 		preview.append(video);
 		//if(preview.width()<preview.find('iframe').width())	    
 	    }
+
+	$('.preview-content .button_close')
+		.unbind("click")
+		.click(function(){
+			self._hideTrackInfo(track);
+		});
+
 	var description;
 	if(data.post_url)
 	    description = "<p><a href=\""+data.post_url+"\">"+data.description+"</a></p>";
