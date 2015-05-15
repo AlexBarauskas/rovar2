@@ -147,7 +147,10 @@ var rovar = {
 		this._hideTrackInfo(this.currentTrack);
 		this.currentTrack = null;
 	    }
-		
+
+    	var type_counter = parseInt($("#type_counter").html()) || 0;
+    	var n_counter = parseInt($("#"+type_name+" .Tnumber").html()) || 0;
+		$("#type_counter").html(type_counter - n_counter);
 
 	$("img."+type_name + ', div.' + type_name).hide();
 	for(key in this.elements.tracks){
@@ -158,6 +161,9 @@ var rovar = {
     },
 
     show : function(type_name){
+    	var type_counter = parseInt($("#type_counter").html()) || 0;
+    	var n_counter = parseInt($("#"+type_name+" .Tnumber").html()) || 0;
+		$("#type_counter").html(type_counter + n_counter);
 	$("img."+type_name + ', div.' + type_name).show();
 	for(key in this.elements.tracks){
 	    if(key == type_name)
@@ -235,13 +241,14 @@ var rovar = {
 	if(data.images && data.images.length){
 	    var imgs_preview = $('<div>').addClass('fotorama').appendTo(preview);
 	    for(var imgiter = data.images.length-1; imgiter>=0; imgiter--){
-		$('<img/>').attr({'src': data.images[imgiter]})
-		    .appendTo(imgs_preview);
+			$('<a></a>').attr({'href': data.images[imgiter]})
+		    	.appendTo(imgs_preview);
 	    }
 	    $('.fotorama').fotorama({
 	    	'nav': false,
 	    	'maxheight': '235px',
 	    	'maxwidth': '320px',
+	    	'allowfullscreen': true
 	    });
 	}
 	preview.append(description);
@@ -363,6 +370,10 @@ var rovar = {
 			    var n = data.length;
 			    if(n){
 					$('#'+type_id+' .Tnumber').text(n);
+					
+					var type_counter = parseInt($("#type_counter").html()) || 0;
+					$("#type_counter").html(type_counter + n);
+
 					$('#'+type_id).show();
 			    }else{
 					$('#'+type_id).hide();
