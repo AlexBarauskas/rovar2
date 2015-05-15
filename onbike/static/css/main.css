@@ -365,6 +365,18 @@ i.icon{
     display: none !important; 
 }
 
+#type_counter{
+    font-size: 12px;
+}
+#type_counter:before{
+    content: "(";
+    display: inline;
+}
+#type_counter:after{
+    content: ")";
+    display: inline;
+}
+
 .authors {
     margin-top: 0px;
     text-align: center;
