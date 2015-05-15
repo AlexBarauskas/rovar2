@@ -28,11 +28,6 @@ rovar.db
 node_modules/*
 settings_local.py
 
-# Dev combine file // compile on server
-onbike/static/css/style.min.css
-onbike/static/js/script.js
-onbike/static/js/script.min.js
-
 # Fabric
 fabfile.py
 
