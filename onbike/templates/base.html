@@ -9,19 +9,6 @@
     <meta charset="utf-8">
     <title>onbike.by{% block subtitle %}{% endblock subtitle %}</title>
     <link type="image/png" rel="icon" href="{% static 'images/favicon.png' %}">
-    <link type="text/css" href="{% static 'css/introjs.css' %}" rel='stylesheet'>
-    <link type="text/css" href="{% static 'css/main.css' %}" rel='stylesheet'>
-    <link type="text/css" href="{% static 'account/css/login.css' %}" rel='stylesheet'>
-    <link  href="//cdnjs.cloudflare.com/ajax/libs/fotorama/4.5.1/fotorama.css" rel="stylesheet">
-    <link type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.smartbanner/1.0.0/jquery.smartbanner.min.css" rel="stylesheet">
-    <!-- fix styles @TODO made favicon for mobile application banner -->
-    <style type="text/css">
-    #smartbanner .sb-icon{
-        background: #FFF;
-        background-size: cover;
-    }
-    </style>
-
     <link rel="apple-touch-icon" href="{% static 'images/favicon.png' %}">
     {% block meta %}
     <meta property="og:title" content="ONBIKE.BY" />
@@ -45,9 +32,9 @@
       var rovar_location='{{location.name}}';
       var rovar_category='{{category.slug}}';
       var language_code='{{LANGUAGE_CODE}}';
-      {%if user.is_staff%}
-      var __editPointLink = "/manager/points/<%id%>/edit/";
-      {%endif%}
+      {% if user.is_staff %}
+        var __editPointLink = "/manager/points/<%id%>/edit/";
+      {% endif %}
     </script>
 
     {% block preload %}
@@ -93,101 +80,10 @@
 
     {% endblock content %}
 
-    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/jquery.form.js' %}"></script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/fotorama/4.5.1/fotorama.js"></script>
-
     {% block js %}
     {% endblock js %}
 
-    <script type="text/javascript" src="{% static 'js/jquery.smartbanner.min.js' %}"></script>
-    <script type="text/javascript">
-        $(window).ready(function(){
-            $.smartbanner({
-              title: "onbike.by",
-              author: "Велосипедная карта города",
-              price: 'FREE',
-              appStoreLanguage: 'ru',
-              inAppStore: 'On the App Store',
-              inGooglePlay: 'In Google Play',
-              inAmazonAppStore: 'In the Amazon Appstore',
-              button: 'Скачать',
-              scale: 'auto',
-              iOSUniversalApp: true
-            });
-        });
-    </script>
-    <script type="text/javascript">
-        $('#locations, #typefilter').click(function(e){
-          e.preventDefault();
-        });
-
-        // $('dropdown').hover(
-        //   function(){
-        //     $(this).addClass("opened");
-        //   },
-        //   function(){
-        //     $(this).removeClass("opened");
-        //   }
-        // );
-
-        
-        $('#info').click(function(e) {
-          e.preventDefault();
-          $(this).parent().toggleClass("hover");
-          $('#info-iframe').fadeToggle();
-                  // var infoIF = $('#info-iframe');
-                  // if (infoIF.length != 0) {
-                  //     if ((infoIF.attr('class') || '').indexOf('show')) {
-                  //         infoIF.animate({
-                  //             height: '100%'
-                  //         }, {
-                  //             complete: function() {
-                  //                 infoIF.addClass('show');
-                  //             }
-                  //         });
-                  //     } else {
-                  //         infoIF.animate({
-                  //             height: 0
-                  //         }, {
-                  //             complete: function() {
-                  //                 infoIF.removeClass('show');
-                  //             }
-                  //         });
-                  //     }
-                  // }
-        });
-
-          //         var infoF = $('#info-iframe');
-          //         if (infoF.length == 0) {
-          //             var data_box = $('.data-content');
-          //             //var info = $('<iframe id="info-iframe" src="/info/?blank=1"/>').css({position: 'absolute',
-          //             var info = $('#info-iframe');
-          //             width: data_box.innerWidth() - 5,
-          //                 height: data_box.innerHeight() - 5,
-          //                 'min-height': '700px',
-          //                 top: -data_box.innerHeight(),
-          //                 'z-index': 1000,
-          //                 left: $('#main-panel').width(),
-          //         }); info.load(function(ev) {
-          //         $(this).animate({
-          //             top: 0
-          //         });
-          //     });
-          //     //info.appendTo('body');
-          // } else {
-          //     infoF.animate({
-          //         top: 1.5 * infoF.height()
-          //     }, {
-          //         complete: function() {
-          //             infoF.css({
-          //                 height: 0,
-          //                 top: 0
-          //             });
-          //         }
-          //     })
-          // }
-    </script>
+    <script type="text/javascript" src="{% static 'js/script.min.js' %}"></script>
 
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

@@ -30,7 +30,7 @@ $(function() {
       $("#info").click();
     });
 
-    $("#gid-link_a").click(function(){
+    $("#gid-link").click(function(){
       var intro = introJs();
         intro.setOptions({
           nextLabel: 'Далее &rarr;',
