@@ -23,10 +23,10 @@ b {
     float: right;
     margin-left: 5px;
     opacity: 0.7;
-    -webkit-transition: all 0.2s ease-in-out;
-    -moz-transition: all 0.2s ease-in-out;
-    -o-transition: all 0.2s ease-in-out;
-    transition: all 0.2s ease-in-out;
+    -webkit-transition: all 0.2s linear;
+    -moz-transition: all 0.2s linear;
+    -o-transition: all 0.2s linear;
+    transition: all 0.2s linear;
 }
 
 #social-networks a:hover {
@@ -38,7 +38,7 @@ b {
     height:100%;
     position: relative;
     margin-top: -48px;
-    z-index: -1 !important;
+    z-index: 1 !important;
     overflow-y: auto;
 }
 
@@ -63,7 +63,6 @@ b {
 
 .main-panel-inner{
     background: rgba(255, 255, 255, .95);
-    margin-bottom: 18px;
     padding: 15px;
     box-shadow: 0 0 15px rgba(0, 0, 0, .1);
 }
@@ -88,6 +87,10 @@ b {
     line-height: 48px;
     z-index: 100;
     position: relative !important;
+    -webkit-transition: background 0.2s linear;
+    -moz-transition: background 0.2s linear;
+    -o-transition: background 0.2s linear;
+    transition: background 0.2s linear;
 }
 #main-header-wrapper {
     width: 100%;
@@ -325,8 +328,8 @@ i.icon{
 #login-badge p{height:20px;text-align:center;font-size:16px;font-weight:bold; margin:0px; padding:10px;}
 
 .preview {
-    font-size:16px;
-    margin-top: 3px;
+    font-size: 16px;
+    margin-bottom: 18px;
     display: none;
 }
 
@@ -352,11 +355,11 @@ i.icon{
 }
 
 .preview-content{
-    max-width: 350px;
+    max-width: 320px;
 }
 
 .preview-content p {
-    margin: 10px 0px 20px 0px;
+    margin: 5px 0px;
 }
 
 .fotorama{
@@ -397,27 +400,24 @@ i.icon{
     min-width:165px;
 }
 
-.authors-item h1{
+.authors-item span{
     font-size: 15px;
     line-height: 19px;
-    margin-top: 10px;
-}
-.authors-item div{
-    font-size: 14px;
-    line-height: 18px;
 }
 
-.authors-item>div{
+.authors-item div{
+    font-size: 12px;
+    line-height: 12px;
     padding: 10px 0 10px;
 }
 
 .authors-item img{
-    display:inline-block;
-    width:130px;
-    height:130px;
-    overflow:hidden;
-    position:relative;
-    border-radius: 75px;
+    display: inline-block;
+    width: 120px;
+    height: 120px;
+    overflow: hidden;
+    position: relative;
+    border-radius: 100%;
 }
 
 #info-iframe{
@@ -427,7 +427,7 @@ i.icon{
     position: fixed;
     right: 18px;
     z-index: 1001;
-    width: 50%;
+    width: 60%;
     border: none;
     overflow: auto;
 }
@@ -481,11 +481,13 @@ i.icon{
     border-bottom: 1px dotted #e95d24;
 }*/
 
-#info-share-btns>div{
-    margin-right:20px;
-    display:inline-block;
-    position:relative;
-    top:0;
+#info-share-btns > div{
+    display: inline-block;
+    position: relative;
+    text-align: center;
+    top: 0;
+    width: 310px;
+    margin: 0 auto;
 }
 
 #images-preview img{
@@ -720,10 +722,10 @@ i.icon{
     right: 10px;
     top: 0;
     background: url(../icons/icon-select-dot.png) bottom center no-repeat;
-    -webkit-transition: all 0.2s ease-in-out;
-    -moz-transition: all 0.2s ease-in-out;
-    -o-transition: all 0.2s ease-in-out;
-    transition: all 0.2s ease-in-out;
+    -webkit-transition: all 0.2s linear;
+    -moz-transition: all 0.2s linear;
+    -o-transition: all 0.2s linear;
+    transition: all 0.2s linear;
 }
 
 .header-menu .header-menu-item.dropdown:hover:after{
@@ -762,10 +764,10 @@ i.icon{
     margin-left: -5px;
     border: 10px solid transparent; 
     border-bottom: 10px solid #FFF;
-    -webkit-transition: all 0.2s ease-in-out;
-    -moz-transition: all 0.2s ease-in-out;
-    -o-transition: all 0.2s ease-in-out;
-    transition: all 0.2s ease-in-out;
+    -webkit-transition: all 0.2s linear;
+    -moz-transition: all 0.2s linear;
+    -o-transition: all 0.2s linear;
+    transition: all 0.2s linear;
 }
 */
 
@@ -959,13 +961,14 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 
 .button_close{
     position: absolute;
+    z-index: 100;
     right: 15px;
     top: 15px;
     height: 13px;
     width: 13px;
     background: url(../icons/icon_close.png) no-repeat;
     cursor: pointer;
--webkit-box-shadow: 0px 0px 12px 0px rgba(255, 255, 255, 1);
--moz-box-shadow:    0px 0px 12px 0px rgba(255, 255, 255, 1);
-box-shadow:         0px 0px 12px 0px rgba(255, 255, 255, 1);
+    -webkit-box-shadow: 0px 0px 12px 0px rgba(255, 255, 255, 1);
+    -moz-box-shadow:    0px 0px 12px 0px rgba(255, 255, 255, 1);
+    box-shadow:         0px 0px 12px 0px rgba(255, 255, 255, 1);
 }
