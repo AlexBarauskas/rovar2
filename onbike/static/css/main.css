@@ -169,6 +169,10 @@ b {
     position: relative;
     float: left;
     cursor: pointer;
+    -webkit-transition: background 0.1s linear;
+    -moz-transition: background 0.1s linear;
+    -o-transition: background 0.1s linear;
+    transition: background 0.1s linear;
 }
 
 .header-menu .header-menu-item > div{
@@ -178,6 +182,10 @@ b {
 .header-menu .header-menu-item > div > span{
     line-height: 30px;
     border-bottom: 1px dotted transparent;
+    -webkit-transition: border-color 0.1s linear;
+    -moz-transition: border-color 0.1s linear;
+    -o-transition: border-color 0.1s linear;
+    transition: border-color 0.1s linear;
 }
 
 .header-menu .header-menu-item.hover > div > span,
