@@ -486,22 +486,22 @@ i.icon{
     position: relative;
     text-align: center;
     top: 0;
-    width: 310px;
+    width: 100%;
     margin: 0 auto;
 }
 
 #images-preview img{
-    position:absolute;
-    display:none;
-    left:0;
-    top:0;
+    position: absolute;
+    display: none;
+    left: 0;
+    top: 0;
 }
 #images-preview img.active{
-    display:block;
+    display: block;
 }
 #images-preview {
-    overflow:hidden;
-    position:relative;
+    overflow: hidden;
+    position: relative;
 }
 
 #images-preview .row-left, #images-preview .row-right{
