@@ -690,35 +690,36 @@ var rovar = {
     },
 
     closeAddPoint : function(){	
-	$("#add-point-btn-text").html(this.messages['add point']);
-	$("#add-point-btn").parent().removeClass("hover");
-	$("#add-point-dialog").hide();
-	$("#ajax-errors").html("");
+		this._runAddPoint = false;
+		$("#add-point-btn-text").html(this.messages['add point']);
+		$("#add-point-btn").parent().removeClass("hover");
+		$("#add-point-dialog").hide();
+		$("#ajax-errors").html("");
 
-	$("#map").attr('style', "");
-	$('.leaflet-clickable').css('cursor', 'pointer');
+		$("#map").attr('style', "");
+		$('.leaflet-clickable').css('cursor', 'pointer');
 
-	this._runAddPoint = false;
-	if(this._addedPoint){
-	    this.map.removeLayer(this._addedPoint);
-	    this._addedPoint = null;
-	}
-	    
+		if(this._addedPoint){
+		    this.map.removeLayer(this._addedPoint);
+		    this._addedPoint = null;
+		}
     },
 
     addPoint : function(){
-	if(!this._runAddPoint){
-	    
-	this._runAddPoint = true;
-	$("#add-point-btn-text").html(this.messages['set coordinates']);
-	$("#add-point-btn").parent().addClass("hover");
+		if(!this._runAddPoint){
+		    
+			this._runAddPoint = true;
+			$("#add-point-btn-text").html(this.messages['set coordinates']);
+			$("#add-point-btn").parent().addClass("hover");
 
-	var self = this;
-	$(this.map._container).css('cursor', "url('/static/icons/pin-add.png') "+(this._iconSize*this._kLeft).toString() + ' ' + (this._iconSize-1).toString() +",crosshair");
-	$('.leaflet-clickable').css('cursor', "url('/static/icons/pin-add.png') "+(this._iconSize*this._kLeft).toString() + ' ' + (this._iconSize-1).toString() +",crosshair");
-	__addClick = function(e){self._setCoordinates(e);};
-	this.map.on('mousedown',__addClick);
-	}
+			var self = this;
+			$(this.map._container).css('cursor', "url('/static/icons/pin-add.png') "+(this._iconSize*this._kLeft).toString() + ' ' + (this._iconSize-1).toString() +",crosshair");
+			$('.leaflet-clickable').css('cursor', "url('/static/icons/pin-add.png') "+(this._iconSize*this._kLeft).toString() + ' ' + (this._iconSize-1).toString() +",crosshair");
+			__addClick = function(e){
+				self._setCoordinates(e);
+			};
+			this.map.on('mousedown',__addClick);
+		}
     },
 
     _set_address: function(data){
@@ -783,8 +784,12 @@ var rovar = {
 $(function(){
   rovar.init();
   $("#add-point-btn").click(function(e){
-  	e.preventDefault();
-  	rovar.addPoint();
+    e.preventDefault();
+    if (rovar._runAddPoint){
+        rovar.closeAddPoint();
+    }else{
+        rovar.addPoint();
+    }
   });
   // $("#back-to-banner").click(function(e){
   // 	e.preventDefault();
@@ -815,7 +820,7 @@ $(function(){
   });
 
   $(document).keyup(function(e) {
-	if (e.keyCode == 27 & rovar._runAddPoint){
+	if (e.keyCode == 27 && rovar._runAddPoint){
 		rovar.closeAddPoint();
 	}
   });
