@@ -60,7 +60,7 @@
           <ul>
             {% for l in locations %}
               {% if l.name != location.name %}
-                <li><a href="{% url 'show_location' l.name %}">{{ l }}</a></li>
+                <li class="clearfix"><a href="{% url 'show_location' l.name %}">{{ l }}</a></li>
               {% endif %}
             {% endfor %}
           </ul>
@@ -74,9 +74,12 @@
           </div>
           <ul id="type-btns">
             {% for T in types %}
-              <li id="{{T.slug}}">
-                <span class="Tname" style="background-color:{{T.color}}">{% trans T.name %}</span>
-                <span class="Tnumber number" style="color:{{T.color}}"></span>
+              <li id="{{T.slug}}" class="clearfix">
+                <span class="Tname" style="color:{{T.color}}">{% trans T.name %}</span>
+                <span class="Tnumber number"></span>
+                <span class="checker_wrapper">
+                  <span class="checker_item"></span>
+                </span>
               </li>
             {% endfor %}
           </ul>
