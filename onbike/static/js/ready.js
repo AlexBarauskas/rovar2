@@ -65,9 +65,23 @@ $(function() {
               position: 'right'
             }
           ]
-    });
-        intro.onchange(function(){rovar.backToHome()});
+        });
+
+        intro.onchange(function(){
+          rovar.backToHome()
+          $("#contentWrapper").attr('style', "z-index: -1 !important;");
+        });
+
+        intro.oncomplete(function() {
+          $("#contentWrapper").attr('style', "z-index: 1 !important;");
+        });
+
+        intro.onexit(function() {
+          $("#contentWrapper").attr('style', "z-index: 1 !important;");
+        });
+
         intro.start();
+
     });
 
 
