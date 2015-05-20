@@ -1,9 +1,10 @@
 html, body {
-    font-family: 'ProximaNovaRegular', Helvetica, Arial, sans-serif;
+    font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Geneva, Verdana, sans-serif;
     height: 100%;
     font-size: 14px;
     position: relative;
     min-width: 800px;
+    font-weight: 100;
 }
 
 b {
@@ -288,14 +289,14 @@ i.icon{
     color: #e95d24;
     font-weight: 100;
     font-size: 1.5em;
-    font-family:'ProximaNovaExtrabold', Helvetica, Arial, sans-serif;
+    font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Geneva, Verdana, sans-serif;
 }
 .data-content h1{font-size: 1.3em;}
 .data-content h2{font-size: 1.2em;}
 .data-content h3{font-size: 1.1em;}
 
 .data-content p{
-    font-family:'ProximaNovaRegular', Helvetica, Arial, sans-serif;
+    font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Geneva, Verdana, sans-serif;
     margin-top: 0;
     margin-bottom: 0;
     padding: 8px 0 8px;
@@ -307,7 +308,9 @@ i.icon{
 
 .data-content .post-info {color:#e95d24;
 			  font-size:0.75m;}
-.data-content div {font-family:'ProximaNovaRegular', Helvetica, Arial, sans-serif;}
+.data-content div {
+    font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Geneva, Verdana, sans-serif;
+}
 
 .post-end {margin-bottom:60px; box-shadow: 0px 1px 2px #444}
 

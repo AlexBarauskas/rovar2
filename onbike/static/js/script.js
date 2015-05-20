@@ -14279,8 +14279,8 @@ var rovar = {
 		data: {name: l_name},
 		success: function(data){
 		    self.location = data;
-		    var minsk = new L.LatLng(self.location.center[0], self.location.center[1]);
-		    self.map = map.setView(minsk, 12);
+		    var selected_location = new L.LatLng(self.location.center[0], self.location.center[1]);
+		    self.map = map.setView(selected_location, 12);
 		    L.tileLayer('//onbike.by/map/tile/{z}/{x}/{y}.png',
 				{attribution: self.copyright,
 				 key: 'BC9A493B41014CAABB98F0471D759707',
