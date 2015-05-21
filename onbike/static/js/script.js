@@ -15059,10 +15059,11 @@ $(function() {
     $('#info').click(function(e) {
       e.preventDefault();
       $(this).parent().toggleClass("hover");
+      $(".popup_overlay").fadeToggle(250);
       $('#info-iframe').fadeToggle();
     });
 
-    $("#info-iframe .button_close").click(function(){
+    $("#info-iframe .button_close, .popup_overlay").click(function(){
       $("#info").click();
     });
 
@@ -15161,4 +15162,5 @@ $(function() {
           "oncleared": clearRootPhone
         }
       );
+
 });
