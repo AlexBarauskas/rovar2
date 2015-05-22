@@ -31,7 +31,7 @@ var rovar = {
     messages : {
 	'edit' : 'Редактировать',
 	'travel time' : 'Время в пути',
-	'add point' : '+ Добавить точку',
+	'add point' : '<i class=\"icon plus\"></i> Добавить точку',
 	'set coordinates' : 'Выберите место на карте (Esc для отмены)',
 	'unknown error' : 'Неизвестная ошибка.',
 	'success message' : 'Ваше предложение будет рассмотрено модератором.',
@@ -67,8 +67,10 @@ var rovar = {
 	    100 : this.messages['feedback email']
 	};
 
-
-	var map = new L.Map('map');
+	var map = new L.Map('map', {zoomControl: false});
+	map.on('click', function(e) {
+        map.panTo(new L.LatLng(e.latlng.lat, e.latlng.lng));
+    });
 	var self = this;
 	map.on('zoomend', function(ev){
 		   self._visible_pins();
@@ -90,8 +92,8 @@ var rovar = {
 		data: {name: l_name},
 		success: function(data){
 		    self.location = data;
-		    var minsk = new L.LatLng(self.location.center[0], self.location.center[1]);
-		    self.map = map.setView(minsk, 12);
+		    var selected_location = new L.LatLng(self.location.center[0], self.location.center[1]);
+		    self.map = map.setView(selected_location, 12);
 		    L.tileLayer('//onbike.by/map/tile/{z}/{x}/{y}.png',
 				{attribution: self.copyright,
 				 key: 'BC9A493B41014CAABB98F0471D759707',
@@ -100,11 +102,11 @@ var rovar = {
 		    self.map.setMaxBounds(self.location.bounds);
 		    self.loadTypes();
 		}
-	       });	
+	});	
 
 	this.uploader = new CustomUpload($("#inputfile"));
-	$('#upload-imgs').click(
-	    function(){
+	$('#upload-imgs').click(function(e){
+		e.preventDefault();
 		var p = $('[name="phones"]');
 		var phones = [];
 		for(var i=p.length; i>=0; i--)
@@ -144,7 +146,10 @@ var rovar = {
 		this._hideTrackInfo(this.currentTrack);
 		this.currentTrack = null;
 	    }
-		
+
+    	var type_counter = parseInt($("#type_counter").html()) || 0;
+    	var n_counter = parseInt($("#"+type_name+" .Tnumber").html()) || 0;
+		$("#type_counter").html(type_counter - n_counter);
 
 	$("img."+type_name + ', div.' + type_name).hide();
 	for(key in this.elements.tracks){
@@ -155,6 +160,9 @@ var rovar = {
     },
 
     show : function(type_name){
+    	var type_counter = parseInt($("#type_counter").html()) || 0;
+    	var n_counter = parseInt($("#"+type_name+" .Tnumber").html()) || 0;
+		$("#type_counter").html(type_counter + n_counter);
 	$("img."+type_name + ', div.' + type_name).show();
 	for(key in this.elements.tracks){
 	    if(key == type_name)
@@ -181,11 +189,16 @@ var rovar = {
 	var stateObj = { foo: "bar" };
 	history.pushState(stateObj, "page", '/' + this.location.name);	  
 
-	$('#back-to-banner').hide();
-	$('#type').hide();
-	$('#banner').show();
-	$("#header").css('background-color', "#e95d24");
-	$("#locations>div").css('background-color', "#e95d24");
+	// $('#back-to-banner').hide();
+	// $('#type').hide();
+	// $('#banner').show();
+	var rbgCol = '#e95d24';
+	var rgbaCol = 'rgba(' + parseInt(rbgCol.slice(-6, -4), 16)
+				    + ',' + parseInt(rbgCol.slice(-4, -2), 16)
+				    + ',' + parseInt(rbgCol.slice(-2), 16)
+				    + ', 0.9)';
+	$('#main-header').css('background-color', rgbaCol);
+
     },
 
     _showPointInfo : function(point){
@@ -206,9 +219,9 @@ var rovar = {
 	this.currentPoint = point;
 
 
-	$('#banner').hide();
-	$('#back-to-banner').show();
-	$('#type').show();
+	// $('#banner').hide();
+	// $('#back-to-banner').show();
+	// $('#type').show();
 
 	var description,
 	data = point._data;
@@ -220,17 +233,27 @@ var rovar = {
 	else
 	    description = "<p>"+data.description+"</p>";
 	var preview = $('.preview-content').html('')
+		.append("<div class='button_close'></div>")
 	    .append($("<h1>"+title+"</h1>").css('color', data.color))
 	    .append($("<p></p>").html(data.address).addClass('description-address'));
+
+	$('.preview-content .button_close')
+		.unbind("click")
+		.click(function(){
+			self._hidePointInfo(point);
+		});
+
 	if(data.images && data.images.length){
 	    var imgs_preview = $('<div>').addClass('fotorama').appendTo(preview);
 	    for(var imgiter = data.images.length-1; imgiter>=0; imgiter--){
-		$('<img/>').attr({'src': data.images[imgiter]})
-		    .appendTo(imgs_preview);
+			$('<a></a>').attr({'href': data.images[imgiter]})
+		    	.appendTo(imgs_preview);
 	    }
 	    $('.fotorama').fotorama({
 	    	'nav': false,
-	    	'maxheight': '235px'
+	    	'maxheight': '235px',
+	    	'maxwidth': '320px',
+	    	'allowfullscreen': true
 	    });
 	}
 	preview.append(description);
@@ -245,9 +268,14 @@ var rovar = {
 		.appendTo(preview);
 	}
 	preview.parent().show();
-	$("#type").html(data.type_name);
-	$("#header").css('background-color', data.color);
-	$("#locations>div").css('background-color', data.color);
+	// $("#type").html(data.type_name);
+	var rbgCol = data.color;
+	var rgbaCol = 'rgba(' + parseInt(rbgCol.slice(-6, -4), 16)
+				    + ',' + parseInt(rbgCol.slice(-4, -2), 16)
+				    + ',' + parseInt(rbgCol.slice(-2), 16)
+				    + ', 0.9)';
+	$('#main-header').css('background-color', rgbaCol);
+
 	var stateObj = { foo: "bar" };
 	history.pushState(stateObj, "page", data.url);	  
 
@@ -330,44 +358,48 @@ var rovar = {
     },
 
     loadObject : function(object_name, type_id, type_params){
-	var self = this;
-	$.ajax({url: '/api/' + object_name + 's',
-		method: 'GET',
-		data: {uid: 'webclient',
-		       location: this.location.id,
-		       type: type_id},
-		success: function(data){
-		    var arg;
-		    for(var i=data.length-1; i>=0; i--){
-			arg = data[i];
-			arg.color = type_params.color;
-			arg.marker_a = type_params.marker_a;
-			arg.marker_b = type_params.marker_b;
-			arg.type_name = type_params.name;
-			if(object_name == 'point'){
-			    self._addPointToMap(arg);
+		var self = this;
+		$.ajax({url: '/api/' + object_name + 's',
+			method: 'GET',
+			data: {uid: 'webclient',
+			       location: this.location.id,
+			       type: type_id},
+			success: function(data){
+			    var arg;
+			    for(var i=data.length-1; i>=0; i--){
+					arg = data[i];
+					arg.color = type_params.color;
+					arg.marker_a = type_params.marker_a;
+					arg.marker_b = type_params.marker_b;
+					arg.type_name = type_params.name;
+					if(object_name == 'point'){
+					    self._addPointToMap(arg);
+					}else{
+					    self._addTrackToMap(arg);
+					}
+			    }
+			    var n = data.length;
+			    if(n){
+					$('#'+type_id+' .Tnumber').text(n);
+					
+					var type_counter = parseInt($("#type_counter").html()) || 0;
+					$("#type_counter").html(type_counter + n);
+
+					$('#'+type_id).show();
+			    }else{
+					$('#'+type_id).hide();
+			    }
+
+			    if(self._category && self._category != type_id){
+					$('#'+type_id).addClass('disable');
+					rovar.hide(type_id);
+			    }
+
+			    if(object_name == 'point' && data.length > 0){
+					self._pointGroup(type_id);		    
+			    }
 			}
-			else{
-			    self._addTrackToMap(arg);
-			}
-			    
-		    }
-		    var n = data.length;
-		    if(n){
-			$('#'+type_id+' .number').text(n);
-			$('#'+type_id).show();
-		    }
-		    else{
-			$('#'+type_id).hide();
-		    }
-		    if(self._category && self._category != type_id){
-			$('#'+type_id).addClass('disable');
-			rovar.hide(type_id);
-		    }
-		    if(object_name == 'point' && data.length > 0)
-			self._pointGroup(type_id);		    
-		}
-	       });	
+	    });	
     },
 
     _hideTrackInfo : function(track){
@@ -381,11 +413,15 @@ var rovar = {
 	var stateObj = { foo: "bar" };
 	history.pushState(stateObj, "page", '/' + this.location.name);	  
 
-	$('#back-to-banner').hide();
-	$('#type').hide();
-	$('#banner').show();
-	$("#header").css('background-color', "#e95d24");
-	$("#locations>div").css('background-color', "#e95d24");
+	// $('#back-to-banner').hide();
+	// $('#type').hide();
+	// $('#banner').show();
+	var rbgCol = '#e95d24';
+	var rgbaCol = 'rgba(' + parseInt(rbgCol.slice(-6, -4), 16)
+				    + ',' + parseInt(rbgCol.slice(-4, -2), 16)
+				    + ',' + parseInt(rbgCol.slice(-2), 16)
+				    + ', 0.9)';
+	$('#main-header').css('background-color', rgbaCol);
 
     },
 
@@ -401,12 +437,13 @@ var rovar = {
 	    $(track._data.pointA._icon).show();
 	    $(track._data.pointB._icon).show();
 	    
-	    $('#banner').hide();
-	    $('#back-to-banner').show();
-            $('#type').show();
+	    // $('#banner').hide();
+	    // $('#back-to-banner').show();
+        // $('#type').show();
 	    var data = track._data;
 	    
 	    var preview = $('.preview-content').html('')
+	    .append("<div class='button_close'></div>")
 		.append($("<h1>"+data.title+"</h1>").css('color', data.color));
 	    if(data.duration)
 		preview.append($("<p></p>").html(this.messages['travel time']+': '+data.duration).addClass('description-address'));
@@ -415,6 +452,13 @@ var rovar = {
 		preview.append(video);
 		//if(preview.width()<preview.find('iframe').width())	    
 	    }
+
+	$('.preview-content .button_close')
+		.unbind("click")
+		.click(function(){
+			self._hideTrackInfo(track);
+		});
+
 	var description;
 	if(data.post_url)
 	    description = "<p><a href=\""+data.post_url+"\">"+data.description+"</a></p>";
@@ -427,11 +471,13 @@ var rovar = {
 	    video.width(preview.width());
 	}
 	
-	$("#type").html(data.type_name);
-	$("#header").css('background-color', data.color);
-	$("#locations>div").css('background-color', data.color);
-
-
+	// $("#type").html(data.type_name);
+	var rbgCol = data.color;
+	var rgbaCol = 'rgba(' + parseInt(rbgCol.slice(-6, -4), 16)
+				    + ',' + parseInt(rbgCol.slice(-4, -2), 16)
+				    + ',' + parseInt(rbgCol.slice(-2), 16)
+				    + ', 0.9)';
+	$('#main-header').css('background-color', rgbaCol);
 
 	var stateObj = { foo: "bar" };
 	history.pushState(stateObj, "page", data.url);	  
@@ -658,38 +704,43 @@ var rovar = {
 		}
 	    }
 	}
-	if($('#type-btns #'+type_name).attr('class').indexOf('disable')>=0)
-	    $("img."+type_name + ', div.' + type_name).hide();
-	return true;
+		if($('#type-btns #'+type_name).hasClass('disable')){
+		    $("img."+type_name + ', div.' + type_name).hide();
+	    }
+		return true;
     },
 
     closeAddPoint : function(){	
-	$("#add-point-btn").html(this.messages['add point']);
-	$("#add-point-dialog").hide();
-	$("#ajax-errors").html("");
+		this._runAddPoint = false;
+		$("#add-point-btn-text").html(this.messages['add point']);
+		$("#add-point-btn").parent().removeClass("hover");
+		$("#add-point-dialog").hide();
+		$("#ajax-errors").html("");
 
-	$("#map").attr('style', "");
-	$('.leaflet-clickable').css('cursor', 'pointer');
+		$("#map").attr('style', "");
+		$('.leaflet-clickable').css('cursor', 'pointer');
 
-	this._runAddPoint = false;
-	if(this._addedPoint){
-	    this.map.removeLayer(this._addedPoint);
-	    this._addedPoint = null;
-	}
-	    
+		if(this._addedPoint){
+		    this.map.removeLayer(this._addedPoint);
+		    this._addedPoint = null;
+		}
     },
 
     addPoint : function(){
-	if(!this._runAddPoint){
-	    
-	this._runAddPoint = true;
-	$("#add-point-btn").html(this.messages['set coordinates']);
-	var self = this;
-	$(this.map._container).css('cursor', "url('/static/icons/pin-add.png') "+(this._iconSize*this._kLeft).toString() + ' ' + (this._iconSize-1).toString() +",crosshair");
-	$('.leaflet-clickable').css('cursor', "url('/static/icons/pin-add.png') "+(this._iconSize*this._kLeft).toString() + ' ' + (this._iconSize-1).toString() +",crosshair");
-	__addClick = function(e){self._setCoordinates(e);};
-	this.map.on('mousedown',__addClick);
-	}
+		if(!this._runAddPoint){
+		    
+			this._runAddPoint = true;
+			$("#add-point-btn-text").html(this.messages['set coordinates']);
+			$("#add-point-btn").parent().addClass("hover");
+
+			var self = this;
+			$(this.map._container).css('cursor', "url('/static/icons/pin-add.png') "+(this._iconSize*this._kLeft).toString() + ' ' + (this._iconSize-1).toString() +",crosshair");
+			$('.leaflet-clickable').css('cursor', "url('/static/icons/pin-add.png') "+(this._iconSize*this._kLeft).toString() + ' ' + (this._iconSize-1).toString() +",crosshair");
+			__addClick = function(e){
+				self._setCoordinates(e);
+			};
+			this.map.on('mousedown',__addClick);
+		}
     },
 
     _set_address: function(data){
@@ -737,45 +788,62 @@ var rovar = {
 
 
     callbackAddPoint: function(data){
-	if(!data.success){
-	    $("#ajax-errors").html($("<p class=\"error alert\">").text(this.__errors[data.error_code] || this.messages['unknown error']));
-	}else{
-	    this._runAddPoint = false;
-	    $("#add-point-btn").html(this.messages['add point']);
-	    $("#ajax-errors").html($("<p class=\"success alert\">").text(this.messages['success message']));
-	    setTimeout("$('#add-point-dialog').animate({'opacity':0.25}, 500, 'swing', function(){$('#add-point-dialog').hide()})", 2000);
-	}
+		if(!data.success){
+		    $("#ajax-errors").html($("<p class=\"error alert\">").text(this.__errors[data.error_code] || this.messages['unknown error']));
+		}else{
+		    this._runAddPoint = false;
+		    $("#add-point-btn-text").html(this.messages['add point']);
+			$("#add-point-btn").parent().removeClass("hover");
+		    $("#ajax-errors").html($("<p class=\"success alert\">").text(this.messages['success message']));
+		    setTimeout("$('#add-point-dialog').animate({'opacity':0.25}, 500, 'swing', function(){$('#add-point-dialog').hide()})", 2000);
+		}
     }
 
 };
 
 
 $(function(){
-      rovar.init();
-      $("#add-point-btn").click(function(){rovar.addPoint();});
-      $("#back-to-banner").click(function(){rovar.backToHome();});
-      $("#add-point-form-close").click(function(){rovar.closeAddPoint();});
-      $("#add-point-form").ajaxForm(function(data){rovar.callbackAddPoint(data);});
-
-      $("#type-btns li").click(function(ev){
-				   var type = this.attributes.id.value;
-				   var stateObj = { foo: "bar" };
-				   if(/\/\w+\/[\w\-]+\/$/.test(window.location.href))
-				       history.pushState(stateObj, "page", '..');
-				   if($(this).attr('class').indexOf('disable')>=0){
-				       $(this).removeClass('disable');
-				       rovar.show(type);
-				   }
-				   else{
-				       $(this).addClass('disable');
-				       rovar.hide(type);
-				   }
-				   
-			       });
-
-      $(document).keyup(function(e) {
-			    if (e.keyCode == 27 & rovar._runAddPoint){rovar.closeAddPoint();}
-			});
-      
-
+  rovar.init();
+  $("#add-point-btn").click(function(e){
+    e.preventDefault();
+    if (rovar._runAddPoint){
+        rovar.closeAddPoint();
+    }else{
+        rovar.addPoint();
+    }
   });
+  // $("#back-to-banner").click(function(e){
+  // 	e.preventDefault();
+  // 	rovar.backToHome();
+  // });
+  $("#add-point-form-close").click(function(e){
+  	e.preventDefault();
+  	rovar.closeAddPoint();
+  });
+  $("#add-point-form").ajaxForm(function(data){
+  	rovar.callbackAddPoint(data);
+  });
+
+  $("#type-btns li").click(function(ev){
+	var type = this.attributes.id.value;
+	var stateObj = { foo: "bar" };
+	if(/\/\w+\/[\w\-]+\/$/.test(window.location.href)){
+	   history.pushState(stateObj, "page", '..');
+	}
+	console.log(type);
+	if($(this).hasClass('disable')){
+	   $(this).removeClass('disable');
+	   rovar.show(type);
+	}else{
+	   $(this).addClass('disable');
+	   rovar.hide(type);
+	}
+  });
+
+  $(document).keyup(function(e) {
+	if (e.keyCode == 27 && rovar._runAddPoint){
+		rovar.closeAddPoint();
+	}
+  });
+
+});

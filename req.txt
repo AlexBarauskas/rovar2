@@ -6,3 +6,4 @@ psycopg2
 pillow
 python-social-auth
 qrcode
+fabric

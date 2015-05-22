@@ -1,22 +1,27 @@
 <div id="info-iframe">
-  <div style="padding:30px">
-    {%include template_name%}
+  <div class="button_close"></div>
+  <div class="main-panel-inner">
+    {% include template_name %}
     <div class="authors">
       {% for author in authors %}
       <div class="authors-item">
         <img src="{{author.image.url}}" />
-        <h1>{{author.name}}</h1>
+        <span>{{author.name}}</span>
         <div>{{author.description|safe}}</div>
       </div>
       {% endfor %}
     </div>
     <div id="info-share-btns">
-      <div>
+      <div class="clearfix">
+        <script type="text/javascript" src="//yastatic.net/share/share.js" charset="utf-8"></script>
+        <b>Рассказать друзьям через —</b><span class="yashare-auto-init" data-yashareL10n="ru" data-yashareType="big" data-yashareQuickServices="vkontakte,facebook,twitter,gplus" data-yashareTheme="counter"></span>
+      </div>
+      <!--<div>
         <div class="fb-share-button" data-href="http://onbike.by" data-width="64" data-type="box_count"></div>
       </div>
       <div style="top:4px">
         <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://onbike.by" data-via="your_screen_name" data-lang="en" data-related="anywhereTheJavascriptAPI" data-count="vertical"></a>
-      </div>
+      </div> -->
     </div>
   </div>
 </div>

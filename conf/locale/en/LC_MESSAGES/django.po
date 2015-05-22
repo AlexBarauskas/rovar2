@@ -30,7 +30,7 @@ msgid "Показывать на карте:"
 msgstr ""
 
 #: templates/home_new.html:77
-msgid "+ Добавить точку"
+msgid "Добавить точку"
 msgstr ""
 
 #: templates/home_new.html:89

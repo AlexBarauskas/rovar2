@@ -1,51 +1,30 @@
 {% extends 'base.html' %}
 {% load cache %}
+{% load i18n %}
 
-{% block css %}
-<style>
-  #api .method{
-  margin: 0px 10px 20px 10px;
-  padding:10px;
-  background:#FFF;
-  border: solid 1px #ccc;
-  border-radius: 4px;
-  font-size:14px;
-}
-#api .method p{
-  font-size:1em;
-  padding: 1em 0;
-  line-height:1.5em;
-}
-#api .method h1{
-  font-size: 1.5em;
-  color: #5252FF;
-  margin-bottom: 1em;
-  border-bottom: solid 1px;
-}
-#api .method h2{
-  font-size:1.25em;
-  color:#5252FF;
-}
 
-#api pre {
-  font-size: 1em;
-  font-family: monospace;
-  line-height: 1.2em;
-  margin: 0.25em 1em;
-  width: auto;
-  overflow-y: auto;
-  border: solid 1px #ccc;
-  border-radius: 3px;
-  background-color: #f9f9f9;
-  padding: 1em;
-}
-</style>
-{% endblock css %}
-
+{% block header %}
+  <div class="header-menu left">
+    <div class="header-menu-item logobanner">
+      <a href="/" id="banner" class="logo">ONBIKE.BY</a>
+    </div>
+  </div>
+  <div class="header-menu right">
+    <!--
+    @TODO
+    <div class="header-menu-item">
+        <div id="info">
+          <i class="icon info"></i> 
+          <span>{% trans "О проекте" %}</span>
+        </div>
+    </div>
+    -->
+  </div>
+{% endblock header %}
 
 {% block content_right %}
 <div id="api" class="data-content" {% if show_left_panel %}style="margin-left:0px;"{%else%}style="min-height:100%;"{% endif %}>
-{%cache 600 "info_content"%}
+{% cache 600 "info_content" %}
   {% for m in methods %}
   <div class="method">
     {% for el in m %}
@@ -54,5 +33,5 @@
   </div>
   {% endfor %}
 </div>
-{%endcache%}
+{% endcache %}
 {% endblock content_right %}
