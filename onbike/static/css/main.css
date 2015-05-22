@@ -1003,3 +1003,49 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
   background-position: initial;
   background-repeat: initial; 
 }
+
+/* API doc.html */
+
+#api{
+    padding-top: 48px;
+}
+
+#api .method{
+  margin: 16px;
+  padding: 16px;
+  background: #FFF;
+  border: solid 1px #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+#api .method p{
+  font-size: 1em;
+  padding: 1em 0;
+  line-height: 1.5em;
+}
+
+#api .method h1{
+  font-size: 1.5em;
+  color: #5252FF;
+  margin-bottom: 1em;
+  border-bottom: solid 1px;
+}
+
+#api .method h2{
+  font-size: 1.25em;
+  color: #5252FF;
+}
+
+#api pre {
+  font-size: 1em;
+  font-family: monospace;
+  line-height: 0.8em;
+  margin: 1em 0;
+  width: auto;
+  overflow-y: auto;
+  border: solid 1px #ccc;
+  border-radius: 3px;
+  background-color: #f9f9f9;
+  padding: 1em;
+}

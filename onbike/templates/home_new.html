@@ -23,10 +23,6 @@
     {% endif %}
   {% endblock meta %}
 
-  {% block css %}
-    <link type="text/css" href="{% static 'css/style.min.css' %}" rel="stylesheet"/>
-  {% endblock css %}
-
   {% block preload %}
     <div style="position:absolute; top:-5000px">
       {% for T in types %}

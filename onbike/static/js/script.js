@@ -14253,7 +14253,6 @@ var rovar = {
 	    100 : this.messages['feedback email']
 	};
 
-
 	var map = new L.Map('map', {zoomControl: false});
 	map.on('click', function(e) {
         map.panTo(new L.LatLng(e.latlng.lat, e.latlng.lng));
