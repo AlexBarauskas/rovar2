@@ -868,14 +868,13 @@ i.icon{
     background: #a6a6a6;
 }
 
-/*
+
 .leaflet-marker-icon{
-    -webkit-transition: all 0.15s linear;
-    -moz-transition: all 0.15s linear;
-    -o-transition: all 0.15s linear;
-    transition: all 0.15s linear;
+    -webkit-transition: margin 0.3s linear, background 0.3s linear;
+    -moz-transition: margin 0.3s linear, background 0.3s linear;
+    -o-transition: margin 0.3s linear, background 0.3s linear;
+    transition: margin 0.3s linear, background 0.3s linear;
 }
-*/
 
 /*
 #locations.dropdown>div, #locations.dropdown ul, #locations.dropdown li{
