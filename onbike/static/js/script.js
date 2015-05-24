@@ -15169,4 +15169,10 @@ $(function() {
         }
       );
 
+    $(document).keyup(function(e) {
+      if (e.keyCode == 27 && $("#info").parent().hasClass("hover")){
+        $("#info").click();
+      }
+    });
+
 });
