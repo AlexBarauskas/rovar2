@@ -803,7 +803,11 @@ var rovar = {
 
 
 $(function(){
-  rovar.init();
+
+  if ($("#map").length) {
+    rovar.init();
+  };
+
   $("#add-point-btn").click(function(e){
     e.preventDefault();
     if (rovar._runAddPoint){
@@ -812,14 +816,17 @@ $(function(){
         rovar.addPoint();
     }
   });
+
   // $("#back-to-banner").click(function(e){
   // 	e.preventDefault();
   // 	rovar.backToHome();
   // });
+
   $("#add-point-form-close").click(function(e){
   	e.preventDefault();
   	rovar.closeAddPoint();
   });
+
   $("#add-point-form").ajaxForm(function(data){
   	rovar.callbackAddPoint(data);
   });
