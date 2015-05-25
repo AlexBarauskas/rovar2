@@ -1,0 +1,14 @@
+#!/bin/sh
+
+ipset destroy
+ipset create cheat hash:net
+
+ipset add cheat 187.170.160.185
+ipset add cheat 188.226.117.135
+ipset add cheat 188.226.74.13
+ipset add cheat 146.185.239.100
+ipset add cheat 199.48.147.141
+ipset add cheat 222.186.21.209
+ipset add cheat 190.81.33.161
+
+iptables -A INPUT -m set --match-set cheat src -j DROP
