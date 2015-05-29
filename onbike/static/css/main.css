@@ -359,8 +359,25 @@ i.icon{
 }
 
 .preview .description-address{
-    color: #a7a7a7;
-    margin: 8px 0px 15px 0px;
+    background: url(../icons/icon-address.png) 0 10px no-repeat;
+    color: #5a5a5a;
+    font-size: 14px;
+    line-height: 24px;
+    padding: 8px 10px 15px 30px;
+    margin: 5px 0;
+}
+
+.preview .description-phones{
+    background: url(../icons/icon-phone.png) 0 10px no-repeat;
+    padding: 8px 10px 15px 30px;
+    margin: 5px 0;
+}
+
+.preview .description-phones p{
+    color: #5a5a5a;
+    font-size: 14px;
+    line-height: 24px;
+    margin: 0;
 }
 
 .preview-content{

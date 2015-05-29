@@ -257,8 +257,16 @@ var rovar = {
 	    });
 	}
 	preview.append(description);
-	if(data.phones)
-	    preview.append($("<p></p>").html(data.phones));
+	if(data.phones){
+        phones_list = data.phones.split(",");
+        console.log(data.phones);
+        console.log(phones_list);
+	    preview.append($("<p></p>").addClass('description-phones'));
+        for (var i = phones_list.length - 1; i >= 0; i--) {
+        	$(".description-phones").append($("<p></p>").html(phones_list[i]));
+        };
+        
+    }
 
 	if(typeof __editPointLink != "undefined" &&  __editPointLink != ""){
 	    var edit_link = __editPointLink.replace("<%id%>", data.id);
