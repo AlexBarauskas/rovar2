@@ -324,25 +324,25 @@ def point_edit(request, point_id=None):
         return HttpResponseNotFound()
 
     messages = []
-    trans_forms = []
+    #trans_forms = []
     if request.method == "POST":
         form = PointForm(request.POST, request.FILES,  instance=point)
-        for lang_code, lang_name in settings.LANGUAGES:
-            if lang_code != settings.LANGUAGE_CODE:
-                if point is not None:
-                    trans, c = Translation.objects.get_or_create(point=point, language=lang_code)
-                else:
-                    trans = None
-                trans_forms.append(TransForm(request.POST, instance=trans, prefix=lang_code))
+        #for lang_code, lang_name in settings.LANGUAGES:
+        #    if lang_code != settings.LANGUAGE_CODE:
+        #        if point is not None:
+        #            trans, c = Translation.objects.get_or_create(point=point, language=lang_code)
+        #        else:
+        #            trans = None
+        #        trans_forms.append(TransForm(request.POST, instance=trans, prefix=lang_code))
         if form.is_valid() and all([i.is_valid() for i in trans_forms]):
             _point =  form.save()
-            for i in trans_forms:
-                t = i.save()
-                if not t.language:
-                    t.language = i.prefix
-                if t.point is None:
-                    t.point = _point
-                t.save()
+            #for i in trans_forms:
+            #    t = i.save()
+            #    if not t.language:
+            #        t.language = i.prefix
+            #    if t.point is None:
+            #        t.point = _point
+            #    t.save()
             for f in request.FILES.getlist('photos',[]):
                 ph = Photo.objects.get_or_create(point=_point, image=f)
             messages.append(u"Изменения успешно сохранены.")
@@ -353,20 +353,20 @@ def point_edit(request, point_id=None):
                                                     args=[form.instance.id]))
     else:
         form = PointForm(instance=point)
-        for lang_code, lang_name in settings.LANGUAGES:
-            if lang_code != settings.LANGUAGE_CODE:
-                if point is not None:
-                    trans, c = Translation.objects.get_or_create(point=point, language=lang_code)
-                else:
-                    trans = None
-                trans_forms.append(TransForm(instance=trans, prefix=lang_code))
+        #for lang_code, lang_name in settings.LANGUAGES:
+        #    if lang_code != settings.LANGUAGE_CODE:
+        #        if point is not None:
+        #            trans, c = Translation.objects.get_or_create(point=point, language=lang_code)
+        #        else:
+        #            trans = None
+        #        trans_forms.append(TransForm(instance=trans, prefix=lang_code))
     mod_notifi = None
     if point is not None and point.message_set.filter(state='m').count():
         mod_notifi = point.message_set.filter(state='m')[0]
     
     return render_to_response('obj_edit.html',
                               {'form': form,
-                               'trans_forms': trans_forms,
+                               #'trans_forms': trans_forms,
                                'comments_instance': point,
                                'title': title,
                                'back_url': reverse('manager_points'),

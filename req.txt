@@ -7,3 +7,4 @@ pillow
 python-social-auth
 qrcode
 fabric
+django-modeltranslation

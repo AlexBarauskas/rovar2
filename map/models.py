@@ -325,16 +325,28 @@ class Point(models.Model):
         tr = Translation.objects.get_or_create(point=self, language=lang)
         return tr[0]
 
+    def copy_translation(self):
+        for code in ['en', 'be']:
+            try:
+                tr = Translation.objects.get(point=self, language=code)
+            except:
+                continue
+            for f in ['name', 'description', 'address']:
+                k = '%s_%s' % (f, code)
+                v = self.__getattribute__(k) or tr.__getattribute__(f)
+                self.__setattr__(k, v)
+            self.save()
+
     def to_dict(self, lang=None):
         translate = self.get_translation_obj(lang=lang)
         
         point = {'coordinates': json.loads(self.coordinates),
-                 'title': translate.name or self.name,
-                 'description': translate.description or self.description,
+                 'title': self.name,                                   #translate.name or self.name,
+                 'description': self.description,                      #translate.description or self.description,
+                 'address': self.address,                              #translate.address or self.address,
                  'id': self.id,
                  'status': 'success',
                  'images': [ph.image.url for ph in  self.photo_set.all()],
-                 'address': translate.address or self.address,
                  'uid': self.uid,
                  'type_slug': self.type.slug,
                  'website': self.website,

@@ -18,7 +18,7 @@ class TrackForm(forms.ModelForm):
 
     class Meta:
         model = Track
-        exclude = ('created', 'post', 'full_coordinates', 'uid')
+        exclude = ('created', 'post', 'full_coordinates', 'uid', 'name', 'description')
 
 class PostForm(forms.ModelForm):
     text = forms.CharField(label="",required=True,
@@ -32,19 +32,29 @@ class PostForm(forms.ModelForm):
 class BasePointForm(forms.ModelForm):
     class Meta:
         model = Point
-        exclude = ('created', 'post')
+        exclude = ('created', 'post', 'name', 'description', 'address')
 
 
 class PointForm(BasePointForm):
     photos = forms.FileField(label=u'Фотографии', required=False,
                              widget=forms.ClearableFileInput(attrs={'multiple':'true'}))
-    description = forms.CharField(label=u'Краткое описание',
-                                  required=False,
-                                  max_length=256,
-                                  widget=forms.Textarea(attrs={'style':'width:400px;'})
-                                  )
+    description_ru = forms.CharField(label=u'Краткое описание [ru]',
+                                     required=False,
+                                     max_length=256,
+                                     widget=forms.Textarea(attrs={'style':'width:400px;'})
+                                     )
+    description_en = forms.CharField(label=u'Краткое описание [en]',
+                                     required=False,
+                                     max_length=256,
+                                     widget=forms.Textarea(attrs={'style':'width:400px;'})
+                                     )
+    description_be = forms.CharField(label=u'Краткое описание [be]',
+                                     required=False,
+                                     max_length=256,
+                                     widget=forms.Textarea(attrs={'style':'width:400px;'})
+                                     )
     coordinates = forms.CharField(label=u'Координаты')
-
+    
 
 
 class UploadImageForm(forms.ModelForm):

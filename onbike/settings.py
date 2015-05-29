@@ -51,6 +51,7 @@ INSTALLED_APPS = (
     'blog',
     'api',
     'developers',
+    'modeltranslation',
 )
 
 MIDDLEWARE_CLASSES = (
