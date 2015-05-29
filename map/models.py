@@ -338,8 +338,7 @@ class Point(models.Model):
             self.save()
 
     def to_dict(self, lang=None):
-        translate = self.get_translation_obj(lang=lang)
-        
+        #translate = self.get_translation_obj(lang=lang)
         point = {'coordinates': json.loads(self.coordinates),
                  'title': self.name,                                   #translate.name or self.name,
                  'description': self.description,                      #translate.description or self.description,
