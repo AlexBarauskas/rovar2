@@ -18,5 +18,12 @@ ipset add cheat 111.74.238.8
 ipset add cheat 194.63.140.103
 ipset add cheat 117.21.191.197
 ipset add cheat 91.212.124.160
+ipset add cheat 141.212.122.194
+
+ipset add cheat 220.241.216.6
+ipset add cheat 63.141.251.186
+ipset add cheat 188.24.244.52
+ipset add cheat 77.222.156.153
+ipset add cheat 121.40.119.35
 
 iptables -A INPUT -m set --match-set cheat src -j DROP
