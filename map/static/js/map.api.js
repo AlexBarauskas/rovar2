@@ -226,16 +226,13 @@ var rovar = {
 	var description,
 	data = point._data;
 	var title = data.title;
-	if(data.website)
+	if(data.website){
 	    title = '<a target="blank" href="'+data.website+'" style="color:' + data.color + '">'+title+'</a>';
-	if(data.post_url)
-	    description = "<p><a href=\""+data.post_url+"\">"+data.description+"</a></p>";
-	else
-	    description = "<p>"+data.description+"</p>";
+	}
+
 	var preview = $('.preview-content').html('')
 		.append("<div class='button_close'></div>")
-	    .append($("<h1>"+title+"</h1>").css('color', data.color))
-	    .append($("<p></p>").html(data.address).addClass('description-address'));
+		.append($("<h1>"+title+"</h1>").css('color', data.color)));
 
 	$('.preview-content .button_close')
 		.unbind("click")
@@ -256,7 +253,15 @@ var rovar = {
 	    	'allowfullscreen': true
 	    });
 	}
-	preview.append(description);
+
+	if(data.post_url){
+	    description = "<a href=\""+data.post_url+"\">"+data.description+"</a>";
+	}else{
+	    description = data.description;
+	}
+	preview.append($("<p></p>").html(description).addClass('description-description'));
+	preview.append($("<p></p>").html(data.address).addClass('description-address'));
+
 	if(data.phones){
         phones_list = data.phones.split(",");
         console.log(data.phones);
