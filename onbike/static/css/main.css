@@ -343,9 +343,9 @@ i.icon{
 }
 
 .preview h1{
-    font-size: 22px;
-    font-weight:normal;
-    margin-right: 20px;
+    font-size: 24px;
+    font-weight: normal;
+    padding-bottom: 10px;
 }
 
 .preview img{
@@ -358,18 +358,26 @@ i.icon{
     text-decoration:none;
 }
 
-.preview .description-address{
-    background: url(../icons/icon-address.png) 0 10px no-repeat;
+.preview .description-description{
     color: #5a5a5a;
     font-size: 14px;
-    line-height: 24px;
-    padding: 8px 10px 15px 30px;
+    line-height: 18px;
+    padding: 8px 0 0;
+    margin: 5px 0;
+}
+
+.preview .description-address{
+    background: url(../icons/icon-address.png) 3px 5px no-repeat;
+    color: #5a5a5a;
+    font-size: 14px;
+    line-height: 18px;
+    padding: 8px 0 0px 30px;
     margin: 5px 0;
 }
 
 .preview .description-phones{
-    background: url(../icons/icon-phone.png) 0 10px no-repeat;
-    padding: 8px 10px 15px 30px;
+    background: url(../icons/icon-phone.png) 3px 10px no-repeat;
+    padding: 8px 0 0px 30px;
     margin: 5px 0;
 }
 
