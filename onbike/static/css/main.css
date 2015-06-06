@@ -343,19 +343,20 @@ i.icon{
 }
 
 .preview h1{
-    font-size: 24px;
+    font-size: 22px;
     font-weight: normal;
     padding-bottom: 10px;
+    position: relative;
 }
 
 .preview img{
-    width:100%;
-    height:auto;
-    position:relative;
+    width: 100%;
+    height: auto;
+    position: relative;
 }
 
 .preview a{
-    text-decoration:none;
+    text-decoration: none;
 }
 
 .preview .description-description{

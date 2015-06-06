@@ -232,7 +232,7 @@ var rovar = {
 
 	var preview = $('.preview-content').html('')
 		.append("<div class='button_close'></div>")
-		.append($("<h1>"+title+"</h1>").css('color', data.color)));
+		.append($("<h1>"+title+"</h1>").css('color', data.color));
 
 	$('.preview-content .button_close')
 		.unbind("click")
