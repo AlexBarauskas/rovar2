@@ -31,6 +31,15 @@ $(function() {
       $("#info").click();
     });
 
+    $("select.category").change(function(){
+      true_array = ['shop', 'bikerental', 'service'];
+      if (true_array.indexOf($(this).val()) > 0) {
+        $(".form-group input[name='phones']").fadeIn(200);
+      }else{
+        $(".form-group input[name='phones']").val('').fadeOut(200);
+      };
+    });
+
     $("#gid-link").click(function(){
       var intro = introJs();
         intro.setOptions({
@@ -97,7 +106,9 @@ $(function() {
           {
             "mask": _phoneMask,
             "oncomplete": phoneCompleted, 
-            "oncleared": function(){ $(this).remove() }
+            "oncleared": function(){
+              $(this).remove()
+            }
           }
         );
     }
