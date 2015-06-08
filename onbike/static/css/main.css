@@ -94,6 +94,7 @@ b {
 #main-header-wrapper {
     width: 100%;
     padding: 0 30px;
+    min-width: 900px;
 
 }
 
