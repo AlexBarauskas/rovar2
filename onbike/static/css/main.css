@@ -94,7 +94,7 @@ b {
 #main-header-wrapper {
     width: 100%;
     padding: 0 30px;
-    min-width: 900px;
+    min-width: 960px;
 
 }
 
@@ -608,9 +608,9 @@ i.icon{
     transition: opacity .6s;
     opacity: 1;
     border: 0;
-    border-bottom: 1px solid #cecece;
+    border: 1px solid #cfcfcf;
     border-radius: 0;
-    background: white;
+    background: rgba(255, 255, 255, 0.7);
     font-size: 16px;
     line-height: 1.467;
     padding: 4px;
@@ -649,6 +649,15 @@ i.icon{
     font-size: 16px;
     line-height: 1.467;
     padding: 20px 4px;
+    float: left;
+    color: #969696;
+}
+
+#add-point-dialog label.category {
+    font-size: 16px;
+    line-height: 1.467;
+    padding: 0;
+    margin-top: 20px;
     float: left;
     color: #969696;
 }
