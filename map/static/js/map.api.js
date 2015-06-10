@@ -264,8 +264,6 @@ var rovar = {
 
 	if(data.phones){
         phones_list = data.phones.split(",");
-        console.log(data.phones);
-        console.log(phones_list);
 	    preview.append($("<p></p>").addClass('description-phones'));
         for (var i = phones_list.length - 1; i >= 0; i--) {
         	$(".description-phones").append($("<p></p>").html(phones_list[i]));
