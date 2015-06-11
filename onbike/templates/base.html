@@ -1,6 +1,8 @@
 {% load cache %}
 {% load login i18n%}
 {% load staticfiles %}
+{% load grunt %}
+{% load account_widgets %}
 {% get_available_languages as LANGUAGES %}
 {% get_current_language as LANGUAGE_CODE %}
 <!DOCTYPE html>
@@ -10,6 +12,10 @@
     <title>onbike.by{% block subtitle %}{% endblock subtitle %}</title>
     <link type="image/png" rel="icon" href="{% static 'images/favicon.png' %}">
     <link rel="apple-touch-icon" href="{% static 'images/favicon.png' %}">
+    <meta name="apple-itunes-app" content="app-id=885802783">
+    <meta name="google-play-app" content="app-id=com.onbike.app">
+    {# <meta name="viewport" content="width=device-width, initial-scale=1.0"> #}
+
     {% block meta %}
     <meta property="og:title" content="ONBIKE.BY" />
     <meta property="og:description" content="Велосипедная карта Минска: маршруты, полезные объекты, с видео- и фотоподсказками. Велосипед — друг человека. Onbike.by — друг велосипедиста!"/>
@@ -18,12 +24,10 @@
     <link rel="image_src" href="//onbike.by/static/images/onbike-og.png"/>
     <meta property="og:url" content="http://onbike.by/" />
 
-    <meta name="apple-itunes-app" content="app-id=885802783">
-    <meta name="google-play-app" content="app-id=com.onbike.app">
-    {# <meta name="viewport" content="width=device-width, initial-scale=1.0"> #}
     {% endblock meta %}
 
-    <link type="text/css" href="{% static 'css/style.min.css' %}" rel="stylesheet"/>
+    {% grunt css %}
+
     {% block css %}
     {% endblock css %}
 
@@ -43,7 +47,6 @@
     {% endblock preload %}
 
     {% block content %}
-
       <div id="social-networks">
         <a href="https://www.facebook.com/onbike.by" target="_blank">
            <img src="{% static 'images/facebook.png' %}">
@@ -73,17 +76,13 @@
       <div id="contentWrapper">
           {% block content_right %}
           {% endblock content_right %}
+	  {% cache 600 "info_content" LANGUAGE_CODE %}
+	  {% info_widget %}
+	  {% endcache %}
       </div>
-
-      {% cache 600 "info_content" LANGUAGE_CODE %}
-      {% load account_widgets %} {# depend info_widget @TODO вынести наверх #}
-      {% info_widget %}
-      {% endcache %}
-
     {% endblock content %}
 
-    <script type="text/javascript" src="{% static 'js/script.min.js' %}"></script>
-
+    {% grunt js %}
     {% block js %}
     {% endblock js %}
 

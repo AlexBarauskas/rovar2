@@ -22,6 +22,10 @@ from tmp.parse_xml import XMLTrack
 
 from api.models import Message
 
+from account.models import Author
+from django.template.loaders import app_directories
+from django.utils import translation
+
 
 @staff_member_required
 def default(request):
@@ -334,7 +338,7 @@ def point_edit(request, point_id=None):
         #        else:
         #            trans = None
         #        trans_forms.append(TransForm(request.POST, instance=trans, prefix=lang_code))
-        if form.is_valid() and all([i.is_valid() for i in trans_forms]):
+        if form.is_valid(): # and all([i.is_valid() for i in trans_forms]):
             _point =  form.save()
             #for i in trans_forms:
             #    t = i.save()
@@ -420,13 +424,12 @@ def photo_img_del(request, point_id, img_id):
                         content_type="text/json")
 
 
-from account.models import Author
-from django.template.loaders import app_directories
-
 @staff_member_required
 def info_page_edit(request):
     default_template = app_directories.Loader().load_template('info-content.html')[0].origin.name
-    template_name = 'info/content-%s.html' % request.GET.get('language', settings.LANGUAGE_CODE)
+    lang_code = request.GET.get('language', settings.LANGUAGE_CODE)
+    translation.activate(lang_code)
+    template_name = 'info/content-%s.html' % lang_code
     template_path = os.path.join(settings.BASE_DIR, 'templates', template_name)
     if not os.path.exists(template_path):
         tf = open(template_path, 'w')
@@ -447,7 +450,7 @@ def info_page_edit(request):
                 field = field[0]
                 if field[0] not in authors:
                     authors[field[0]] = {}
-                authors[field[0]][field[1]] = value.strip()
+                authors[field[0]][field[1] + '_' + lang_code] = value.strip()
         for q, v in authors.iteritems():
             Author.objects.filter(id=q).update(**v)
         for key, value in request.FILES.iteritems():

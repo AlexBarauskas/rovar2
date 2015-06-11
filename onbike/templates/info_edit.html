@@ -34,7 +34,7 @@
   .thumbnail input[type="file"] {height: 200%!important;line-height: 16px!important;position: absolute;cursor: pointer;top: -100%;width:100%;opacity: 0;filter:alpha(opacity = 1);left:0;}
 </style>
 <div class="data-content" {% if not show_left_panel %}style="margin-left:0px;"{%else%}style="min-height:100%;"{% endif %}>
-  <div style="padding:30px">
+  <div style="padding:60px">
   <form method="POST" action=".?language={{LC}}" enctype="multipart/form-data">
       {%for m in messages%}
       <div class="alert form-alert {{m.class}}">

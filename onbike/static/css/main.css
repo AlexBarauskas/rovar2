@@ -434,7 +434,7 @@ i.icon{
     display: none;
     top: 66px;
     height: 80%;
-    position: fixed;
+    position: absolute;
     right: 18px;
     z-index: 1001;
     width: 60%;

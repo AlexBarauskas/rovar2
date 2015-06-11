@@ -1,4 +1,6 @@
-var src_js = [  'onbike/static/js/jquery.min.js',
+/*
+ * MOVE CONFIG TO Gruntfile.js
+ * var src_js = [  'onbike/static/js/jquery.min.js',
                 'onbike/static/js/jquery.form.js',
                 'onbike/static/js/fotorama.js',
                 'onbike/static/js/jquery.smartbanner.min.js',
@@ -11,7 +13,7 @@ var src_js = [  'onbike/static/js/jquery.min.js',
                 'onbike/static/js/intro.js',
                 'map/static/js/map.api.translate.js',
                 'map/static/js/map.api.js',
-                'onbike/static/js/ready.js',]
+                'onbike/static/js/ready.js'];
 
 var src_css =  ['onbike/static/css/reset.css', 
                 'onbike/static/css/clearfix.css', 
@@ -23,7 +25,16 @@ var src_css =  ['onbike/static/css/reset.css',
                 'account/static/account/css/login.css',
                 'onbike/static/css/fonts.css',
                 'onbike/static/css/manager.css',
-                'onbike/static/css/main.css',]
+                'onbike/static/css/main.css'];
+*/
+
+var fs = require('fs');
+
+var src = fs.readFileSync('Gruntfile.json', 'utf-8');
+src = JSON.parse(src);
+
+var css_files = {};
+css_files['onbike' + src.css.out] = src.css.in;
 
 module.exports = function(grunt) {
     grunt.initConfig({
@@ -31,14 +42,14 @@ module.exports = function(grunt) {
 
         concat: {
             dist: {
-                src: src_js,
-                dest: 'onbike/static/js/script.js',
+                src: src.js.in,
+                dest: 'onbike/static/js/script.js'
             }
         },
         uglify: {
             build: {
                 src: 'onbike/static/js/script.js',
-                dest: 'onbike/static/js/script.min.js'
+                dest: 'onbike' + src.js.out
             }
         },
 
@@ -47,35 +58,33 @@ module.exports = function(grunt) {
                 banner: '/* _ */'
             },
             combine: {
-                files: {
-                    'onbike/static/css/style.min.css': src_css,
-                }
+                files: css_files
             }
         },
 
         watch: {
             scripts: {
-                files: src_js,
+                files: src.js.in,
                 tasks: ['js'],
                 options: {
-                    spawn: false,
-                },
+                    spawn: false
+                }
             },
             html: {
                 files: ['*.html'],
                 tasks: [],
                 options: {
-                    spawn: false,
-                },
-            },
-            css: {
-                files: src_css,
-                tasks: ['css'],
-                options: {
-                    spawn: false,
+                    spawn: false
                 }
             },
-        },
+            css: {
+                files: src.css.in,
+                tasks: ['css'],
+                options: {
+                    spawn: false
+                }
+            }
+        }
     });
 
     grunt.loadNpmTasks('grunt-contrib-concat');

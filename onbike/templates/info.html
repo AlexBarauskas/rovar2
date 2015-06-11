@@ -4,6 +4,24 @@
 
 {% block css %}
 <!--link type="text/css" href="/static/leaflet/leaflet.css" rel="stylesheet"/-->
+<style>
+#info-iframe{
+display: block;
+top: 0;
+height: auto;
+position: static;
+right: 0;
+z-index: 0;
+width: 100%;
+border: none;
+overflow: auto;
+padding-top: 50px;
+}
+
+#info-iframe .button_close{
+display: none;
+}
+</style>
 {% endblock css %}
 
 
@@ -27,12 +45,12 @@
   }(document, 'script', 'facebook-jssdk'));
 </script>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-<script>
+<!--script>
   $(function(){
     $("#info-iframe").css("min-height", "100%");
     $("#info-iframe").css("height", "100%");
-    $("#info").hide();
+    $("#info-iframe").show();
 });
-</script>
+</script-->
 
 {% endblock js %}
