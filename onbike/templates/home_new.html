@@ -132,81 +132,81 @@
 
 {% block content_right %}
 
-<div id="map" class="data-content" style="padding:0;"></div>
-<div id="add-point-dialog" style="display:none">
-  <form id="add-point-form" class="clearfix" method="POST" action="/api/point/add" enctype="multipart/form-data">
-    
-    <input type="hidden" value="" name="coordinates"/>
-    
-    <div class="form-group clearfix">
-      <input type="text" class="form-control" value="" placeholder="{% trans 'Название *' %}" name="title" />
-    </div>
-    
-    <div class="form-group clearfix border">
-      <div class="input">
-        <label class="photo">{% trans "Категория" %} <sup>*</sup></label>
-        <select name="type" class="category">
-          <option value="shop">{% trans "Магазин"%}</option>
-          <option value="bikerental">{% trans "Прокат" %}</option>
-          <option value="entertainment">{% trans "Развлечения"%}</option>
-          <option value="parking">{% trans "Велопарковка" %}</option>
-          <option value="service">{% trans "Сервис" %}</option>
-        </select>
-      </div>
-    </div>
-    
-    <div class="form-group clearfix">
-      <textarea type="text" class="form-control" value="" placeholder="{% trans 'Описание (время работы, ориентиры и т.д.)' %}" name="description"></textarea>
-    </div>
-    
-    <div class="form-group clearfix">
-      <input type="text" class="form-control" value="" placeholder="{% trans 'Адрес *' %}" name="address" />
-    </div>
-    
-    <div class="form-group clearfix">
-      <input type="text" class="form-control" value="" placeholder="{% trans 'Телефон' %}" name="phones" />
-    </div>
+    <div id="map" class="data-content" style="padding:0;"></div>
+    <div id="add-point-dialog" style="display:none">
+      <form id="add-point-form" class="clearfix" method="POST" action="/api/point/add" enctype="multipart/form-data">
+        
+        <input type="hidden" value="" name="coordinates"/>
+        
+        <div class="form-group clearfix">
+          <input type="text" class="form-control" value="" placeholder="{% trans 'Название *' %}" name="title" />
+        </div>
+        
+        <div class="form-group clearfix">
+          <div class="input">
+            <label class="category">{% trans "Категория" %} <sup>*</sup></label>
+            <select name="type" class="category">
+              <option value="shop">{% trans "Магазин"%}</option>
+              <option value="bikerental">{% trans "Прокат" %}</option>
+              <option value="entertainment">{% trans "Развлечения"%}</option>
+              <option value="parking">{% trans "Велопарковка" %}</option>
+              <option value="service">{% trans "Сервис" %}</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="form-group clearfix">
+          <textarea type="text" class="form-control" value="" placeholder="{% trans 'Описание (время работы, ориентиры и т.д.)' %}" name="description"></textarea>
+        </div>
+        
+        <div class="form-group clearfix">
+          <input type="text" class="form-control" value="" placeholder="{% trans 'Адрес *' %}" name="address" />
+        </div>
+        
+        <div class="form-group clearfix">
+          <input type="text" class="form-control" value="" placeholder="{% trans 'Телефон' %}" name="phones" />
+        </div>
 
-    <div class="form-group clearfix">
-      <input type="text" class="form-control" value="" placeholder="{% trans 'Сайт' %}" name="website" />
-    </div>
+        <div class="form-group clearfix">
+          <input type="text" class="form-control" value="" placeholder="{% trans 'Сайт' %}" name="website" />
+        </div>
 
-    <div class="form-group clearfix">
-      <input type="text" class="form-control" value="{%if user.is_authenticated%}{{user.email}}{%endif%}" placeholder="{% trans 'Ваш Email (мы не будем спамить, честно) *' %}" name="email" />
-    </div>
-    
-    <!--div class="form-group clearfix">
+        <div class="form-group clearfix">
+          <input type="text" class="form-control" value="{%if user.is_authenticated%}{{user.email}}{%endif%}" placeholder="{% trans 'Ваш Email (мы не будем спамить, честно) *' %}" name="email" />
+        </div>
+        
+        <!--div class="form-group clearfix">
+          <label class="photo">{% trans "Фото *" %}</label>
+          <input type="file" class="form-control photo" value="" accept="image/*" name="image" />
+        </div-->
+              
+      
+      <div class="form-group clearfix" id="inputfile">  
+        <!--div class="logbox" draggable="true"></div-->
+        <!--label>OR Select a file to upload:</label-->
+
         <label class="photo">{% trans "Фото *" %}</label>
-        <input type="file" class="form-control photo" value="" accept="image/*" name="image" />
-    </div-->
-    
-    
-    <div class="form-group clearfix" id="inputfile">  
-      <!--div class="logbox" draggable="true"></div-->
-      <!--label>OR Select a file to upload:</label-->
-
-      <label class="photo">{% trans "Фото *" %}</label>
-      <!--div id="fileInputContainer">
-          <a id="fileUploadDummy" class="btn-choose">Choose File</a>
-          <input type="file" name="image" id="fileUploadInput" accept="image/*" multiple="multiple"/>
+        <!--div id="fileInputContainer">
+            <a id="fileUploadDummy" class="btn-choose">Choose File</a>
+            <input type="file" name="image" id="fileUploadInput" accept="image/*" multiple="multiple"/>
+        </div-->
+        <input type="file" name="image" id="fileUploadInput" accept="image/*" multiple="multiple"/>
+      </div>
+      <!--div>
+          <a class="btn" id="upload-imgs" href="javascript:;">Upload</a>
+          <a class="btn" id="close-upload" href="javascript:;">Close</a>
       </div-->
-      <input type="file" name="image" id="fileUploadInput" accept="image/*" multiple="multiple"/>
-    </div>
-    <!--div>
-        <a class="btn" id="upload-imgs" href="javascript:;">Upload</a>
-        <a class="btn" id="close-upload" href="javascript:;">Close</a>
-    </div-->
-    <div id="progressbar"></div>
-    <div id="ajax-errors"></div>
-    <div class="btn-box">
-      <!--button class="btn success">{% trans "Добавить точку" %}</button-->
-      <a id="upload-imgs" class="btn success" href="#">{% trans "Добавить точку" %}</a>
-      <a class="btn" id="add-point-form-close" href="#">{% trans "Отмена" %}</a>
-    </div>
-    <input type="hidden" value="webclient" name="uid"/>
-    
-  </form>
-</div>
+      <div id="progressbar"></div>
+      <div id="ajax-errors"></div>
+      <div class="btn-box">
+        <!--button class="btn success">{% trans "Добавить точку" %}</button-->
+        <a id="upload-imgs" class="btn success" href="#">{% trans "Добавить точку" %}</a>
+        <a class="btn" id="add-point-form-close" href="#">{% trans "Отмена" %}</a>
+      </div>
+      <input type="hidden" value="webclient" name="uid"/>
+      
+    </form>
+  </div>
 
 {% endblock content_right %}
 

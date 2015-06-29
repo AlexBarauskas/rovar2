@@ -94,6 +94,7 @@ b {
 #main-header-wrapper {
     width: 100%;
     padding: 0 30px;
+    min-width: 960px;
 
 }
 
@@ -344,23 +345,49 @@ i.icon{
 
 .preview h1{
     font-size: 22px;
-    font-weight:normal;
-    margin-right: 20px;
+    font-weight: normal;
+    padding-bottom: 10px;
+    position: relative;
 }
 
 .preview img{
-    width:100%;
-    height:auto;
-    position:relative;
+    width: 100%;
+    height: auto;
+    position: relative;
 }
 
 .preview a{
-    text-decoration:none;
+    text-decoration: none;
+}
+
+.preview .description-description{
+    color: #5a5a5a;
+    font-size: 14px;
+    line-height: 18px;
+    padding: 8px 0 0;
+    margin: 5px 0;
 }
 
 .preview .description-address{
-    color: #a7a7a7;
-    margin: 8px 0px 15px 0px;
+    background: url(../icons/icon-address.png) 3px 5px no-repeat;
+    color: #5a5a5a;
+    font-size: 14px;
+    line-height: 18px;
+    padding: 8px 0 0px 30px;
+    margin: 5px 0;
+}
+
+.preview .description-phones{
+    background: url(../icons/icon-phone.png) 3px 10px no-repeat;
+    padding: 8px 0 0px 30px;
+    margin: 5px 0;
+}
+
+.preview .description-phones p{
+    color: #5a5a5a;
+    font-size: 14px;
+    line-height: 24px;
+    margin: 0;
 }
 
 .preview-content{
@@ -581,9 +608,9 @@ i.icon{
     transition: opacity .6s;
     opacity: 1;
     border: 0;
-    border-bottom: 1px solid #cecece;
+    border: 1px solid #cfcfcf;
     border-radius: 0;
-    background: white;
+    background: rgba(255, 255, 255, 0.7);
     font-size: 16px;
     line-height: 1.467;
     padding: 4px;
@@ -622,6 +649,15 @@ i.icon{
     font-size: 16px;
     line-height: 1.467;
     padding: 20px 4px;
+    float: left;
+    color: #969696;
+}
+
+#add-point-dialog label.category {
+    font-size: 16px;
+    line-height: 1.467;
+    padding: 0;
+    margin-top: 20px;
     float: left;
     color: #969696;
 }
@@ -868,14 +904,13 @@ i.icon{
     background: #a6a6a6;
 }
 
-/*
+
 .leaflet-marker-icon{
-    -webkit-transition: all 0.15s linear;
-    -moz-transition: all 0.15s linear;
-    -o-transition: all 0.15s linear;
-    transition: all 0.15s linear;
+    -webkit-transition: margin 0.3s linear, background 0.3s linear;
+    -moz-transition: margin 0.3s linear, background 0.3s linear;
+    -o-transition: margin 0.3s linear, background 0.3s linear;
+    transition: margin 0.3s linear, background 0.3s linear;
 }
-*/
 
 /*
 #locations.dropdown>div, #locations.dropdown ul, #locations.dropdown li{

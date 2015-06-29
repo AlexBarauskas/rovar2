@@ -68,9 +68,11 @@ var rovar = {
 	};
 
 	var map = new L.Map('map', {zoomControl: false});
-	map.on('click', function(e) {
-        map.panTo(new L.LatLng(e.latlng.lat, e.latlng.lng));
-    });
+	// map.on('click', function(e) {
+		// @TODO Добавить проверку на расстояние 
+		// и если оно больше некой delta выполнять центрирование
+ 	//     map.panTo(new L.LatLng(e.latlng.lat, e.latlng.lng));
+ 	// });
 	var self = this;
 	map.on('zoomend', function(ev){
 		   self._visible_pins();
@@ -78,14 +80,16 @@ var rovar = {
 	this.copyright = '&copy; <a href="//osm.org/copyright">OpenStreetMap</a> contributors';
 	
 	var l_name;
-	if(typeof rovar_category != 'undefined')
+	if(typeof rovar_category != 'undefined'){
 	    this._category = rovar_category;
-	else
+	}else{
 	    this._category = '';
-	if(typeof rovar_location != 'undefined')
+	}
+	if(typeof rovar_location != 'undefined'){
 	    l_name = rovar_location;
-	else
+	}else{
 	    l_name = 'Minsk';
+	}
 
 	$.ajax({url: '/api/location',
 		method: 'GET',
@@ -128,11 +132,12 @@ var rovar = {
     },
 
     backToHome : function(){
-	if(this.currentPoint)
-	    this._hidePointInfo(this.currentPoint);
-	if(this.currentTrack)
-	    this._hideTrackInfo(this.currentTrack);
-
+		if(this.currentPoint){
+		    this._hidePointInfo(this.currentPoint);
+		}
+		if(this.currentTrack){
+		    this._hideTrackInfo(this.currentTrack);
+		}
     },
     
     hide : function(type_name){
@@ -152,11 +157,11 @@ var rovar = {
 		$("#type_counter").html(type_counter - n_counter);
 
 	$("img."+type_name + ', div.' + type_name).hide();
-	for(key in this.elements.tracks){
-	    if(key == type_name)
-		for(id in this.elements.tracks[key])
-		    this.elements.tracks[key][id].eachLayer(function(l){$(l._container).hide();});
-	}
+		for(key in this.elements.tracks){
+		    if(key == type_name)
+			for(id in this.elements.tracks[key])
+			    this.elements.tracks[key][id].eachLayer(function(l){$(l._container).hide();});
+		}
     },
 
     show : function(type_name){
@@ -226,16 +231,13 @@ var rovar = {
 	var description,
 	data = point._data;
 	var title = data.title;
-	if(data.website)
+	if(data.website){
 	    title = '<a target="blank" href="'+data.website+'" style="color:' + data.color + '">'+title+'</a>';
-	if(data.post_url)
-	    description = "<p><a href=\""+data.post_url+"\">"+data.description+"</a></p>";
-	else
-	    description = "<p>"+data.description+"</p>";
+	}
+
 	var preview = $('.preview-content').html('')
 		.append("<div class='button_close'></div>")
-	    .append($("<h1>"+title+"</h1>").css('color', data.color))
-	    .append($("<p></p>").html(data.address).addClass('description-address'));
+		.append($("<h1>"+title+"</h1>").css('color', data.color));
 
 	$('.preview-content .button_close')
 		.unbind("click")
@@ -256,9 +258,22 @@ var rovar = {
 	    	'allowfullscreen': true
 	    });
 	}
-	preview.append(description);
-	if(data.phones)
-	    preview.append($("<p></p>").html(data.phones));
+
+	if(data.post_url){
+	    description = "<a href=\""+data.post_url+"\">"+data.description+"</a>";
+	}else{
+	    description = data.description;
+	}
+	preview.append($("<p></p>").html(description).addClass('description-description'));
+	preview.append($("<p></p>").html(data.address).addClass('description-address'));
+
+	if(data.phones){
+        phones_list = data.phones.split(",");
+	    preview.append($("<p></p>").addClass('description-phones'));
+        for (var i = phones_list.length - 1; i >= 0; i--) {
+        	$(".description-phones").append($("<p></p>").html(phones_list[i]));
+        };
+    }
 
 	if(typeof __editPointLink != "undefined" &&  __editPointLink != ""){
 	    var edit_link = __editPointLink.replace("<%id%>", data.id);
