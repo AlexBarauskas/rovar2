@@ -5,6 +5,7 @@ html, body {
     position: relative;
     min-width: 800px;
     font-weight: 100;
+    margin-top: 0 !important; /* smartbanner fix */
 }
 
 b {
