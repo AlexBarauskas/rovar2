@@ -71,7 +71,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.i18n",
     "manager.context_processor.manager_menu_item",
     "manager.context_processor.moderation_count",
-    "account.context_processors.get_account",
+    # "account.context_processors.get_account",
 )
 
 
@@ -150,7 +150,7 @@ AUTHENTICATION_BACKENDS = (
     'account.auth_backends.SocialLoginBackend',
 )
 
-AUTH_PROFILE_MODULE = "account.Account"
+AUTH_USER_MODEL = "account.User"
 
 MAP_TILES = os.path.join(MEDIA_ROOT, 'tiles')
 
