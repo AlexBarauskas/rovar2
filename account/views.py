@@ -6,7 +6,7 @@ from django.template.context import RequestContext
 from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
 from django.contrib.auth import authenticate, login
-from django.contrib.auth.models import User
+from account.models import User
 from django.utils.datastructures import MultiValueDictKeyError
 
 from account.models import Account, ACCOUNT_BACKENDS
