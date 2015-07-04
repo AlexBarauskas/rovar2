@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-from django.contrib.auth.models import User
+from account.models import User
 from django.template.loader import render_to_string
 from django.conf import settings
 from django.core.urlresolvers import reverse
