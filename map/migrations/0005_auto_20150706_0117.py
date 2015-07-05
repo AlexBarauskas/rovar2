@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
+from django.conf import settings
 
 
 class Migration(migrations.Migration):
@@ -14,7 +15,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='location',
             name='admins',
-            field=models.ManyToManyField(to='account.User'),
+            field=models.ManyToManyField(to=settings.AUTH_USER_MODEL, verbose_name=b'locations'),
             preserve_default=True,
         ),
     ]
