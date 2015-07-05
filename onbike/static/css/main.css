@@ -252,6 +252,10 @@ i.icon{
     background-image: url(../icons/icon-info.png);
 }
 
+.icon.user{
+    background-image: url(../icons/icon-user.png);
+}
+
 .social{
     height: 25px;
     width: auto;
