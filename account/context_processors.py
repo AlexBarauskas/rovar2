@@ -1,5 +1,7 @@
 # from account.models import Account
 # from django.core.exceptions import ObjectDoesNotExist
+# @TODO удалить файл
+
 
 # def get_account(request):
 #     if request.user and request.user.is_authenticated():

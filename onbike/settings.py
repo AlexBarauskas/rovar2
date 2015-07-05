@@ -147,7 +147,7 @@ LOGGING = {
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
-    'account.auth_backends.SocialLoginBackend',
+    # 'account.auth_backends.SocialLoginBackend',
 )
 
 AUTH_USER_MODEL = "account.User"

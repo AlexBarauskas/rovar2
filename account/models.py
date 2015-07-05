@@ -47,8 +47,8 @@ class User(AbstractBaseUser):
     img_url = models.URLField(null=True)
     gender = models.CharField(verbose_name='Пол', max_length=10, blank=True, null=True)
     phone = models.CharField(verbose_name='Телефон', max_length=255, unique=True, blank=True, null=True)
-    address = models.CharField(verbose_name='Адрес', max_length=255, blank=True)
-    bike = models.CharField(verbose_name='Байк', max_length=255, blank=True)
+    address = models.CharField(verbose_name='Адрес', max_length=255, blank=True, null=True)
+    bike = models.CharField(verbose_name='Байк', max_length=255, blank=True, null=True)
 
     backend = models.CharField(max_length=16, choices=ACCOUNT_BACKENDS, null=True)
     id_from_backend = models.CharField(max_length=32, null=True)

@@ -111,7 +111,7 @@ class Location(models.Model):
     center_lat = models.FloatField()
     center_lng = models.FloatField()
     radius = models.FloatField()
-    admins = models.ManyToManyField(User)
+    admins = models.ManyToManyField(User, verbose_name='locations')
     default = models.BooleanField(default=False)
 
     objects = LocationManager()
