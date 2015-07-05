@@ -30,3 +30,6 @@ settings_local.py
 
 # Fabric
 fabfile.py
+
+# Generated files
+onbike/static/css/style.min.css
