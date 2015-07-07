@@ -2,12 +2,13 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
+from django.conf import settings
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('map', '0003_auto_20150428_0114'),
+        ('map', '0002_track_full_coordinates'),
     ]
 
     operations = [
@@ -99,6 +100,12 @@ class Migration(migrations.Migration):
             model_name='track',
             name='name_ru',
             field=models.CharField(max_length=128, null=True, verbose_name='\u041d\u0430\u0438\u043c\u0435\u043d\u043e\u0432\u0430\u043d\u0438\u0435'),
+            preserve_default=True,
+        ),
+        migrations.AlterField(
+            model_name='location',
+            name='admins',
+            field=models.ManyToManyField(to=settings.AUTH_USER_MODEL, verbose_name=b'locations'),
             preserve_default=True,
         ),
     ]
