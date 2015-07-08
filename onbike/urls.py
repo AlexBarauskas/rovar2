@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.conf.urls import patterns, include, url
 from django.conf import settings
 from django.views.generic.base import RedirectView
@@ -62,10 +63,15 @@ urlpatterns = patterns(
     #url(r'^account/login/$', 'django.contrib.auth.views.login',
     #    {'template_name': 'login.html'},
     #    name="account_login"),
-    url(r'^account/login/$', RedirectView.as_view(url='/', permanent=False)),
+    # url(r'^account/login/$', RedirectView.as_view(url='/', permanent=False)),
 
-    #url(r'^account/', include('account.urls')),
-                       
+    url('', include('social.apps.django_app.urls', namespace='social')),
+    url(r'^logout/$', 'account.views.logout'),
+    # Нам нужно твоё мыло:) если некоторое из провайдеров не вернули его
+    url(r'^email/$', 'account.views.require_email', name='require_email'),
+
+    url(r'^account/', include('account.urls')),
+
 #    url(r'^login/$','django.contrib.auth.views.login',{ 'template_name' : 'login.html'},name="login"),
 
     # url(r'^rovar2/', include('rovar2.foo.urls')),
@@ -75,10 +81,10 @@ urlpatterns = patterns(
 
     # Uncomment the next line to enable the admin:
     # url(r'^i18n/', include('django.conf.urls.i18n')),
-    
+
     url(r'^admin/', include(admin.site.urls)),
 
-    
+
     #url(r'^(?P<slug>\w+)/(?P<uid>[\-_\w]+)$', 'onbike.views.home', name='home_uid'),
     #url(r'^(?P<uid>\d+\-\w)/$', 'onbike.views.home', name='home_uid'),
 
