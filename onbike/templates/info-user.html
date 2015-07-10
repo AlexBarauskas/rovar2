@@ -1,0 +1,31 @@
+{% load static %}
+
+{% if user.is_authenticated %}
+	<div class="header-menu-item">
+		<div id="user-link-logout" class="clearfix">
+		  <i class="icon user"></i>
+		  <a href="#" id="url_accout_edit" class="w150_text"><span>{{ user.username }}</span></a>
+		  <a href="/logout"><span>Выход</span></a>
+		</div>
+	</div>
+{% else %}
+	<div class="header-menu-item dropdown">
+		<div id="user-link">
+		  <i class="icon user"></i>
+		  <span>Войти</span>
+		</div>
+	    <ul id="social-networks" class="clearfix">
+	    	{# @TODO class="disabled" implement #}
+	    	<li class="disabled"><span>Войти через:</span></li>
+			<li><a href="/login/facebook/">
+				<img src="/static/images/facebook.png"/>
+			</a></li>
+			<li><a class="disabled" href="/login/vk/">
+				<img src="/static/images/vk.png"/>
+			</a></li>
+			<li><a href="/login/twitter/">
+				<img src="/static/images/twitter.png"/>
+			</a></li>
+	    </ul>
+    </div>
+{% endif %}
