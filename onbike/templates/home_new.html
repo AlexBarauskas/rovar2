@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load cache %}
 {% load i18n %}
+{% load account_widgets %}
 {% load staticfiles %}
 {% get_available_languages as LANGUAGES %}
 {% get_current_language as LANGUAGE_CODE %}
@@ -93,12 +94,9 @@
 
 <div class="header-menu right">
 
-  <div class="header-menu-item">
-    <div id="user-link">
-      <i class="icon user"></i>
-      <span>Войти</span>
-    </div>
-  </div>
+  {# <div class="header-menu-item"> #}
+    {% info_user_widget %}
+  {# </div> #}
 
   <div class="header-menu-item">
     <div id="gid-link">
