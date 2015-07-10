@@ -19,3 +19,12 @@ def info_widget(context):
         'authors': Author.objects.all(),
         'template_name': template_name,
     }
+
+
+@register.inclusion_tag('info-user.html', takes_context=True)
+def info_user_widget(context):
+    try:
+        u = context.get('request').user
+    except AttributeError:
+        u = None
+    return {'user': u}
