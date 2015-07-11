@@ -33,3 +33,5 @@ fabfile.py
 
 # Generated files
 onbike/static/css/style.min.css
+
+onbike/static/js/script.min.js
