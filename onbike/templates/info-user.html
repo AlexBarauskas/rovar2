@@ -1,4 +1,5 @@
 {% load static %}
+{% load account_widgets %}
 
 {% if user.is_authenticated %}
 	<div class="header-menu-item">
@@ -6,6 +7,9 @@
 		  <i class="icon user"></i>
 		  <span id="url_account_edit">{{ user.username }}</span>
 		  <a href="/logout" id="url_account_logout"><span>Выход</span></a>
+		</div>
+		<div id="popup_account_edit">
+			{% info_user_form %}
 		</div>
 	</div>
 {% else %}
