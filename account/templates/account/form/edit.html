@@ -5,6 +5,8 @@
     <form action="{% url 'account_edit' %}" method="POST">
     	{% csrf_token %}
         {{ form.as_p }}
-        <input id="account_edit_submit" type="submit" value="Обновить"/>
+        <p class="tcenter">
+        	<input id="account_edit_submit" type="submit" class="btn success" value="Обновить"/>
+        </p>
     </form>
 </div>

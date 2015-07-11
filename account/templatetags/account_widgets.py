@@ -30,10 +30,11 @@ def info_user_widget(context):
         u = None
     return {'user': u}
 
+
 @register.inclusion_tag('account/form/edit.html', takes_context=True)
 def info_user_form(context):
     try:
-        u = context.get('request').user
+        u = context['user']
     except AttributeError:
         u = None
     f = UserCreationForm(instance=u)
