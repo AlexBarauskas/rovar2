@@ -5,6 +5,7 @@ from django.conf import settings
 from django.utils import translation
 
 from account.models import Author
+from account.forms import UserCreationForm
 
 register = template.Library()
 
@@ -28,3 +29,12 @@ def info_user_widget(context):
     except AttributeError:
         u = None
     return {'user': u}
+
+@register.inclusion_tag('account/form/edit.html', takes_context=True)
+def info_user_form(context):
+    try:
+        u = context.get('request').user
+    except AttributeError:
+        u = None
+    f = UserCreationForm(instance=u)
+    return {'user': u, 'form': f}
