@@ -35,3 +35,5 @@ fabfile.py
 onbike/static/css/style.min.css
 
 onbike/static/js/script.min.js
+
+onbike/static/js/script.js
