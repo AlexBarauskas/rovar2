@@ -468,6 +468,11 @@ i.icon{
     padding: 0;
 }
 
+#account_badges_wrapper span{
+    color: #333;
+
+}
+
 form p{
     margin: 0;
 }

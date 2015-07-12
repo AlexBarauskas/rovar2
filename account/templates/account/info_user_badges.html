@@ -1,0 +1,5 @@
+<div id="account_badges_wrapper">
+    {% for key, value in badges.items %}
+        <span><b>{{ key }}:</b></span>  {% if value %}<span>True</span>{% else %}<span>False</span>{% endif %}
+    {% endfor %}
+</div>
