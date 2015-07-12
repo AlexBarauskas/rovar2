@@ -9,7 +9,10 @@
 		  <a href="/logout" id="url_account_logout"><span>Выход</span></a>
 		</div>
 		<div id="popup_account_edit">
-			{% info_user_form %}
+			<div class="main-panel-inner">
+				{% info_user_badges %}
+				{% info_user_form %}
+			</div>
 		</div>
 	</div>
 {% else %}

@@ -25,7 +25,7 @@ def info_widget(context):
 @register.inclusion_tag('info-user.html', takes_context=True)
 def info_user_widget(context):
     try:
-        u = context.get('request').user
+        u = context['user']
     except AttributeError:
         u = None
     return {'user': u}
@@ -39,3 +39,17 @@ def info_user_form(context):
         u = None
     f = UserCreationForm(instance=u)
     return {'user': u, 'form': f}
+
+
+@register.inclusion_tag('account/info_user_badges.html', takes_context=True)
+def info_user_badges(context):
+    try:
+        u = context['user']
+    except AttributeError:
+        u = None
+    badges = dict()
+    if u:
+        badges = {
+            "is_full_profile": u.is_full_profile(),
+        }
+    return {'user': u, 'badges': badges}
