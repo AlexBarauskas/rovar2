@@ -14168,13 +14168,13 @@ $(function() {
 
     $('#url_account_edit').click(function(e) {
       e.preventDefault();
-      $(this).parent().toggleClass("hover");
+      $(this).parent().parent().toggleClass("hover");
       $(".popup_overlay").fadeToggle(250);
       $('#popup_account_edit').fadeToggle();
     });
 
     $("#popup_account_edit .button_close, .popup_overlay").click(function(){
-      if ($("#url_account_edit").parent().hasClass("hover")) {
+      if ($("#url_account_edit").parent().parent().hasClass("hover")) {
         $("#url_account_edit").click();
       };
     });
