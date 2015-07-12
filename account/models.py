@@ -74,6 +74,15 @@ class User(AbstractBaseUser):
     def get_short_name(self):
         return self.username
 
+    def is_full_profile(self):
+        """ Все поля заполнены? """
+        fields = ['first_name', 'last_name', 'username', \
+                  'email', 'gender', 'phone', 'address', 'bike']
+        for field in fields:
+            if not getattr(self, field):
+                return False
+        return True
+
     def __unicode__(self):
         return self.get_full_name()
 
