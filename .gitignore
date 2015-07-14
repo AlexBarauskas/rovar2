@@ -37,3 +37,6 @@ onbike/static/css/style.min.css
 onbike/static/js/script.min.js
 
 onbike/static/js/script.js
+
+onbike/static/semantic/src/**/*
+onbike/static/semantic/tasks/**/*
