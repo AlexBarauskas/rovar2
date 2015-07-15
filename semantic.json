@@ -8,12 +8,12 @@
       "themes": "onbike/static/src/themes/"
     },
     "output": {
-      "packaged": "onbike/static/dist/",
-      "uncompressed": "onbike/static/dist/components/",
-      "compressed": "onbike/static/dist/components/",
-      "themes": "onbike/static/dist/themes/"
+      "packaged": "dist/",
+      "uncompressed": "dist/components/",
+      "compressed": "dist/components/",
+      "themes": "dist/themes/"
     },
-    "clean": "onbike/static/dist/"
+    "clean": "dist/"
   },
   "permission": false,
   "rtl": "No",
