@@ -1,19 +1,19 @@
 {
-  "base": "semantic/",
+  "base": "onbike/static/semantic/",
   "paths": {
     "source": {
-      "config": "src/theme.config",
+      "config": "onbike/static/src/theme.config",
       "definitions": "src/definitions/",
-      "site": "src/site/",
-      "themes": "src/themes/"
+      "site": "onbike/static/src/site/",
+      "themes": "onbike/static/src/themes/"
     },
     "output": {
-      "packaged": "dist/",
-      "uncompressed": "dist/components/",
-      "compressed": "dist/components/",
-      "themes": "dist/themes/"
+      "packaged": "onbike/static/dist/",
+      "uncompressed": "onbike/static/dist/components/",
+      "compressed": "onbike/static/dist/components/",
+      "themes": "onbike/static/dist/themes/"
     },
-    "clean": "dist/"
+    "clean": "onbike/static/dist/"
   },
   "permission": false,
   "rtl": "No",
