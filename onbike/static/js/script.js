@@ -14153,6 +14153,9 @@ $(function() {
   	  e.preventDefault();
   	});
 
+    $('select').dropdown();
+    $('.ui.radio.checkbox').checkbox();
+
     $('#info').click(function(e) {
       e.preventDefault();
       $('#info-iframe')

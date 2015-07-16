@@ -729,7 +729,7 @@ var rovar = {
 		this._runAddPoint = false;
 		$("#add-point-btn-text").html(this.messages['add point']);
 		$("#add-point-btn").parent().removeClass("hover");
-		$("#add-point-dialog").hide();
+		$("#add-point-dialog").modal("hide");
 		$("#ajax-errors").html("");
 
 		$("#map").attr('style', "");
@@ -793,7 +793,8 @@ var rovar = {
 	this.map.off('mousedown', __addClick);
 	$("#ajax-errors").html("");
 	$("#add-point-dialog .for-clear").val('');
-	var d=$("#add-point-dialog").show();
+	var d=$("#add-point-dialog");
+	d.modal({blurring: true}).modal("show");
 	$("#add-point-dialog input[name=\"title\"]").focus();
 	$('#add-point-dialog').animate({'opacity':1}, 500);
 	d.css('left', ($(document).innerWidth() - d.innerWidth())/2);
@@ -810,7 +811,7 @@ var rovar = {
 		    $("#add-point-btn-text").html(this.messages['add point']);
 			$("#add-point-btn").parent().removeClass("hover");
 		    $("#ajax-errors").html($("<p class=\"success alert\">").text(this.messages['success message']));
-		    setTimeout("$('#add-point-dialog').animate({'opacity':0.25}, 500, 'swing', function(){$('#add-point-dialog').hide()})", 2000);
+		    setTimeout("$('#add-point-dialog').animate({'opacity':0.25}, 500, 'swing', function(){$('#add-point-dialog').modal('hide')})", 2000);
 		}
     }
 
