@@ -22,28 +22,26 @@ $(function() {
 
     $('#info').click(function(e) {
       e.preventDefault();
-      $(this).parent().toggleClass("hover");
-      $(".popup_overlay").fadeToggle(250);
-      $('#info-iframe').fadeToggle();
+      $('#info-iframe')
+        .modal({blurring: true})
+        .modal('show');
     });
 
-    $("#info-iframe .button_close, .popup_overlay").click(function(){
-      if ($("#info").parent().hasClass("hover")) {
-        $("#info").click();
-      };
+    $(".button_close").click(function(e){
+        $('.ui.modal').modal('hide');
     });
+
+    // $("#info-iframe .button_close, .popup_overlay").click(function(){
+    //   if ($("#info").parent().hasClass("hover")) {
+    //     $("#info").click();
+    //   };
+    // });
 
     $('#url_account_edit').click(function(e) {
       e.preventDefault();
-      $(this).parent().parent().toggleClass("hover");
-      $(".popup_overlay").fadeToggle(250);
-      $('#popup_account_edit').fadeToggle();
-    });
-
-    $("#popup_account_edit .button_close, .popup_overlay").click(function(){
-      if ($("#url_account_edit").parent().parent().hasClass("hover")) {
-        $("#url_account_edit").click();
-      };
+      $('#popup_account_edit')
+        .modal({blurring: true})
+        .modal('show');
     });
 
     $("select.category").change(function(){

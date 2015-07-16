@@ -445,24 +445,28 @@ i.icon{
 
 #info-iframe{
     display: none;
-    top: 66px;
+    top: 50%;
     height: 80%;
+    margin-top: -40%;
     position: absolute;
-    right: 18px;
+    left: 50%;
     z-index: 1001;
-    width: 60%;
+    width: 80%;
+    margin-left: -40%;
     border: none;
     overflow: auto;
 }
 
 #popup_account_edit{
     display: none;
-    top: 66px;
-    height: 80%;
+    top: 50%;
+    height: 500px;
     position: absolute;
-    right: 18px;
     z-index: 1001;
+    left: 50%;
     width: 400px;
+    margin-left: -200px;
+    margin-top: -250px;
     border: none;
     overflow: auto;
     padding: 0;
@@ -1073,15 +1077,6 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 #main-header.introjs-fixParent{
     width: 100%;
 }
-
-/*#account_edit_form_wrapper .close{
-
-}*/
-
-#popup_account_edit{
-    position: fixed;
-}
-
 
 /*<!-- fix styles @TODO made favicon for mobile application banner -->*/
 #smartbanner .sb-icon{
