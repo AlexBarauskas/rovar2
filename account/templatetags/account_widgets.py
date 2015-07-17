@@ -50,6 +50,6 @@ def info_user_badges(context):
     badges = dict()
     if u:
         badges = {
-            "is_full_profile": u.is_full_profile(),
+            "is_full_profile": {'state': u.is_full_profile(), 'popup': "Заполните весь профиль для получения бэйджа!"},
         }
     return {'user': u, 'badges': badges}

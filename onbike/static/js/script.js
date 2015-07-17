@@ -14156,6 +14156,8 @@ $(function() {
     $('select').dropdown();
     $('.ui.radio.checkbox').checkbox();
 
+    $('.uipopup').popup();
+
     $('#info').click(function(e) {
       e.preventDefault();
       $('#info-iframe')
