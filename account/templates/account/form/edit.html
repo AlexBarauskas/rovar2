@@ -1,8 +1,4 @@
-<div id="account_edit_form_wrapper">
-    <div class="button_close"></div>
-    <div class="tcenter">
-    	<img src="http://api.adorable.io/avatars/70/{{user.get_full_name}}" alt="">
-    </div>
+<div id="account_edit_form_wrapper" class="clearfix">
     {# <div class="form-header">Данные пользователя</div> #}
     <div id="account_edit_form_errors"></div>
     <form class="ui form" action="{% url 'account_edit' %}" method="POST">
