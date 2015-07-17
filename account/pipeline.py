@@ -30,7 +30,7 @@ def save_profile(backend, user, response, *args, **kwargs):
     if backend.name == 'twitter':
         details = kwargs.get('details')
         user.first_name = details.get('first_name')
-        user.last_name = details.get('last_name')
+        user.last_name = details.get('last_name') if not user.last_name else user.last_name
         user.save()
     if backend.name == 'vkontakte':
         # @TODO найти у кого есть контактик и заполнить поля

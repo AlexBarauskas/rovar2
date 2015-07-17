@@ -59,7 +59,7 @@ def edit(request):
         form = UserCreationForm(instance=request.user)
     else:
         form = UserCreationForm(request.POST, instance=request.user)
-        if form.is_valid() and request.is_ajax():
+        if form.is_valid(): # and request.is_ajax()
             user = form.save()
             user = authenticate(username=user.username, password='')
             if user is not None:
@@ -69,5 +69,6 @@ def edit(request):
         else:
             data = json.dumps([[k, v] for k, v in form.errors.items()])
             return HttpResponseBadRequest(data, content_type='application/json')
-        return HttpResponse(data, content_type='application/json')
+        # return HttpResponse(data, content_type='application/json')
+        return HttpResponseRedirect("/")
     return render(request, 'account/form/edit.html', {'form': form,})
