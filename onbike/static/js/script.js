@@ -14157,6 +14157,7 @@ $(function() {
     $('.ui.radio.checkbox').checkbox();
 
     $('.uipopup').popup();
+    $('.ui.rating').rating();
 
     $('#info').click(function(e) {
       e.preventDefault();
