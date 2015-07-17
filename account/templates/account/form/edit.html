@@ -1,12 +1,15 @@
-<div id="account_edit_form_wrapper" class="main-panel-inner">
-    <div class="button_close">x</div>
+<div id="account_edit_form_wrapper">
+    <div class="button_close"></div>
+    <div class="tcenter">
+    	<img src="http://api.adorable.io/avatars/70/{{user.get_full_name}}" alt="">
+    </div>
     {# <div class="form-header">Данные пользователя</div> #}
     <div id="account_edit_form_errors"></div>
-    <form action="{% url 'account_edit' %}" method="POST">
+    <form class="ui form" action="{% url 'account_edit' %}" method="POST">
     	{% csrf_token %}
         {{ form.as_p }}
         <p class="tcenter">
-        	<input id="account_edit_submit" type="submit" class="btn success" value="Обновить"/>
+        	<input id="account_edit_submit" type="submit" class="ui button green" value="Обновить"/>
         </p>
     </form>
 </div>
