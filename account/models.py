@@ -9,6 +9,10 @@ ACCOUNT_BACKENDS = ((u'vk', u'ВКонтакте'),
                     (u'facebook', u'Facebook'),
                     )
 
+GENDER_CHOICES = (
+    (u'male', u'Мужской'),
+    (u'female', u'Женский'),
+)
 
 class UserManager(BaseUserManager):
     def create_user(self, email, username, password=None, **kwargs):
@@ -45,7 +49,7 @@ class User(AbstractBaseUser):
         null=True
     )
     img_url = models.URLField(null=True)
-    gender = models.CharField(verbose_name='Пол', max_length=10, blank=True, null=True)
+    gender = models.CharField(verbose_name='Пол', max_length=10, blank=True, null=True, choices=GENDER_CHOICES)
     phone = models.CharField(verbose_name='Телефон', max_length=255, unique=True, blank=True, null=True)
     address = models.CharField(verbose_name='Адрес', max_length=255, blank=True, null=True)
     bike = models.CharField(verbose_name='Байк', max_length=255, blank=True, null=True)
