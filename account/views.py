@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout as auth_logout, login, authenticate
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
 
-from onbike.decorators import render_to
+from annoying.decorators import render_to
 from social.backends.google import GooglePlusAuth
 from social.backends.utils import load_backends
 from social.backends.oauth import BaseOAuth1, BaseOAuth2
