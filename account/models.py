@@ -38,8 +38,8 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser):
-    first_name = models.CharField(verbose_name='Имя', max_length=255, blank=True)
-    last_name = models.CharField(verbose_name='Фамилия', max_length=255, blank=True)
+    first_name = models.CharField(verbose_name='Имя', max_length=255, blank=True, null=True)
+    last_name = models.CharField(verbose_name='Фамилия', max_length=255, blank=True, null=True)
     username = models.CharField(verbose_name='Псевдоним', max_length=255, unique=True)
     email = models.EmailField(
         verbose_name='Емайл',
