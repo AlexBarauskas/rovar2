@@ -385,11 +385,16 @@ var rovar = {
 	}else{
 	    description = data.description;
 	}
-	ratingcomment = "<span><a data-comment_id='"+data.id+"' id='get_comment"+data.id+"'' href='#'>Комментарии 10</a></span>";
+	ratingcomment = "<span><a data-comment_id='"+data.id+"' id='get_comment"+data.id+"'' href='#'>Комментарии 10</a></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class='ui star rating'></span>";
 	preview.append($("<p></p>").html(ratingcomment).addClass('description-ratingcomment'));
 	preview.append($("<p></p>").html(description).addClass('description-description'));
 	preview.append($("<p></p>").html(data.address).addClass('description-address'));
-
+	
+	$('.ui.rating').rating({
+		initialRating: 3,
+		maxRating: 5
+	});
+	
 	$("#get_comment"+data.id).click(function(e){
 		comments.init(data.id);
 		$("#comment_modal").modal({blurring: true}).modal("show");
