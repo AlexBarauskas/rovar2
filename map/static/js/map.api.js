@@ -20,6 +20,127 @@ o.Image.MAX_RESIZE_WIDTH = 10000;
 
 var __addClick;
 
+var debug = true;
+
+var comments = {
+   items : [],
+   setting : {
+      wrapper : "#comments",
+      labels : {
+         'reply': 'Ответить',
+         'say': 'Написать',
+         'add_comment': 'Добавить комментарий'
+      }
+   },
+   init: function(postID){
+      if (debug){console.log("init function");}
+      this.load(postID);
+   },
+   load: function(postID){
+      if (debug){console.log("load function");}
+      $(this.setting.wrapper).addClass("active").addClass("dimmer").html("<div class='ui text loader'>Сейчас все появится!:)</div>");
+      var request = $.ajax({
+        url: "/api/comments",
+        method: "GET",
+        data: {point_id : postID},
+        dataType: "json"
+      })
+      .done(function(data) {
+        comments.items = data;
+      	comments.rePaint();
+      })
+      .fail(function(jqXHR, textStatus) {
+        alert("Request failed: " + textStatus);
+        comments.items = [];
+      	comments.rePaint();
+      });
+   },
+   rePaint: function(){
+      if (debug){console.log("rePaint function");}      
+      $(this.setting.wrapper).removeClass("active").removeClass("dimmer").html("");
+      this.drawItems($(this.setting.wrapper), null);
+      $("#comment_modal").modal('refresh');
+   },
+   drawItems: function(wrapper, parent){
+      if (debug){console.log("drawItems function");}
+      console.log(this.items);
+      var if_there = false;
+      for (var i = 0; i < this.items.length; i++) {
+         current = this.items[i];
+         if (current.parent_id === parent){
+         	if_there = true;
+            this.drawItem(wrapper, current);
+         }
+      };
+      if (!if_there) { // Если вложенных комментов нет удалить враппер
+      	$(wrapper).remove();
+      };
+   },
+   drawItem: function (wrapper, item) {
+      if (debug){console.log("drawItem function");}
+      if (debug){console.log("drawItem: ", current.id);}
+
+      tpl = " \
+	      <div class='comment' id='comment-"+current.id+"'> \
+	        <a class='avatar'> \
+	          <img class='ui avatar image' src='http://api.adorable.io/avatars/70/"+current.username+"' alt=''> \
+	        </a> \
+	        <div class='content'> \
+	          <a class='author'>"+current.username+"</a> \
+	          <div class='metadata'> \
+	            <span class='date'>"+current.timestamp+"</span> \
+	          </div> \
+	          <div class='text'> \
+	            "+current.message+" \
+	          </div> \
+	          <div class='actions'> \
+	            <a class='reply'>Reply</a> \
+	          </div> \
+	          <div class='comments'></div> \
+	        </div> \
+	      </div>";
+
+	  $(wrapper).append(tpl);
+      this.drawItems($("#comment-"+current.id+" > .content > .comments"), current.id);
+   },
+   add_comment: function (message, parentID) {
+      if (debug){console.log("add_comment function");}
+      // var postID = $("#postID").attr( "id" );
+      // var request = $.ajax({
+      //   url: "/api/comments",
+      //   method: "POST",
+      //   data: {
+      //    postID : postID,
+      //    parentID : parentID,
+      //    message: message,
+      // },
+      //   dataType: "html"
+      // })
+      // .done(function(data) {
+      //   console.log(data);
+      //   this.items = data.items
+      //   this.draw();
+      // })
+      // .fail(function(jqXHR, textStatus) {
+      //   alert("Request failed: " + textStatus);
+      // });
+   },
+   show_form: function (parent_id){
+      if (debug){console.log("show_form function");}
+      this.hide_forms();
+      $("#reply-"+parent_id).before("<form class='comment_form'><textarea></textarea><br><a id='add_comment' data-id='"+parent_id+"' href='#'>"+this.setting.labels['add_comment']+"</a></form>")
+   },
+   hide_forms: function (){
+      if (debug){console.log("hide_forms function");}
+      $(".comment_form").remove();
+      $(".reply_button").show();
+   },
+   reply_button: function (button) {
+      if (debug){console.log("reply_button function");}
+      this.show_form(button.data('id'))
+      button.hide();
+   }
+};
 
 var rovar = {
     elements:{'points': {}, 'tracks': {}},
@@ -264,8 +385,15 @@ var rovar = {
 	}else{
 	    description = data.description;
 	}
+	ratingcomment = "<span><a data-comment_id='"+data.id+"' id='get_comment"+data.id+"'' href='#'>Комментарии 10</a></span>";
+	preview.append($("<p></p>").html(ratingcomment).addClass('description-ratingcomment'));
 	preview.append($("<p></p>").html(description).addClass('description-description'));
 	preview.append($("<p></p>").html(data.address).addClass('description-address'));
+
+	$("#get_comment"+data.id).click(function(e){
+		comments.init(data.id);
+		$("#comment_modal").modal({blurring: true}).modal("show");
+	});
 
 	if(data.phones){
         phones_list = data.phones.split(",");
