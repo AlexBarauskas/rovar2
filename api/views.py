@@ -521,3 +521,84 @@ def tracks(request):
         tracks = tracks[page * per_page:(page + 1) * per_page]
     tracks = [p.to_dict() for p in tracks]
     return _generate_response(request, tracks)
+
+
+def comments(request):
+    # @TODO после соглашения /api/comments вывести комменты
+    comment = [
+        {
+      "id": 1,
+      "username": "username1",
+      "is_auth": True,
+      "timestamp": "date1",
+      "message": "Тут большой комментарий1",
+      "parent_id": None,
+      },{
+      "id": 2,
+      "username": "username2",
+      "is_auth": True,
+      "timestamp": "date2",
+      "message": "Тут большой комментарий2",
+      "parent_id": 1
+        },{
+      "id": 6,
+      "username": "username6",
+      "is_auth": False,
+      "timestamp": "date6",
+      "message": "Тут большой комментарий6",
+      "parent_id": 1,
+      }, {
+      "id": 8,
+      "username": "username8",
+      "is_auth": True,
+      "timestamp": "date8",
+      "message": "Тут большой комментарий8",
+      "parent_id": 6,
+      }, {
+      "id": 9,
+      "username": "username9",
+      "is_auth": False,
+      "timestamp": "date9",
+      "message": "Тут большой комментарий9",
+      "parent_id": 6,
+      }, {
+      "id": 10,
+      "username": "username10",
+      "is_auth": True,
+      "timestamp": "date10",
+      "message": "Тут большой комментарий10",
+      "parent_id": 9,
+      }, {
+      "id": 7,
+      "username": "username7",
+      "is_auth": True,
+      "timestamp": "date7",
+      "message": "Тут большой комментарий7",
+      "parent_id": 2,
+      }, {
+      "id": 5,
+      "username": "username5",
+      "is_auth": False,
+      "timestamp": "date5",
+      "message": "Тут большой комментарий5",
+      "parent_id": 1,
+      }, {
+      "id": 3,
+      "username": "username3",
+      "is_auth": True,
+      "timestamp": "date3",
+      "message": "Тут большой комментарий3",
+      "parent_id": 1,
+      }, {
+      "id": 4,
+      "username": "username4",
+      "is_auth": True,
+      "timestamp": "date4",
+      "message": "Тут большой комментарий4",
+      "parent_id": None,
+      }
+    ]
+
+    # from time import sleep
+    # sleep(2)
+    return _generate_response(request, comment)
