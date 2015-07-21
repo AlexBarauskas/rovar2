@@ -17,6 +17,7 @@ from datetime import datetime
 
 from api.models import Application, Message, Track, Point, Type, Photo, Offer
 from map.models import Location
+from blog.models import Post, Comment
 #http://blogs.cs.st-andrews.ac.uk/jfdm/2013/04/04/documenting-python-using-doxygen/
 
 
@@ -149,6 +150,7 @@ def points(request):
     'uid': "GUM", <b>// - Идентификатор для ссылки</b>
     'type_slug': "parking", <b>// - Уникальный текстовый идентификатор типа к которому принадлежит точка.</b>
     'website': null,
+    'comments_count': количество комментариев,
     'color': "#cffcdf", <b>// - Цвет Маркера. В скором будущем будет удалено.</b>
     'marker': "/url/to/marker", <b>// - Маркер неактивного состояния. В скором будущем будет удалено.</b>
     'marker_active': "/url/to/marker_active", <b>// - Марке активного состояния. В скором будущем будет удалено.</b>
@@ -523,82 +525,104 @@ def tracks(request):
     return _generate_response(request, tracks)
 
 
+def __get_post(src_entry):
+    """
+        Функция возвращает инстанс Post соотвествующей модели Point или Track
+        Если его нет, то надо бы создать
+    """
+    if not src_entry.post:
+        entry = Post.objects.create(title=src_entry.name, text=src_entry.description)
+        src_entry.post = entry
+        src_entry.save()
+    return src_entry.post
+
+
+def __get_or_none(classmodel, **kwargs):
+    try:
+        return classmodel.objects.get(**kwargs)
+    except classmodel.DoesNotExist:
+        return None
+
+def __html_special_chars(text):
+    return text \
+            .replace(u"&", u"&amp;") \
+            .replace(u'"', u"&quot;") \
+            .replace(u"'", u"&#039;") \
+            .replace(u"<", u"&lt;") \
+            .replace(u">", u"&gt;")
+
+
 def comments(request):
-    # @TODO после соглашения /api/comments вывести комменты
-    comment = [
+    """
+    [point:point_id, :limit, :skip]/
+    -Получение информации о доступных маршрутах.
+    GET: http://onbike.by/api/comments?entry_type=<type>&entry_id=<id>&page=P&per_page=N
+
+    entry_type=<type> - тип сущности (Point|Track|Post)
+    entry_id=<id> - ID - сущности к которой отдать комментарии
+
+        comments = [
         {
-      "id": 1,
-      "username": "username1",
-      "is_auth": True,
-      "timestamp": "date1",
-      "message": "Тут большой комментарий1",
-      "parent_id": None,
-      },{
-      "id": 2,
-      "username": "username2",
-      "is_auth": True,
-      "timestamp": "date2",
-      "message": "Тут большой комментарий2",
-      "parent_id": 1
-        },{
-      "id": 6,
-      "username": "username6",
-      "is_auth": False,
-      "timestamp": "date6",
-      "message": "Тут большой комментарий6",
-      "parent_id": 1,
-      }, {
-      "id": 8,
-      "username": "username8",
-      "is_auth": True,
-      "timestamp": "date8",
-      "message": "Тут большой комментарий8",
-      "parent_id": 6,
-      }, {
-      "id": 9,
-      "username": "username9",
-      "is_auth": False,
-      "timestamp": "date9",
-      "message": "Тут большой комментарий9",
-      "parent_id": 6,
-      }, {
-      "id": 10,
-      "username": "username10",
-      "is_auth": True,
-      "timestamp": "date10",
-      "message": "Тут большой комментарий10",
-      "parent_id": 9,
-      }, {
-      "id": 7,
-      "username": "username7",
-      "is_auth": True,
-      "timestamp": "date7",
-      "message": "Тут большой комментарий7",
-      "parent_id": 2,
-      }, {
-      "id": 5,
-      "username": "username5",
-      "is_auth": False,
-      "timestamp": "date5",
-      "message": "Тут большой комментарий5",
-      "parent_id": 1,
-      }, {
-      "id": 3,
-      "username": "username3",
-      "is_auth": True,
-      "timestamp": "date3",
-      "message": "Тут большой комментарий3",
-      "parent_id": 1,
-      }, {
-      "id": 4,
-      "username": "username4",
-      "is_auth": True,
-      "timestamp": "date4",
-      "message": "Тут большой комментарий4",
-      "parent_id": None,
-      }
-    ]
+          "id": 1,
+          "username": "Admin",
+          "is_auth": True,
+          "timestamp": "date1",
+          "message": "Тут большой комментарий1",
+          "parent_id": None,
+          },
+        ]
+
+        Если комментариев нет то приходит:
+        {
+            empty : true
+        }
+    """
+
+    page = None
+    per_page = None
+    if 'page' in request.GET:
+        page = request.GET.get('page', 0)
+        try:
+            page = int(page)
+        except:
+            page = None
+    if page is not None:
+        per_page = request.GET.get('per_page', 10)
+        try:
+            per_page = int(per_page)
+        except:
+            per_page = 10
+
+    if 'entry_id' in request.GET:
+        entry_id = request.GET.get('entry_id')
+        try:
+            entry_id = int(entry_id)
+        except:
+            raise ValueError
+    else:
+        raise ValueError
+
+    if 'entry_type' in request.GET:
+        entry_type = request.GET.get('entry_type')
+        if entry_type == 'Point':
+            src_entry = Point.objects.get(pk=entry_id)
+            entry = __get_post(src_entry)
+        elif entry_type == 'Track':
+            src_entry = Track.objects.get(pk=entry_id)
+            entry = __get_post(src_entry)
+        elif entry_type == 'Post':
+            entry = Post.objects.get(pk=entry_id)
+    else:
+        raise ValueError
+
+    comments = Comment.objects.filter(post=entry)
+    if not comments:
+        return _generate_response(request, {"empty": True})
 
     # from time import sleep
     # sleep(2)
-    return _generate_response(request, comment)
+
+    lang_code = translation.get_language()
+    comments_to_dict = [comment.to_dict(lang=lang_code) for comment in comments]
+    return _generate_response(request, comments_to_dict)
+
