@@ -21,4 +21,5 @@ urlpatterns = patterns(
     url(r'^messages/read$', message_read, name="api_message_read"),
 
     url(r'^comments$', comments, name="api_get_comments"),
+    url(r'^comment/add$', add_comment, name="api_add_comment"),
     )
