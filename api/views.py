@@ -626,3 +626,85 @@ def comments(request):
     comments_to_dict = [comment.to_dict(lang=lang_code) for comment in comments]
     return _generate_response(request, comments_to_dict)
 
+
+@csrf_exempt
+def add_comment(request):
+    '''-Добавление комментария.
+    POST: http://onbike.by/api/comment/add
+--Параметры:
+
+--Коды ошибок:
+1 - Неверный тип запроса.
+2 - Клиент не авторизован.
+
+--Возвращаемый json:
+{'success': false,
+'error_code': 1,
+'message': "Error message."
+}
+В случае успеха:
+{'success': true}
+'''
+    # check request type
+    if request.method != 'POST':
+        return _generate_response(request,
+                                  {'success': False,
+                                   'error_code': 1,
+                                   'message': 'Incorrect method.'})
+    try:
+        print request.POST
+    except Exception, e:
+        print "Error POST"
+        print e
+
+    if not request.user.is_authenticated:
+        return _generate_response(request, {'success': False,
+                                            'error_code': 2,
+                                            'message': 'Your client is not authorized.'})
+
+    if 'input_hidden_ENTRYID' in request.POST:
+        entry_id = request.POST.get('input_hidden_ENTRYID')
+        try:
+            entry_id = int(entry_id)
+        except:
+            raise ValueError
+    else:
+        raise ValueError
+
+    if 'input_hidden_ENTRYTYPE' in request.POST:
+        entry_type = request.POST.get('input_hidden_ENTRYTYPE')
+        if entry_type == 'Point':
+            src_entry = Point.objects.get(pk=entry_id)
+            entry = __get_post(src_entry)
+        elif entry_type == 'Track':
+            src_entry = Track.objects.get(pk=entry_id)
+            entry = __get_post(src_entry)
+        elif entry_type == 'Post':
+            entry = Post.objects.get(pk=entry_id)
+    else:
+        raise ValueError
+
+    if 'input_hidden_PARENTID' in request.POST:
+        parent_id = request.POST.get('input_hidden_PARENTID')
+        try:
+            parent_id = int(parent_id)
+        except:
+            parent_id = None
+
+    if 'message' in request.POST:
+        try:
+            text = __html_special_chars(request.POST.get('message'))
+        except:
+            print "Error POST5"
+            raise ValueError
+
+    comment = Comment(
+        owner=request.user,
+        post=entry,
+        parent= __get_or_none(Comment, pk=parent_id),
+        text=text
+    )
+
+    comment.save()
+
+    return _generate_response(request, {'success': True, 'comment': comment.to_dict()})
