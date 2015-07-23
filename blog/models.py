@@ -38,3 +38,24 @@ class Comment(models.Model):
     parent = models.ForeignKey('self', null=True)
     created = models.DateTimeField(auto_now_add=True)
     text = models.TextField(u'Комментарий', default='')
+
+    def to_dict(self, lang=None):
+        #translate = self.get_translation_obj(lang=lang)
+        import time
+        timestamp = time.mktime(self.created.timetuple())
+
+        comment = {'id': self.pk,
+                   'username': self.owner.username,
+                   'is_auth': True, # Можно ли ответить? Пока да и всем
+                   'message': self.text,
+                   'timestamp': timestamp,
+                   'status': 'success',
+        }
+
+        if self.parent:
+            comment['parent_id'] = self.parent.pk
+        else:
+            comment['parent_id'] = None
+
+        return comment
+
