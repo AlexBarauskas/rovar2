@@ -361,6 +361,10 @@ class Point(models.Model):
             point['phones'] = self.phones
         else:
             point['phones'] = ''
+        if self.post:
+            point['comments_count'] = self.post.comment_set.count()
+        else:
+            point['comments_count'] = 0
         ##DEPRECATE
         if self.type.image:
             point['marker'] = self.type.image.url
