@@ -32,21 +32,32 @@ var comments = {
          'add_comment': 'Добавить комментарий'
       }
    },
-   init: function(postID){
+   init: function(entryID, entryTYPE){
       if (debug){console.log("init function");}
-      this.load(postID);
+      this.load(entryID, entryTYPE);
    },
-   load: function(postID){
+   load: function(entryID, entryTYPE){
       if (debug){console.log("load function");}
       $(this.setting.wrapper).addClass("active").addClass("dimmer").html("<div class='ui text loader'>Сейчас все появится!:)</div>");
+      $("#input_hidden_ENTRYID").val(entryID);
+      $("#input_hidden_ENTRYTYPE").val(entryTYPE);
       var request = $.ajax({
         url: "/api/comments",
         method: "GET",
-        data: {point_id : postID},
+        data: {
+            entry_id : entryID,
+            entry_type: entryTYPE,
+//          page: 0,
+            per_page: 100
+        },
         dataType: "json"
       })
       .done(function(data) {
-        comments.items = data;
+        if (data.empty == true){
+            comments.items = [];
+        }else{
+            comments.items = data;
+        }
       	comments.rePaint();
       })
       .fail(function(jqXHR, textStatus) {
@@ -55,10 +66,33 @@ var comments = {
       	comments.rePaint();
       });
    },
+   reBind: function(){
+      $(".comments .actions .reply").click(function(e){
+          e.preventDefault();
+
+          //Показать кроме активного
+          $(".actions .reply").show();
+          $(this).hide();
+          var parent_id = $(this).data("commentid");
+          $("#input_hidden_PARENTID").val(parent_id);
+          $(this).after($("#add-comment-form"));
+      });
+
+      $(".comments .comment .author").click(function(e){
+          e.preventDefault();
+          var $comment = $(this).closest(".comment");
+          var username = $comment.children(".content").children(".author").html()
+          var msg = $("#textarea_message").val();
+          $("#textarea_message").val("@"+username+" "+msg);
+      });
+   },
    rePaint: function(){
       if (debug){console.log("rePaint function");}      
       $(this.setting.wrapper).removeClass("active").removeClass("dimmer").html("");
+      $("#pre-comments-form").after($("#add-comment-form"));
+      $("#pre-comments-form").children(".reply").hide();
       this.drawItems($(this.setting.wrapper), null);
+      this.reBind();
       $("#comment_modal").modal('refresh');
    },
    drawItems: function(wrapper, parent){
@@ -72,7 +106,7 @@ var comments = {
             this.drawItem(wrapper, current);
          }
       };
-      if (!if_there) { // Если вложенных комментов нет удалить враппер
+      if (parent && !if_there) { // Если вложенных комментов нет удалить враппер
       	$(wrapper).remove();
       };
    },
@@ -88,13 +122,14 @@ var comments = {
 	        <div class='content'> \
 	          <a class='author'>"+current.username+"</a> \
 	          <div class='metadata'> \
-	            <span class='date'>"+current.timestamp+"</span> \
+	            <span class='date'>"+moment(current.timestamp*1000, "x").fromNow()+"</span> \
 	          </div> \
 	          <div class='text'> \
 	            "+current.message+" \
 	          </div> \
 	          <div class='actions'> \
-	            <a class='reply'>Reply</a> \
+	            <a class='reply' data-commentid='"+current.id+"'> \
+	            "+this.setting.labels['reply']+"</a> \
 	          </div> \
 	          <div class='comments'></div> \
 	        </div> \
@@ -103,27 +138,18 @@ var comments = {
 	  $(wrapper).append(tpl);
       this.drawItems($("#comment-"+current.id+" > .content > .comments"), current.id);
    },
-   add_comment: function (message, parentID) {
+   add_comment: function (data) {
       if (debug){console.log("add_comment function");}
-      // var postID = $("#postID").attr( "id" );
-      // var request = $.ajax({
-      //   url: "/api/comments",
-      //   method: "POST",
-      //   data: {
-      //    postID : postID,
-      //    parentID : parentID,
-      //    message: message,
-      // },
-      //   dataType: "html"
-      // })
-      // .done(function(data) {
-      //   console.log(data);
-      //   this.items = data.items
-      //   this.draw();
-      // })
-      // .fail(function(jqXHR, textStatus) {
-      //   alert("Request failed: " + textStatus);
-      // });
+       console.log(data);
+      if(data.success){
+        $("#textarea_message").val("");
+        $("#input_hidden_PARENTID").val("");
+        comments.items.push(data.comment);
+      	comments.rePaint();
+        this.reBind();
+      }else{
+        $("#ajax-errors").html($("<p class=\"error alert\">").text(this.__errors[data.error_code] || this.messages['unknown error']));
+	  }
    },
    show_form: function (parent_id){
       if (debug){console.log("show_form function");}
@@ -385,7 +411,14 @@ var rovar = {
 	}else{
 	    description = data.description;
 	}
-	ratingcomment = "<span><a data-comment_id='"+data.id+"' id='get_comment"+data.id+"'' href='#'>Комментарии 10</a></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class='ui star rating'></span>";
+
+    var comment_string;
+    if (data.comments_count > 0){
+        comment_string = "Отзывов: "+ data.comments_count;
+    }else{
+        comment_string = "Оставить первый отзыв";
+    }
+	ratingcomment = "<span><a data-comment_id='"+data.id+"' id='get_comment"+data.id+"'' href='#'>"+comment_string+"</a></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class='ui star rating'></span>";
 	preview.append($("<p></p>").html(ratingcomment).addClass('description-ratingcomment'));
 	preview.append($("<p></p>").html(description).addClass('description-description'));
 	preview.append($("<p></p>").html(data.address).addClass('description-address'));
@@ -396,7 +429,7 @@ var rovar = {
 	});
 	
 	$("#get_comment"+data.id).click(function(e){
-		comments.init(data.id);
+		comments.init(data.id, "Point"); // @TODO научится принимать тип entry из api
 		$("#comment_modal").modal({blurring: true}).modal("show");
 	});
 
@@ -978,6 +1011,10 @@ $(function(){
 
   $("#add-point-form").ajaxForm(function(data){
   	rovar.callbackAddPoint(data);
+  });
+
+  $("#add-comment-form").ajaxForm(function(data){
+  	comments.add_comment(data);
   });
 
   $("#type-btns li").click(function(ev){
