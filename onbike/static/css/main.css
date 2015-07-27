@@ -873,6 +873,31 @@ label{
     margin-top: 8px;
 }
 
+#pre-comments-form a.reply{
+    cursor: pointer;
+    padding: 15px 0 5px 10px;
+    font-size: 14px;
+    display: inline-block;
+}
+
+#pre-comments-form form.reply{
+    margin-top: 1em;
+}
+
+.popuplogin.socials{
+}
+
+.popuplogin.socials li{
+    display: inline-block;
+    line-height: 48px;
+}
+
+.popuplogin.socials img{
+    float: right;
+    line-height: 48px;
+    margin: 8px 0 0 8px;
+}
+
 #url_account_edit{
     margin-right: 10px;
 }
