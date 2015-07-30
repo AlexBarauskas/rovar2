@@ -1,6 +1,8 @@
 {"js" : {"in": [  "onbike/static/js/jquery.min.js",
                 "onbike/static/js/jquery.form.js",
                 "onbike/static/js/fotorama.js",
+                "onbike/static/js/moment.min.js",
+                "onbike/static/js/moment-with-locales.min.js",
                 "onbike/static/js/jquery.smartbanner.min.js",
                 "onbike/static/js/jquery.inputmask.js",
                 "onbike/static/js/jquery.inputmask.extensions.js",
