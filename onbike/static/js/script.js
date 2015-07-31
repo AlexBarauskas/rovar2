@@ -14135,7 +14135,10 @@ $(function() {
 
     var _phoneMask = "+999 (99) 999-99-99";
     var _phoneMaskList = [_phoneMask];
-  
+
+    var now = moment();
+    moment.lang('ru');
+
     $.smartbanner({
       title: "onbike.by",
       author: "Велосипедная карта города",
