@@ -41,8 +41,8 @@ class Comment(models.Model):
 
     def to_dict(self, lang=None):
         #translate = self.get_translation_obj(lang=lang)
-        import time
-        timestamp = time.mktime(self.created.timetuple())
+        import calendar
+        timestamp = calendar.timegm(self.created.timetuple())
 
         comment = {'id': self.pk,
                    'username': self.owner.username,
