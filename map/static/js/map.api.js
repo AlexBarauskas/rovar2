@@ -85,6 +85,18 @@ var comments = {
           var msg = $("#textarea_message").val();
           $("#textarea_message").val("@"+username+" "+msg);
       });
+
+        function repeatdata(){
+            console.log($(".repeatdata"));
+            $(".repeatdata").each(function(i, val){
+                var timestamp = parseInt($(this).data("timestamp"))*1000;
+                var momentjs = moment(timestamp, "x").startOf('second').fromNow();
+                $(this).html(momentjs);
+            })
+        }
+        // Каждые 10 секунд обновлять время на комментариях
+        // @TODO при удалении модального окна таймер остается:) так что память может потечь
+        setInterval(repeatdata, 10000);
    },
    rePaint: function(){
       if (debug){console.log("rePaint function");}      
@@ -122,7 +134,7 @@ var comments = {
 	        <div class='content'> \
 	          <a class='author'>"+current.username+"</a> \
 	          <div class='metadata'> \
-	            <span class='date'>"+moment(current.timestamp*1000, "x").fromNow()+"</span> \
+	            <span class='date repeatdata' data-timestamp='"+current.timestamp+"'>"+moment(current.timestamp*1000, "x").startOf('second').fromNow()+"</span> \
 	          </div> \
 	          <div class='text'> \
 	            "+current.message+" \
