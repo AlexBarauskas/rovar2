@@ -451,9 +451,9 @@ i.icon{
     position: absolute;
     left: 50%;
     z-index: 1001;
-    width: 80%;
-    max-width: 1200px;
-    margin-left: -40%;
+    /*width: 80%;*/
+    /*max-width: 1200px;*/
+    /*margin-left: -40%;*/
     border: none;
     overflow: auto;
 }
