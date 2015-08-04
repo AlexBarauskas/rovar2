@@ -13,7 +13,9 @@ var rovar_transplate = {
 	'required image' : "Вы не выбрали изображение или оно не верного формата.",
 	'invalide url' : "Не верный URL для поля 'Cайт'.",
 	'feedback email' : "Введите email для обратной связи.",
-	'description length' : "\"Описание\" не должна превышать 256 символов."
+	'description length' : "\"Описание\" не должна превышать 256 символов.",
+    'comment first' : "Оставить первый отзыв",
+    'comment number' : "Отзывов: "
     },
 
     be : {
@@ -30,7 +32,9 @@ var rovar_transplate = {
 	'required image' : "Вы не абралі фотаздымак або ён не дакладнага фармату.",
 	'invalide url' : "Не дакладны URL для поля 'Cайт'.",
 	'feedback email' : "Пакіньце email для зваротнай сувязі.",
-	'description length' : "\"Описание\" не должна превышать 256 символов."
+	'description length' : "\"Описание\" не должна превышать 256 символов.",
+    'comment first' : "Оставить первый отзыв",
+    'comment number' : "Отзывов: "
     },
 
     en : {
@@ -47,7 +51,9 @@ var rovar_transplate = {
 	'required image' : "Вы не выбрали изображение или оно не верного формата.",
 	'invalide url' : "Не верный URL для поля 'Cайт'.",
 	'feedback email' : "Введите email для обратной связи.", 
-	'description length' : "\"Описание\" не должна превышать 256 символов."
+	'description length' : "\"Описание\" не должна превышать 256 символов.",
+    'comment first' : "Оставить первый отзыв",
+    'comment number' : "Отзывов: "
     }
 
 };
