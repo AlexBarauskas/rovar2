@@ -99,10 +99,15 @@ var comments = {
         setInterval(repeatdata, 10000);
    },
    rePaint: function(){
-      if (debug){console.log("rePaint function");}      
-      $(this.setting.wrapper).removeClass("active").removeClass("dimmer").html("");
+      if (debug){console.log("rePaint function");}
+      if (this.items.length > 0){
+          $(".description-ratingcomment span a").html(rovar.messages['comment number']+ this.items.length)
+      }else{
+          $(".description-ratingcomment span a").html(rovar.messages['comment first'])
+      }
       $("#pre-comments-form").after($("#add-comment-form"));
       $("#pre-comments-form").children(".reply").hide();
+      $(this.setting.wrapper).removeClass("active").removeClass("dimmer").html("");
       this.drawItems($(this.setting.wrapper), null);
       this.reBind();
       $("#comment_modal").modal('refresh');
@@ -156,8 +161,8 @@ var comments = {
       if(data.success){
         $("#textarea_message").val("");
         $("#input_hidden_PARENTID").val("");
-        comments.items.push(data.comment);
-      	comments.rePaint();
+        this.items.push(data.comment);
+      	this.rePaint();
         this.reBind();
       }else{
         $("#ajax-errors").html($("<p class=\"error alert\">").text(this.__errors[data.error_code] || this.messages['unknown error']));
@@ -201,9 +206,8 @@ var rovar = {
 	'required image' : "Вы не выбрали изображение или оно не верного формата.",
 	'invalide url' : "Не верный URL для поля 'Cайт'.",
 	'feedback email' : "Введите email для обратной связи.",
-	'description length' : "\"Описание\" не должно превышать 256 символов."
+	'description length' : "\"Описание\" не должно превышать 256 символов.",
     },
-
 
     _visible_pins : function(){
     },
@@ -426,10 +430,11 @@ var rovar = {
 
     var comment_string;
     if (data.comments_count > 0){
-        comment_string = "Отзывов: "+ data.comments_count;
+        comment_string = this.messages['comment number']+ data.comments_count;
     }else{
-        comment_string = "Оставить первый отзыв";
+        comment_string = this.messages['comment first'];
     }
+
 	ratingcomment = "<span><a data-comment_id='"+data.id+"' id='get_comment"+data.id+"'' href='#'>"+comment_string+"</a></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class='ui star rating'></span>";
 	preview.append($("<p></p>").html(ratingcomment).addClass('description-ratingcomment'));
 	preview.append($("<p></p>").html(description).addClass('description-description'));
