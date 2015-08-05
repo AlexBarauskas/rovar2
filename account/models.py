@@ -115,3 +115,11 @@ class Author(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Rating(models.Model):
+    value = models.IntegerField(default=0)
+    owner = models.ForeignKey(User, related_name="ratings")
+
+    def __unicode__(self):
+        return "%s %s" % (self.owner, str(self.value))
