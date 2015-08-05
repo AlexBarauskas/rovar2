@@ -2,7 +2,7 @@
 
 from django.contrib import admin
 
-from account.models import Author, User
+from account.models import Author, User, Rating
 from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin
 
@@ -30,6 +30,7 @@ class MyUserAdmin(UserAdmin):
     ordering = ('email',)
     filter_horizontal = ()
 
+admin.site.register(Rating)
 admin.site.register(User, MyUserAdmin)
 admin.site.register(Author, AuthorAdmin)
 admin.site.unregister(Group)
