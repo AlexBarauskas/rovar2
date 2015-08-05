@@ -22,4 +22,6 @@ urlpatterns = patterns(
 
     url(r'^comments$', comments, name="api_get_comments"),
     url(r'^comment/add$', add_comment, name="api_add_comment"),
+
+    url(r'^ratings$', ratings, name="api_get_ratings"),
     )
