@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-from account.models import User
+from account.models import User, Rating
 
 
 class PostManager(models.Manager):
@@ -25,6 +25,8 @@ class Post(models.Model):
     title = models.CharField(u'Заголовок', max_length=128, null=False)
     text = models.TextField(u'Пост', default='')
     created = models.DateTimeField(auto_now_add=True)
+    ratings = models.ManyToManyField(Rating, related_name="post_ratings")
+    rating = models.IntegerField(default=0)
 
     def __unicode__(self):
         return self.title
@@ -33,7 +35,7 @@ class Post(models.Model):
 
 
 class Comment(models.Model):
-    owner = models.ForeignKey(User, verbose_name='comments')
+    owner = models.ForeignKey(User, verbose_name='comments', related_name='comments')
     post = models.ForeignKey(Post)
     parent = models.ForeignKey('self', null=True)
     created = models.DateTimeField(auto_now_add=True)
