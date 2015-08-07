@@ -18,6 +18,7 @@ from datetime import datetime
 from api.models import Application, Message, Track, Point, Type, Photo, Offer
 from map.models import Location
 from blog.models import Post, Comment
+from account.models import Rating
 #http://blogs.cs.st-andrews.ac.uk/jfdm/2013/04/04/documenting-python-using-doxygen/
 
 
@@ -708,3 +709,119 @@ def add_comment(request):
     comment.save()
 
     return _generate_response(request, {'success': True, 'comment': comment.to_dict()})
+
+
+
+@csrf_exempt
+def ratings(request):
+    """
+    [point:point_id]/
+    -Получение информации о рейтинге точки.
+    GET: http://onbike.by/api/ratings?entry_type=<type>&entry_id=<id>
+
+    entry_type=<type> - тип сущности (Point|Track|Post)
+    entry_id=<id> - ID - сущности к которой отдать комментарии
+
+        ratings = [
+        {
+          "entry_id": <id>,
+          "entry_type": <type>,
+          "initialRating": int = sum/count,
+          "maxRating": int = 5,
+          },
+        ]
+
+    - Обновление рейтинга точки.
+    POST: http://onbike.by/api/ratings
+
+    entry_type=<type>
+    entry_id=<id>
+    rating=<value>
+
+    """
+
+    MAX_RATING = 5
+
+    def getpost_entry(REQUEST_TYPE):
+        if REQUEST_TYPE:
+            if 'entry_id' in REQUEST_TYPE:
+                entry_id = REQUEST_TYPE.get('entry_id')
+                try:
+                    entry_id = int(entry_id)
+                except:
+                    raise ValueError
+            else:
+                raise ValueError
+
+            if 'entry_type' in REQUEST_TYPE:
+                entry_type = REQUEST_TYPE.get('entry_type')
+                if entry_type == 'Point':
+                    entry = Point.objects.get(pk=entry_id)
+                elif entry_type == 'Track':
+                    entry = Track.objects.get(pk=entry_id)
+                elif entry_type == 'Post':
+                    entry = Post.objects.get(pk=entry_id)
+            else:
+                raise ValueError
+
+            return entry, entry_id, entry_type
+
+    # Если значения пришли из GET
+    if request.GET:
+        entry, entry_id, entry_type = getpost_entry(request.GET)
+
+    # Если значения пришли из POST
+    if request.POST and request.user:
+        entry, entry_id, entry_type = getpost_entry(request.POST)
+
+        if (entry and entry_id and entry_type):
+            if 'value' in request.POST:
+                request_value = request.POST.get('value')
+                try:
+                    request_value = int(request_value)
+                except:
+                    raise ValueError
+            else:
+                raise ValueError
+
+            ratings = entry.ratings.all()
+            current_rating = None
+
+            # Поиск хозяина оценки, если он уже ставил
+            if ratings:
+                for r in ratings:
+                    if request.user == r.owner:
+                        current_rating = r
+
+            if not current_rating:
+                # Если не нашли, то создадим новый
+                current_rating = Rating(owner=request.user, value=request_value)
+                current_rating.save()
+                # Добавим к текущей сущности новый рейтинг
+                entry.ratings.add(current_rating)
+            else:
+                # Иначе обновим на всякий случай новый
+                # Предварительно сравним, мало ли, чтоб лишний раз одно и тоже не писать
+                if not current_rating.value == request_value:
+                    current_rating.value = request_value
+                    current_rating.save()
+
+
+            ratings = entry.ratings.all()
+
+            sum_ratings = sum([rating.value for rating in ratings])
+            len_ratings = len(ratings)
+
+            entry.rating = int(sum_ratings / len_ratings)
+            entry.save()
+        else:
+            print "Login required for request.POST"
+            raise ValueError
+
+    return _generate_response(request, {
+        "entry_id": entry_id,
+        "entry_type": entry_type,
+        "initialRating": entry.rating,
+        "maxRating": MAX_RATING
+    })
+
