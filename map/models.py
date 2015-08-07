@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-from account.models import User
 from django.template.loader import render_to_string
 from django.conf import settings
 from django.core.urlresolvers import reverse
 
-from blog.models import Post
 import json
 import re
 from math import sqrt
 from datetime import datetime
 import urllib
 
+from blog.models import Post
+from account.models import User, Rating
 from map.translit import transliterate
 
 OBJ_CHOICES = (('t', u'Маршрут'),
@@ -137,6 +137,8 @@ class Track(models.Model):
     video = models.TextField(u'Ссылка на видео', default='', blank=True)
     created = models.DateTimeField(auto_now_add=True)
     post = models.OneToOneField(Post, null=True)
+    ratings = models.ManyToManyField(Rating, related_name="track_ratings")
+    rating = models.IntegerField(default=0)
     duration = models.PositiveIntegerField(u'Длительность',null=True, blank=True)
     uid = models.CharField(max_length=16, null=True)
     color = models.CharField(u'Цвет', max_length=7, default="#0000FF")
@@ -277,6 +279,8 @@ class Point(models.Model):
     # ALTER TABLE map_point ADD "last_update" timestamp with time zone;
     
     post = models.OneToOneField(Post, null=True)
+    ratings = models.ManyToManyField(Rating, related_name="point_ratings")
+    rating = models.IntegerField(default=0)
     uid = models.CharField(max_length=24, null=True, blank=True)
 
     objects = PointManager()
