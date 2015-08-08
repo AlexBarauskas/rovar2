@@ -439,13 +439,25 @@ var rovar = {
 	preview.append($("<p></p>").html(ratingcomment).addClass('description-ratingcomment'));
 	preview.append($("<p></p>").html(description).addClass('description-description'));
 	preview.append($("<p></p>").html(data.address).addClass('description-address'));
-	
-	$('.ui.rating').rating({
-		initialRating: 3,
-		maxRating: 5
-	});
-	
-	$("#get_comment"+data.id).click(function(e){
+
+        var entryID = data.id; // currentPoint.id
+        var rating_get = $.ajax({
+            url: "/api/ratings",
+            method: "GET",
+            data: {
+                entry_id: entryID,
+                entry_type: "Point" // @TODO научиться принимать разные сущности
+            },
+            dataType: "json"
+        })
+            .done(function (data) {
+                console.log(data);
+            })
+            .fail(function (jqXHR, textStatus) {
+                alert("Request failed: " + textStatus);
+            });
+
+        $("#get_comment"+data.id).click(function(e){
 		comments.init(data.id, "Point"); // @TODO научится принимать тип entry из api
 		$("#comment_modal").modal({blurring: true}).modal("show");
 	});
