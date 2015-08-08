@@ -451,7 +451,38 @@ var rovar = {
             dataType: "json"
         })
             .done(function (data) {
-                console.log(data);
+                var initialRating = data.initialRating, maxRating = data.maxRating;
+                $('.ui.rating').rating({
+                    initialRating: initialRating,
+                    maxRating: maxRating,
+                    onRate: function (value) {
+                        var $this = $(this);
+                        //Проверка на инициализацию
+                        //Если ещё не установлен флаг
+                        if ($this.hasClass('initial'+entryID)) {
+
+                            var rating_post = $.ajax({
+                                url: "/api/ratings",
+                                type: "POST",
+                                data: {
+                                    "entry_id": entryID,
+                                    "entry_type": "Point", // @TODO научиться принимать разные сущности
+                                    "value": value
+                                },
+                                dataType: "json"
+                            })
+                                .done(function (data) {
+                                    alert("Cпасибо, ваш голос учтён!")
+                                })
+                                .fail(function (jqXHR, textStatus) {
+                                    alert("Request failed: " + textStatus);
+                                });
+                        } else {
+                            $this.addClass('initial'+entryID)
+                        }
+                    }
+                });
+
             })
             .fail(function (jqXHR, textStatus) {
                 alert("Request failed: " + textStatus);
