@@ -452,12 +452,10 @@ var rovar = {
         })
             .done(function (data) {
                 var initialRating = data.initialRating, maxRating = data.maxRating;
-                $('.ui.rating').rating({
-                    initialRating: initialRating,
-                    maxRating: maxRating
-                });
                 if (data.is_auth) {
                     $('.ui.rating').rating({
+                        initialRating: initialRating,
+                        maxRating: maxRating,
                         onRate: function (value) {
                             var $this = $(this);
                             //Проверка на инициализацию
@@ -486,7 +484,10 @@ var rovar = {
                         }
                     });
                 } else {
-                    $('.ui.rating').rating('disable');
+                    $('.ui.rating').rating({
+                        initialRating: initialRating,
+                        maxRating: maxRating
+                    }).rating('disable');
                 }
             })
             .fail(function (jqXHR, textStatus) {
