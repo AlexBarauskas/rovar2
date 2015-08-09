@@ -728,6 +728,7 @@ def ratings(request):
           "entry_type": <type>,
           "initialRating": int = sum/count,
           "maxRating": int = 5,
+          "is_auth": true/false,
           },
         ]
 
@@ -822,6 +823,6 @@ def ratings(request):
         "entry_id": entry_id,
         "entry_type": entry_type,
         "initialRating": entry.rating,
-        "maxRating": MAX_RATING
+        "maxRating": MAX_RATING,
+        "is_auth": request.user.is_authenticated()
     })
-
