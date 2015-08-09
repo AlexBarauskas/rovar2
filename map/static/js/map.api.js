@@ -435,10 +435,10 @@ var rovar = {
         comment_string = this.messages['comment first'];
     }
 
-	ratingcomment = "<span><a data-comment_id='"+data.id+"' id='get_comment"+data.id+"'' href='#'>"+comment_string+"</a></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class='ui star rating'></span>";
-	preview.append($("<p></p>").html(ratingcomment).addClass('description-ratingcomment'));
-	preview.append($("<p></p>").html(description).addClass('description-description'));
-	preview.append($("<p></p>").html(data.address).addClass('description-address'));
+        ratingcomment = "<span><a data-comment_id='" + data.id + "' id='get_comment" + data.id + "'' href='#'>" + comment_string + "</a></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class='ui star rating'></span>";
+        preview.append($("<p></p>").html(ratingcomment).addClass('description-ratingcomment'));
+        preview.append($("<p></p>").html(description).addClass('description-description'));
+        preview.append($("<p></p>").html(data.address).addClass('description-address'));
 
         var entryID = data.id; // currentPoint.id
         var rating_get = $.ajax({
@@ -454,54 +454,60 @@ var rovar = {
                 var initialRating = data.initialRating, maxRating = data.maxRating;
                 $('.ui.rating').rating({
                     initialRating: initialRating,
-                    maxRating: maxRating,
-                    onRate: function (value) {
-                        var $this = $(this);
-                        //Проверка на инициализацию
-                        //Если ещё не установлен флаг
-                        if ($this.hasClass('initial'+entryID)) {
-
-                            var rating_post = $.ajax({
-                                url: "/api/ratings",
-                                type: "POST",
-                                data: {
-                                    "entry_id": entryID,
-                                    "entry_type": "Point", // @TODO научиться принимать разные сущности
-                                    "value": value
-                                },
-                                dataType: "json"
-                            })
-                                .done(function (data) {
-                                    alert("Cпасибо, ваш голос учтён!")
-                                })
-                                .fail(function (jqXHR, textStatus) {
-                                    alert("Request failed: " + textStatus);
-                                });
-                        } else {
-                            $this.addClass('initial'+entryID)
-                        }
-                    }
+                    maxRating: maxRating
                 });
+                if (data.is_auth) {
+                    $('.ui.rating').rating({
+                        onRate: function (value) {
+                            var $this = $(this);
+                            //Проверка на инициализацию
+                            //Если ещё не установлен флаг
+                            if ($this.hasClass('initial' + entryID)) {
 
+                                var rating_post = $.ajax({
+                                    url: "/api/ratings",
+                                    type: "POST",
+                                    data: {
+                                        "entry_id": entryID,
+                                        "entry_type": "Point", // @TODO научиться принимать разные сущности
+                                        "value": value
+                                    },
+                                    dataType: "json"
+                                })
+                                    .done(function (data) {
+                                        alert("Cпасибо, ваш голос учтён!")
+                                    })
+                                    .fail(function (jqXHR, textStatus) {
+                                        alert("Request failed: " + textStatus);
+                                    });
+                            } else {
+                                $this.addClass('initial' + entryID)
+                            }
+                        }
+                    });
+                } else {
+                    $('.ui.rating').rating('disable');
+                }
             })
             .fail(function (jqXHR, textStatus) {
                 alert("Request failed: " + textStatus);
             });
 
-        $("#get_comment"+data.id).click(function(e){
-		comments.init(data.id, "Point"); // @TODO научится принимать тип entry из api
-		$("#comment_modal").modal({blurring: true}).modal("show");
-	});
+        $("#get_comment" + data.id).click(function (e) {
+            comments.init(data.id, "Point"); // @TODO научится принимать тип entry из api
+            $("#comment_modal").modal({blurring: true}).modal("show");
+        });
 
-	if(data.phones){
-        phones_list = data.phones.split(",");
-	    preview.append($("<p></p>").addClass('description-phones'));
-        for (var i = phones_list.length - 1; i >= 0; i--) {
-        	$(".description-phones").append($("<p></p>").html(phones_list[i]));
-        };
-    }
+        if (data.phones) {
+            phones_list = data.phones.split(",");
+            preview.append($("<p></p>").addClass('description-phones'));
+            for (var i = phones_list.length - 1; i >= 0; i--) {
+                $(".description-phones").append($("<p></p>").html(phones_list[i]));
+            }
+            ;
+        }
 
-	if(typeof __editPointLink != "undefined" &&  __editPointLink != ""){
+    if(typeof __editPointLink != "undefined" &&  __editPointLink != ""){
 	    var edit_link = __editPointLink.replace("<%id%>", data.id);
 	    $('<p>').append($('<a>').attr('href', edit_link)
 		.attr('target', edit_link)
