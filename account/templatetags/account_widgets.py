@@ -45,11 +45,16 @@ def info_user_form(context):
 def info_user_badges(context):
     try:
         u = context['user']
+        likes = u.ratings.all()
+        comments = u.comments.all()
     except AttributeError:
         u = None
+        likes = []
+        comments = []
+
     badges = dict()
     if u:
         badges = {
             "is_full_profile": {'state': u.is_full_profile(), 'popup': "Заполните весь профиль для получения бэйджа!"},
         }
-    return {'user': u, 'badges': badges}
+    return {'user': u, 'badges': badges, 'likes': len(likes), 'comments': len(comments)}
