@@ -473,7 +473,7 @@ var rovar = {
                                     dataType: "json"
                                 })
                                     .done(function (data) {
-                                        alert("Cпасибо, ваш голос учтён!")
+                                        alert("Cпасибо, ваш голос учтён!");
                                     })
                                     .fail(function (jqXHR, textStatus) {
                                         alert("Request failed: " + textStatus);
