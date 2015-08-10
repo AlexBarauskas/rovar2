@@ -2,36 +2,37 @@
 {% load account_widgets %}
 
 {% if user.is_authenticated %}
-	<div class="header-menu-item">
-		<div id="user-link-logout" class="clearfix">
-		  <i class="icon user"></i>
-		  <span id="url_account_edit">{{ user.username }}</span>
-		  <a href="/logout" id="url_account_logout"><span>Выход</span></a>
-		</div>
-		<div id="popup_account_edit" class="ui modal">
-			<div class="main-panel-inner clearfix">
-    			<div class="button_close"></div>
-				{% info_user_badges %}
-				{% info_user_form %}
-			</div>
-		</div>
-	</div>
-{% else %}
-	<div class="header-menu-item dropdown">
-		<div id="user-link">
-		  <i class="icon user"></i>
-		  <span>Войти</span>
-		</div>
-	    <ul class="socials clearfix">
-			<li class="clearfix"><a href="/login/facebook/">
-				Через Фейсбук <img src="/static/images/facebook.png"/>
-			</a></li>
-			<li class="clearfix"><a class="disabled" href="/login/vk/">
-				Через Вконтакте <img src="/static/images/vk.png"/>
-			</a></li>
-			<li class="clearfix"><a href="/login/twitter/">
-				Через Твиттер <img src="/static/images/twitter.png"/>
-			</a></li>
-	    </ul>
+<div class="header-menu-item">
+    <div id="user-link-logout" class="clearfix">
+        <i class="icon user"></i>
+        <!--id="url_account_edit"-->
+        <a href="/account/edit">{{ user.username }}</a>
+        <a href="/logout" id="url_account_logout"><span>Выход</span></a>
     </div>
+    <div id="popup_account_edit" class="ui modal">
+        <div class="main-panel-inner clearfix">
+            <div class="button_close"></div>
+            {% info_user_badges %}
+            {% info_user_form %}
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="header-menu-item dropdown">
+    <div id="user-link">
+        <i class="icon user"></i>
+        <span>Войти</span>
+    </div>
+    <ul class="socials clearfix">
+        <li class="clearfix"><a href="/login/facebook/">
+            Через Фейсбук <img src="/static/images/facebook.png"/>
+        </a></li>
+        <li class="clearfix"><a class="disabled" href="/login/vk/">
+            Через Вконтакте <img src="/static/images/vk.png"/>
+        </a></li>
+        <li class="clearfix"><a href="/login/twitter/">
+            Через Твиттер <img src="/static/images/twitter.png"/>
+        </a></li>
+    </ul>
+</div>
 {% endif %}
