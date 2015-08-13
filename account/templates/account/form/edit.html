@@ -1,4 +1,35 @@
-{% extends 'home.html' %}
+{% extends 'base.html' %}
+
+{% load account_widgets %}
+{% load i18n %}
+
+{% block header %}
+  <div class="header-menu left">
+    <div class="header-menu-item logobanner">
+      <a href="/" id="banner" class="logo">ONBIKE.BY</a>
+    </div>
+  </div>
+<div class="header-menu right">
+
+  {# <div class="header-menu-item"> #}
+    {% info_user_widget %}
+  {# </div> #}
+
+  <div class="header-menu-item">
+    <div id="gid-link">
+      <i class="icon eye"></i>
+      <span>Как это работает?</span>
+    </div>
+  </div>
+
+  <div class="header-menu-item">
+    <div id="info">
+      <i class="icon info"></i>
+      <span>{% trans "О проекте" %}</span>
+    </div>
+  </div>
+</div>
+{% endblock header %}
 
 {% block content %}
 <div id="account_edit_form_wrapper" class="clearfix">
