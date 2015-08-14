@@ -1,131 +1,289 @@
 {% extends 'base.html' %}
+{% load cache %}
+{% load i18n %}
+{% load account_widgets %}
+{% load staticfiles %}
+{% get_available_languages as LANGUAGES %}
+{% get_current_language as LANGUAGE_CODE %}
 
-{% block css %}
-<link type="text/css" href="/static/leaflet/leaflet.css" rel="stylesheet"/>
-{% endblock css %}
+{% block meta %}
+{% if obj %}
+<meta property="og:title" content="ONBIKE.BY | {{obj.name}}" />
+<meta name="description" content="{{obj.description}}"/>
+<meta property="og:description" content="{{obj.description}}"/>
+<meta property="og:url" content="//onbike.by{% url 'show_object' obj.location.name obj.type_slug obj.uid %}" />
+{% if obj.photo_set.all.0.image.url %}
+<meta property="og:image" content="//onbike.by{{obj.photo_set.all.0.image.url}}" />
+<link rel="image_src" href="//onbike.by{{obj.photo_set.all.0.image.url}}" />
+{% else %}
+<meta property="og:image" content="//onbike.by/static/images/onbike-og.png' %}"/>
+<link rel="image_src" href="//onbike.by/static/images/onbike-og.png' %}"/>
+{% endif %}
+{% else %}
+{{ block.super }}
+{% endif %}
+{% endblock meta %}
 
+{% block preload %}
+<div style="position:absolute; top:-5000px">
+  {% for T in types %}
+  {% if T.count_items %}
+  {% if T.image %}
+  <img src="{{T.image.url}}"/>
+  {% endif %}
+  {% if T.image2 %}
+  <img src="{{T.image2.url}}"/>
+  {% endif %}
+  {% endif %}
+  {% endfor %}
+  <img src="{% static 'icons/pin-add.png' %}"/>
+</div>
+{% endblock preload %}
 
+{% block header %}
+<div class="header-menu left">
+  <div class="header-menu-item logobanner">
+    <a href="/" id="banner" class="logo">ONBIKE.BY</a>
+    <!--<a href="#" id="back-to-banner" class="back">
+        ← <span id="type" class="type"></span>
+        </a>-->
+  </div>
 
+  {% if locations_dropdown %}
+  <div class="header-menu-item dropdown">
+    <div id="locations">
+      <i class="icon locations"></i> {{location}}
+    </div>
+    <ul>
+      {% for l in locations %}
+      {% if l.name != location.name %}
+      <li class="clearfix"><a href="{% url 'show_location' l.name %}">{{ l }}</a></li>
+      {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  <div class="header-menu-item dropdown">
+    <div id="typefilter">
+      <i class="icon pin"></i> {% trans "Что показать" %}
+      <span id="type_counter">0</span>
+    </div>
+    <ul id="type-btns">
+      {% for T in types %}
+      <li id="{{T.slug}}" class="clearfix">
+        <span class="Tname" style="color:{{T.color}}">{% trans T.name %}</span>
+        <span class="Tnumber number"></span>
+        <span class="checker_wrapper">
+          <span class="checker_item"></span>
+        </span>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  <div class="header-menu-item">
+    <div id="add-point-btn">
+      <i class="icon plus"></i>
+      <span id="add-point-btn-text">
+        {% trans "Добавить точку" %}
+      </span>
+    </div>
+  </div>
+
+</div>
+
+<div class="header-menu right">
+
+  {# <div class="header-menu-item"> #}
+    {% info_user_widget %}
+  {# </div> #}
+
+  <div class="header-menu-item">
+    <div id="gid-link">
+      <i class="icon eye"></i>
+      <span>Как это работает?</span>
+    </div>
+  </div>
+
+  <div class="header-menu-item">
+    <div id="info">
+      <i class="icon info"></i> 
+      <span>{% trans "О проекте" %}</span>
+    </div>
+  </div>
+</div>
+{% endblock header %}
 
 {% block content_left %}
-<div class="preview">
-  <div class="preview-content"></div>
+
+<div class="preview main-panel-inner">
+  <div class="preview-content clearfix"></div>
   <div id="disqus_thread" style="display:none"></div>
 </div>
 
-<div class="section views">
-  <h1>Показывать на карте:</h1>
-  <ul class="control">
-    {%for T in types%}
-    {%if T.count_items%}
-    <li id="type-{{T.obj}}-{{T.id}}" class="type-all">
-      <span style="background-color:{{T.color}}">{{T.name}}</span>
-      <span style="color:{{T.color}}" class="number">{{T.count_items}}</span>
-    </li>
-    {%endif%}
-    {%endfor%}
-  </ul>
-</div>
-<div class="footer">
-  <ul>
-    <li><a class="left" href="#">О проекте</a></li>
-    <li><a class="left" href="#">Блог</a></li>
-    <li><a class="left" href="#">API</a></li>    
-    <li><a class="right dotted" href="#">Па-беларуску</a></li>
-    <li><a class="right dotted" href="#">In English</a></li>
-  </ul>
-</div>
-{% endblock content_left %}
-
-
-{% block content_right %}
-<div class="data-content info-iframe" style="">
-  <iframe id="info-iframe" src="/info/?blank=1"></iframe>
-</div>
-<div id="map" class="data-content" style="padding:0;"></div>
-<div id="lang">
-  <a id="add-point-btn"  href="javascript:;">
-    Добавить точку
+<div id="app-links" class="main-panel-inner">
+  <b>Мобильное приложение Onbike</b>
+  <a class="appbutton" href="https://itunes.apple.com/us/app/onbike-velosipednaa-karta/id885802783" 
+     target="_blank">
+    <img src="{% static 'images/appstore-download.png' %}" width="130" alt="appstore-download">
+  </a>
+  <a class="appbutton" href="https://play.google.com/store/apps/details?id=com.onbike.app&hl=ru" 
+     target="_blank">
+    <img src="{% static 'images/google-play-download.png' %}" width="130" alt="appstore-download">
   </a>
 </div>
-<div id="add-point-dialog" style="display:none">
-  <h1>Добавление точки</h1>
-  <form id="add-point-form" method="POST" action="." enctype="multipart/form-data">
-    
-    <div class="input">
-      <label>Координаты</label>
-      <input type="text" value="" name="coordinates" disabled="disabled"/>
+
+{% endblock content_left %}
+
+{% block content_right %}
+
+    <div id="map" class="data-content" style="padding:0;"></div>
+    <div id="add-point-dialog" class="ui modal" style="display:none">
+      <form id="add-point-form" class="ui form clearfix" method="POST" action="/api/point/add" enctype="multipart/form-data">
+        
+        <input type="hidden" value="" name="coordinates"/>
+        
+        <div class="field form-group clearfix">
+          <input type="text" class="form-control" value="" placeholder="{% trans 'Название *' %}" name="title" />
+        </div>
+        
+        <div class="field form-group clearfix">
+          <div class="input">
+            <label class="category">{% trans "Категория" %} <sup>*</sup></label>
+            <select name="type" class="category">
+              <option value="shop">{% trans "Магазин"%}</option>
+              <option value="bikerental">{% trans "Прокат" %}</option>
+              <option value="entertainment">{% trans "Развлечения"%}</option>
+              <option value="parking">{% trans "Велопарковка" %}</option>
+              <option value="service">{% trans "Сервис" %}</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="field form-group clearfix">
+          <textarea type="text" class="form-control" value="" placeholder="{% trans 'Описание (время работы, ориентиры и т.д.)' %}" name="description"></textarea>
+        </div>
+        
+        <div class="field form-group clearfix">
+          <input type="text" class="form-control" value="" placeholder="{% trans 'Адрес *' %}" name="address" />
+        </div>
+        
+        <div class="field form-group clearfix">
+          <input type="text" class="form-control" value="" placeholder="{% trans 'Телефон' %}" name="phones" />
+        </div>
+
+        <div class="field form-group clearfix">
+          <input type="text" class="form-control" value="" placeholder="{% trans 'Сайт' %}" name="website" />
+        </div>
+
+        <div class="field form-group clearfix">
+          <input type="text" class="form-control" value="{%if user.is_authenticated%}{{user.email}}{%endif%}" placeholder="{% trans 'Ваш Email (мы не будем спамить, честно) *' %}" name="email" />
+        </div>
+        
+        <!--div class="field form-group clearfix">
+          <label class="photo">{% trans "Фото *" %}</label>
+          <input type="file" class="form-control photo" value="" accept="image/*" name="image" />
+        </div-->
+      
+      <div class="field form-group clearfix" id="inputfile">  
+        <!--div class="logbox" draggable="true"></div-->
+        <!--label>OR Select a file to upload:</label-->
+
+        <label class="photo">{% trans "Фото *" %}</label>
+        <!--div id="fileInputContainer">
+            <a id="fileUploadDummy" class="btn-choose">Choose File</a>
+            <input type="file" name="image" id="fileUploadInput" accept="image/*" multiple="multiple"/>
+        </div-->
+        <input type="file" name="image" id="fileUploadInput" accept="image/*" multiple="multiple"/>
+      </div>
+      <!--div>
+          <a class="btn" id="upload-imgs" href="javascript:;">Upload</a>
+          <a class="btn" id="close-upload" href="javascript:;">Close</a>
+      </div-->
+      <div id="progressbar"></div>
+      <div id="ajax-errors"></div>
+      <div class="btn-box">
+        <!--button class="btn success">{% trans "Добавить точку" %}</button-->
+        <a id="upload-imgs" class="ui button green medium" href="#">{% trans "Добавить точку" %}</a>
+        <a class="ui button tiny" id="add-point-form-close" href="#">{% trans "Отмена" %}</a>
+      </div>
+      <input type="hidden" value="webclient" name="uid"/>
+      
+    </form>
+  </div>
+  <div id="comment_modal" class="ui modal">
+    <div class="ui comments">
+      <h3 class="ui dividing header">Все отзывы</h3>
+      <div class="button_close"></div>
+      <div id="comments" class="ui inverted">
+      </div>
+	  <div id="pre-comments-form" class='actions'>
+	      <a id="main_reply" class='reply' data-commentid='' style="display: none;">Написать отзыв</a>
+          <form action="/api/comment/add" method="POST" id="add-comment-form" class="ui reply form">
+            <input id="input_hidden_ENTRYID" name="input_hidden_ENTRYID" type="hidden"/>
+            <input id="input_hidden_ENTRYTYPE" name="input_hidden_ENTRYTYPE" type="hidden"/>
+            <input id="input_hidden_PARENTID"  name="input_hidden_PARENTID" type="hidden"/>
+            <div class="field">
+              <textarea id="textarea_message" required="required" name="message"></textarea>
+            </div>
+            {% if user.is_authenticated %}
+            <button id="add-comment-button" class="ui blue submit button">
+                Добавить отзыв
+            </button>
+            {% else %}
+            <ul class="popuplogin socials clearfix">
+                <li class="clearfix">Войти</li>
+                <li class="clearfix"><a href="/login/facebook/">
+                    Через Фейсбук <img src="/static/images/facebook.png"/>
+                </a></li>
+                <li class="clearfix"><a class="disabled" href="/login/vk/">
+                    Через Вконтакте <img src="/static/images/vk.png"/>
+                </a></li>
+                <li class="clearfix"><a href="/login/twitter/">
+                    Через Твиттер <img src="/static/images/twitter.png"/>
+                </a></li>
+            </ul>
+            {% endif%}
+          </form>
+      </div>
     </div>
-    <div class="input">
-      <label>Название</label>
-      <input type="text" value="" name="title"/>
-    </div>
-    <div class="input">
-      <label>Категория</label>
-      <select name="type">
-	shop, bikerental, entertainment, parking, service
-	<option value="shop">Магазин</option>
-	<option value="bikerental">Прокат</option>
-	<option value="entertainment">Развлечение</option>
-	<option value="parking">Парковка</option>
-	<option value="service">Сервис</option>
-      </select>
-    </div>
-    <div class="input">
-      <label>Описание</label>
-      <textarea type="text" name="description"></textarea>
-    </div>
-    <div class="input">
-      <label>Адрес</label>
-      <input type="text" value="" name="address"/>
-    </div>
-    <div class="input">
-      <label>Телефоны</label>
-      <input type="text" value="" name="phones"/>
-    </div>
-    <div class="input">
-      <label>Сайт</label>
-      <input type="text" value="" name="website"/>
-    </div>
-    <div class="input">
-      <label>Фото</label>
-      <input type="file" value="" accept="image/*" name="image"/>
-    </div>
-    <div class="btn-box">
-      <button class="btn success">Добавить</button>
-      <a class="btn" id="add-point-form-close" href="javascript:;">Отмена</a>
-    </div>
-  </form>
-</div>
+  </div>
 
 {% endblock content_right %}
 
-
-
 {% block js %}
-<script type="text/javascript" src="/static/leaflet/leaflet-src.js"></script>
-<script type="text/javascript" src="/static/leaflet/leaflet.js"></script>
-<script type="text/javascript" src="/static/js/map.js"></script>
-<script type="text/javascript" src="/static/js/add-point.js"></script>
-
+<script type="text/javascript" src="/static/js/map.api.translate.js"></script>
+<script type="text/javascript" src="/static/js/map.api.js"></script>
 
 <script type="text/javascript">
   /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-  var disqus_shortname = 'onbikeby'; // required: replace example with your forum shortname
-  var disqus_identifier = '{%if rovar_uid%}{{rovar_uid}}{%else%}home{%endif%}';
-  var disqus_title = '{%if obj%}{{obj.title}}{%else%}home{%endif%}';
-  {% if rovar_uid %}
-  var disqus_url = 'http://onbike.by/{{rovar_uid}}/';
-  {% endif %}
+  // var disqus_shortname = 'onbikecomments' // required: replace example with your forum shortname
+  // var disqus_identifier = '{%if obj.uid%}{{obj.uid}}{%else%}home{%endif%}';
+  // var disqus_title = '{%if obj%}{{obj.title}}{%else%}home{%endif%}';
+  // var disqus_config = function () { 
+  // this.language = language_code;
+  // };
+  // {% if obj.uid %}
+  // var disqus_url = 'http://onbike.by{% url 'show_object' obj.location.name obj.type_slug obj.uid %}';
+  // {% endif %}
   
-  /* * * DON'T EDIT BELOW THIS LINE * * */
-  (function() {
-  var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
+  // /* * * DON'T EDIT BELOW THIS LINE * * */
+  // (function() {
+  // var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+  // dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  // (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  // })();
 </script>
 
-
-
+{# @TODO зачем это? #}
+<div id="fb-root"></div> 
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/ru_RU/all.js#xfbml=1&appId=364131847036990";
+  fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 {% endblock js %}

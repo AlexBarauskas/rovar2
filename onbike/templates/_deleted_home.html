@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+
+{% block css %}
+<link type="text/css" href="/static/leaflet/leaflet.css" rel="stylesheet"/>
+{% endblock css %}
+
+
+
+
+{% block content_left %}
+<div class="preview">
+  <div class="preview-content"></div>
+  <div id="disqus_thread" style="display:none"></div>
+</div>
+
+<div class="section views">
+  <h1>Показывать на карте:</h1>
+  <ul class="control">
+    {%for T in types%}
+    {%if T.count_items%}
+    <li id="type-{{T.obj}}-{{T.id}}" class="type-all">
+      <span style="background-color:{{T.color}}">{{T.name}}</span>
+      <span style="color:{{T.color}}" class="number">{{T.count_items}}</span>
+    </li>
+    {%endif%}
+    {%endfor%}
+  </ul>
+</div>
+<div class="footer">
+  <ul>
+    <li><a class="left" href="#">О проекте</a></li>
+    <li><a class="left" href="#">Блог</a></li>
+    <li><a class="left" href="#">API</a></li>    
+    <li><a class="right dotted" href="#">Па-беларуску</a></li>
+    <li><a class="right dotted" href="#">In English</a></li>
+  </ul>
+</div>
+{% endblock content_left %}
+
+
+{% block content_right %}
+<div class="data-content info-iframe" style="">
+  <iframe id="info-iframe" src="/info/?blank=1"></iframe>
+</div>
+<div id="map" class="data-content" style="padding:0;"></div>
+<div id="lang">
+  <a id="add-point-btn"  href="javascript:;">
+    Добавить точку
+  </a>
+</div>
+<div id="add-point-dialog" style="display:none">
+  <h1>Добавление точки</h1>
+  <form id="add-point-form" method="POST" action="." enctype="multipart/form-data">
+    
+    <div class="input">
+      <label>Координаты</label>
+      <input type="text" value="" name="coordinates" disabled="disabled"/>
+    </div>
+    <div class="input">
+      <label>Название</label>
+      <input type="text" value="" name="title"/>
+    </div>
+    <div class="input">
+      <label>Категория</label>
+      <select name="type">
+	shop, bikerental, entertainment, parking, service
+	<option value="shop">Магазин</option>
+	<option value="bikerental">Прокат</option>
+	<option value="entertainment">Развлечение</option>
+	<option value="parking">Парковка</option>
+	<option value="service">Сервис</option>
+      </select>
+    </div>
+    <div class="input">
+      <label>Описание</label>
+      <textarea type="text" name="description"></textarea>
+    </div>
+    <div class="input">
+      <label>Адрес</label>
+      <input type="text" value="" name="address"/>
+    </div>
+    <div class="input">
+      <label>Телефоны</label>
+      <input type="text" value="" name="phones"/>
+    </div>
+    <div class="input">
+      <label>Сайт</label>
+      <input type="text" value="" name="website"/>
+    </div>
+    <div class="input">
+      <label>Фото</label>
+      <input type="file" value="" accept="image/*" name="image"/>
+    </div>
+    <div class="btn-box">
+      <button class="btn success">Добавить</button>
+      <a class="btn" id="add-point-form-close" href="javascript:;">Отмена</a>
+    </div>
+  </form>
+</div>
+
+{% endblock content_right %}
+
+
+
+{% block js %}
+<script type="text/javascript" src="/static/leaflet/leaflet-src.js"></script>
+<script type="text/javascript" src="/static/leaflet/leaflet.js"></script>
+<script type="text/javascript" src="/static/js/map.js"></script>
+<script type="text/javascript" src="/static/js/add-point.js"></script>
+
+
+<script type="text/javascript">
+  /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+  var disqus_shortname = 'onbikeby'; // required: replace example with your forum shortname
+  var disqus_identifier = '{%if rovar_uid%}{{rovar_uid}}{%else%}home{%endif%}';
+  var disqus_title = '{%if obj%}{{obj.title}}{%else%}home{%endif%}';
+  {% if rovar_uid %}
+  var disqus_url = 'http://onbike.by/{{rovar_uid}}/';
+  {% endif %}
+  
+  /* * * DON'T EDIT BELOW THIS LINE * * */
+  (function() {
+  var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+
+{% endblock js %}
