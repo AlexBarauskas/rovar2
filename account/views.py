@@ -24,7 +24,7 @@ def context(**extra):
     }, **extra)
 
 
-@render_to('home_new.html')
+@render_to('home.html')
 def require_email(request):
     backend = request.session['partial_pipeline']['backend']
     return context(email_required=True, backend=backend)
