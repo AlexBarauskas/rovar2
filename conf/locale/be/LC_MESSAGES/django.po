@@ -25,75 +25,75 @@ msgstr "Пра праект"
 msgid "Блог"
 msgstr "Блог"
 
-#: templates/home_new.html:31
+#: templates/home.html:31
 msgid "Показывать на карте:"
 msgstr "Паказваць на карце"
 
-#: templates/home_new.html:77
+#: templates/home.html:77
 msgid "Добавить точку"
 msgstr "Дадаць месца"
 
-#: templates/home_new.html:89
+#: templates/home.html:89
 msgid "Название *"
 msgstr "Назва *"
 
-#: templates/home_new.html:94
+#: templates/home.html:94
 msgid "Категория"
 msgstr "Катэгорыя"
 
-#: templates/home_new.html:97
+#: templates/home.html:97
 msgid "Магазин"
 msgstr "Крама"
 
-#: templates/home_new.html:98
+#: templates/home.html:98
 msgid "Прокат"
 msgstr "Пракат"
 
-#: templates/home_new.html:99
+#: templates/home.html:99
 msgid "Развлечения"
 msgstr "Забавы"
 
-#: templates/home_new.html:100
+#: templates/home.html:100
 msgid "Велопарковка"
 msgstr "Паркоўка"
 
-#: templates/home_new.html:101
+#: templates/home.html:101
 msgid "Сервис"
 msgstr "Майстэрня"
 
-#: templates/home_new.html:107
+#: templates/home.html:107
 msgid "Описание (время работы, ориентиры и т.д.)"
 msgstr "Описание (часы працы, арыентыры i г.д.)"
 
-#: templates/home_new.html:111
+#: templates/home.html:111
 msgid "Адрес *"
 msgstr "Адрас *"
 
-#: templates/home_new.html:115
+#: templates/home.html:115
 msgid "Телефон"
 msgstr "Тэлефон"
 
-#: templates/home_new.html:119
+#: templates/home.html:119
 msgid "Сайт"
 msgstr "Сайт"
 
-#: templates/home_new.html:123
+#: templates/home.html:123
 msgid "Ваш Email (мы не будем спамить, честно) *"
 msgstr "Ваш Email (нiякага спаму, сапраўды) *"
 
-#: templates/home_new.html:127
+#: templates/home.html:127
 msgid "Фото *"
 msgstr "Фотаздымак *"
 
-#: templates/home_new.html:134
+#: templates/home.html:134
 msgid "Добавить точку"
 msgstr "Дадаць месца"
 
-#: templates/home_new.html:135
+#: templates/home.html:135
 msgid "Отмена"
 msgstr "Адмена"
 
-#: templates/home_new.html:161
+#: templates/home.html:161
 msgid "Добавить телефон"
 msgstr "Дадаць тэлефон"
 
