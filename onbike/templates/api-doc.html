@@ -1,28 +1,9 @@
-{% extends 'base.html' %}
+{% extends 'page.html' %}
 {% load cache %}
 {% load i18n %}
 
 
-{% block header %}
-  <div class="header-menu left">
-    <div class="header-menu-item logobanner">
-      <a href="/" id="banner" class="logo">ONBIKE.BY</a>
-    </div>
-  </div>
-  <div class="header-menu right">
-    <!--
-    @TODO
-    <div class="header-menu-item">
-        <div id="info">
-          <i class="icon info"></i> 
-          <span>{% trans "О проекте" %}</span>
-        </div>
-    </div>
-    -->
-  </div>
-{% endblock header %}
-
-{% block content_right %}
+{% block content_center %}
 <div id="api" class="data-content" {% if show_left_panel %}style="margin-left:0px;"{%else%}style="min-height:100%;"{% endif %}>
 {% cache 600 "info_content" %}
   {% for m in methods %}
@@ -34,4 +15,4 @@
   {% endfor %}
 </div>
 {% endcache %}
-{% endblock content_right %}
+{% endblock content_center %}

@@ -74,6 +74,7 @@
         </div>
     </div>
 
+    {% block content_wrapper %}
     <div id="contentWrapper">
         {% block content_right %}
         {% endblock content_right %}
@@ -81,6 +82,8 @@
             {% info_widget %}
         {% endcache %}
     </div>
+    {% endblock content_wrapper %}
+
 {% endblock content %}
 
 {% grunt js %}

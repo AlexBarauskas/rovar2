@@ -41,8 +41,10 @@
         </div>
     {% endblock header %}
 
-    {% block content_center %}
-    {% endblock content_center %}
+    {% block content_wrapper %}
+        {% block content_center %}
+        {% endblock content_center %}
+    {% endblock content_wrapper %}
 {% endblock content %}
 
 {% block js %}
