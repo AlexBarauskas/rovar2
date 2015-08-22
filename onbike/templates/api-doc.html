@@ -4,15 +4,15 @@
 
 
 {% block content_center %}
-<div id="api" class="data-content" {% if show_left_panel %}style="margin-left:0px;"{%else%}style="min-height:100%;"{% endif %}>
-{% cache 600 "info_content" %}
-  {% for m in methods %}
-  <div class="method">
-    {% for el in m %}
-    {{el|safe}}
-    {% endfor %}
-  </div>
-  {% endfor %}
-</div>
-{% endcache %}
+    <div id="api" class="data-content">
+        {% cache 600 "info_content" %}
+            {% for m in methods %}
+                <div class="method">
+                    {% for el in m %}
+                        {{ el|safe }}
+                    {% endfor %}
+                </div>
+            {% endfor %}
+            </div>
+        {% endcache %}
 {% endblock content_center %}
