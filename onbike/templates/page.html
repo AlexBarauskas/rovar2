@@ -13,39 +13,36 @@
 {% block preload %}
 {% endblock preload %}
 
-{% block content %}
+{% block header %}
+    <div class="header-menu left">
+        <div class="header-menu-item logobanner">
+            <a href="/" id="banner" class="logo">ONBIKE.BY</a>
+        </div>
+    </div>
 
-    {% block header %}
-        <div class="header-menu left">
-            <div class="header-menu-item logobanner">
-                <a href="/" id="banner" class="logo">ONBIKE.BY</a>
+    <div class="header-menu right">
+        {% info_user_widget %}
+
+        <div class="header-menu-item">
+            <div id="gid-link">
+                <i class="icon eye"></i>
+                <span>Как это работает?</span>
             </div>
         </div>
 
-        <div class="header-menu right">
-            {% info_user_widget %}
-
-            <div class="header-menu-item">
-                <div id="gid-link">
-                    <i class="icon eye"></i>
-                    <span>Как это работает?</span>
-                </div>
-            </div>
-
-            <div class="header-menu-item">
-                <div id="info">
-                    <i class="icon info"></i>
-                    <span>{% trans "О проекте" %}</span>
-                </div>
+        <div class="header-menu-item">
+            <div id="info">
+                <i class="icon info"></i>
+                <span>{% trans "О проекте" %}</span>
             </div>
         </div>
-    {% endblock header %}
+    </div>
+{% endblock header %}
 
-    {% block content_wrapper %}
-        {% block content_center %}
-        {% endblock content_center %}
-    {% endblock content_wrapper %}
-{% endblock content %}
+{% block content_wrapper %}
+    {% block content_center %}
+    {% endblock content_center %}
+{% endblock content_wrapper %}
 
 {% block js %}
 {% endblock js %}
