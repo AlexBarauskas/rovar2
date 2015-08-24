@@ -1,56 +1,13 @@
-{% extends 'base.html' %}
+{% extends 'page.html' %}
 
 {% load account_widgets %}
 
 {% block css %}
-<!--link type="text/css" href="/static/leaflet/leaflet.css" rel="stylesheet"/-->
-<style>
-#info-iframe{
-display: block;
-top: 0;
-height: auto;
-position: static;
-right: 0;
-z-index: 0;
-width: 100%;
-border: none;
-overflow: auto;
-padding-top: 50px;
-}
-
-#info-iframe .button_close{
-display: none;
-}
-</style>
 {% endblock css %}
 
-
-{% block menu %}
-{% if show_left_panel %}
-{{block.super}}
-{% endif %}
-{% endblock menu %}
-
-{% block content_right %}
-{% endblock content_right %}
+{% block content_center %}
+    {% info_widget %}
+{% endblock content_center %}
 
 {% block js %}
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/ru_RU/all.js#xfbml=1&appId=364131847036990";
-  fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));
-</script>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-<!--script>
-  $(function(){
-    $("#info-iframe").css("min-height", "100%");
-    $("#info-iframe").css("height", "100%");
-    $("#info-iframe").show();
-});
-</script-->
-
 {% endblock js %}

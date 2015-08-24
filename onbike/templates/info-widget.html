@@ -1,28 +1,22 @@
-<div id="info-iframe" class="ui modal">
-  <div class="button_close"></div>
-  <div class="main-panel-inner">
+<div>
     {% include template_name %}
     <div class="authors">
-      {% for author in authors %}
-      <div class="authors-item">
-        <img src="{{author.image.url}}" />
-        <span>{{author.name}}</span>
-        <div>{{author.description|safe}}</div>
-      </div>
-      {% endfor %}
+        {% for author in authors %}
+            <div class="authors-item">
+                <img src="{{ author.image.url }}"/>
+                <span>{{ author.name }}</span>
+
+                <div>{{ author.description|safe }}</div>
+            </div>
+        {% endfor %}
     </div>
     <div id="info-share-btns">
-      <div class="clearfix">
-        <script type="text/javascript" src="//yastatic.net/share/share.js" charset="utf-8"></script>
-        <b>Рассказать друзьям через —</b><span class="yashare-auto-init" data-yashareL10n="ru" data-yashareType="big" data-yashareQuickServices="vkontakte,facebook,twitter,gplus" data-yashareTheme="counter"></span>
-      </div>
-      <!--<div>
-        <div class="fb-share-button" data-href="http://onbike.by" data-width="64" data-type="box_count"></div>
-      </div>
-      <div style="top:4px">
-        <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://onbike.by" data-via="your_screen_name" data-lang="en" data-related="anywhereTheJavascriptAPI" data-count="vertical"></a>
-      </div> -->
+        <div class="clearfix">
+            <script type="text/javascript" src="//yastatic.net/share/share.js" charset="utf-8"></script>
+            <b>Рассказать друзьям через —</b><span class="yashare-auto-init" data-yashareL10n="ru"
+                                                   data-yashareType="big"
+                                                   data-yashareQuickServices="vkontakte,facebook,twitter,gplus"
+                                                   data-yashareTheme="counter"></span>
+        </div>
     </div>
-  </div>
 </div>
-
