@@ -24,17 +24,12 @@
         {% info_user_widget %}
 
         <div class="header-menu-item">
-            <div id="gid-link">
-                <i class="icon eye"></i>
-                <span>Как это работает?</span>
-            </div>
-        </div>
-
-        <div class="header-menu-item">
-            <div id="info">
-                <i class="icon info"></i>
-                <span>{% trans "О проекте" %}</span>
-            </div>
+            <a href="{% url 'info' %}">
+                <div id="info">
+                    <i class="icon info"></i>
+                    <span>{% trans "О проекте" %}</span>
+                </div>
+            </a>
         </div>
     </div>
 {% endblock header %}
