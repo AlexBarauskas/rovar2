@@ -91,7 +91,7 @@
         </div>
 
     </div>
-
+hom
     <div class="header-menu right">
 
         {# <div class="header-menu-item"> #}
@@ -106,10 +106,12 @@
         </div>
 
         <div class="header-menu-item">
-            <div id="info">
-                <i class="icon info"></i>
-                <span>{% trans "О проекте" %}</span>
-            </div>
+                <div id="info">
+            <a href="{% url 'info' %}">
+                    <i class="icon info"></i>
+                    <span>{% trans "О проекте" %}</span>
+            </a>
+                </div>
         </div>
     </div>
 {% endblock header %}

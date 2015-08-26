@@ -53,7 +53,7 @@ def show_location(request, location_name):
     if location.name != location_name:
         return HttpResponseRedirect(reverse('show_location', args=[location.name]))
     request.session['location'] = location.name
-    return render_to_response('home.html',
+    return render_to_response('map.html',
                               {   'types': Type.objects.all(),
                                   'locations_dropdown': True,
                                   'location': location,
@@ -70,13 +70,13 @@ def show_category(request, location_name, slug):
         category = Type.objects.get(slug=slug)
     except Type.DoesNotExist:
         return HttpResponseRedirect(reverse('show_location', args=[location.name]))
-    return render_to_response('home.html',
-                              {   'types': Type.objects.all(),
-                                  'locations_dropdown': True,
-                                  'location': location,
-                                  'locations': Location.objects.all(),
-                                  'category': category
-                                  },
+    return render_to_response('map.html',
+                              {'types': Type.objects.all(),
+                               'locations_dropdown': True,
+                               'location': location,
+                               'locations': Location.objects.all(),
+                               'category': category
+                              },
                               context_instance=RequestContext(request))
 
 
@@ -96,13 +96,13 @@ def show_object(request, location_name, slug, uid):
     obj = category.get_object(uid, location, acl)
     if obj is None:
         return HttpResponseRedirect(reverse('show_location', args=[location.name]))
-    return render_to_response('home.html',
-                              {   'types': Type.objects.all(),
-                                  'locations_dropdown': True,
-                                  'location': location,
-                                  'locations': Location.objects.all(),
-                                  'obj': obj
-                                  },
+    return render_to_response('map.html',
+                              {'types': Type.objects.all(),
+                               'locations_dropdown': True,
+                               'location': location,
+                               'locations': Location.objects.all(),
+                               'obj': obj
+                              },
                               context_instance=RequestContext(request))
 
 ## def home(request, uid=None, slug=None):
@@ -154,8 +154,8 @@ def show_object(request, location_name, slug, uid):
 ##             location = Location.objects.filter(default=True)[0]
 ##         except:
 ##             location = Location.objects.all()[0]
-    
-##     return render_to_response('home.html',
+
+##     return render_to_response('map.html',
 ##                               {   'types': types,
 ##                                   'obj': obj,
 ##                                   'locations_dropdown': True,
