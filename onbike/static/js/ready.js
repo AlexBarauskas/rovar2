@@ -29,22 +29,9 @@ $(function() {
     $('.uipopup').popup();
     $('.ui.rating').rating();
 
-    $('#info').click(function(e) {
-      e.preventDefault();
-      $('#info-iframe')
-        .modal({blurring: true})
-        .modal('show');
-    });
-
     $(".button_close").click(function(e){
         $('.ui.modal').modal('hide');
     });
-
-    // $("#info-iframe .button_close, .popup_overlay").click(function(){
-    //   if ($("#info").parent().hasClass("hover")) {
-    //     $("#info").click();
-    //   };
-    // });
 
     $('#url_account_edit').click(function(e) {
       e.preventDefault();
