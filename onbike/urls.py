@@ -40,11 +40,11 @@ urlpatterns = patterns(
          #'template_name': 'qartez/rel_alternate_hreflang_sitemap.xml'
          }),
 
-    url(r'^robots.txt$', 'onbike.views.robots', name='home'),
+    url(r'^robots.txt$', 'onbike.views.robots', name='robots'),
     url(r'^qr.png$', 'onbike.views.make_qr', name='make_qr'),
     url(r'^qr/$', 'onbike.views.qr_redirect', name='qr_redirect'),
 
-    url(r'^$', 'onbike.views.home', name='home'),
+    url(r'^$', 'onbike.views.map', name='map'),
     url(r'^short-home/$', 'onbike.views.short_home', name='short_home'),
     
     

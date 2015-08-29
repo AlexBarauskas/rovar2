@@ -41,7 +41,7 @@ def short_home(request):
                                },
                               context_instance=RequestContext(request))
 
-def home(request):
+def map(request):
     l_name = request.session.get('location', None)
     location = Location.objects.get_location(l_name)
     return HttpResponseRedirect(reverse('show_location', args=[location.name]))
@@ -54,11 +54,11 @@ def show_location(request, location_name):
         return HttpResponseRedirect(reverse('show_location', args=[location.name]))
     request.session['location'] = location.name
     return render_to_response('map.html',
-                              {   'types': Type.objects.all(),
-                                  'locations_dropdown': True,
-                                  'location': location,
-                                  'locations': Location.objects.all()
-                                  },
+                              {'types': Type.objects.all(),
+                               'locations_dropdown': True,
+                               'location': location,
+                               'locations': Location.objects.all()
+                               },
                               context_instance=RequestContext(request))
 
 
