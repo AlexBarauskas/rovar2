@@ -9,13 +9,6 @@
         <a href="/account/edit">{{ user.username }}</a>
         <a href="/logout" id="url_account_logout"><span>Выход</span></a>
     </div>
-    <div id="popup_account_edit" class="ui modal">
-        <div class="main-panel-inner clearfix">
-            <div class="button_close"></div>
-            {% info_user_badges %}
-            {% info_user_form %}
-        </div>
-    </div>
 </div>
 {% else %}
 <div class="header-menu-item dropdown">
