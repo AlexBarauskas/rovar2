@@ -5,8 +5,8 @@
 <div class="header-menu-item">
     <div id="user-link-logout" class="clearfix">
         <i class="icon user"></i>
-        <a href="/account/edit">{{ user.username }}</a>
-        <a href="/logout" id="url_account_logout"><span>Выход</span></a>
+        <a href="{% url 'account_edit' %}">{{ user.username }}</a>
+        <a href="{% url 'logout' %}" id="url_account_logout"><span>Выход</span></a>
     </div>
 </div>
 {% else %}
