@@ -31,6 +31,12 @@ def info_user_widget(context):
     return {'user': u}
 
 
+@register.inclusion_tag('info-link.html', takes_context=True)
+def info_link_widget(context):
+    return {}
+
+
+
 @register.inclusion_tag('account/form/edit.html', takes_context=True)
 def info_user_form(context):
     try:
