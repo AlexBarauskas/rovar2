@@ -94,9 +94,7 @@
 
     <div class="header-menu right">
 
-        {# <div class="header-menu-item"> #}
         {% info_user_widget %}
-        {# </div> #}
 
         <div class="header-menu-item">
             <div id="gid-link">
@@ -105,14 +103,8 @@
             </div>
         </div>
 
-        <div class="header-menu-item">
-            <a href="{% url 'info' %}">
-                <div id="info">
-                    <i class="icon info"></i>
-                    <span>{% trans "О проекте" %}</span>
-                </div>
-            </a>
-        </div>
+        {% info_link_widget %}
+
     </div>
 {% endblock header %}
 
