@@ -5,10 +5,8 @@
 {% block content_center %}
 <div class="main-panel-inner clearfix">
     {% info_user_badges %}
-{#  {% info_user_form %}#}
 </div>
 <div id="account_edit_form_wrapper" class="clearfix">
-    {# <div class="form-header">Данные пользователя</div> #}
     <div id="account_edit_form_errors"></div>
     <form class="ui form" action="{% url 'account_edit' %}" method="POST">
     	{% csrf_token %}
