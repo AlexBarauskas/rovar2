@@ -19,8 +19,15 @@ o.Image.MAX_RESIZE_WIDTH = 10000;
 
 
 var __addClick;
-
 var debug = true;
+
+function loadTmpl(tmpl, data, target) {
+    $.get(tmpl, function (template) {
+        var rendered = Mustache.render(template, data);
+        $(target).html(rendered);
+    });
+}
+
 
 var comments = {
     items: [],
