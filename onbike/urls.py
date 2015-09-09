@@ -105,4 +105,5 @@ urlpatterns += patterns(
     url(r'^(?P<location_name>\w+)/$', 'onbike.views.show_location', name='show_location'),
     url(r'^(?P<location_name>\w+)/(?P<slug>[\w\-]+)/$', 'onbike.views.show_category', name='show_category'),
     url(r'^(?P<location_name>\w+)/(?P<slug>[\w\-]+)/(?P<uid>[\-\+\.\%_\w]+)$', 'onbike.views.show_object', name='show_object'),
+    url(r'^(?P<location_name>\w+)/(?P<slug>[\w\-]+)/(?P<uid>[\-\+\.\%_\w]+)/comments$', 'onbike.views.show_object_comments', name='show_object_comments'),
     )
