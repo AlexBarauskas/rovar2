@@ -105,6 +105,30 @@ def show_object(request, location_name, slug, uid):
                               },
                               context_instance=RequestContext(request))
 
+def show_object_comments(request, location_name, slug, uid):
+    location = Location.objects.get_location(location_name)
+    if location.name != location_name:
+        return HttpResponseRedirect(reverse('show_category', args=[location.name, slug]))
+    try:
+        category = Type.objects.get(slug=slug)
+    except Type.DoesNotExist:
+        return HttpResponseRedirect(reverse('show_location', args=[location.name]))
+    acl = '0'
+    if request.user.is_authenticated():
+        acl = '1'
+        if request.user.is_staff:
+            acl = '2'
+    obj = category.get_object(uid, location, acl)
+    if obj.__class__ == Point:
+        return render_to_response('object/object_point.html',
+                                  {'obj': obj},
+                                  context_instance=RequestContext(request))
+    if obj.__class__ == Track:
+        return render_to_response('object/object_track.html',
+                                  {'obj': obj},
+                                  context_instance=RequestContext(request))
+
+
 ## def home(request, uid=None, slug=None):
 ##     request.session['human'] = True;
 ##     acl = '0'
