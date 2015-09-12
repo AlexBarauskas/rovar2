@@ -4,6 +4,7 @@ from django.core import serializers
 from account.models import User
 from account.forms import UserCreationForm
 from django.conf import settings
+from django.core.urlresolvers import reverse
 from django.shortcuts import redirect, render_to_response, render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout as auth_logout, login, authenticate
@@ -59,16 +60,11 @@ def edit(request):
         form = UserCreationForm(instance=request.user)
     else:
         form = UserCreationForm(request.POST, instance=request.user)
-        if form.is_valid(): # and request.is_ajax()
+        if form.is_valid():
             user = form.save()
             user = authenticate(username=user.username, password='')
             if user is not None:
                 if user.is_active:
                     login(request, user)
-            data = json.dumps(['success', ])
-        else:
-            data = json.dumps([[k, v] for k, v in form.errors.items()])
-            return HttpResponseBadRequest(data, content_type='application/json')
-        # return HttpResponse(data, content_type='application/json')
-        return HttpResponseRedirect("/")
+            return HttpResponseRedirect(reverse('account_edit'))
     return render(request, 'account/form/edit.html', {'form': form,})
