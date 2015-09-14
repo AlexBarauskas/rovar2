@@ -75,13 +75,8 @@
     </div>
 
     {% block content_wrapper %}
-    <div id="contentWrapper">
         {% block content_right %}
         {% endblock content_right %}
-        {% cache 600 "info_content" LANGUAGE_CODE %}
-            {% info_widget %}
-        {% endcache %}
-    </div>
     {% endblock content_wrapper %}
 
 {% endblock content %}
