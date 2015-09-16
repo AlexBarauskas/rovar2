@@ -6,7 +6,12 @@
 {% endblock css %}
 
 {% block content_center %}
-    {% info_widget %}
+    <div class="ui grid">
+        <div class="sixteen wide column box">
+            {% info_widget %}
+        </div>
+    </div>
+    </div>
 {% endblock content_center %}
 
 {% block js %}
