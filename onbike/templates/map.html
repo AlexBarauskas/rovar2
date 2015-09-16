@@ -130,7 +130,7 @@
 {% endblock content_left %}
 
 {% block content_right %}
-
+<div id="contentWrapperMap">
     <div id="map" class="data-content" style="padding:0;"></div>
     <div id="add-point-dialog" class="ui modal" style="display:none">
         <form id="add-point-form" class="ui form clearfix" method="POST" action="/api/point/add"
@@ -250,7 +250,7 @@
             </div>
         </div>
     </div>
-
+</div>
 {% endblock content_right %}
 
 {% block js %}
