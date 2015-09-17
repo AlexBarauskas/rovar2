@@ -924,19 +924,6 @@ label{
     margin: 8px 0 0 8px;
 }
 
-#url_account_edit{
-    margin-right: 10px;
-}
-
-#url_account_logout{
-    border-bottom: 1px dotted transparent;
-}
-
-#url_account_logout:hover{
-    border-color: rgba(255, 255, 255, .4);
-}
-
-
 /*
 .header-menu .header-menu-item.dropdown ul:before{
     content: "";
