@@ -48,18 +48,6 @@
 {% endblock preload %}
 
 {% block content %}
-    <div id="social-networks">
-        <a href="https://www.facebook.com/onbike.by" target="_blank">
-            <img src="{% static 'images/facebook.png' %}">
-        </a>
-        <a href="https://vk.com/onbike_by" target="_blank">
-            <img src="{% static 'images/vk.png' %}">
-        </a>
-        <a href="https://twitter.com/onbike_by" target="_blank">
-            <img src="{% static 'images/twitter.png' %}">
-        </a>
-    </div>
-
     <div id="main-header"{% if obj %} style="background-color:{{ obj.type.color }}"{% endif %}>
         <div id="main-header-wrapper" class="clearfix">
             {% block header %}
