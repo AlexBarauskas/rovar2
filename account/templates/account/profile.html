@@ -1,0 +1,18 @@
+{% extends 'page.html' %}
+
+{% load account_widgets %}
+
+{% block content_center %}
+<div class="ui grid">
+    <div class="nine wide column box">
+        <h2>Информация</h2>
+        {{ user.username }}
+    </div>
+    <div class="one wide column">
+    </div>
+    <div class="six wide column box">
+        <h2>Бэйджи</h2>
+        {% info_user_badges %}
+    </div>
+</div>
+{% endblock content_center %}
