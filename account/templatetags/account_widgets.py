@@ -36,16 +36,6 @@ def info_link_widget(context):
     return {}
 
 
-@register.inclusion_tag('account/form/edit.html', takes_context=True)
-def info_user_form(context):
-    try:
-        u = context['user']
-    except AttributeError:
-        u = None
-    f = UserCreationForm(instance=u)
-    return {'user': u, 'form': f}
-
-
 @register.inclusion_tag('account/info_user_badges.html', takes_context=True)
 def info_user_badges(context):
     try:
