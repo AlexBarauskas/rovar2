@@ -9,6 +9,7 @@ from django.shortcuts import redirect, render_to_response, render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout as auth_logout, login, authenticate
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
+from django.shortcuts import get_object_or_404
 
 from annoying.decorators import render_to
 from social.backends.google import GooglePlusAuth
@@ -67,4 +68,13 @@ def edit(request):
                 if user.is_active:
                     login(request, user)
             return HttpResponseRedirect(reverse('account_edit'))
-    return render(request, 'account/form/edit.html', {'form': form,})
+    return render(request, 'account/edit.html', {'form': form,})
+
+
+def profile(request, username):
+    print(username)
+    u = User.objects.filter(username=username)
+    print(u)
+    print('exit')
+    user = get_object_or_404(User, username=username)
+    return render(request, 'account/profile.html', {'user': user,})
