@@ -12,7 +12,7 @@
         <i class="icon user"></i> {{ user.username }}
     </div>
     <ul>
-        <li class="clearfix"><a href="#">Профиль</a></li>
+        <li class="clearfix"><a href="/account/profile/{{ user.username  }}">Профиль</a></li>
         <li class="clearfix"><a href="{% url 'account_edit' %}">Настройки</a></li>
         <li class="clearfix"><a href="{% url 'logout' %}"><span>Выход</span></a></li>
     </ul>
