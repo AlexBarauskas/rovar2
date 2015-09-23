@@ -2,11 +2,6 @@
 {% load account_widgets %}
 
 {% if user.is_authenticated %}
-<div class="header-menu-item">
-    <div id="user-link-logout" class="clearfix">
-
-    </div>
-</div>
 <div class="header-menu-item dropdown">
     <div id="info-user">
         <i class="icon user"></i> {{ user.username }}
