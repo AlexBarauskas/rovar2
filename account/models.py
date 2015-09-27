@@ -92,6 +92,13 @@ class User(AbstractBaseUser):
         return self.get_full_name()
 
     @property
+    def avatar_url(self):
+        if self.avatar_image:
+            return self.avatar.path
+        else:
+            return "http://api.adorable.io/avatars/70/{{0}}".format(self.get_full_name)
+
+    @property
     def is_staff(self):
         return self.is_admin
 
