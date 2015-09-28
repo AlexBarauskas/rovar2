@@ -40,6 +40,22 @@ def info_link_widget(context):
 def info_user_badges(context):
     try:
         u = context['user']
+    except AttributeError:
+        u = None
+
+    badges = dict()
+    if u:
+        badges = {
+            "is_full_profile": {'state': u.is_full_profile(), 'popup': "Заполните весь профиль для получения бэйджа!"},
+        }
+    return {'user': u, 'badges': badges}
+
+
+
+@register.inclusion_tag('account/info_user_badges.html', takes_context=True)
+def info_user_stats(context):
+    try:
+        u = context['user']
         likes = u.ratings.all()
         comments = u.comments.all()
     except AttributeError:
@@ -47,9 +63,4 @@ def info_user_badges(context):
         likes = []
         comments = []
 
-    badges = dict()
-    if u:
-        badges = {
-            "is_full_profile": {'state': u.is_full_profile(), 'popup': "Заполните весь профиль для получения бэйджа!"},
-        }
-    return {'user': u, 'badges': badges, 'likes': len(likes), 'comments': len(comments)}
+    return {'user': u, 'likes': len(likes), 'comments': len(comments)}
