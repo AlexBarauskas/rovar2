@@ -52,7 +52,7 @@ def info_user_badges(context):
 
 
 
-@register.inclusion_tag('account/info_user_badges.html', takes_context=True)
+@register.inclusion_tag('account/info_user_stats.html', takes_context=True)
 def info_user_stats(context):
     try:
         u = context['user']
