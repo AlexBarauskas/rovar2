@@ -2,7 +2,7 @@
 import json
 from django.core import serializers
 from account.models import User
-from account.forms import UserCreationForm
+from account.forms import UserAccountForm, UserProfileForm
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect, render_to_response, render
@@ -56,11 +56,11 @@ def ajax_auth(request, backend):
 
 
 @login_required(login_url='/')
-def edit(request):
+def account_edit(request):
     if request.method == 'GET':
-        form = UserCreationForm(instance=request.user)
+        form = UserAccountForm(instance=request.user)
     else:
-        form = UserCreationForm(request.POST, instance=request.user)
+        form = UserAccountForm(request.POST, instance=request.user)
         if form.is_valid():
             user = form.save()
             user = authenticate(username=user.username, password='')
@@ -68,7 +68,22 @@ def edit(request):
                 if user.is_active:
                     login(request, user)
             return HttpResponseRedirect(reverse('account_edit'))
-    return render(request, 'account/edit.html', {'form': form,})
+    return render(request, 'account/edit/account.html', {'form': form,})
+
+@login_required(login_url='/')
+def profile_edit(request):
+    if request.method == 'GET':
+        form = UserProfileForm(instance=request.user)
+    else:
+        form = UserProfileForm(request.POST, instance=request.user)
+        if form.is_valid():
+            user = form.save()
+            user = authenticate(username=user.username, password='')
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+            return HttpResponseRedirect(reverse('profile_edit'))
+    return render(request, 'account/edit/profile.html', {'form': form,})
 
 
 def profile(request, username):
