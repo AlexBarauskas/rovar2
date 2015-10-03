@@ -1,0 +1,31 @@
+{% extends 'page.html' %}
+
+{% load account_widgets %}
+
+{% block content_center %}
+<div class="ui grid">
+    <div class="nine wide column box">
+        <h2>Настройки аккаунта</h2>
+        <div id="account_edit_form_errors"></div>
+        <form class="ui form" action="{% url 'account_edit' %}" method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <p class="tcenter">
+                <input id="account_edit_submit" type="submit" class="ui button green" value="Обновить"/>
+            </p>
+        </form>
+    </div>
+    <div class="one wide column">
+    </div>
+    <div class="six wide column box">
+        <h2>Настройки</h2>
+        <ul id="settings_tab">
+            <li class="active"><a href="{% url 'account_edit' %}">Аккаунт</a></li>
+            <li><a href="{% url 'profile_edit' %}">Профиль</a></li>
+            <li><a href="#">Добавленные точки</a></li>
+            <li><a href="#">Комментарии</a></li>
+            <li><a href="#">Уведомления</a></li>
+        </ul>
+    </div>
+</div>
+{% endblock content_center %}
