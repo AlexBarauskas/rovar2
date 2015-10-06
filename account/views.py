@@ -16,7 +16,7 @@ from social.backends.google import GooglePlusAuth
 from social.backends.utils import load_backends
 from social.backends.oauth import BaseOAuth1, BaseOAuth2
 from social.apps.django_app.utils import psa
-
+from blog.models import Comment
 
 def context(**extra):
     return dict({
@@ -87,9 +87,10 @@ def profile_edit(request):
 
 
 def profile(request, username):
-    print(username)
-    u = User.objects.filter(username=username)
-    print(u)
-    print('exit')
     user = get_object_or_404(User, username=username)
     return render(request, 'account/profile.html', {'user': user,})
+
+@login_required(login_url='/')
+def comments_edit(request):
+    comments = Comment.objects.filter(owner=request.user)
+    return render(request, 'account/edit/comments.html', {'comments': comments,})
