@@ -1,5 +1,4 @@
 <div id="account_badges_wrapper" class="clearfix">
-
 	<div class="ui small images">
     {% for key, value in badges.items %}
     	<div class="image">
@@ -7,7 +6,6 @@
 				<img src="/static/images/{{key}}_true.png" alt="">
 			{% else %}
 				<img data-content="{{value.popup}}" class="uipopup" src="/static/images/{{key}}_false.png" alt="">
-				{{value.popup}}
 			{% endif %}
 		</div>
     {% endfor %}
