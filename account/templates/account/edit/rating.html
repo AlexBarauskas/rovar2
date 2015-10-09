@@ -1,0 +1,41 @@
+{% extends 'page.html' %}
+
+{% load account_widgets %}
+
+{% block content_center %}
+<div class="ui grid">
+    <div class="nine wide column box">
+        <h2>Рейтинг</h2>
+        <div class="ui minimal comments">
+            {% for rating in ratings %}
+            <div class="comment">
+                <a class="avatar">
+                    <img src="{{rating.owner.avatar_url}}">
+                </a>
+
+                <div class="content">
+                    <a class="author">{{rating.owner}}</a>
+
+                    <div class="value">
+                        {{rating.value}}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="one wide column">
+    </div>
+    <div class="six wide column box">
+        <h2>Настройки</h2>
+        <ul id="settings_tab">
+            <li><a href="{% url 'account_edit' %}">Аккаунт</a></li>
+            <li><a href="{% url 'profile_edit' %}">Профиль</a></li>
+            <li><a href="#">Добавленные точки</a></li>
+            <li><a href="{% url 'comments_edit' %}">Комментарии</a></li>
+            <li class="active"><a href="{% url 'rating_edit' %}">Отметки рейтинга</a></li>
+            <li><a href="#">Уведомления</a></li>
+        </ul>
+    </div>
+</div>
+{% endblock content_center %}
