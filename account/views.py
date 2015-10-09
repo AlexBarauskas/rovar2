@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import json
 from django.core import serializers
-from account.models import User
+from account.models import User, Rating
 from account.forms import UserAccountForm, UserProfileForm
 from django.conf import settings
 from django.core.urlresolvers import reverse
@@ -17,6 +17,7 @@ from social.backends.utils import load_backends
 from social.backends.oauth import BaseOAuth1, BaseOAuth2
 from social.apps.django_app.utils import psa
 from blog.models import Comment
+
 
 def context(**extra):
     return dict({
@@ -94,3 +95,9 @@ def profile(request, username):
 def comments_edit(request):
     comments = Comment.objects.filter(owner=request.user)
     return render(request, 'account/edit/comments.html', {'comments': comments,})
+
+@login_required(login_url='/')
+def rating_edit(request):
+    ratings = Rating.objects.filter(owner=request.user)
+    return render(request, 'account/edit/rating.html', {'ratings': ratings,})
+
