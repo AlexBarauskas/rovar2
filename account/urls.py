@@ -6,5 +6,6 @@ urlpatterns = patterns('account.views',
     url(r'^profile/edit/$', "profile_edit", name="profile_edit"),
 
     url(r'^comments/edit$', "comments_edit", name="comments_edit"),
+    url(r'^rating/edit$', "rating_edit", name="rating_edit"),
     url(r'^profile/(?P<username>[^/]+)/$', "profile", name="account_profile"),
 )
