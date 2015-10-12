@@ -1,3 +1,25 @@
+debug = true;
+// @TODO: REMOVE future!
+var rovar = {
+    messages: {
+        'edit': 'Редактировать',
+        'travel time': 'Время в пути',
+        'add point': '<i class=\"icon plus\"></i> Добавить точку',
+        'set coordinates': 'Выберите место на карте (Esc для отмены)',
+        'unknown error': 'Неизвестная ошибка.',
+        'success message': 'Ваше предложение будет рассмотрено модератором.',
+        'error request method': "Неверный тип запроса.",
+        'not init client': "Ваш клиент не инициализирован.",
+        'required fields': "Поля 'Название', 'Категория', 'Описание', 'Адрес' являются обязательными.",
+        'unknown url': "Указанный тип точки не существует.",
+        'required image': "Вы не выбрали изображение или оно не верного формата.",
+        'invalide url': "Не верный URL для поля 'Cайт'.",
+        'feedback email': "Введите email для обратной связи.",
+        'description length': "\"Описание\" не должно превышать 256 символов.",
+    },
+}
+
+
 var comments = {
     items: [],
     setting: {
@@ -183,3 +205,62 @@ var comments = {
         button.hide();
     }
 };
+
+//var entryID = data.id; // currentPoint.id
+//var rating_get = $.ajax({
+//        url: "/api/ratings",
+//        method: "GET",
+//        data: {
+//            entry_id: entryID,
+//            entry_type: "Point" // @TODO научиться принимать разные сущности
+//        },
+//        dataType: "json"
+//    })
+//    .done(function (data) {
+//        var initialRating = data.initialRating, maxRating = data.maxRating;
+//        if (data.is_auth) {
+//            $('.ui.rating').rating({
+//                initialRating: initialRating,
+//                maxRating: maxRating,
+//                onRate: function (value) {
+//                    var $this = $(this);
+//                    //Проверка на инициализацию
+//                    //Если ещё не установлен флаг
+//                    if ($this.hasClass('initial' + entryID)) {
+//
+//                        var rating_post = $.ajax({
+//                                url: "/api/ratings",
+//                                type: "POST",
+//                                data: {
+//                                    "entry_id": entryID,
+//                                    "entry_type": "Point", // @TODO научиться принимать разные сущности
+//                                    "value": value
+//                                },
+//                                dataType: "json"
+//                            })
+//                            .done(function (data) {
+//                                alert("Cпасибо, ваш голос учтён!");
+//                            })
+//                            .fail(function (jqXHR, textStatus) {
+//                                alert("Request failed: " + textStatus);
+//                            });
+//                    } else {
+//                        $this.addClass('initial' + entryID)
+//                    }
+//                }
+//            });
+//        } else {
+//            $('.ui.rating').rating({
+//                initialRating: initialRating,
+//                maxRating: maxRating
+//            }).rating('disable');
+//        }
+//    })
+//    .fail(function (jqXHR, textStatus) {
+//        alert("Request failed: " + textStatus);
+//    });
+
+id = $("#obj_id").val();
+if (id){
+    comments.init(id, $("#obj_type").val()); // @TODO научится принимать тип entry из api
+}
