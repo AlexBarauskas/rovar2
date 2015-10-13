@@ -349,11 +349,6 @@ var rovar = {
                     alert("Request failed: " + textStatus);
                 });
 
-            //$("#get_comment" + data.id).click(function (e) {
-            //    comments.init(data.id, "Point"); // @TODO научится принимать тип entry из api
-            //    $("#comment_modal").modal({blurring: true}).modal("show");
-            //});
-
             if (data.phones) {
                 phones_list = data.phones.split(",");
                 preview.append($("<p></p>").addClass('description-phones'));
