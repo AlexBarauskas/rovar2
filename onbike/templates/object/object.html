@@ -1,5 +1,53 @@
 {% extends 'page.html' %}
 
 {% block content_center %}
-    {{ obj }}
+<div class="ui grid">
+    <div class="nine wide column box">
+        <h2>{% block obj_type %}{% endblock obj_type %} <a href="#">{{ obj }}</a></h2>
+        <input type="hidden" name="obj_id" id="obj_id" value="{{obj.id}}">
+        <input type="hidden" name="obj_type" id="obj_type" value="Point">
+        {% block obj_info %}{% endblock obj_info %}
+        <div class="ui comments">
+            <h3 class="ui dividing header">Все отзывы</h3>
+
+            <div id="comments" class="ui inverted">
+            </div>
+            <div id="pre-comments-form" class='actions'>
+                <a id="main_reply" class='reply' data-commentid='{{ obj.id }}' style="display: none;">Написать отзыв</a>
+
+                <form action="/api/comment/add" method="POST" id="add-comment-form" class="ui reply form">
+                    <input id="input_hidden_ENTRYID" name="input_hidden_ENTRYID" type="hidden"/>
+                    <input id="input_hidden_ENTRYTYPE" name="input_hidden_ENTRYTYPE" type="hidden"/>
+                    <input id="input_hidden_PARENTID" name="input_hidden_PARENTID" type="hidden"/>
+
+                    <div class="field">
+                        <textarea id="textarea_message" required="required" name="message"></textarea>
+                    </div>
+                    {% if user.is_authenticated %}
+                        <button id="add-comment-button" class="ui blue submit button">
+                            Добавить отзыв
+                        </button>
+                    {% else %}
+                        <ul class="popuplogin socials clearfix">
+                            <li class="clearfix">Войти</li>
+                            <li class="clearfix"><a href="/login/facebook/">
+                                Через Фейсбук <img src="/static/images/facebook.png"/>
+                            </a></li>
+                            <li class="clearfix"><a class="disabled" href="/login/vk/">
+                                Через Вконтакте <img src="/static/images/vk.png"/>
+                            </a></li>
+                            <li class="clearfix"><a href="/login/twitter/">
+                                Через Твиттер <img src="/static/images/twitter.png"/>
+                            </a></li>
+                        </ul>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="one wide column">
+    </div>
+    <div class="six wide column box">
+        <h2>История</h2>
+    </div>
 {% endblock content_center %}
