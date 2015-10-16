@@ -574,18 +574,6 @@ var rovar = {
             var stateObj = {foo: "bar"};
             history.pushState(stateObj, "page", data.url);
 
-            if (typeof DISQUS != 'undefined') {
-                DISQUS.reset({
-                    reload: true,
-                    config: function () {
-                        this.language = language_code;
-                        this.page.identifier = data.uid;
-                        this.page.title = data.title;
-                        this.page.url = "http://onbike.by" + data.url;
-                    }
-                });
-                $('#disqus_thread').show();
-            }
         }
     },
 
