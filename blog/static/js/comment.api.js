@@ -264,3 +264,7 @@ id = $("#obj_id").val();
 if (id){
     comments.init(id, $("#obj_type").val()); // @TODO научится принимать тип entry из api
 }
+
+$("#add-comment-form").ajaxForm(function (data) {
+    comments.add_comment(data);
+});
