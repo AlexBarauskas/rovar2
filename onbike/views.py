@@ -2,8 +2,9 @@
 from django.shortcuts import render_to_response
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
-from django.template import RequestContext
+from django.template import RequestContext, loader
 from django.utils import translation
+import codecs
 import os
 import re
 
@@ -219,6 +220,13 @@ def set_language(request):
 def robots(request):
     return HttpResponse('User-Agent: *\nDisallow: /api/\nDisallow: /language/\nDisallow: /map/',
                         'text/plain')
+
+def tpl(request, name):
+    template = loader.get_template('mst/' + name + '.mst.html')
+    content = ""
+    with codecs.open(template.origin.name, "r", "utf-8") as f:
+        content = f.read()
+    return HttpResponse(content, content_type="text/plain")
 
 import qrcode
 def make_qr(request):
