@@ -84,6 +84,8 @@ urlpatterns = patterns(
 
     url(r'^admin/', include(admin.site.urls)),
 
+    url(r'^tpl/(?P<name>.+)$', 'onbike.views.tpl'),
+
 
     #url(r'^(?P<slug>\w+)/(?P<uid>[\-_\w]+)$', 'onbike.views.home', name='home_uid'),
     #url(r'^(?P<uid>\d+\-\w)/$', 'onbike.views.home', name='home_uid'),
