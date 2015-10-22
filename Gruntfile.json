@@ -21,7 +21,7 @@
                 "onbike/static/css/jquery.smartbanner.min.css",
                 "onbike/static/css/introjs.css",
                 "onbike/static/css/fotorama.css",
-                "account/static/account.css",
+                "account/static/account/css/account.css",
                 "account/static/account/css/login.css",
                 "onbike/static/css/fonts.css",
                 "onbike/static/css/manager.css",
