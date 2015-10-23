@@ -253,47 +253,58 @@ var rovar = {
                 title = '<a target="blank" href="' + data.website + '" style="color:' + data.color + '">' + title + '</a>';
             }
 
-            var preview = $('.preview-content').html('')
-                .append("<div class='button_close'></div>")
-                .append($("<h1>" + title + "</h1>").css('color', data.color));
+            var preview = $('.preview-content').html('');
+                //.append("<div class='button_close'></div>")
+                //.append($("<h1>" + title + "</h1>").css('color', data.color));
 
-            $('.preview-content .button_close')
-                .unbind("click")
-                .click(function () {
-                    self._hidePointInfo(point);
-                });
+            function loadTpl(target, tplname, data, callbacks) {
+                $.get("/tpl/"+tplname, function(template) {
+                    var rendered = Jinja.render(template, data);
+                    $(target).html(rendered);
 
-            if (data.images && data.images.length) {
-                var imgs_preview = $('<div>').addClass('fotorama').appendTo(preview);
-                for (var imgiter = data.images.length - 1; imgiter >= 0; imgiter--) {
-                    $('<a></a>').attr({'href': data.images[imgiter]})
-                        .appendTo(imgs_preview);
-                }
-                $('.fotorama').fotorama({
-                    'nav': false,
-                    'maxheight': '235px',
-                    'maxwidth': '320px',
-                    'allowfullscreen': true
+                    callbacks.forEach(function(item, i, arr){
+                        item.func(item.params);
+                    });
                 });
+            }
+
+            // preparing data
+            if (data.comments_count > 0) {
+                data['comment_string'] = this.messages['comment number'] + data.comments_count;
+            } else {
+                data['comment_string'] = this.messages['comment first'];
+            }
+
+            if (data.phones){
+                data.phones = data.phones.split(",");
             }
 
             if (data.post_url) {
-                description = "<a href=\"" + data.post_url + "\">" + data.description + "</a>";
+                data['description'] = "<a href=\"" + data.post_url + "\">" + data.description + "</a>";
             } else {
-                description = data.description;
+                data['description'] = data.description;
             }
 
-            var comment_string;
-            if (data.comments_count > 0) {
-                comment_string = this.messages['comment number'] + data.comments_count;
-            } else {
-                comment_string = this.messages['comment first'];
-            }
-            console.log(data);
-            ratingcomment = "<span><a data-comment_id='" + data.id + "' id='get_comment" + data.id + "' href='"+data.url+"/comments'>" + comment_string + "</a></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class='ui star rating'></span>";
-            preview.append($("<p></p>").html(ratingcomment).addClass('description-ratingcomment'));
-            preview.append($("<p></p>").html(description).addClass('description-description'));
-            preview.append($("<p></p>").html(data.address).addClass('description-address'));
+            // generate popup (target, template name, data, callbacks)
+            loadTpl(".preview-content", "point", data, [
+                {
+                    func: fotorama,
+                    params: data.images,
+                },
+                {
+                    func: close_button,
+                    params: point
+                }
+            ]);
+
+
+            //if (data.phones) {
+            //    phones_list = data.phones.split(",");
+            //    preview.append($("<p></p>").addClass('description-phones'));
+            //    for (var i = phones_list.length - 1; i >= 0; i--) {
+            //        $(".description-phones").append($("<p></p>").html(phones_list[i]));
+            //    };
+            //}
 
             var entryID = data.id; // currentPoint.id
             var rating_get = $.ajax({
@@ -348,15 +359,6 @@ var rovar = {
                 .fail(function (jqXHR, textStatus) {
                     alert("Request failed: " + textStatus);
                 });
-
-            if (data.phones) {
-                phones_list = data.phones.split(",");
-                preview.append($("<p></p>").addClass('description-phones'));
-                for (var i = phones_list.length - 1; i >= 0; i--) {
-                    $(".description-phones").append($("<p></p>").html(phones_list[i]));
-                }
-                ;
-            }
 
             if (typeof __editPointLink != "undefined" && __editPointLink != "") {
                 var edit_link = __editPointLink.replace("<%id%>", data.id);
