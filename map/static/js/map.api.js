@@ -257,6 +257,32 @@ var rovar = {
                 //.append("<div class='button_close'></div>")
                 //.append($("<h1>" + title + "</h1>").css('color', data.color));
 
+
+            function fotorama(images) {
+                if (images && images.length) {
+                    console.log(images);
+                    for (var imgiter = images.length - 1; imgiter >= 0; imgiter--) {
+                        $('.fotorama').append($('<a></a>').attr({'href': images[imgiter]}));
+                        console.log(imgiter);
+                    }
+                    $('.fotorama').fotorama({
+                        'nav': false,
+                        'maxheight': '235px',
+                        'maxwidth': '320px',
+                        'allowfullscreen': true
+                    });
+                }
+            }
+
+            function close_button(obj){
+                $('#main-panel-wrapper .preview-content .button_close')
+                    .unbind("click")
+                    .on("click", function () {
+                        self._hidePointInfo(obj);
+                    });
+            }
+
+
             function loadTpl(target, tplname, data, callbacks) {
                 $.get("/tpl/"+tplname, function(template) {
                     var rendered = Jinja.render(template, data);
