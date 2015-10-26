@@ -1,0 +1,21 @@
+<!--<div class="preview main-panel-inner" style="display: block;">-->
+    <!--<div class="preview-content clearfix">-->
+        <div class="button_close"></div>
+        <h1 style="color: rgb(238, 84, 21);"><a target="blank" href="{{website}}" style="color:{{color}}">{{title}}</a></h1>
+        <style></style>
+        <div class="fotorama--hidden"></div>
+        <div class="fotorama"></div>
+        <p class="description-ratingcomment">
+        	<span><a data-comment_id='{{id}}' id='get_comment{{id}}' href='{{url}}/comments'>{{comment_string}}</a></span>
+            <span class='ui star rating'></span>
+        </p>
+        <p class="description-description">{{description}}</p>
+        <p class="description-address">{{address}}</p>
+        <p class="description-phones">
+            {% for phone in phones %}
+                <p>{{phone}}</p>
+            {% endfor %}
+        </p>
+    </div>
+    <!--<div id="disqus_thread" style="display:none"></div>-->
+<!--</div>-->
