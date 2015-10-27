@@ -210,9 +210,6 @@ var rovar = {
         var stateObj = {foo: "bar"};
         history.pushState(stateObj, "page", '/' + this.location.name);
 
-        // $('#back-to-banner').hide();
-        // $('#type').hide();
-        // $('#banner').show();
         var rbgCol = '#e95d24';
         var rgbaCol = 'rgba(' + parseInt(rbgCol.slice(-6, -4), 16)
             + ',' + parseInt(rbgCol.slice(-4, -2), 16)
@@ -241,11 +238,6 @@ var rovar = {
                 });
             this.currentPoint = point;
 
-
-            // $('#banner').hide();
-            // $('#back-to-banner').show();
-            // $('#type').show();
-
             var description,
                 data = point._data;
             var title = data.title;
@@ -254,9 +246,6 @@ var rovar = {
             }
 
             var preview = $('.preview-content').html('');
-                //.append("<div class='button_close'></div>")
-                //.append($("<h1>" + title + "</h1>").css('color', data.color));
-
 
             function fotorama(images) {
                 if (images && images.length) {
@@ -322,15 +311,6 @@ var rovar = {
                     params: point
                 }
             ]);
-
-
-            //if (data.phones) {
-            //    phones_list = data.phones.split(",");
-            //    preview.append($("<p></p>").addClass('description-phones'));
-            //    for (var i = phones_list.length - 1; i >= 0; i--) {
-            //        $(".description-phones").append($("<p></p>").html(phones_list[i]));
-            //    };
-            //}
 
             var entryID = data.id; // currentPoint.id
             var rating_get = $.ajax({
