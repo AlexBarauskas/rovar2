@@ -222,7 +222,7 @@ def robots(request):
                         'text/plain')
 
 def tpl(request, name):
-    template = loader.get_template('mst/' + name + '.mst.html')
+    template = loader.get_template('jinja/' + name + '.jinja.html')
     content = ""
     with codecs.open(template.origin.name, "r", "utf-8") as f:
         content = f.read()
