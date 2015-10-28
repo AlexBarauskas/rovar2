@@ -6,14 +6,14 @@
         <div class="fotorama--hidden"></div>
         <div class="fotorama"></div>
         <p class="description-ratingcomment">
-        	<span><a data-comment_id='{{id}}' id='get_comment{{id}}' href='{{url}}/comments'>{{comment_string}}</a></span>
+        	<span><a data-comment_id='{{id}}' id='get_comment{{id}}' href='{{url}}/comments'>{{message_comment_string}}</a></span>
             <span class='ui star rating'></span>
         </p>
         <p class="description-description">{{description}}</p>
         <p class="description-address">{{address}}</p>
         <p class="description-phones">
-            {% for phone in phones %}
-                <p>{{phone}}</p>
+            {% for phone in array_phones %}
+                <span>{{phone}}</span>
             {% endfor %}
         </p>
     </div>
