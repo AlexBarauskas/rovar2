@@ -404,7 +404,8 @@ i.icon{
     margin: 5px 0;
 }
 
-.preview .description-phones p{
+.preview .description-phones span{
+    display: block;
     color: #5a5a5a;
     font-size: 14px;
     line-height: 24px;
