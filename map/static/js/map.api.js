@@ -150,6 +150,39 @@ var rovar = {
         }
     },
 
+    close_button: function (obj){
+        $('#main-panel-wrapper .preview-content .button_close')
+            .unbind("click")
+            .on("click", function () {
+                switch (obj.type){
+                    case "point":{
+                        obj.rovar._hidePointInfo(obj);
+                        break;
+                    }
+                    case "track":{
+                        obj.rovar._hideTrackInfo(obj);
+                        break;
+                    }
+                }
+            });
+    },
+
+    fotorama: function (images) {
+        if (images && images.length) {
+            console.log(images);
+            for (var imgiter = images.length - 1; imgiter >= 0; imgiter--) {
+                $('.fotorama').append($('<a></a>').attr({'href': images[imgiter]}));
+                console.log(imgiter);
+            }
+            $('.fotorama').fotorama({
+                'nav': false,
+                'maxheight': '235px',
+                'maxwidth': '320px',
+                'allowfullscreen': true
+            });
+        }
+    },
+
     hide: function (type_name) {
         if (this.currentPoint)
             if (this.currentPoint._data.type_slug == type_name) {
@@ -190,7 +223,6 @@ var rovar = {
         }
 
     },
-
 
     _hidePointInfo: function (point) {
         var self = this;
@@ -236,8 +268,14 @@ var rovar = {
                 .click(function () {
                     self._hidePointInfo(point);
                 });
+
+            point.type = 'point';
+            point.rovar = self;
             this.currentPoint = point;
 
+            var preview = $('.preview-content').html('');
+
+            // preparing data
             var description,
                 data = point._data;
             var title = data.title;
@@ -245,53 +283,14 @@ var rovar = {
                 title = '<a target="blank" href="' + data.website + '" style="color:' + data.color + '">' + title + '</a>';
             }
 
-            var preview = $('.preview-content').html('');
-
-            function fotorama(images) {
-                if (images && images.length) {
-                    console.log(images);
-                    for (var imgiter = images.length - 1; imgiter >= 0; imgiter--) {
-                        $('.fotorama').append($('<a></a>').attr({'href': images[imgiter]}));
-                        console.log(imgiter);
-                    }
-                    $('.fotorama').fotorama({
-                        'nav': false,
-                        'maxheight': '235px',
-                        'maxwidth': '320px',
-                        'allowfullscreen': true
-                    });
-                }
-            }
-
-            function close_button(obj){
-                $('#main-panel-wrapper .preview-content .button_close')
-                    .unbind("click")
-                    .on("click", function () {
-                        self._hidePointInfo(obj);
-                    });
-            }
-
-
-            function loadTpl(target, tplname, data, callbacks) {
-                $.get("/tpl/"+tplname, function(template) {
-                    var rendered = Jinja.render(template, data);
-                    $(target).html(rendered);
-
-                    callbacks.forEach(function(item, i, arr){
-                        item.func(item.params);
-                    });
-                });
-            }
-
-            // preparing data
             if (data.comments_count > 0) {
-                data['comment_string'] = this.messages['comment number'] + data.comments_count;
+                data['message_comment_string'] = this.messages['comment number'] + data.comments_count;
             } else {
-                data['comment_string'] = this.messages['comment first'];
+                data['message_comment_string'] = this.messages['comment first'];
             }
 
             if (data.phones){
-                data.phones = data.phones.split(",");
+                data.array_phones = data.phones.split(",");
             }
 
             if (data.post_url) {
@@ -300,14 +299,14 @@ var rovar = {
                 data['description'] = data.description;
             }
 
-            // generate popup (target, template name, data, callbacks)
-            loadTpl(".preview-content", "point", data, [
+            // generate popup (target, template name == type object, data, callbacks)
+            this.loadTpl(".preview-content", point.type, data, [
                 {
-                    func: fotorama,
-                    params: data.images,
+                    func: this.fotorama,
+                    params: data.images
                 },
                 {
-                    func: close_button,
+                    func: this.close_button,
                     params: point
                 }
             ]);
@@ -387,7 +386,6 @@ var rovar = {
 
         }
     },
-
 
     _addPointToMap: function (data) {
         var self = this;
@@ -502,6 +500,17 @@ var rovar = {
         });
     },
 
+    loadTpl: function (target, tplname, data, callbacks) {
+        $.get("/tpl/"+tplname, function(template) {
+            var rendered = Jinja.render(template, data);
+            $(target).html(rendered);
+
+            callbacks.forEach(function(item, i, arr){
+                item.func(item.params);
+            });
+        });
+    },
+
     _hideTrackInfo: function (track) {
         var self = this;
         $(track._data.pointA._icon).hide();
@@ -513,9 +522,6 @@ var rovar = {
         var stateObj = {foo: "bar"};
         history.pushState(stateObj, "page", '/' + this.location.name);
 
-        // $('#back-to-banner').hide();
-        // $('#type').hide();
-        // $('#banner').show();
         var rbgCol = '#e95d24';
         var rgbaCol = 'rgba(' + parseInt(rbgCol.slice(-6, -4), 16)
             + ',' + parseInt(rbgCol.slice(-4, -2), 16)
@@ -532,46 +538,57 @@ var rovar = {
                 this._hidePointInfo(this.currentPoint);
             if (this.currentTrack)
                 this._hideTrackInfo(this.currentTrack);
+
+            track.type = 'track';
+            track.rovar = self;
             this.currentTrack = track;
 
             $(track._data.pointA._icon).show();
             $(track._data.pointB._icon).show();
 
-            // $('#banner').hide();
-            // $('#back-to-banner').show();
-            // $('#type').show();
             var data = track._data;
 
-            var preview = $('.preview-content').html('')
-                .append("<div class='button_close'></div>")
-                .append($("<h1>" + data.title + "</h1>").css('color', data.color));
-            if (data.duration)
-                preview.append($("<p></p>").html(this.messages['travel time'] + ': ' + data.duration).addClass('description-address'));
-            if (data.video != '') {
-                var video = $(data.video);
-                preview.append(video);
-                //if(preview.width()<preview.find('iframe').width())
+            var preview = $('.preview-content').html('');
+
+            // preparing data
+            if (data.comments_count > 0) {
+                data['message_comment_string'] = this.messages['comment number'] + data.comments_count;
+            } else {
+                data['message_comment_string'] = this.messages['comment first'];
             }
 
-            $('.preview-content .button_close')
-                .unbind("click")
-                .click(function () {
-                    self._hideTrackInfo(track);
-                });
-
-            var description;
-            if (data.post_url)
-                description = "<p><a href=\"" + data.post_url + "\">" + data.description + "</a></p>";
-            else
-                description = "<p>" + data.description + "</p>";
-            preview.append(description);
-            preview.parent().show();
-            if (typeof video != 'undefined') {
-                video.height(video.height() * (preview.width()) / video.width());
-                video.width(preview.width());
+            if (data.phones){
+                data.phones = data.phones.split(",");
             }
 
-            // $("#type").html(data.type_name);
+            if (data.post_url) {
+                data['description'] = "<a href=\"" + data.post_url + "\">" + data.description + "</a>";
+            } else {
+                data['description'] = data.description;
+            }
+
+            data['message_travel_time'] = this.messages['travel time'];
+
+
+            // generate popup (target, template name, data, callbacks)
+            this.loadTpl(".preview-content", track.type, data, [
+                {
+                    func: this.close_button,
+                    params: track
+                }
+            ]);
+
+
+            //if (data.video != '') {
+            //    var video = $(data.video);
+            //    preview.append(video);
+            //}
+            //
+            //if (typeof video != 'undefined') {
+            //    video.height(video.height() * (preview.width()) / video.width());
+            //    video.width(preview.width());
+            //}
+
             var rbgCol = data.color;
             var rgbaCol = 'rgba(' + parseInt(rbgCol.slice(-6, -4), 16)
                 + ',' + parseInt(rbgCol.slice(-4, -2), 16)
@@ -690,7 +707,6 @@ var rovar = {
             this._showTrackInfo(polyline);
 
     },
-
 
     _pointGroup: function (type_name) {
         var i = 0, j = 0, x0, x1, y0, y1, local_pins, k, p0, p, X, Y, t, id, id0;
@@ -892,7 +908,6 @@ var rovar = {
         if (($(document).innerHeight() - d.innerHeight()) / 2 >= 0)
             d.css('top', ($(document).innerHeight() - d.innerHeight()) / 2);
     },
-
 
     callbackAddPoint: function (data) {
         if (!data.success) {
