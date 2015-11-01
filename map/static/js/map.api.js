@@ -35,6 +35,7 @@ var rovar = {
     _kLeft: 0.317,
     _numberPoint: 0,
     _numberLoadPoint: 0,
+    _cache_tpl : {},
     messages: {
         'edit': 'Редактировать',
         'travel time': 'Время в пути',
@@ -501,14 +502,26 @@ var rovar = {
     },
 
     loadTpl: function (target, tplname, data, callbacks) {
-        $.get("/tpl/"+tplname, function(template) {
+
+        var self = this;
+        var callback = function(template){
             var rendered = Jinja.render(template, data);
             $(target).html(rendered);
-
             callbacks.forEach(function(item, i, arr){
                 item.func(item.params);
             });
-        });
+        }
+
+        if(!this._cache_tpl[tplname]){
+            $.get("/tpl/"+tplname, function(template) {
+                self._cache_tpl[tplname] = template;
+                callback(template);
+            });
+        }else{
+            var template = self._cache_tpl[tplname];
+            callback(template);
+        };
+
     },
 
     _hideTrackInfo: function (track) {
