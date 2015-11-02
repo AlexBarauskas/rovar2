@@ -21,13 +21,6 @@ o.Image.MAX_RESIZE_WIDTH = 10000;
 var __addClick;
 var debug = true;
 
-function loadTmpl(tmpl, data, target) {
-    $.get(tmpl, function (template) {
-        var rendered = Mustache.render(template, data);
-        $(target).html(rendered);
-    });
-}
-
 var rovar = {
     elements: {'points': {}, 'tracks': {}},
     sort_ids: {},
@@ -560,6 +553,8 @@ var rovar = {
             $(track._data.pointB._icon).show();
 
             var data = track._data;
+
+            console.log(data);
 
             var preview = $('.preview-content').html('');
 
