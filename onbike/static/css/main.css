@@ -282,20 +282,20 @@ i.icon{
     position:relative;
 }
 
-.section.preview iframe{
-    margin-left: -20px;
-}
-
-.video>a{
-    float:left!important;
-    position:relative;
-}
-
-.video>iframe{
-    border-radius:5px;
-    border:solid 4px #444;
-    box-shadow: 0px 0px 5px black
-}
+/*.section.preview iframe{*/
+    /*margin-left: -20px;*/
+/*}*/
+/**/
+/*.video>a{*/
+    /*float:left!important;*/
+    /*position:relative;*/
+/*}*/
+/**/
+/*.video>iframe{*/
+    /*border-radius:5px;*/
+    /*border:solid 4px #444;*/
+    /*box-shadow: 0px 0px 5px black*/
+/*}*/
 
 .data-content {
     padding:0;
@@ -1232,4 +1232,9 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
   border-radius: 3px;
   background-color: #f9f9f9;
   padding: 1em;
+}
+
+.video iframe{
+    max-width: 100%;
+    height: auto;
 }
