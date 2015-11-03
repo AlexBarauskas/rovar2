@@ -565,10 +565,6 @@ var rovar = {
                 data['message_comment_string'] = this.messages['comment first'];
             }
 
-            if (data.phones){
-                data.phones = data.phones.split(",");
-            }
-
             if (data.post_url) {
                 data['description'] = "<a href=\"" + data.post_url + "\">" + data.description + "</a>";
             } else {
@@ -576,7 +572,6 @@ var rovar = {
             }
 
             data['message_travel_time'] = this.messages['travel time'];
-
 
             // generate popup (target, template name, data, callbacks)
             this.loadTpl(".preview-content", track.type, data, [
@@ -586,16 +581,7 @@ var rovar = {
                 }
             ]);
 
-
-            //if (data.video != '') {
-            //    var video = $(data.video);
-            //    preview.append(video);
-            //}
-            //
-            //if (typeof video != 'undefined') {
-            //    video.height(video.height() * (preview.width()) / video.width());
-            //    video.width(preview.width());
-            //}
+            preview.parent().show();
 
             var rbgCol = data.color;
             var rgbaCol = 'rgba(' + parseInt(rbgCol.slice(-6, -4), 16)
