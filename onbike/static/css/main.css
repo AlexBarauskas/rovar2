@@ -669,23 +669,36 @@ label{
 
 /*ADD POINT DIALOG*/
 #add-point-dialog{
-    /*position: fixed;*/
-    
-    width: 440px;
-    /*overflow-y: auto;*/
+    width: 694px;
     top: 50% !important;
-
     margin: 0;
-    padding: 20px 0;
+    padding: 0;
+    padding-top: 58px;
     z-index: 999;
-    top: 0;
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: #fff;
     border-radius: 4px;
+    overflow: hidden;
     box-shadow: 0 1px 10px rgba(0,0,0,.3);
+    position: relative;
+}
+
+#form-close{
+    position: absolute;
+    right: 30px;
+    top: 30px;
+    background: url(../icons/icon_close_18.png);
+    height: 18px;
+    width: 18px;
+    display: block;
+    cursor: pointer;
+}
+
+.ui.form .ui.input>input.form-control,
+#fileUploadInput {
+    width: 100% !important;
 }
 
 #add-point-dialog form{
-    margin: 0 16px;
     display: block;
 }
 
@@ -694,6 +707,67 @@ label{
     opacity: 1;
     transition: .6s;
     display: block;
+}
+
+.form-group-hide{
+    display: none;
+}
+
+.form-group-hide-btn{
+    text-align: left;
+    padding-left: 30%;
+    line-height: 25px;
+    padding-bottom: 5px;
+    position: relative;
+}
+
+.form-group-hide-btn span{
+    color: #4783bf;
+    line-height: 1.2142em;
+    font-size: 1.28571429em;
+    position: relative;
+    cursor: pointer;
+    margin-right: 3px;
+}
+
+.form-group-hide-btn-plus{
+    line-height: 25px;
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    background: url(../icons/icon-plus-22.png);
+    position: relative;
+    top: 5px;
+}
+
+#add-point-dialog .form-group .label {
+    display: block;
+    float: left;
+    width: 30%;
+    text-align: right;
+}
+
+#add-point-dialog .form-group .label label{
+    margin-right: 8%;
+    line-height: 1.2142em;
+    font-size: 1.28571429em;
+    padding: .67861429em 1em;
+    font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Geneva, Verdana, sans-serif;
+}
+
+#add-point-dialog .form-group .input {
+    display: block;
+    float: left;
+    width: 70%;
+    padding-right: 13%;
+    text-align: left;
+    font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Geneva, Verdana, sans-serif;
+}
+
+#add-point-dialog .form-group .input input,
+#add-point-dialog .form-group .input textarea,
+#add-point-dialog .form-group .input .ui.selection.dropdown{
+    border-width: 2px;
 }
 
 #add-point-dialog .form-group.border {
@@ -709,18 +783,6 @@ label{
     line-height: 1.467;
 }
 
-#fileUploadInput{
-    width: 280px;
-    margin-top: 10px;
-    /*line-height: 18px;*/
-}
-
-/*#add-point-dialog input:focus {
-    border-color: black;
-    color: black;
-}
-*/
-
 #add-point-dialog select{
     width: 100%;
 }
@@ -729,8 +791,11 @@ label{
 }
 
 #add-point-dialog textarea.form-control:focus {
-    border-color: black;
-    color: black;
+    border-color: rgba(34,36,38,.35);
+    color: rgba(0,0,0,.95);
+    border-radius: .28571429rem;
+    background: #fff;
+    box-shadow: 0 0 0 0 rgba(34,36,38,.35) inset;
 }
 
 #add-point-dialog label.photo {
@@ -766,10 +831,10 @@ label{
 }
 
 #add-point-dialog .btn-box{
-    padding: 10px 36px 10px;
-    height: 60px;
-    margin-top: 0px;
-    text-align: right;
+    padding: 20px;
+    margin-top: 20px;
+    text-align: center;
+    background: #dbdbdb;
 }
 
 #add-point-dialog button.btn, #add-point-dialog #upload-imgs.btn{
@@ -789,20 +854,32 @@ label{
     /*width: 388px;*/
 }
 
-::-webkit-input-placeholder {
-   color: #969696;
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder{
+    color: #969696;
+    font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Geneva, Verdana, sans-serif;
+    font-weight: 100;
 }
 
-:-moz-placeholder { /* Firefox 18- */
-   color: #969696;  
+input:-moz-placeholder,
+textarea:-moz-placeholder{ /* Firefox 18- */
+    color: #969696;
+    font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Geneva, Verdana, sans-serif;
+    font-weight: 100;
 }
 
-::-moz-placeholder {  /* Firefox 19+ */
-   color: #969696;  
+input::-moz-placeholder,
+textarea::-moz-placeholder{  /* Firefox 19+ */
+    color: #969696;
+    font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Geneva, Verdana, sans-serif;
+    font-weight: 100;
 }
 
-:-ms-input-placeholder {  
-   color: #969696;  
+input:-ms-input-placeholder,
+textarea:-ms-input-placeholder{
+    color: #969696;
+    font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Geneva, Verdana, sans-serif;
+    font-weight: 100;
 }
 
 

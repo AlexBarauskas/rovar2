@@ -933,7 +933,7 @@ $(function () {
         }
     });
 
-    $("#add-point-form-close").click(function (e) {
+    $("#add-point-form-close, #form-close").click(function (e) {
         e.preventDefault();
         rovar.closeAddPoint();
     });

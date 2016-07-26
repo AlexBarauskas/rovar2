@@ -33,6 +33,11 @@ $(function() {
         $('.ui.modal').modal('hide');
     });
 
+    $('.form-group-hide-btn').click(function(e){
+        $(this).remove();
+        $('.form-group-hide').slideDown(250);
+    })
+
     $('#url_account_edit').click(function(e) {
       e.preventDefault();
       $('#popup_account_edit')

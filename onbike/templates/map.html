@@ -133,20 +133,25 @@
     <div id="contentWrapperMap">
         <div id="map" class="data-content" style="padding:0;"></div>
         <div id="add-point-dialog" class="ui modal" style="display:none">
+            <div id="form-close"></div>
             <form id="add-point-form" class="ui form clearfix" method="POST" action="/api/point/add"
                   enctype="multipart/form-data">
 
                 <input type="hidden" value="" name="coordinates"/>
 
                 <div class="field form-group clearfix">
-                    <input type="text" class="form-control" value="" placeholder="{% trans 'Название *' %}"
-                           name="title"/>
+                    <div class="label"><label for="title">Название</label></div>
+                    <div class="ui big input">
+                        <input type="text" class="form-control" value="" placeholder="{% trans 'Опишите место' %}"
+                           name="title" id="title"/>
+                    </div>
                 </div>
 
                 <div class="field form-group clearfix">
-                    <div class="input">
-                        <label class="category">{% trans "Категория" %} <sup>*</sup></label>
-                        <select name="type" class="category">
+                    <div class="label"><label for="type">Категория</label></div>
+                    <div class="ui big input">
+                        <select name="type" id="type" class="category">
+                            <option value="">{% trans "Выберите" %}</option>
                             <option value="shop">{% trans "Магазин" %}</option>
                             <option value="bikerental">{% trans "Прокат" %}</option>
                             <option value="entertainment">{% trans "Развлечения" %}</option>
@@ -157,45 +162,71 @@
                 </div>
 
                 <div class="field form-group clearfix">
-                    <textarea type="text" class="form-control" value=""
-                              placeholder="{% trans 'Описание (время работы, ориентиры и т.д.)' %}"
-                              name="description"></textarea>
+                    <div class="label"><label for="address">Адрес</label></div>
+                    <div class="ui big input">
+                        <input type="text" class="form-control" value="" placeholder="{% trans 'Адрес *' %}"
+                           name="address" id="address"/>
+                    </div>
                 </div>
 
                 <div class="field form-group clearfix">
-                    <input type="text" class="form-control" value="" placeholder="{% trans 'Адрес *' %}"
-                           name="address"/>
+                    <div class="label"><label for="description">Описание</label></div>
+                    <div class="ui big input">
+                        <textarea type="text" class="form-control" value=""
+                                  placeholder="{% trans 'Время работы, ориентиры и т.д.' %}"
+                                  name="description"
+                                  id="description"></textarea>
+                    </div>
                 </div>
-
-                <div class="field form-group clearfix">
-                    <input type="text" class="form-control" value="" placeholder="{% trans 'Телефон' %}" name="phones"/>
-                </div>
-
-                <div class="field form-group clearfix">
-                    <input type="text" class="form-control" value="" placeholder="{% trans 'Сайт' %}" name="website"/>
-                </div>
-
-                <div class="field form-group clearfix">
-                    <input type="text" class="form-control"
-                           value="{% if user.is_authenticated %}{{ user.email }}{% endif %}"
-                           placeholder="{% trans 'Ваш Email (мы не будем спамить, честно) *' %}" name="email"/>
-                </div>
-
-                <!--div class="field form-group clearfix">
-              <label class="photo">{% trans "Фото *" %}</label>
-              <input type="file" class="form-control photo" value="" accept="image/*" name="image" />
-            </div-->
 
                 <div class="field form-group clearfix" id="inputfile">
                     <!--div class="logbox" draggable="true"></div-->
                     <!--label>OR Select a file to upload:</label-->
 
-                    <label class="photo">{% trans "Фото *" %}</label>
                     <!--div id="fileInputContainer">
                         <a id="fileUploadDummy" class="btn-choose">Choose File</a>
                         <input type="file" name="image" id="fileUploadInput" accept="image/*" multiple="multiple"/>
                     </div-->
-                    <input type="file" name="image" id="fileUploadInput" accept="image/*" multiple="multiple"/>
+                    <div class="label"><label for="fileUploadInput">{% trans "Фото" %}</label></div>
+                    <div class="ui big input">
+                        <input type="file" name="image" id="fileUploadInput" accept="image/*" multiple="multiple"/>
+                    </div>
+                </div>
+
+                <div class="field form-group clearfix">
+                    <div class="label"><label for="email">Email</label></div>
+                    <div class="ui big input">
+                        <input type="text" class="form-control"
+                           value="{% if user.is_authenticated %}{{ user.email }}{% endif %}"
+                           placeholder="{% trans 'Ваш Email для связи' %}" name="email" id="email"/>
+                    </div>
+                </div>
+
+                <div class="form-group-hide-btn">
+                    <span>Хочу заполнить подробнее <i class="form-group-hide-btn-plus"></i></span>
+                </div>
+
+                <div class="form-group-hide">
+
+                <div class="field form-group clearfix">
+                    <div class="label"><label for="phones">Телефон</label></div>
+                    <div class="ui big input">
+                        <input type="text" class="form-control" value=""
+                           placeholder="{% trans '+375 (29) 123-45-67' %}"
+                           name="phones" id="phones"/>
+                    </div>
+                </div>
+
+                <div class="field form-group clearfix">
+                    <div class="label"><label for="website">Сайт</label></div>
+                    <div class="ui big input">
+                        <input type="text" class="form-control" value=""
+                           placeholder="{% trans 'www.site.com' %}"
+                           name="website" id="website"/>
+                    </div>
+                </div>
+
+
                 </div>
                 <!--div>
                     <a class="btn" id="upload-imgs" href="javascript:;">Upload</a>
@@ -205,13 +236,14 @@
                 <div id="ajax-errors"></div>
                 <div class="btn-box">
                     <!--button class="btn success">{% trans "Добавить точку" %}</button-->
-                    <a id="upload-imgs" class="ui button green medium" href="#">{% trans "Добавить точку" %}</a>
-                    <a class="ui button tiny" id="add-point-form-close" href="#">{% trans "Отмена" %}</a>
+                    <a id="upload-imgs" class="ui button green huge" href="#">{% trans "Добавить точку" %}</a>
+                    <!--<a class="ui button tiny" id="add-point-form-close" href="#">{% trans "Отмена" %}</a>-->
                 </div>
+
                 <input type="hidden" value="webclient" name="uid"/>
 
             </form>
-        </div>
+        </form>
     </div>
 
     <div id="social-networks">
